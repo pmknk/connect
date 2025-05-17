@@ -1,6 +1,22 @@
 {
-  "extends": "./tsconfig.base.json",
-  "compileOnSave": false,
-  "files": [],
-  "references": []
+    "extends": "./tsconfig.base.json",
+    "compileOnSave": false,
+    "files": [],
+    "references": [
+        {
+            "path": "./apps/admin"
+        },
+        {
+            "path": "./packages/admin/identity"
+        },
+        {
+            "path": "./apps/server"
+        },
+        {
+            "path": "./packages/server/core"
+        },
+        {
+            "path": "./packages/admin/core"
+        }
+    ]
 }
