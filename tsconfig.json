@@ -7,9 +7,6 @@
             "path": "./apps/admin"
         },
         {
-            "path": "./packages/admin/identity"
-        },
-        {
             "path": "./apps/server"
         },
         {
@@ -17,6 +14,12 @@
         },
         {
             "path": "./packages/admin/core"
+        },
+        {
+            "path": "./packages/admin/ui"
+        },
+        {
+            "path": "./packages/admin/signin"
         }
     ]
 }
