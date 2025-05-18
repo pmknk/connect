@@ -9,6 +9,10 @@ module.exports = {
             __dirname,
             '{src,pages,components,app}/**/*!(*.stories|*.spec).{ts,tsx,html}'
         ),
+        join(
+            __dirname,
+            '../../packages/admin/**/*!(*.stories|*.spec).{ts,tsx,html}'
+        ),
         ...createGlobPatternsForDependencies(__dirname),
         "./node_modules/@material-tailwind/react/**/*.{js,ts,jsx,tsx}"
     ],
