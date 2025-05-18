@@ -12,11 +12,11 @@ export const config = createConfig((env) => {
             database: env.string('SERVER_DATABASE_NAME', 'postgres')
         },
         identity: {
-            jwtSecret: env.string('SERVER_IDENTITY_JWT_SECRET', 'secret'),
+            jwtSecret: env.string('SERVER_IDENTITY_JWT_SECRET') ?? 'default-jwt-secret-please-change-in-production',
             admin: {
-                fullName: env.string('SERVER_IDENTITY_ADMIN_FULLNAME'),
-                email: env.string('SERVER_IDENTITY_ADMIN_EMAIL'),
-                password: env.string('SERVER_IDENTITY_ADMIN_PASSWORD')
+                fullName: env.string('SERVER_IDENTITY_ADMIN_FULLNAME') ?? 'Admin',
+                email: env.string('SERVER_IDENTITY_ADMIN_EMAIL') ?? 'admin@example.com',
+                password: env.string('SERVER_IDENTITY_ADMIN_PASSWORD') ?? 'default-password-please-change'
             }
         },
         server: {

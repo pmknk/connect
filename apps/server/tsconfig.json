@@ -4,6 +4,9 @@
     "include": [],
     "references": [
         {
+            "path": "../../packages/server/identity"
+        },
+        {
             "path": "../../packages/server/core"
         },
         {

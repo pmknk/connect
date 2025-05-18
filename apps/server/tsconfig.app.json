@@ -19,6 +19,9 @@
     ],
     "references": [
         {
+            "path": "../../packages/server/identity/tsconfig.lib.json"
+        },
+        {
             "path": "../../packages/server/core/tsconfig.lib.json"
         }
     ]

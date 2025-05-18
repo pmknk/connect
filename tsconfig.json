@@ -20,6 +20,9 @@
         },
         {
             "path": "./packages/admin/signin"
+        },
+        {
+            "path": "./packages/server/identity"
         }
     ]
 }
