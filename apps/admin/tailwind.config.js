@@ -19,5 +19,7 @@ module.exports = {
     theme: {
         extend: {}
     },
-    plugins: [mtConfig]
+    plugins: [mtConfig({
+        radius: "1.8rem",
+    })]
 };
