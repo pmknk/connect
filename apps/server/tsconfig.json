@@ -4,6 +4,9 @@
     "include": [],
     "references": [
         {
+            "path": "../../packages/server/database"
+        },
+        {
             "path": "../../packages/server/identity"
         },
         {

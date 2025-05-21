@@ -34,7 +34,7 @@
         "@testing-library/dom": "10.4.0",
         "@testing-library/react": "16.1.0",
         "@types/jest": "^29.5.12",
-        "@types/node": "^20.0.0",
+        "@types/node": "18.16.9",
         "@types/react": "19.0.0",
         "@types/react-dom": "19.0.0",
         "autoprefixer": "10.4.13",
@@ -75,7 +75,8 @@
         "server-e2e",
         "packages/server/core",
         "packages/server/utils",
-        "packages/server/identity"
+        "packages/server/identity",
+        "packages/server/database"
     ],
     "dependencies": {
         "@fastify/autoload": "~6.0.3",
@@ -88,6 +89,8 @@
         "fastify": "~5.2.1",
         "fastify-plugin": "~5.0.1",
         "iconoir-react": "^7.11.0",
+        "pg": "^8.16.0",
+        "pg-hstore": "^2.3.4",
         "react": "19.0.0",
         "react-dom": "19.0.0",
         "react-hook-form": "^7.56.4",

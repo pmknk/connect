@@ -23,6 +23,9 @@
         },
         {
             "path": "./packages/server/identity"
+        },
+        {
+            "path": "./packages/server/database"
         }
     ]
 }

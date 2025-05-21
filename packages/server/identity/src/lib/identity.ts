@@ -11,7 +11,6 @@ export type IdentityPluginOptions = {
 };
 
 export default fp(async (fastify: FastifyInstance, options: IdentityPluginOptions) => {
-    console.log(fastify)
     console.log(options)
 })
 
