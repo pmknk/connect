@@ -1,22 +1,18 @@
-import fp from "fastify-plugin";
+import fp from 'fastify-plugin';
 import { FastifyInstance } from "fastify";
-import { type Options as DatabasePluginOptions, Sequelize } from 'sequelize';
+import { Options, Sequelize } from "sequelize";
+import { ConnectionService } from './services/connection.service';
 
-export default fp(async (fastify: FastifyInstance, config: DatabasePluginOptions) => {
-    try {
-        const sequelize = new Sequelize({
-            logging: fastify.log.info.bind(fastify.log),
-            ...config,
-    });
-    await sequelize.authenticate();
 
-    fastify.decorate('db', sequelize);
+class DatabasePluginInitializer {
+    static async initialize(fastify: FastifyInstance, options: Options) {
+        const sequelize = new Sequelize(options);
 
-    fastify.addHook('onClose', async () => {
-        await sequelize.close();
-    });
-    } catch (error) {
-        fastify.log.error(error);
-        process.exit(1);
+        const connectionService = new ConnectionService(sequelize);
+        await connectionService.connect();
+
+        
     }
-})
+}
+
+export default fp<Options>(DatabasePluginInitializer.initialize);

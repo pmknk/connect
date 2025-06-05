@@ -1,7 +1,7 @@
-import { FastifyInstance } from 'fastify';
+import { FastifyInstance } from "fastify";
 import fp from 'fastify-plugin';
 
-export type IdentityPluginOptions = {
+type IdentityPluginOptions = {
     jwtSecret: string;
     admin?: {
         fullName: string;
@@ -10,7 +10,17 @@ export type IdentityPluginOptions = {
     };
 };
 
-export default fp(async (fastify: FastifyInstance, options: IdentityPluginOptions) => {
-    console.log(options)
-})
+class IdentityPluginInitializer {
 
+    /**
+     * Registers the Identity Plugin with the provided Fastify instance and options.
+     *
+     * @param {FastifyInstance} fastify - The Fastify instance to register the plugin with.
+     */
+    static async initialize(fastify: FastifyInstance, options: IdentityPluginOptions): Promise<void> {
+        console.log('here')
+    }
+}
+
+
+export default fp<IdentityPluginOptions>(IdentityPluginInitializer.initialize);

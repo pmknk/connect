@@ -26,6 +26,9 @@
         },
         {
             "path": "./packages/server/database"
+        },
+        {
+            "path": "./packages/server/utils"
         }
     ]
 }
