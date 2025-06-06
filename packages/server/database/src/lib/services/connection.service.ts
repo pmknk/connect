@@ -1,41 +1,19 @@
+import { inject, injectable } from "inversify";
 import { Sequelize } from "sequelize";
+import { DATABASE_CONNECTION_CLIENT_PROVIDER } from "../constants";
 
 /**
  * Service for managing database connections
  */
+@injectable()
 export class ConnectionService {
-    /** Sequelize instance */
-    private readonly sequelize: Sequelize;
-
-    /**
-     * Creates a new ConnectionService instance
-     * @param sequelize - The Sequelize instance to use
-     */
-    constructor(sequelize: Sequelize) {
-        this.sequelize = sequelize;
-    }
-
-    /**
-     * Establishes a connection to the database
-     * @returns Promise that resolves when the connection is established
-     */
-    async connect() {
-        await this.sequelize.authenticate();
-    }
-
-    /**
-     * Closes the database connection
-     * @returns Promise that resolves when the connection is closed
-     */
-    async disconnect() {
-        await this.sequelize.close();
-    }
+    constructor(@inject(DATABASE_CONNECTION_CLIENT_PROVIDER) private readonly sequelize: Sequelize) {}
 
     /**
      * Gets the current Sequelize instance
      * @returns The Sequelize instance
      */
-    get connection() {
+    get client() {
         return this.sequelize;
     }
 }

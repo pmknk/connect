@@ -1,5 +1,7 @@
 import { FastifyInstance } from "fastify";
 import fp from 'fastify-plugin';
+import { UserModule } from "./modules/user/user.module";
+import { RoleModule } from "./modules/role/role.module";
 
 type IdentityPluginOptions = {
     jwtSecret: string;
@@ -18,7 +20,8 @@ class IdentityPluginInitializer {
      * @param {FastifyInstance} fastify - The Fastify instance to register the plugin with.
      */
     static async initialize(fastify: FastifyInstance, options: IdentityPluginOptions): Promise<void> {
-        console.log('here')
+        fastify.di.bind(UserModule).toSelf();
+        fastify.di.bind(RoleModule).toSelf();
     }
 }
 

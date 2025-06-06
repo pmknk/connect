@@ -4,6 +4,8 @@
     "license": "MIT",
     "scripts": {
         "dev": "nx run-many --target=serve --all --configuration=development",
+        "dev:server": "nx run server:serve --configuration=development",
+        "dev:admin": "nx run admin:serve --configuration=development",
         "format": "nx format:write"
     },
     "private": true,
@@ -78,6 +80,7 @@
         "packages/server/identity",
         "packages/server/database"
     ],
+    "types": "./@types/fastify/index.d.ts",
     "dependencies": {
         "@fastify/autoload": "~6.0.3",
         "@fastify/cors": "^11.0.1",
