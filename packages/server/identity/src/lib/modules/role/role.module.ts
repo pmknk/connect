@@ -4,7 +4,9 @@ import { RoleSchema } from "./role.schema";
 
 @injectable()
 export class RoleModule {
-    constructor(private readonly schemaService: SchemaService) {
+    constructor(private readonly schemaService: SchemaService) {}
+
+    async initialize() {
         this.schemaService.defineSchema(RoleSchema);
     }
 }

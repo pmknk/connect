@@ -24,5 +24,14 @@ export const UserSchema: SchemaDefinition = {
             type: 'string',
             nullable: false,
         }
-    }
+    },
+    relations: [
+        {
+            type: 'belongsToMany',
+            target: 'Role',
+            options: {
+                through: 'UserRoles',
+            }
+        }
+    ]
 }

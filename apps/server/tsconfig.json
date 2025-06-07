@@ -7,6 +7,15 @@
             "path": "../../packages/server/utils"
         },
         {
+            "path": "../../packages/server/database"
+        },
+        {
+            "path": "../../packages/server/identity"
+        },
+        {
+            "path": "../../packages/server/core"
+        },
+        {
             "path": "./tsconfig.app.json"
         },
         {

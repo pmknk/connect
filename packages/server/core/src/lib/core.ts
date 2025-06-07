@@ -1,16 +1,14 @@
 import { Container } from 'inversify';
-import fastify, { FastifyInstance } from 'fastify';
+import fastify from 'fastify';
+import { type FastifyApplicationInstance } from '../types';
 
 /**
  * Represents the main application class that wraps a Fastify instance
  * and provides dependency injection capabilities.
  */
 export class Application {
-    /** The underlying Fastify instance */
-    private readonly fastifyInstance: FastifyInstance;
-    /** Proxy to the Fastify register method */
+    private readonly fastifyInstance: FastifyApplicationInstance;
     readonly register: typeof this.fastifyInstance.register;
-    /** Proxy to the Fastify listen method */
     readonly listen: typeof this.fastifyInstance.listen;
 
     /**
@@ -19,9 +17,9 @@ export class Application {
      * dependency injection container.
      */
     constructor() {
-        this.fastifyInstance = fastify({ logger: true });
-        this.register = this.fastifyInstance.register;
-        this.listen = this.fastifyInstance.listen;
+        this.fastifyInstance = fastify({ logger: true }) as unknown as FastifyApplicationInstance;
+        this.register = this.fastifyInstance.register.bind(this.fastifyInstance);
+        this.listen = this.fastifyInstance.listen.bind(this.fastifyInstance);
 
         const diContainer = new Container();
 
