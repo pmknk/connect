@@ -1,9 +1,8 @@
 import { FormField } from "@avyyx/admin-ui"
-
+import { Button, Typography } from "@material-tailwind/react";
 import { FormattedMessage } from "react-intl";
 import { useForm } from "react-hook-form"
 import { Layout } from "../../components/Layout"
-import { Button, Typography } from "@material-tailwind/react";
 
 export const Login = () => {
     const { control, handleSubmit } = useForm()

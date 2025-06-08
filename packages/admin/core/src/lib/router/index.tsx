@@ -1,6 +1,6 @@
+import { Suspense } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { usePluginRegistry } from "../hooks/usePluginRegistry";
-import { Suspense } from "react";
 
 export const Router = () => {
 

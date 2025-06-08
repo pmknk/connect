@@ -6,16 +6,16 @@ import cors from '@fastify/cors';
 
 import { config } from './config';
 
-    async function start() {
-        const application = createApp();
+async function start() {
+    const application = createApp();
 
-        await application.register(cors, config.cors);
-        await application.register(database, config.database);
-        await application.register(identity, config.identity);
+    await application.register(cors, config.cors);
+    await application.register(database, config.database);
+    await application.register(identity, config.identity);
         
-        await application.app.di.get(SchemaService).sync();
+    await application.app.di.get(SchemaService).sync();
 
-        application.listen(config.server);
+    application.listen(config.server);
 }
 
 export { start };
