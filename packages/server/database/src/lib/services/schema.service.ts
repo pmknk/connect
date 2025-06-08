@@ -1,52 +1,99 @@
-import { injectable } from "inversify";
-import { ModelService } from "./model.service";
-import { BelongsToManyOptions, BelongsToOptions, HasManyOptions, HasOneOptions, ModelAttributes, ModelOptions } from "sequelize";
-import { resolveSequelizeType } from "../utils";
-import { ConnectionService } from "./connection.service";
+import { injectable } from 'inversify';
+import { ModelService } from './model.service';
+import {
+    BelongsToManyOptions,
+    BelongsToOptions,
+    HasManyOptions,
+    HasOneOptions,
+    IndexesOptions,
+    ModelAttributes,
+    ModelValidateOptions
+} from 'sequelize'; 
+import { resolveSequelizeType } from '../utils';
+import { ConnectionService } from './connection.service';
 
 /**
  * Supported data types for schema fields
  */
-export type SchemaDataType = 'string' | 'text' | 'enum' | 'uuid' | 'date' | 'time' | 'datetime' | 'timestamp' | 'integer' | 'biginteger' | 'float' | 'decimal' | 'boolean' | 'json';
+export type SchemaDataType =
+    | 'string'
+    | 'text'
+    | 'enum'
+    | 'uuid'
+    | 'date'
+    | 'time'
+    | 'datetime'
+    | 'timestamp'
+    | 'integer'
+    | 'biginteger'
+    | 'float'
+    | 'decimal'
+    | 'boolean'
+    | 'json'
+    | 'relation';
 
 /**
  * Definition of a schema field with its properties
  */
 export type SchemaFieldDefinition = {
-    /** The data type of the field */
     type: SchemaDataType;
-    /** Whether this field is a primary key */
     primaryKey?: boolean;
-    /** Whether this field can be null */
     nullable?: boolean;
-    /** Whether this field must be unique */
     unique?: boolean;
-};
+    defaultValue?: string | number | boolean | Date | null;
+    values?: string[] | number[];
+    validate?: ModelValidateOptions;
+} & (
+    | {
+        type: 'relation';
+    } & SchemaRelationDefinition
+    | {}
+)
 
 /**
  * Definition of a relationship between models
  */
 export type SchemaRelationDefinition = {
-    /** The type of relationship */
-    type: 'hasOne' | 'hasMany' | 'belongsTo' | 'belongsToMany';
-    /** The target model name */
+    relationType: 'hasOne' | 'hasMany' | 'belongsTo' | 'belongsToMany';
     target: string;
-    /** The relationship options */
-    options: HasOneOptions | HasManyOptions | BelongsToOptions | BelongsToManyOptions;
+    options:
+        | HasOneOptions
+        | HasManyOptions
+        | BelongsToOptions
+        | BelongsToManyOptions;
+};
+
+export type SchemaIndexDefinition = {
+    name?: string;
+    fields:
+        | string[]
+        | {
+              name: string;
+              length?: number;
+              order?: 'ASC' | 'DESC';
+              collate?: string;
+              operator?: string;
+          }[];
+    concurrently?: boolean;
+    unique?: boolean;
+    using?: 'BTREE' | 'HASH' | 'GIST' | 'SPGIST' | 'GIN' | 'BRIN';
+    operator?: string;
+    where?: string;
+};
+
+export type SchemaOptions = {
+    paranoid?: boolean;
+    timestamps?: boolean;
+    indexes?: SchemaIndexDefinition[];
 };
 
 /**
  * Complete schema definition for a model
  */
 export type SchemaDefinition = {
-    /** The name of the model */
     name: string;
-    /** The fields of the model */
     fields: Record<string, SchemaFieldDefinition>;
-    /** Optional relationships with other models */
-    relations?: SchemaRelationDefinition[];
-    /** Additional model options */
-    options?: ModelOptions;
+    options?: SchemaOptions;
 };
 
 /**
@@ -80,20 +127,33 @@ export class SchemaService {
 
             this.modelService.defineModel(schema.name, attributes, {
                 ...schema.options,
-                indexes
+                indexes: indexes as IndexesOptions[]
             });
         }
 
         for (const schema of this.schemas) {
-            const sourceModel = this.connectionService.client.models[schema.name];
-            for (const relation of schema.relations ?? []) {
-                const targetModel = this.connectionService.client.models[relation.target];
-                this.modelService.defineRelations(sourceModel, targetModel, relation);
+            const sourceModel =
+                this.connectionService.client.models[schema.name];
+            for (const [_name, field] of Object.entries(schema.fields)) {
+                if (field.type !== 'relation') continue;
+
+                const relationField = field as SchemaRelationDefinition;
+
+                const targetModel = this.connectionService.client.models[relationField.target];
+                this.modelService.defineRelations(
+                    sourceModel,
+                    targetModel,
+                    {
+                        type: relationField.relationType,
+                        target: relationField.target,
+                        options: relationField.options
+                    }
+                );
             }
         }
 
         this.connectionService.client.sync({
-            alter: true,
+            alter: true
         });
     }
 
@@ -106,12 +166,14 @@ export class SchemaService {
         const attributes: ModelAttributes = {};
 
         for (const [name, field] of Object.entries(schema.fields)) {
-            const type = resolveSequelizeType(field.type, field);
+            if (field.type === 'relation') continue;
             
+            const type = resolveSequelizeType(field.type, field);
+
             attributes[name] = {
                 type,
                 allowNull: field.nullable ?? true,
-                primaryKey: field.primaryKey ?? false,
+                primaryKey: field.primaryKey ?? false
             };
         }
 
@@ -132,9 +194,6 @@ export class SchemaService {
             }
         }
 
-        return [
-            ...(def.options?.indexes ?? []),
-            ...indexes,
-        ];
+        return [...(def.options?.indexes ?? []), ...indexes];
     }
 }
