@@ -1,7 +1,7 @@
 import { SchemaDefinition } from '@avyyx/server-database';
 
 export const ProjectSchema: SchemaDefinition = {
-    name: 'Project',
+    name: 'Projects',
     fields: {
         id: {
             type: 'uuid',
@@ -32,7 +32,7 @@ export const ProjectSchema: SchemaDefinition = {
         users: {
             type: 'relation',
             relationType: 'belongsToMany',
-            target: 'User',
+            target: 'Users',
             options: {
                 through: 'ProjectUsers',
                 foreignKey: 'projectId',

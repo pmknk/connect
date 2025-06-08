@@ -1,11 +1,13 @@
 import { SchemaDefinition } from '@avyyx/server-database';
+import { v4 as uuidv4 } from 'uuid';
 
 export const UserSchema: SchemaDefinition = {
-    name: 'User',
+    name: 'Users',
     fields: {
         id: {
             type: 'uuid',
-            primaryKey: true
+            primaryKey: true,
+            defaultValue: uuidv4()
         },
         email: {
             type: 'string',
@@ -30,7 +32,7 @@ export const UserSchema: SchemaDefinition = {
         roles: {
             type: 'relation',
             relationType: 'belongsToMany',
-            target: 'Role',
+            target: 'Roles',
             options: {
                 through: 'UserRoles',
                 foreignKey: 'userId',

@@ -1,7 +1,7 @@
 import { SchemaDefinition } from "@avyyx/server-database";
 
 export const RoleSchema: SchemaDefinition = {
-    name: 'Role',
+    name: 'Roles',
     fields: {
         id: {
             type: 'uuid',

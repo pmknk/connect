@@ -1,7 +1,7 @@
 import { SchemaDefinition } from "@avyyx/server-database";
 
 export const PermissionGroupSchema: SchemaDefinition = {
-    name: 'PermissionGroup',
+    name: 'PermissionGroups',
     fields: {
         id: {
             type: 'uuid',
@@ -23,7 +23,7 @@ export const PermissionGroupSchema: SchemaDefinition = {
         permissions: {
             type: 'relation',
             relationType: 'hasMany',
-            target: 'Permission',
+            target: 'Permissions',
             options: {
                 foreignKey: 'permissionGroupId',
             }

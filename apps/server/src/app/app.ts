@@ -16,7 +16,6 @@ import { config } from './config';
         await application.app.di.get(SchemaService).sync();
 
         application.listen(config.server);
-        
 }
 
 export { start };

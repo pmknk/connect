@@ -5,10 +5,20 @@ import { ModelService } from './services/model.service';
 import { DATABASE_CONNECTION_CLIENT_PROVIDER } from './constants';
 import { SchemaService } from './services/schema.service';
 
-
+/**
+ * Initializes the database plugin for the application
+ */
 class DatabasePluginInitializer {
+    /**
+     * Initializes the database connection and registers required services
+     * @param fastify - The Fastify application instance
+     * @param options - Sequelize database connection options
+     */
     static async initialize(fastify: FastifyApplicationInstance, options: Options) {
-        const sequelize = new Sequelize(options);
+        const sequelize = new Sequelize({
+            logging: false,
+            ...options,
+        });
         await sequelize.authenticate();
 
         fastify.di.bind(DATABASE_CONNECTION_CLIENT_PROVIDER).toConstantValue(sequelize);

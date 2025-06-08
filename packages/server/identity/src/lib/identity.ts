@@ -7,11 +7,6 @@ import { ProjectModule } from "./modules/project/project.module";
 
 type IdentityPluginOptions = {
     jwtSecret: string;
-    admin?: {
-        fullName: string;
-        email: string;
-        password: string;
-    };
 };
 
 class IdentityPluginInitializer {
@@ -28,17 +23,11 @@ class IdentityPluginInitializer {
         fastify.di.bind(PermissionGroupModule).toSelf();
         fastify.di.bind(ProjectModule).toSelf();
 
-        const userModule = fastify.di.get(UserModule);
-        const roleModule = fastify.di.get(RoleModule);
-        const permissionModule = fastify.di.get(PermissionModule);
-        const permissionGroupModule = fastify.di.get(PermissionGroupModule);
-        const projectModule = fastify.di.get(ProjectModule);
-
-        await userModule.initialize();
-        await roleModule.initialize();
-        await permissionModule.initialize();
-        await permissionGroupModule.initialize();
-        await projectModule.initialize();
+        fastify.di.get(UserModule).initialize();
+        fastify.di.get(RoleModule).initialize();
+        fastify.di.get(PermissionModule).initialize();
+        fastify.di.get(PermissionGroupModule).initialize();
+        fastify.di.get(ProjectModule).initialize();
     }
 }
 

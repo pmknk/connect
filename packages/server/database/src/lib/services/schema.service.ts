@@ -40,7 +40,7 @@ export type SchemaFieldDefinition = {
     primaryKey?: boolean;
     nullable?: boolean;
     unique?: boolean;
-    defaultValue?: string | number | boolean | Date | null;
+    defaultValue?: string | number | boolean | Date | null | (() => string | number | boolean | Date | null);
     values?: string[] | number[];
     validate?: ModelValidateOptions;
 } & (
@@ -173,7 +173,9 @@ export class SchemaService {
             attributes[name] = {
                 type,
                 allowNull: field.nullable ?? true,
-                primaryKey: field.primaryKey ?? false
+                primaryKey: field.primaryKey ?? false,
+                defaultValue: field.defaultValue ? (typeof field.defaultValue === 'function' ? field.defaultValue() : field.defaultValue) : undefined,
+                validate: field.validate ?? undefined
             };
         }
 
