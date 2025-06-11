@@ -1,1 +1,2 @@
-export * from './lib/factories/config.factory.js';
+export * from './lib/factories/config.factory';
+export * from './lib/errors';

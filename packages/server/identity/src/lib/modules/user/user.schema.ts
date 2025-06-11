@@ -1,6 +1,14 @@
 import { SchemaDefinition } from '@avyyx/server-database';
 import { v4 as uuidv4 } from 'uuid';
 
+export interface User {
+    id: string;
+    email: string;
+    fullName: string;
+    password: string;
+    salt: string;
+}
+
 export const UserSchema: SchemaDefinition = {
     name: 'Users',
     fields: {

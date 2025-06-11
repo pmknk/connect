@@ -4,6 +4,7 @@ import { RoleModule } from "./modules/role/role.module";
 import { PermissionModule } from "./modules/permission/permission.module";
 import { PermissionGroupModule } from "./modules/permission-group/permission-group.module";
 import { ProjectModule } from "./modules/project/project.module";
+import { InitModule } from "./modules/init/init.module";
 
 type IdentityPluginOptions = {
     jwtSecret: string;
@@ -22,7 +23,9 @@ class IdentityPluginInitializer {
         fastify.di.bind(PermissionModule).toSelf();
         fastify.di.bind(PermissionGroupModule).toSelf();
         fastify.di.bind(ProjectModule).toSelf();
+        fastify.di.bind(InitModule).toSelf();
 
+        fastify.di.get(InitModule).initialize(fastify);
         fastify.di.get(UserModule).initialize();
         fastify.di.get(RoleModule).initialize();
         fastify.di.get(PermissionModule).initialize();

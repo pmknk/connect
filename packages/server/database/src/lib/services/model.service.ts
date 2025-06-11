@@ -58,4 +58,13 @@ export class ModelService {
 
         relationFn(sourceModel, targetModel, relation.options as any);
     }
+
+    /**
+     * Gets a model by name
+     * @param name - The name of the model
+     * @returns The model
+     */
+    getModel(name: string): ModelCtor<Model> {
+        return this.connectionService.client.models[name] as ModelCtor<Model>;
+    }
 }

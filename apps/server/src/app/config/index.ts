@@ -3,7 +3,7 @@ import { Dialect } from "sequelize";
 
 export const config = createConfig((env) => ({
     database: {
-        dialect: 'postgres' as Dialect,
+        dialect: env.string('SERVER_DATABASE_DIALECT', 'postgres') as Dialect,
         host: env.string('SERVER_DATABASE_HOST', 'localhost'),
         port: env.number('SERVER_DATABASE_PORT', 5432),
         username: env.string('SERVER_DATABASE_USERNAME', 'postgres'),

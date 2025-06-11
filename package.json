@@ -6,7 +6,9 @@
         "dev": "nx run-many --target=serve --all --configuration=development",
         "dev:server": "nx run server:serve --configuration=development",
         "dev:admin": "nx run admin:serve --configuration=development",
-        "format": "nx format:write"
+        "format": "nx format:write",
+        "cli:link": "npx nx run @avyyx/avyyx-cli:build && cd packages/cli && npm link",
+        "cli:unlink": "npm unlink --global @avyyx/avyyx-cli"
     },
     "private": true,
     "devDependencies": {
@@ -78,7 +80,8 @@
         "packages/server/core",
         "packages/server/utils",
         "packages/server/identity",
-        "packages/server/database"
+        "packages/server/database",
+        "packages/cli"
     ],
     "types": "./@types/fastify/index.d.ts",
     "dependencies": {
@@ -89,9 +92,11 @@
         "@reduxjs/toolkit": "^2.8.2",
         "@tanstack/react-query": "^5.76.1",
         "axios": "^1.6.0",
+        "commander": "^14.0.0",
         "fastify": "~5.2.1",
         "fastify-plugin": "~5.0.1",
         "iconoir-react": "^7.11.0",
+        "inquirer": "^12.6.3",
         "inversify": "^7.5.2",
         "pg": "^8.16.0",
         "pg-hstore": "^2.3.4",
