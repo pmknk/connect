@@ -1,10 +1,13 @@
-import { type FastifyApplicationInstance, createPlugin } from "@avyyx/server-core";
+import { type FastifyApplicationInstance, StartupHooksService, createPlugin } from "@avyyx/server-core";
+import { ConnectionService } from "@avyyx/server-database";
+
 import { UserModule } from "./modules/user/user.module";
 import { RoleModule } from "./modules/role/role.module";
 import { PermissionModule } from "./modules/permission/permission.module";
 import { PermissionGroupModule } from "./modules/permission-group/permission-group.module";
 import { ProjectModule } from "./modules/project/project.module";
 import { InitModule } from "./modules/init/init.module";
+import initializeDataSeed from "./seeds/initialization-data";
 
 type IdentityPluginOptions = {
     jwtSecret: string;
@@ -25,12 +28,20 @@ class IdentityPluginInitializer {
         fastify.di.bind(ProjectModule).toSelf();
         fastify.di.bind(InitModule).toSelf();
 
+        fastify.di.get(UserModule).initialize(fastify);
+        fastify.di.get(RoleModule).initialize(fastify);
         fastify.di.get(InitModule).initialize(fastify);
-        fastify.di.get(UserModule).initialize();
-        fastify.di.get(RoleModule).initialize();
+
         fastify.di.get(PermissionModule).initialize();
         fastify.di.get(PermissionGroupModule).initialize();
         fastify.di.get(ProjectModule).initialize();
+
+        const startupHooksService = fastify.di.get(StartupHooksService);
+
+        startupHooksService.registerHook('beforeApplicationStart', async (app) => {
+            const connection = app.di.get(ConnectionService).client;
+            await initializeDataSeed.up(connection);
+        });
     }
 }
 

@@ -1,5 +1,5 @@
 export const ROLE_CODES = {
-    ADMIN: 'ADMIN',
-    EDITOR: 'EDITOR',
-    VIEWER: 'VIEWER'
+    ADMIN: 'admin',
+    EDITOR: 'contributor',
+    VIEWER: 'viewer'
 }

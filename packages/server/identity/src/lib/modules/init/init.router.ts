@@ -12,6 +12,23 @@ export class InitRouter {
             INIT: '/init'
         }
 
-        fastify.post(ROUTE_PATHS.INIT, this.initController.init.bind(this.initController));
+        fastify.post(
+            ROUTE_PATHS.INIT,
+            {
+                schema: {
+                    body: {
+                        type: 'object',
+                        required: ['email', 'password'],
+                        properties: {
+                            email: { type: 'string', format: 'email' },
+                            password: { type: 'string', minLength: 8 }
+                        }
+                    }
+                },
+                config: {
+                    auth: false
+                }
+            },
+            this.initController.init.bind(this.initController));
     }
 }

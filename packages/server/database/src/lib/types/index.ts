@@ -94,4 +94,11 @@ export type CreateOnePayload<T> = BaseFindOptions<T> & CreateOptions<T> & {
     values: Partial<T>;
 }
 
+export type AddRelationPayload<T, R> = {
+    name: string;
+    firstRelation: T;
+    secondRelation: R;
+    transaction?: Transaction;
+}
+
 export type Transaction = SequelizeTransaction;

@@ -63,7 +63,7 @@ export class SchemaRegistryService {
             }
         }
 
-        this.connectionService.client.sync({
+        await this.connectionService.client.sync({
             alter: true
         });
     }

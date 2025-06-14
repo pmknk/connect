@@ -29,6 +29,9 @@ export const PermissionSchema: SchemaDefinition = {
             type: 'relation',
             relationType: 'belongsTo',
             target: 'PermissionGroups',
+            options: {
+                foreignKey: 'permissionGroupId'
+            }
         }
     },
     options: {

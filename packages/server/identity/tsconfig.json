@@ -4,10 +4,10 @@
     "include": [],
     "references": [
         {
-            "path": "../database"
+            "path": "../utils"
         },
         {
-            "path": "../utils"
+            "path": "../database"
         },
         {
             "path": "../core"

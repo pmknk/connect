@@ -1,5 +1,12 @@
 import { SchemaDefinition } from "@avyyx/server-database";
 
+export interface Role {
+    id: string;
+    name: string;
+    description: string;
+    slug: string;
+}
+
 export const RoleSchema: SchemaDefinition = {
     name: 'Roles',
     fields: {

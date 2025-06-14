@@ -1,4 +1,4 @@
-import { type FastifyApplicationInstance, createPlugin } from "@avyyx/server-core";
+import { type FastifyApplicationInstance, StartupHooksService, createPlugin } from "@avyyx/server-core";
 import { type Options, Sequelize } from "sequelize";
 import { DATABASE_CONNECTION_CLIENT_PROVIDER } from './constants';
 
@@ -29,7 +29,13 @@ class DatabasePluginInitializer {
         fastify.di.bind(ConnectionService).toSelf().inSingletonScope();
         fastify.di.bind(EntryService).toSelf().inSingletonScope();
 
-        await sequelize.authenticate();
+        const schemaRegistryService = fastify.di.get(SchemaRegistryService);
+        const startupHooksService = fastify.di.get(StartupHooksService);
+
+        startupHooksService.registerHook('beforeApplicationStart', async () => {
+            await sequelize.authenticate();
+            await schemaRegistryService.sync();
+        });
     }
 }
 

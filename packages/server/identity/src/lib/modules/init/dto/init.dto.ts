@@ -1,4 +1,4 @@
-export interface InitDto {
+export interface InitAdminUserDto {
     email: string;
     password: string;
 }

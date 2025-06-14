@@ -11,7 +11,7 @@ export class EntryService {
         return (await model.findOne(payload))?.toJSON() as T | null;
     }
 
-    async createOne<T>(payload: CreateOnePayload<T>) {
+    async create<T>(payload: CreateOnePayload<T>) {
         const model = this.modelService.getModel(payload.schema);
         return (await model.create(payload.values, payload))?.toJSON() as T;
     }

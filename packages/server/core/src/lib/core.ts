@@ -1,7 +1,7 @@
 import { Container } from 'inversify';
 import fastify, { FastifyListenOptions } from 'fastify';
-import { type FastifyApplicationInstance } from '../types';
 import { StartupHooksService } from './services/startup-hooks.service';
+import { type FastifyApplicationInstance } from '../types';
 
 /**
  * Represents the main application class that wraps a Fastify instance
