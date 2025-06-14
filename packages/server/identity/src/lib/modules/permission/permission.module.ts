@@ -1,12 +1,12 @@
 import { injectable } from "inversify";
-import { SchemaService } from "@avyyx/server-database";
+import { SchemaRegistryService } from "@avyyx/server-database";
 import { PermissionSchema } from "./permission.schema";
 
 @injectable()
 export class PermissionModule {
-    constructor(private readonly schemaService: SchemaService) {}
+    constructor(private readonly schemaRegistryService: SchemaRegistryService) {}
 
     async initialize() {
-        this.schemaService.defineSchema(PermissionSchema);
+        this.schemaRegistryService.defineSchema(PermissionSchema);
     }
 }

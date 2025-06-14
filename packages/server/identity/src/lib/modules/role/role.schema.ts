@@ -15,7 +15,7 @@ export const RoleSchema: SchemaDefinition = {
         description: {
             type: 'string',
         },
-        code: {
+        slug: {
             type: 'string',
             unique: true,
             nullable: false,

@@ -1,106 +1,17 @@
 import { injectable } from 'inversify';
 import { ModelService } from './model.service';
-import {
-    BelongsToManyOptions,
-    BelongsToOptions,
-    HasManyOptions,
-    HasOneOptions,
-    IndexesOptions,
-    ModelAttributes,
-    ModelValidateOptions
-} from 'sequelize'; 
 import { resolveSequelizeType } from '../utils';
 import { ConnectionService } from './connection.service';
 
-/**
- * Supported data types for schema fields
- */
-export type SchemaDataType =
-    | 'string'
-    | 'text'
-    | 'enum'
-    | 'uuid'
-    | 'date'
-    | 'time'
-    | 'datetime'
-    | 'timestamp'
-    | 'integer'
-    | 'biginteger'
-    | 'float'
-    | 'decimal'
-    | 'boolean'
-    | 'json'
-    | 'relation';
+import type { IndexesOptions, ModelAttributes } from 'sequelize'; 
+import type { SchemaDefinition, SchemaRelationDefinition } from '../types';
 
-/**
- * Definition of a schema field with its properties
- */
-export type SchemaFieldDefinition = {
-    type: SchemaDataType;
-    primaryKey?: boolean;
-    nullable?: boolean;
-    unique?: boolean;
-    defaultValue?: string | number | boolean | Date | null | (() => string | number | boolean | Date | null);
-    values?: string[] | number[];
-    validate?: ModelValidateOptions;
-} & (
-    | {
-        type: 'relation';
-    } & SchemaRelationDefinition
-    | {}
-)
-
-/**
- * Definition of a relationship between models
- */
-export type SchemaRelationDefinition = {
-    relationType: 'hasOne' | 'hasMany' | 'belongsTo' | 'belongsToMany';
-    target: string;
-    options:
-        | HasOneOptions
-        | HasManyOptions
-        | BelongsToOptions
-        | BelongsToManyOptions;
-};
-
-export type SchemaIndexDefinition = {
-    name?: string;
-    fields:
-        | string[]
-        | {
-              name: string;
-              length?: number;
-              order?: 'ASC' | 'DESC';
-              collate?: string;
-              operator?: string;
-          }[];
-    concurrently?: boolean;
-    unique?: boolean;
-    using?: 'BTREE' | 'HASH' | 'GIST' | 'SPGIST' | 'GIN' | 'BRIN';
-    operator?: string;
-    where?: string;
-};
-
-export type SchemaOptions = {
-    paranoid?: boolean;
-    timestamps?: boolean;
-    indexes?: SchemaIndexDefinition[];
-};
-
-/**
- * Complete schema definition for a model
- */
-export type SchemaDefinition = {
-    name: string;
-    fields: Record<string, SchemaFieldDefinition>;
-    options?: SchemaOptions;
-};
 
 /**
  * Service for managing database schemas and model definitions
  */
 @injectable()
-export class SchemaService {
+export class SchemaRegistryService {
     private readonly schemas: SchemaDefinition[] = [];
 
     constructor(

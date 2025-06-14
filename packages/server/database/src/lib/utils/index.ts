@@ -1,7 +1,14 @@
 import { DataTypes } from "sequelize";
-import { DataType } from "../types";
+import type { SchemaDataType } from "../types";
 
-export const resolveSequelizeType = (type: DataType, extra?: any) => {
+/**
+ * Converts a schema data type to its corresponding Sequelize DataType
+ * @param type - The schema data type to convert
+ * @param extra - Additional options for certain types (e.g. values for ENUM)
+ * @returns The corresponding Sequelize DataType
+ * @throws Error if type is not supported or if ENUM values are missing
+ */
+export const resolveSequelizeType = (type: SchemaDataType, extra?: any) => {
     switch (type.toLowerCase()) {
         case 'string':
             return DataTypes.STRING;

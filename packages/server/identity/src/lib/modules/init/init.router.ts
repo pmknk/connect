@@ -12,6 +12,6 @@ export class InitRouter {
             INIT: '/init'
         }
 
-        fastify.post(ROUTE_PATHS.INIT, this.initController.initialize.bind(this.initController));
+        fastify.post(ROUTE_PATHS.INIT, this.initController.init.bind(this.initController));
     }
 }

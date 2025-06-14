@@ -1,23 +1,16 @@
-import { ConnectionService, ModelService } from "@avyyx/server-database";
+import { EntryService } from "@avyyx/server-database";
 import { injectable } from "inversify";
-import { Model, ModelStatic } from "sequelize";
 import { ROLE_CODES } from "../../constants";
 import { User } from "../user/user.schema";
-import { InitDto } from "./dto/init.dto";
-
 @injectable()
 export class InitService {
-    private readonly userModel: ModelStatic<Model<User>>;
-
     constructor(
-        private readonly modelService: ModelService,
-        private readonly connectionService: ConnectionService
-    ) {
-        this.userModel = this.modelService.getModel('User');
-    }
+        private readonly entryService: EntryService,
+    ) {}
 
     async findAdminUser() {
-        return await this.userModel.findOne({
+        return await this.entryService.findOne<User>({
+            schema: 'Users',
             include: [
                 {
                     association: 'Roles',
@@ -27,18 +20,5 @@ export class InitService {
                 }
             ]
         })
-    }
-
-    
-
-    async createAdminUser(dto: InitDto) {
-        const transaction = await this.connectionService.transaction();
-
-        try {
-            
-        } catch (error) {
-            await transaction.rollback();
-            throw error;
-        }
     }
 }

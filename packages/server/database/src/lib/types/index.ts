@@ -1,26 +1,97 @@
-import { BelongsToManyOptions, BelongsToOptions, HasManyOptions, HasOneOptions, ModelOptions } from 'sequelize';
+import { BelongsToManyOptions, BelongsToOptions, CreateOptions, FindOptions, HasManyOptions, HasOneOptions, ModelValidateOptions, Transaction as SequelizeTransaction } from "sequelize";
 
-export type DataType = 'string' | 'text' | 'enum' | 'uuid' | 'date' | 'time' | 'datetime' | 'timestamp' | 'integer' | 'biginteger' | 'float' | 'decimal' | 'boolean' | 'json';
+/**
+ * Supported data types for schema fields
+ */
+export type SchemaDataType =
+    | 'string'
+    | 'text'
+    | 'enum'
+    | 'uuid'
+    | 'date'
+    | 'time'
+    | 'datetime'
+    | 'timestamp'
+    | 'integer'
+    | 'biginteger'
+    | 'float'
+    | 'decimal'
+    | 'boolean'
+    | 'json'
+    | 'relation';
 
-export type FieldDefinition = {
-    type: DataType;
-    allowNull?: boolean;
+/**
+ * Definition of a schema field with its properties
+ */
+export type SchemaFieldDefinition = {
+    type: SchemaDataType;
     primaryKey?: boolean;
-    defaultValue?: string | number | boolean | null;
+    nullable?: boolean;
     unique?: boolean;
-    values?: string[];
-    validate?: Record<string, any>;
-};
+    defaultValue?: string | number | boolean | Date | null | (() => string | number | boolean | Date | null);
+    values?: string[] | number[];
+    validate?: ModelValidateOptions;
+} & (
+    | {
+        type: 'relation';
+    } & SchemaRelationDefinition
+    | {}
+)
 
-export type RelationDefinition = {
-    type: 'hasOne' | 'hasMany' | 'belongsTo' | 'belongsToMany';
+/**
+ * Definition of a relationship between models
+ */
+export type SchemaRelationDefinition = {
+    relationType: 'hasOne' | 'hasMany' | 'belongsTo' | 'belongsToMany';
     target: string;
-    options: HasOneOptions | HasManyOptions | BelongsToOptions | BelongsToManyOptions;
+    options:
+        | HasOneOptions
+        | HasManyOptions
+        | BelongsToOptions
+        | BelongsToManyOptions;
 };
 
-export interface ModelDefinition {
+export type SchemaIndexDefinition = {
+    name?: string;
+    fields:
+        | string[]
+        | {
+              name: string;
+              length?: number;
+              order?: 'ASC' | 'DESC';
+              collate?: string;
+              operator?: string;
+          }[];
+    concurrently?: boolean;
+    unique?: boolean;
+    using?: 'BTREE' | 'HASH' | 'GIST' | 'SPGIST' | 'GIN' | 'BRIN';
+    operator?: string;
+    where?: string;
+};
+
+export type SchemaOptions = {
+    paranoid?: boolean;
+    timestamps?: boolean;
+    indexes?: SchemaIndexDefinition[];
+};
+
+/**
+ * Complete schema definition for a model
+ */
+export type SchemaDefinition = {
     name: string;
-    options?: ModelOptions;
-    fields: Record<string, FieldDefinition>;
-    relations?: RelationDefinition[];
-} 
+    fields: Record<string, SchemaFieldDefinition>;
+    options?: SchemaOptions;
+};
+
+
+export type BaseFindOptions<T> = {
+    schema: string
+};
+
+export type FindOnePayload<T> = BaseFindOptions<T> & FindOptions<T>;
+export type CreateOnePayload<T> = BaseFindOptions<T> & CreateOptions<T> & {
+    values: Partial<T>;
+}
+
+export type Transaction = SequelizeTransaction;

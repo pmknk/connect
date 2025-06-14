@@ -1,15 +1,12 @@
 import { SchemaDefinition } from "@avyyx/server-database";
 
-export interface PermissionGroup extends PermissionGroupAttributes {
+export interface PermissionGroup {
     id: string;
-    createdAt: Date;
-    updatedAt: Date;
-}
-
-export interface PermissionGroupAttributes {
     name: string;
     slug: string;
     description: string;
+    createdAt: Date;
+    updatedAt: Date;
 }
 
 export const PermissionGroupSchema: SchemaDefinition = {

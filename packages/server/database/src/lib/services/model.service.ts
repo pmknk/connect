@@ -1,6 +1,7 @@
-import { BelongsToManyOptions, BelongsToOptions, HasManyOptions, HasOneOptions, Model, ModelAttributes, ModelCtor, ModelOptions } from "sequelize";
-import { ConnectionService } from "./connection.service";
 import { injectable } from "inversify";
+import { ConnectionService } from "./connection.service";
+
+import type { BelongsToManyOptions, BelongsToOptions, HasManyOptions, HasOneOptions, Model, ModelAttributes, ModelCtor, ModelOptions } from "sequelize";
 
 /**
  * Defines a relationship between two models
@@ -13,7 +14,7 @@ export type RelationDefinition = {
 
 /**
  * Service for managing Sequelize models and their relationships
- */
+ */ 
 @injectable()
 export class ModelService {
     constructor(private readonly connectionService: ConnectionService) {}
