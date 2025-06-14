@@ -1,7 +1,10 @@
 #!/usr/bin/env node
 
-import inquirer from 'inquirer';
 import { Command } from 'commander';
+import { config } from 'dotenv';
+
+import axios from 'axios';
+import inquirer from 'inquirer';
 
 const program = new Command();
 
@@ -10,30 +13,61 @@ program
     .description('CLI tool for Avyyx CMS')
 
 program
-    .command('project:prepare')
-    .description('Initialize the project')
-    .action(async () => {
-        const { adminEmail, adminPassword } = await inquirer.prompt([
-            {
-                type: 'input',
-                name: 'adminEmail',
-                message: '[avyyx] Enter admin email:',
-                validate: (input) => {
-                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                    return emailRegex.test(input) ? true : 'Please enter a valid email address';
-                }
-            },
-            {
-                type: 'password',
-                name: 'adminPassword',
-                message: '[avyyx] Enter admin password:',
-                validate: (input) => {
-                    return input.length >= 8 ? true : 'Password must be at least 8 characters long';
-                }
-            }
-        ]);
+    .command('root:create')
+    .description('Create a root user')
+    .option('-e, --email <email>', 'Root user email')
+    .option('-p, --password <password>', 'Root user password')
 
-        console.log('[avyyx] Project initialized');
+    .action(async (options) => {
+        try {
+            config();
+
+            const PORT = process.env.SERVER_PORT;
+
+            if (!PORT) {
+                throw new Error('SERVER_PORT is not set in .env file');
+            }
+
+            let rootEmail = options.email;
+            let rootPassword = options.password;
+
+            if (!rootEmail || !rootPassword) {
+                const answers = await inquirer.prompt([
+                    {
+                        type: 'input',
+                        name: 'rootEmail',
+                        message: '[avyyx] Enter root user email:',
+                        validate: (input) => {
+                            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                            return emailRegex.test(input) ? true : 'Please enter a valid email address';
+                        },
+                        when: !rootEmail
+                    },
+                    {
+                        type: 'password',
+                        name: 'rootPassword',
+                        message: '[avyyx] Enter root user password:',
+                        validate: (input) => {
+                            return input.length >= 8 ? true : 'Password must be at least 8 characters long';
+                        },
+                        when: !rootPassword
+                    }
+                ]);
+
+                rootEmail = rootEmail || answers.rootEmail;
+                rootPassword = rootPassword || answers.rootPassword;
+            }
+
+
+            await axios.post(`http://localhost:${PORT}/init`, {
+                email: rootEmail,
+                password: rootPassword
+            });
+
+            console.log('[avyyx] Root user created');
+        } catch (error: any) {
+            throw new Error(error.message);
+        }
     });
 
 program.parse(process.argv);
