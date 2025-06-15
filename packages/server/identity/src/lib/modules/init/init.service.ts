@@ -1,12 +1,12 @@
-import { ConnectionService } from "@avyyx/server-database";
-import { ConflictError, NotFoundError } from "@avyyx/server-utils";
-import { injectable } from "inversify";
-import { createHmac, randomBytes } from 'crypto';
+import { ConnectionService } from '@avyyx/server-database';
+import { ConflictError, NotFoundError } from '@avyyx/server-utils';
+import { injectable } from 'inversify';
 
-import { ROLE_CODES } from "../../constants";
-import { UserRepository } from "../user/user.repository";
-import { RoleRepository } from "../role/role.repository";
-import { InitAdminUserDto } from "./dto/init.dto";
+import { ROLE_CODES } from '../../constants';
+import { UserRepository } from '../user/user.repository';
+import { RoleRepository } from '../role/role.repository';
+import { InitAdminUserDto } from './dto/init.dto';
+import { generateHash } from '../../utils';
 
 /**
  * Service responsible for initializing the system with an admin user
@@ -32,7 +32,9 @@ export class InitService {
      * @returns {Promise<Role>} The admin role
      */
     private async validateAdminCreation() {
-        const existingAdmin = await this.userRepository.findByRoleSlug(ROLE_CODES.ADMIN);
+        const existingAdmin = await this.userRepository.findByRoleSlug(
+            ROLE_CODES.ADMIN
+        );
         if (existingAdmin) {
             throw new ConflictError('Admin user already exists');
         }
@@ -46,35 +48,31 @@ export class InitService {
     }
 
     /**
-     * Generates a password hash and salt for secure password storage
-     * @param password - The plain text password to hash
-     * @returns {Object} Object containing the salt and hashed password
-     */
-    private generatePasswordHash(password: string) {
-        const salt = randomBytes(16).toString('hex');
-        const hash = createHmac('sha256', salt).update(password).digest('hex');
-        return { salt, hash };
-    }
-
-    /**
      * Creates a new user with the specified role
      * @param dto - The admin user data transfer object
      * @param roleId - The ID of the role to assign
      * @param transaction - The database transaction to use
      * @returns {Promise<User>} The created user
      */
-    private async createUserWithRole(dto: InitAdminUserDto, roleId: string, transaction: any) {
-        const { salt, hash } = this.generatePasswordHash(dto.password);
-        
-        const user = await this.userRepository.create({
-            ...dto,
-            fullName: 'Root User',
-            password: hash,
-            salt
-        }, transaction);
+    private async createUserWithRole(
+        dto: InitAdminUserDto,
+        roleId: string,
+        transaction: any
+    ) {
+        const { salt, hash } = generateHash(dto.password);
+
+        const user = await this.userRepository.create(
+            {
+                ...dto,
+                fullName: 'Root User',
+                password: hash,
+                salt
+            },
+            transaction
+        );
 
         await this.userRepository.addRole(user.id, roleId, transaction);
-        
+
         return user;
     }
 
@@ -89,7 +87,11 @@ export class InitService {
         const transaction = await this.connectionService.client.transaction();
 
         try {
-            const user = await this.createUserWithRole(dto, role.id, transaction);
+            const user = await this.createUserWithRole(
+                dto,
+                role.id,
+                transaction
+            );
             await transaction.commit();
             return user;
         } catch (error) {

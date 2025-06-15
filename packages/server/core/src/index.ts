@@ -1,5 +1,4 @@
-export { default } from './lib/core.js';
-export * from './lib/factories/plugin.factory.js';
-export * from './lib/services/startup-hooks.service.js';
+export { default } from './lib/core';
+export * from './lib/factories/plugin.factory';
 
-export * from './types/index.js';
+export * from './types';

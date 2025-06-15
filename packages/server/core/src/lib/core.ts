@@ -1,6 +1,5 @@
 import { Container } from 'inversify';
 import fastify, { FastifyListenOptions } from 'fastify';
-import { StartupHooksService } from './services/startup-hooks.service';
 import { type FastifyApplicationInstance } from '../types';
 
 /**
@@ -20,23 +19,24 @@ export class Application {
         const LOG_BIND_NAME = 'log';
         const DI_BIND_NAME = 'di';
 
-        this.fastifyInstance = fastify({ logger: true }) as unknown as FastifyApplicationInstance;
-        this.register = this.fastifyInstance.register.bind(this.fastifyInstance);
+        this.fastifyInstance = fastify({
+            logger: true
+        }) as unknown as FastifyApplicationInstance;
+        this.register = this.fastifyInstance.register.bind(
+            this.fastifyInstance
+        );
 
         const diContainer = new Container();
 
-        diContainer.bind(LOG_BIND_NAME).toConstantValue(this.fastifyInstance.log);
-        diContainer.bind(StartupHooksService).toSelf().inSingletonScope();
-        
+        diContainer
+            .bind(LOG_BIND_NAME)
+            .toConstantValue(this.fastifyInstance.log);
+
         this.fastifyInstance.decorate(DI_BIND_NAME, diContainer);
     }
 
     async start(options: FastifyListenOptions) {
-        const startupHooksService = this.fastifyInstance.di.get(StartupHooksService);
-        
-        await startupHooksService.executeBeforeStartHooks(this.fastifyInstance);
         await this.fastifyInstance.listen(options);
-        await startupHooksService.executeAfterStartHooks(this.fastifyInstance);
     }
 }
 
@@ -47,4 +47,4 @@ export class Application {
 export default () => {
     const application = new Application();
     return application;
-}
+};
