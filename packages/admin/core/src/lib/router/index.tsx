@@ -1,29 +1,28 @@
-import { Suspense } from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { usePluginRegistry } from "../hooks/usePluginRegistry";
+import { Suspense } from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { usePlugins } from '../hooks/usePlugins';
 
 export const Router = () => {
+    const { getRoutes } = usePlugins();
 
-    const { routes } = usePluginRegistry()
-
-    const publicRoutes = (routes ?? []).filter(r => r.isPublic)
-    const privateRoutes = (routes ?? []).filter(r => !r.isPublic)
+    const publicRoutes = (getRoutes() ?? []).filter((r) => r.isPublic);
+    const privateRoutes = (getRoutes() ?? []).filter((r) => !r.isPublic);
 
     return (
         <BrowserRouter>
             <Routes>
-            {publicRoutes.map(({ path, component: Component }) => (
-                <Route
-                    key={path}
-                    path={path}
-                    element={
-                        <Suspense fallback={<div>Loading…</div>}>
-                            <Component />
-                        </Suspense>
-                    }
-                />
-            ))}
+                {publicRoutes.map(({ path, component: Component }) => (
+                    <Route
+                        key={path}
+                        path={path}
+                        element={
+                            <Suspense fallback={null}>
+                                <Component />
+                            </Suspense>
+                        }
+                    />
+                ))}
             </Routes>
         </BrowserRouter>
-    )
-}
+    );
+};

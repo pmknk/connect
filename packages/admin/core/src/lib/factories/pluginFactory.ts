@@ -1,20 +1,20 @@
 import { FC, LazyExoticComponent } from "react"
 
-export type PluginDefinition<T> = {
+export type PluginDefinition = {
     name: string
     routes?: Array<{
         path: string
         component: LazyExoticComponent<FC>
         isPublic?: boolean
-        props?: Record<string, T>
+        props?: Record<string, object>
     }>
     slots?: Record<string, Array<{
         key: string
         component: LazyExoticComponent<FC>
-        props?: Record<string, T>
+        props?: Record<string, object>
     }>>
   }
 
-export const createPlugin = <T>(plugin: PluginDefinition<T>) => {
+export const createPlugin = (plugin: PluginDefinition) => {
     return plugin;
 }

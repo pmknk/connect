@@ -5,6 +5,7 @@ import axios, {
     InternalAxiosRequestConfig
 } from 'axios';
 import { createContext, useContext, ReactNode } from 'react';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { store } from '../../store/store';
 import { resetAuthState, setAccessToken } from '../../store/slices/auth';
 
@@ -142,15 +143,15 @@ axiosInstance.interceptors.response.use(
     }
 );
 
-const AxiosContext = createContext<AxiosInstance>(axiosInstance);
+const HttpClientContext = createContext<AxiosInstance>(axiosInstance);
 
 /**
  * Custom hook to access the Axios instance from the context.
  *
  * @returns {AxiosInstance} - The Axios instance with request and response interceptors.
  */
-export const useAxios = (): AxiosInstance => {
-    return useContext(AxiosContext);
+export const useHttpClient = (): AxiosInstance => {
+    return useContext(HttpClientContext);
 };
 
 /**
@@ -159,7 +160,7 @@ export const useAxios = (): AxiosInstance => {
  * @param {{ children: ReactNode }} props - The children components to wrap inside the provider.
  * @returns {JSX.Element} - The provider wrapping the application.
  */
-export const AxiosProvider = ({
+export const HttpClientProvider = ({
     api,
     children
 }: {
@@ -167,9 +168,13 @@ export const AxiosProvider = ({
     children: ReactNode;
 }) => {
     axiosInstance.defaults.baseURL = api;
+    const queryClient = new QueryClient();
+
     return (
-        <AxiosContext.Provider value={axiosInstance}>
-            {children}
-        </AxiosContext.Provider>
+        <HttpClientContext.Provider value={axiosInstance}>
+            <QueryClientProvider client={queryClient}>
+                {children}
+            </QueryClientProvider>
+        </HttpClientContext.Provider>
     );
 };
