@@ -1,5 +1,5 @@
 import React, { Component, ReactNode } from 'react';
-import { ErrorBoundaryContext } from '../../contexts/ErrorBoundaryContext';
+import { ErrorBoundaryContext } from '../../contexts/ErrorBoundary';
 
 /**
  * Props passed to the fallback component.
@@ -96,7 +96,7 @@ export class ErrorBoundary extends Component<
      * Renders the fallback component or the children based on the error boundary state.
      * @returns {ReactNode} The rendered fallback component or child components.
      */
-    render(): ReactNode {
+    override render(): ReactNode {
         const { hasError, error, shouldReload } = this.state;
         const { fallback: FallbackComponent, children } = this.props;
 

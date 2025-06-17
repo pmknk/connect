@@ -2,10 +2,14 @@ import { IntlProvider } from 'react-intl';
 import { Provider as ReduxStoreProvider } from 'react-redux';
 import { Router } from './router';
 
-import { store } from './store/store';
-import { HttpClientProvider } from './contexts/HttpClientProvider';
-import { ErrorBoundary } from './components/ErrorBoundary';
-import { createPlugin } from './factories/pluginFactory';
+import { 
+    store,
+    HttpClientProvider,
+    PluginsRegistryProvider,
+    ErrorBoundary,
+    createPlugin
+} from '@avyyx/admin-utils';
+
 
 type CoreProps = {
     environment: {
@@ -18,10 +22,16 @@ type CoreProps = {
 export function Core({ environment, plugins = [] }: CoreProps) {
     return (
         <IntlProvider locale={'en'}>
-            <ErrorBoundary fallback={null as any}>
+            <ErrorBoundary
+                fallback={() => {
+                    return <div>Error</div>;
+                }}
+            >
                 <HttpClientProvider api={environment.api}>
                     <ReduxStoreProvider store={store}>
-                        <Router />
+                        <PluginsRegistryProvider plugins={plugins}>
+                            <Router />
+                        </PluginsRegistryProvider>
                     </ReduxStoreProvider>
                 </HttpClientProvider>
             </ErrorBoundary>

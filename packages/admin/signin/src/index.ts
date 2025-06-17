@@ -1,4 +1,4 @@
-import { createPlugin } from "@avyyx/admin-core"
+import { createPlugin } from "@avyyx/admin-utils"
 import { lazy } from "react"
 
 export const createSigninPlugin = () => {

@@ -1,6 +1,14 @@
-import { useSelector } from "react-redux";
-import type { PluginState } from "../../store/slices";
 import type { PluginDefinition } from "../../factories/pluginFactory";
+import { PluginsRegistryContext } from "../../contexts/PluginRegistry";
+import { useContext } from "react";
+
+interface UsePluginsReturn {
+    plugins: PluginDefinition[];
+    getRoutes: () => PluginDefinition['routes'];
+    getSlots: () => PluginDefinition['slots'];
+    getPluginsByRoute: (route: string) => PluginDefinition[];
+    getPluginsBySlot: (slot: string) => PluginDefinition[];
+}
 
 /**
  * Custom hook to access and manage plugins from the Redux store
@@ -11,11 +19,8 @@ import type { PluginDefinition } from "../../factories/pluginFactory";
  * @property {Function} getPluginsByRoute - Function to get plugins by route path
  * @property {Function} getPluginsBySlot - Function to get plugins by slot name
  */
-export const usePlugins = () => {
-    const plugins = useSelector((state: {
-        plugin: PluginState
-    }) => state.plugin.plugins);
-
+export const usePlugins = (): UsePluginsReturn => {
+    const { plugins } = useContext(PluginsRegistryContext);
     /**
      * Gets all routes from all registered plugins
      * @returns {PluginDefinition['routes']} Array of all plugin routes

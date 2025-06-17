@@ -13,20 +13,28 @@ export const FormField = ({ control, name, label, inputProps }: FormFieldProps) 
         <Controller
             name={name}
             control={control}
-            render={({ field }) => (
-                <div className="space-y-1">
-                    <Typography
-                        as="label"
-                        htmlFor="email"
-                        type="small"
-                        color="default"
-                        className="font-semibold"
-                    >
-                        {label}
-                    </Typography>
-                    <Input id={name} {...inputProps} />
-              </div>
-            )}
+            defaultValue=""
+            render={({ field }) => {
+                return (
+                    <div className="space-y-1">
+                        <Typography
+                            as="label"
+                            htmlFor={name}
+                            type="small"
+                            color="default"
+                            className="font-semibold"
+                        >
+                            {label}
+                        </Typography>
+                        <Input 
+                            id={name} 
+                            {...field} 
+                            value={field.value || ''} 
+                            {...inputProps} 
+                        />
+                    </div>
+                )
+            }}
         />
     )
 }

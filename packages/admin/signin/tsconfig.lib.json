@@ -35,7 +35,7 @@
             "path": "../ui/tsconfig.lib.json"
         },
         {
-            "path": "../core/tsconfig.lib.json"
+            "path": "../utils/tsconfig.lib.json"
         }
     ]
 }

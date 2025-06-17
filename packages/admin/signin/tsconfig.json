@@ -6,7 +6,7 @@
             "path": "../ui"
         },
         {
-            "path": "../core"
+            "path": "../utils"
         },
         {
             "path": "./tsconfig.lib.json"
