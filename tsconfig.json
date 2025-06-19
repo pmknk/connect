@@ -35,6 +35,9 @@
         },
         {
             "path": "./packages/admin/utils"
+        },
+        {
+            "path": "./packages/admin/dashboard"
         }
     ]
 }

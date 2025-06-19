@@ -8,6 +8,4 @@ export * from './contexts/ErrorBoundary';
 export * from './contexts/HttpClient';
 export * from './contexts/PluginRegistry';
 
-export * from './factories/pluginFactory';
-
 export * from './store/store';

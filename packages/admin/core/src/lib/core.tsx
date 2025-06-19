@@ -7,16 +7,15 @@ import {
     HttpClientProvider,
     PluginsRegistryProvider,
     ErrorBoundary,
-    createPlugin
+    PluginDefinition,
 } from '@avyyx/admin-utils';
-
 
 type CoreProps = {
     environment: {
         production: boolean;
         api: string;
     };
-    plugins?: ReturnType<typeof createPlugin>[];
+    plugins?: PluginDefinition[];
 };
 
 export function Core({ environment, plugins = [] }: CoreProps) {

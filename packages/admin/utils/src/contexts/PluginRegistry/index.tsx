@@ -1,6 +1,12 @@
 import { Context, createContext } from 'react';
-import type { PluginDefinition } from '../../factories/pluginFactory';
 
+export type PluginDefinition = {
+    name: string;
+    routes: {
+        path: string;
+        component: React.ComponentType;
+    }[];
+}
 export interface PluginsRegistryContextValue {
     plugins: PluginDefinition[];
 }

@@ -1,7 +1,7 @@
 import { Router } from "./router";
 
-export function Signin() {
+const Dashboard = () => {
     return <Router />
 }
 
-export default Signin;
+export default Dashboard;

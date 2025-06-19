@@ -5,13 +5,11 @@ import { usePlugins } from '@avyyx/admin-utils';
 export const Router = () => {
     const { getRoutes } = usePlugins();
 
-    const publicRoutes = (getRoutes() ?? []).filter((r) => r.isPublic);
-    // const privateRoutes = (getRoutes() ?? []).filter((r) => !r.isPublic);
 
     return (
         <BrowserRouter>
             <Routes>
-                {publicRoutes.map(({ path, component: Component }) => (
+                {getRoutes().map(({ path, component: Component }) => (
                     <Route
                         key={path}
                         path={path}

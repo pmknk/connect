@@ -1,9 +1,6 @@
 import { Core } from "@avyyx/admin-core";
-import { createSigninPlugin } from "@avyyx/admin-signin";
-
-const plugins = [
-    createSigninPlugin()
-]
+import { signin } from "@avyyx/admin-signin";
+import { dashboard } from "@avyyx/admin-dashboard";
 
 export function App() {
     return (
@@ -13,7 +10,11 @@ export function App() {
                     production: false,
                     api: "http://localhost:4000"
                 }}
-                plugins={plugins}
+                plugins={[
+                    signin(),
+                    dashboard(),
+                ]}
+
             />
         </div>
     );

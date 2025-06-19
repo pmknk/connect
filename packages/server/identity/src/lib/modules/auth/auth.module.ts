@@ -4,6 +4,7 @@ import { JwtService } from './services/jwt.service';
 import { SigninService } from './services/signin.service';
 import { AuthController } from './auth.controller';
 import { AuthRouter } from './auth.router';
+import { AuthMiddleware } from './auth.middleware';
 
 /**
  * Module responsible for handling authentication-related functionality
@@ -31,8 +32,16 @@ export class AuthModule {
         fastify.di.bind(SigninService).toSelf();
         fastify.di.bind(AuthController).toSelf();
         fastify.di.bind(AuthRouter).toSelf();
+        fastify.di.bind(AuthMiddleware).toSelf();
 
         // Initialize the authentication router with the Fastify instance
         fastify.di.get(AuthRouter).initialize(fastify);
+
+        fastify.addHook(
+            'preHandler',
+            fastify.di
+                .get(AuthMiddleware)
+                .authenticate.bind(fastify.di.get(AuthMiddleware))
+        );
     }
 }

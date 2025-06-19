@@ -1,6 +1,5 @@
-import type { PluginDefinition } from "../../factories/pluginFactory";
-import { PluginsRegistryContext } from "../../contexts/PluginRegistry";
 import { useContext } from "react";
+import { PluginDefinition, PluginsRegistryContext } from "../../contexts/PluginRegistry";
 
 interface UsePluginsReturn {
     plugins: PluginDefinition[];

@@ -26,4 +26,8 @@ export class AuthController {
             await this.signinService.signin(request.body as SigninDto)
         );
     }
+
+    async getMe(request: FastifyRequest) {
+        return 'test'
+    }
 }
