@@ -13,6 +13,7 @@ import { InitModule } from './modules/init/init.module';
 import initializeDataSeed from './seeds/initialization-data';
 import { IDENTITY_PLUGIN_OPTIONS_DI_PROVIDER } from './constants';
 import { IdentityPluginOptions } from './types';
+import { AuthModule } from './modules/auth/auth.module';
 
 class IdentityPluginInitializer {
     /**
@@ -34,10 +35,12 @@ class IdentityPluginInitializer {
         fastify.di.bind(PermissionGroupModule).toSelf();
         fastify.di.bind(ProjectModule).toSelf();
         fastify.di.bind(InitModule).toSelf();
+        fastify.di.bind(AuthModule).toSelf();
 
         fastify.di.get(UserModule).initialize(fastify);
         fastify.di.get(RoleModule).initialize(fastify);
         fastify.di.get(InitModule).initialize(fastify);
+        fastify.di.get(AuthModule).initialize(fastify);
 
         fastify.di.get(PermissionModule).initialize();
         fastify.di.get(PermissionGroupModule).initialize();

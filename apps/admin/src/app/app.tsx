@@ -11,7 +11,7 @@ export function App() {
             <Core 
                 environment={{
                     production: false,
-                    api: "http://localhost:3000"
+                    api: "http://localhost:4000"
                 }}
                 plugins={plugins}
             />

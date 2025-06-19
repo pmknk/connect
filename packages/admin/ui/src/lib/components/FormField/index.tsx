@@ -1,4 +1,4 @@
-import { Control, Controller } from "react-hook-form"
+import { Control, Controller, useFormState } from "react-hook-form"
 import { Input, InputProps, Typography } from "@material-tailwind/react"
 
 type FormFieldProps = {
@@ -9,12 +9,16 @@ type FormFieldProps = {
 }
 
 export const FormField = ({ control, name, label, inputProps }: FormFieldProps) => {
+
+    const { errors } = useFormState({ control })
+
     return (
         <Controller
             name={name}
             control={control}
             defaultValue=""
             render={({ field }) => {
+                const error = errors[name]
                 return (
                     <div className="space-y-1">
                         <Typography
@@ -26,12 +30,18 @@ export const FormField = ({ control, name, label, inputProps }: FormFieldProps) 
                         >
                             {label}
                         </Typography>
-                        <Input 
+                        <Input
                             id={name} 
+                            {...inputProps}
                             {...field} 
-                            value={field.value || ''} 
-                            {...inputProps} 
+                            isError={!!error}
+                            color={error ? "error" : (inputProps?.color || "primary")}
                         />
+                        {error && (
+                            <Typography type="small" color="error" className="mt-1 block">
+                                {error.message}
+                            </Typography>
+                        )}
                     </div>
                 )
             }}

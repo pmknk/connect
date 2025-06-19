@@ -1,6 +1,8 @@
 export * from './components/ErrorBoundary';
 
 export * from './hooks/usePlugins';
+export * from './hooks/useAuth';
+export * from './hooks/useErrorBoundary';
 
 export * from './contexts/ErrorBoundary';
 export * from './contexts/HttpClient';

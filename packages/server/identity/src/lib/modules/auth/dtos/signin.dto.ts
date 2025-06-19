@@ -6,17 +6,21 @@ export type SigninDto = {
 };
 
 export type SigninResponseDto = {
-    accessToken: string;
-    accessTokenExpiresIn: number;
-    refreshToken: string;
-    refreshTokenExpiresIn: number;
+    data: {
+        accessToken: string;
+        accessTokenExpiresIn: number;
+        refreshToken: string;
+        refreshTokenExpiresIn: number;
+    }
 };
 
 export const toSigninResponseDto = (tokensPair: TokensPair): SigninResponseDto => {
     return {
-        accessToken: tokensPair.accessToken,
-        accessTokenExpiresIn: tokensPair.accessTokenExpiresIn,
-        refreshToken: tokensPair.refreshToken,
-        refreshTokenExpiresIn: tokensPair.refreshTokenExpiresIn
+        data: {
+            accessToken: tokensPair.accessToken,
+            accessTokenExpiresIn: tokensPair.accessTokenExpiresIn,
+            refreshToken: tokensPair.refreshToken,
+            refreshTokenExpiresIn: tokensPair.refreshTokenExpiresIn
+        }
     };
 };

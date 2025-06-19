@@ -42,7 +42,7 @@ export async function rootCreateAction(options: { email?: string; password?: str
             rootPassword = rootPassword || answers.rootPassword;
         }
 
-        await axios.post(`http://localhost:${PORT}/init`, {
+        await axios.post(`http://localhost:${PORT}/identity/init`, {
             email: rootEmail,
             password: rootPassword
         });

@@ -1,19 +1,18 @@
-import type { FastifyApplicationInstance } from "@avyyx/server-core";
 import { injectable } from "inversify";
-import { InitController } from "./init.controller";
+import { AuthController } from "./auth.controller";
+import { FastifyApplicationInstance } from "@avyyx/server-core";
 
 @injectable()
-export class InitRouter {
-
-    constructor(private readonly initController: InitController) {}
+export class AuthRouter {
+    constructor(private readonly authController: AuthController) {}
 
     initialize(fastify: FastifyApplicationInstance) {
         const ROUTE_PATHS = {
-            INIT: '/identity/init'
+            SIGNIN: '/identity/auth/signin'
         }
 
         fastify.post(
-            ROUTE_PATHS.INIT,
+            ROUTE_PATHS.SIGNIN,
             {
                 schema: {
                     body: {
@@ -29,6 +28,7 @@ export class InitRouter {
                     auth: false
                 }
             },
-            this.initController.init.bind(this.initController));
+            this.authController.signin.bind(this.authController)
+        )
     }
 }

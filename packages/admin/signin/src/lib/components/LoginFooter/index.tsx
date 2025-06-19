@@ -1,10 +1,15 @@
-import { Button, Typography } from "@material-tailwind/react";
+import { Button, Spinner, Typography } from "@material-tailwind/react";
 import { FormattedMessage } from "react-intl";
 
-export const LoginFooter = () => {
+interface LoginFooterProps {
+    isLoading: boolean;
+}
+
+export const LoginFooter = ({ isLoading }: LoginFooterProps) => {
     return (
         <>
-            <Button type="submit" isFullWidth size="lg" className="mb-4">
+            <Button type="submit" isFullWidth size="lg" className="mb-4" disabled={isLoading}>
+                {isLoading && <Spinner size="sm" className="mr-2" />}
                 <FormattedMessage id="auth.admin.pages.login.submit" defaultMessage="Sign in" />
             </Button>
             <Typography
