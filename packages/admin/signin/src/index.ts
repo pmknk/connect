@@ -1,13 +1,10 @@
-import { lazy } from "react"
+import Signin from './lib/signin';
 
-export const signin = () => {
-    return {
-        name: 'signin',
-        routes: [
-            { 
-                path: '/signin',
-                component: lazy(() => import('./lib/signin')), 
-            }
-        ]
+export const signin = () => ({
+    name: 'signin',
+    route: {
+        public: true,
+        path: '/signin',
+        component: Signin
     }
-}
+})

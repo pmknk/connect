@@ -9,3 +9,5 @@ export * from './contexts/HttpClient';
 export * from './contexts/PluginRegistry';
 
 export * from './store/store';
+
+export * from './helpers/renderElement';

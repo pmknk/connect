@@ -1,12 +1,16 @@
-import { useContext } from "react";
-import { PluginDefinition, PluginsRegistryContext } from "../../contexts/PluginRegistry";
+import { useContext } from 'react';
+import {
+    PluginDefinition,
+    PluginsRegistryContext
+} from '../../contexts/PluginRegistry';
 
 interface UsePluginsReturn {
     plugins: PluginDefinition[];
-    getRoutes: () => PluginDefinition['routes'];
+    getRoutes: () => PluginDefinition['route'][];
+    getPublicRoutes: () => PluginDefinition['route'][];
+    getPrivateRoutes: () => PluginDefinition['route'][];
     getSlots: () => PluginDefinition['slots'];
-    getPluginsByRoute: (route: string) => PluginDefinition[];
-    getPluginsBySlot: (slot: string) => PluginDefinition[];
+    getComponentsBySlot: (slot: string) => PluginDefinition['slots'];
 }
 
 /**
@@ -15,8 +19,7 @@ interface UsePluginsReturn {
  * @property {PluginDefinition[]} plugins - Array of all registered plugins
  * @property {Function} getRoutes - Function to get all plugin routes
  * @property {Function} getSlots - Function to get all plugin slots
- * @property {Function} getPluginsByRoute - Function to get plugins by route path
- * @property {Function} getPluginsBySlot - Function to get plugins by slot name
+ * @property {Function} getComponentsBySlot - Function to get all components by slot
  */
 export const usePlugins = (): UsePluginsReturn => {
     const { plugins } = useContext(PluginsRegistryContext);
@@ -24,47 +27,53 @@ export const usePlugins = (): UsePluginsReturn => {
      * Gets all routes from all registered plugins
      * @returns {PluginDefinition['routes']} Array of all plugin routes
      */
-    const getRoutes = (): PluginDefinition['routes'] => {
-        return plugins.flatMap(plugin => plugin.routes ?? []);
-    }
+    const getRoutes = (): PluginDefinition['route'][] => {
+        return plugins.flatMap((plugin) => plugin.route ?? []);
+    };
+
+    /**
+     * Gets all public routes from all registered plugins
+     * @returns {PluginDefinition['routes']} Array of all public plugin routes
+     */
+    const getPublicRoutes = (): PluginDefinition['route'][] => {
+        return plugins
+            .flatMap((plugin) => plugin.route ?? [])
+            .filter(({ public: isPublic }) => isPublic);
+    };
+
+    /**
+     * Gets all private routes from all registered plugins
+     * @returns {PluginDefinition['routes']} Array of all private plugin routes
+     */
+    const getPrivateRoutes = (): PluginDefinition['route'][] => {
+        return plugins
+            .flatMap((plugin) => plugin.route ?? [])
+            .filter(({ public: isPublic }) => !isPublic);
+    };
 
     /**
      * Gets all slots from all registered plugins
      * @returns {PluginDefinition['slots']} Object containing all plugin slots
      */
     const getSlots = (): PluginDefinition['slots'] => {
-        const result: Record<string, any[]> = {}
-        for (const p of plugins) {
-            for (const [slotName, components] of Object.entries(p.slots || {})) {
-                result[slotName] = [...(result[slotName] || []), ...components]
-            }
-        }
-        return result
-    }
-    
-    /**
-     * Gets plugins that have a specific route
-     * @param {string} route - The route path to filter by
-     * @returns {PluginDefinition[]} Array of plugins that have the specified route
-     */
-    const getPluginsByRoute = (route: string) => {
-        return plugins.filter(plugin => plugin.routes?.some(r => r.path === route));
-    }
+        return plugins.flatMap((plugin) => plugin.slots ?? []);
+    };
 
     /**
-     * Gets plugins that have a specific slot
-     * @param {string} slot - The slot name to filter by
-     * @returns {PluginDefinition[]} Array of plugins that have the specified slot
+     * Gets all components by slot from all registered plugins
+     * @param {string} slot - The slot to get components for
+     * @returns {PluginDefinition['slots']} Object containing all components by slot
      */
-    const getPluginsBySlot = (slot: string) => {
-        return plugins.filter(plugin => plugin.slots?.[slot]);
+    const getComponentsBySlot = (slot: string) => {
+        return plugins.flatMap((plugin) => plugin.slots ?? []).filter(({ slot: s }) => s === slot);
     }
 
     return {
         plugins,
         getRoutes,
+        getPublicRoutes,
+        getPrivateRoutes,
         getSlots,
-        getPluginsByRoute,
-        getPluginsBySlot
+        getComponentsBySlot
     };
-}
+};

@@ -38,6 +38,9 @@
         },
         {
             "path": "./packages/admin/projects"
+        },
+        {
+            "path": "./packages/admin/users"
         }
     ]
 }

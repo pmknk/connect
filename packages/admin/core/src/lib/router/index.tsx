@@ -1,24 +1,33 @@
-import { Suspense } from 'react';
+import { lazy } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { usePlugins } from '@avyyx/admin-utils';
+import { renderElement, usePlugins } from '@avyyx/admin-utils';
+
+const LazyMain = lazy(() => import('../pages/Main'));
 
 export const Router = () => {
-    const { getRoutes } = usePlugins();
-
+    const { getPublicRoutes, getPrivateRoutes } = usePlugins();
     return (
         <BrowserRouter>
             <Routes>
-                {getRoutes().map(({ path, component: Component }) => (
+                {getPublicRoutes().map(({ path, component, props }) => (
                     <Route
                         key={path}
                         path={path}
-                        element={
-                            <Suspense fallback={null}>
-                                <Component />
-                            </Suspense>
-                        }
+                        element={renderElement(component, props)}
                     />
                 ))}
+                <Route
+                    path="/"
+                    element={<LazyMain />}
+                >
+                    {getPrivateRoutes().map(({ path, component, props }) => (
+                        <Route
+                            key={path}
+                            path={path}
+                            element={renderElement(component, props)}
+                        />
+                    ))}
+                </Route>
             </Routes>
         </BrowserRouter>
     );

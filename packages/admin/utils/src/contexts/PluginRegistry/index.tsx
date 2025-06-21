@@ -1,19 +1,21 @@
 import { ComponentType, Context, createContext, ReactNode } from 'react';
 
-export type InjectComponent = {
+export type SlotComponent = {
     key: string;
-    zone: string;
-    element: ReactNode | ComponentType;
+    slot: string;
+    component: ReactNode | ComponentType;
 };
 
 export type PluginDefinition = {
     name: string;
-    routes: {
+    route: {
+        public?: boolean;
         path: string;
         component: React.ComponentType;
-    }[];
-    injectComponents?: InjectComponent[];
-}
+        props?: any;
+    };
+    slots?: SlotComponent[];
+};
 export interface PluginsRegistryContextValue {
     plugins: PluginDefinition[];
 }
