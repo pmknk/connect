@@ -5,7 +5,6 @@ import { usePlugins } from '@avyyx/admin-utils';
 export const Router = () => {
     const { getRoutes } = usePlugins();
 
-
     return (
         <BrowserRouter>
             <Routes>

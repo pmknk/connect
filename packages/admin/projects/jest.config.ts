@@ -1,5 +1,5 @@
 export default {
-    displayName: '@avyyx/admin-dashboard',
+    displayName: '@avyyx/admin-projects',
     preset: '../../../jest.preset.js',
     transform: {
         '^(?!.*\\.(js|jsx|ts|tsx|css|json)$)': '@nx/react/plugins/jest',

@@ -1,21 +1,19 @@
-import { ErrorBoundary } from "@avyyx/admin-utils";
-import { FormattedMessage } from "react-intl";
-import { FormWrapper } from "../../components/FormWrapper"
-import { LoginFormData, useLoginForm } from "../../hooks/useLoginForm"
-import { LoginBody } from "../../components/LoginBody"
-import { LoginFooter } from "../../components/LoginFooter"
-import { useLoginMutation } from "../../hooks/useLoginMutation";
+import { ErrorBoundary } from '@avyyx/admin-utils';
+import { FormattedMessage } from 'react-intl';
+import { FormWrapper } from '../../components/FormWrapper';
+import { LoginFormData, useLoginForm } from '../../hooks/useLoginForm';
+import { LoginBody } from '../../components/LoginBody';
+import { LoginFooter } from '../../components/LoginFooter';
+import { useLoginMutation } from '../../hooks/useLoginMutation';
 
 export const Login = () => {
-    const { control, handleSubmit } = useLoginForm()
-    const { mutate, isPending, isUnauthorized } = useLoginMutation()
-
-    console.log(isUnauthorized)
+    const { control, handleSubmit } = useLoginForm();
+    const { mutate, isPending, isUnauthorized } = useLoginMutation();
 
     return (
         <FormWrapper
             onSubmit={handleSubmit((formData: LoginFormData) => {
-                mutate(formData)
+                mutate(formData);
             })}
             title={
                 <FormattedMessage
@@ -29,20 +27,22 @@ export const Login = () => {
                     defaultMessage="Please sign in to your account to continue to the admin panel"
                 />
             }
-            body={<LoginBody 
-                control={control}
-                isLoading={isPending}
-                isUnauthorized={isUnauthorized}
-            />}
+            body={
+                <LoginBody
+                    control={control}
+                    isLoading={isPending}
+                    isUnauthorized={isUnauthorized}
+                />
+            }
             footer={<LoginFooter isLoading={isPending} />}
         />
-    )
-}
+    );
+};
 
 export default () => {
     return (
         <ErrorBoundary fallback={() => <div>Error</div>}>
             <Login />
         </ErrorBoundary>
-    )
+    );
 };

@@ -1,4 +1,10 @@
-import { Context, createContext } from 'react';
+import { ComponentType, Context, createContext, ReactNode } from 'react';
+
+export type InjectComponent = {
+    key: string;
+    zone: string;
+    element: ReactNode | ComponentType;
+};
 
 export type PluginDefinition = {
     name: string;
@@ -6,6 +12,7 @@ export type PluginDefinition = {
         path: string;
         component: React.ComponentType;
     }[];
+    injectComponents?: InjectComponent[];
 }
 export interface PluginsRegistryContextValue {
     plugins: PluginDefinition[];

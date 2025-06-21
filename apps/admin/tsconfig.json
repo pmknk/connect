@@ -3,9 +3,6 @@
     "include": [],
     "references": [
         {
-            "path": "../../packages/admin/dashboard"
-        },
-        {
             "path": "../../packages/admin/signin"
         },
         {

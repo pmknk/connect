@@ -1,16 +1,12 @@
-import { Route } from "react-router-dom"
+import { lazy } from 'react';
+import { Route, Routes } from 'react-router-dom';
 
-import { Routes } from "react-router-dom"
-import { lazy } from "react"
-const Login = lazy(() => import('../pages/Login'))
+const Login = lazy(() => import('../pages/Login'));
 
 export const Router = () => {
     return (
         <Routes>
-            <Route 
-                path="" 
-                element={<Login />} 
-            />
+            <Route path="" element={<Login />} />
         </Routes>
-    )
-}
+    );
+};

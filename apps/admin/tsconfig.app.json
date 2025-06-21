@@ -33,9 +33,6 @@
     "include": ["src/**/*.js", "src/**/*.jsx", "src/**/*.ts", "src/**/*.tsx"],
     "references": [
         {
-            "path": "../../packages/admin/dashboard/tsconfig.lib.json"
-        },
-        {
             "path": "../../packages/admin/signin/tsconfig.lib.json"
         },
         {
