@@ -1,86 +1,69 @@
-import { UnauthorizedError } from '@avyyx/server-utils';
 import { FastifyRequest } from 'fastify';
 import { injectable } from 'inversify';
-import { JwtService } from './services/jwt.service';
 import { TOKEN_SCOPE } from '../../constants';
-import { TokenExpiredError } from 'jsonwebtoken';
-import { UserRepository } from '../user/user.repository';
 import { User } from '../user/user.schema';
+import { AuthService } from './services/auth.service';
 
+/**
+ * Configuration object for authentication settings
+ */
 type AuthConfig = {
     auth: boolean;
     scope?: TOKEN_SCOPE;
 };
 
+/**
+ * Middleware responsible for handling authentication in Fastify requests
+ * 
+ * This middleware authenticates users based on JWT tokens and attaches
+ * the authenticated user to the request object. It can be configured
+ * per route to require authentication and optionally verify specific token scopes.
+ */
 @injectable()
 export class AuthMiddleware {
-    constructor(
-        private readonly jwtService: JwtService,
-        private readonly userRepository: UserRepository
-    ) {}
+    /**
+     * Creates an instance of AuthMiddleware
+     * 
+     * @param authService - Service responsible for user authentication
+     */
+    constructor(private readonly authService: AuthService) {}
 
+    /**
+     * Authenticates a user from the request and attaches the user to the request object
+     * 
+     * This method extracts authentication configuration from the route options,
+     * performs user authentication if required, and handles authentication errors.
+     * If authentication is not required (auth !== true), the method returns early.
+     * 
+     * @param request - Fastify request object with user property for storing authenticated user
+     * @throws {UnauthorizedError} When authentication fails or user is not found
+     * @returns {Promise<void>} A promise that resolves when authentication is complete
+     * 
+     * @example
+     * ```typescript
+     * // Route configuration requiring authentication
+     * {
+     *   config: {
+     *     auth: true,
+     *     scope: TOKEN_SCOPE.ACCESS
+     *   }
+     * }
+     * ```
+     */
     async authenticate(request: FastifyRequest & { user: User | null }) {
-        const { auth, scope } = request.routeOptions.config as unknown as AuthConfig;
+        const { auth, scope } = request.routeOptions
+            .config as unknown as AuthConfig;
 
         if (auth !== true) return;
 
-        const token = this.extractToken(request);
-        request.user =  await this.userRepository.findById(
-            await this.verifyToken(token, scope)
-        );
-    }
-
-    /**
-     * Extracts JWT token from request headers.
-     *
-     * @param req - Express request object
-     * @throws {UnauthorizedError} If token is missing or malformed
-     * @returns Extracted JWT token
-     */
-    private extractToken(req: FastifyRequest): string {
-        const authHeader = req.headers.authorization;
-        if (!authHeader) {
-            throw new UnauthorizedError('No authorization header provided');
-        }
-
-        const token = authHeader.split(' ')[1];
-        if (!token) {
-            throw new UnauthorizedError(
-                'Token not provided in the authorization header'
-            );
-        }
-
-        return token;
-    }
-
-    /**
-     * Verifies JWT token validity and extracts user ID.
-     *
-     * @param token - JWT token to verify
-     * @param scope - Optional token scope
-     * @throws {UnauthorizedError} If token is invalid or expired
-     * @returns Verified user ID from token
-     */
-    private async verifyToken(
-        token: string,
-        scope?: TOKEN_SCOPE
-    ): Promise<string> {
         try {
-            const decoded = await this.jwtService.verify<{
-                id: string;
-                scope: TOKEN_SCOPE;
-            }>(token);
-
-            if (scope && decoded.scope !== scope) {
-                throw new UnauthorizedError('Invalid token scope');
-            }
-
-            return decoded.id;
+            request.user = await this.authService.authenticateUser(
+                request,
+                scope
+            );
         } catch (error) {
-            if (error instanceof TokenExpiredError) {
-                throw new UnauthorizedError('Token expired');
-            }
-            throw new UnauthorizedError('Invalid token');
+            request.user = null;
+            throw error;
         }
     }
 }
