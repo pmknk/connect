@@ -1,4 +1,4 @@
-import { TokensPair } from "../services/jwt.service";
+import { TokensPair } from "../services/signin.service";
 
 export type SigninDto = {
     email: string;
@@ -16,11 +16,6 @@ export type SigninResponseDto = {
 
 export const toSigninResponseDto = (tokensPair: TokensPair): SigninResponseDto => {
     return {
-        data: {
-            accessToken: tokensPair.accessToken,
-            accessTokenExpiresIn: tokensPair.accessTokenExpiresIn,
-            refreshToken: tokensPair.refreshToken,
-            refreshTokenExpiresIn: tokensPair.refreshTokenExpiresIn
-        }
+        data: tokensPair
     };
 };

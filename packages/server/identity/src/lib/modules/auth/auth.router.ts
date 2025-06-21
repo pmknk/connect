@@ -1,6 +1,7 @@
 import { injectable } from "inversify";
 import { AuthController } from "./auth.controller";
 import { FastifyApplicationInstance } from "@avyyx/server-core";
+import { TOKEN_SCOPES } from "../../constants";
 
 /**
  * Router responsible for handling authentication-related routes
@@ -51,7 +52,7 @@ export class AuthRouter {
                     }
                 },
                 config: {
-                    auth: false
+                    auth: false,
                 }
             },
             this.authController.signin.bind(this.authController)
@@ -61,7 +62,8 @@ export class AuthRouter {
             ROUTE_PATHS.GET_ME,
             {
                 config: {
-                    auth: true
+                    auth: true,
+                    scope: TOKEN_SCOPES.ADMIN_ACCESS
                 }
             },
             this.authController.getMe.bind(this.authController)

@@ -75,4 +75,16 @@ export class UserRepository {
             where: { email }
         });
     }
+
+    /**
+     * Finds a user by their ID
+     * @param id - The ID of the user
+     * @returns {Promise<User | null>} The found user or null if not found
+     */
+    async findById(id: string) {
+        return await this.entryService.findOne<User>({
+            schema: 'Users',
+            where: { id }
+        });
+    }
 }

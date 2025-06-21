@@ -5,6 +5,8 @@ import { SigninService } from './services/signin.service';
 import { AuthController } from './auth.controller';
 import { AuthRouter } from './auth.router';
 import { AuthMiddleware } from './auth.middleware';
+import { FastifyRequest } from 'fastify';
+import { User } from '../user/user.schema';
 
 /**
  * Module responsible for handling authentication-related functionality
@@ -39,9 +41,11 @@ export class AuthModule {
 
         fastify.addHook(
             'preHandler',
-            fastify.di
-                .get(AuthMiddleware)
-                .authenticate.bind(fastify.di.get(AuthMiddleware))
+            async (request, reply) => {
+                await fastify.di
+                    .get(AuthMiddleware)
+                    .authenticate(request as FastifyRequest & { user: User | null })
+            }
         );
     }
 }
