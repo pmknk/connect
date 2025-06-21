@@ -1,21 +1,20 @@
-import { TokensPair } from "../services/signin.service";
+import { FastifyRequest } from "fastify";
 
 export type SigninDto = {
     email: string;
     password: string;
 };
 
-export type SigninResponseDto = {
-    data: {
-        accessToken: string;
-        accessTokenExpiresIn: number;
-        refreshToken: string;
-        refreshTokenExpiresIn: number;
-    }
+export const toSigninDto = (request: FastifyRequest): SigninDto => {
+    const { email, password } = request.body as SigninDto;
+    return { email, password };
 };
 
-export const toSigninResponseDto = (tokensPair: TokensPair): SigninResponseDto => {
-    return {
-        data: tokensPair
-    };
-};
+export const signinRequestSchema = {
+    type: 'object',
+    required: ['email', 'password'],
+    properties: {
+        email: { type: 'string', format: 'email' },
+        password: { type: 'string', minLength: 8 }
+    }
+} as const;

@@ -48,7 +48,7 @@ const refresh = async (
     accessTokenExpiresIn: number;
 }> => {
     const refreshResponse = await axios.get(
-        `${baseUrl}/admin/identity/auth/refresh`,
+        `${baseUrl}/identity/auth/refresh-token`,
         {
             headers: {
                 Authorization: `Bearer ${store.getState().auth.refreshToken}`

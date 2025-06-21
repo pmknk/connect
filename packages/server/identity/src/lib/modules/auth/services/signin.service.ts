@@ -46,7 +46,7 @@ export class SigninService {
      * @param {string} userId - The ID of the user.
      * @returns {Promise<TokensPair>} - Returns an object containing access and refresh tokens along with their expiration times.
      */
-    private async getTokensPair(userId: string): Promise<TokensPair> {
+    async getTokensPair(userId: string): Promise<TokensPair> {
         const tokenConfigs = [
             {
                 scope: TOKEN_SCOPES.ADMIN_ACCESS,

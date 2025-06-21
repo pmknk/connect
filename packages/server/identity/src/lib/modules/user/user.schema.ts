@@ -7,6 +7,9 @@ export interface User {
     fullName: string;
     password: string;
     salt: string;
+    createdAt: Date;
+    updatedAt: Date;
+    deletedAt: Date;
 }
 
 export const UserSchema: SchemaDefinition = {

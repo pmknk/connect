@@ -2,6 +2,7 @@ import { injectable } from "inversify";
 import { AuthController } from "./auth.controller";
 import { FastifyApplicationInstance } from "@avyyx/server-core";
 import { TOKEN_SCOPES } from "../../constants";
+import { signinRequestSchema } from "./dtos/signin.dto";
 
 /**
  * Router responsible for handling authentication-related routes
@@ -35,21 +36,15 @@ export class AuthRouter {
     initialize(fastify: FastifyApplicationInstance) {
         const ROUTE_PATHS = {
             SIGNIN: '/identity/auth/signin',
-            GET_ME: '/identity/auth/me'
+            GET_ME: '/identity/auth/me',
+            REFRESH_TOKEN: '/identity/auth/refresh-token'
         }
 
         fastify.post(
             ROUTE_PATHS.SIGNIN,
             {
                 schema: {
-                    body: {
-                        type: 'object',
-                        required: ['email', 'password'],
-                        properties: {
-                            email: { type: 'string', format: 'email' },
-                            password: { type: 'string', minLength: 8 }
-                        }
-                    }
+                    body: signinRequestSchema
                 },
                 config: {
                     auth: false,
@@ -67,6 +62,17 @@ export class AuthRouter {
                 }
             },
             this.authController.getMe.bind(this.authController)
+        )
+
+        fastify.get(
+            ROUTE_PATHS.REFRESH_TOKEN,
+            {
+                config: {
+                    auth: true,
+                    scope: TOKEN_SCOPES.ADMIN_REFRESH
+                }
+            },
+            this.authController.refreshToken.bind(this.authController)
         )
     }
 }
