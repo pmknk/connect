@@ -90,6 +90,7 @@ export type BaseFindOptions<T> = {
 };
 
 export type FindOnePayload<T> = BaseFindOptions<T> & FindOptions<T>;
+export type FindPayload<T> = BaseFindOptions<T> & FindOptions<T>;
 export type CreateOnePayload<T> = BaseFindOptions<T> & CreateOptions<T> & {
     values: Partial<T>;
 }

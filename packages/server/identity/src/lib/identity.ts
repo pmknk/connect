@@ -41,8 +41,8 @@ class IdentityPluginInitializer {
         fastify.di.get(RoleModule).initialize(fastify);
         fastify.di.get(InitModule).initialize(fastify);
         fastify.di.get(AuthModule).initialize(fastify);
-
-        fastify.di.get(PermissionModule).initialize();
+        fastify.di.get(PermissionModule).initialize(fastify);
+        
         fastify.di.get(PermissionGroupModule).initialize();
         fastify.di.get(ProjectModule).initialize();
 

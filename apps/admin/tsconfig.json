@@ -3,6 +3,12 @@
     "include": [],
     "references": [
         {
+            "path": "../../packages/admin/users"
+        },
+        {
+            "path": "../../packages/admin/projects"
+        },
+        {
             "path": "../../packages/admin/signin"
         },
         {

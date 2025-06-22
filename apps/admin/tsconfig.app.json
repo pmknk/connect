@@ -33,6 +33,12 @@
     "include": ["src/**/*.js", "src/**/*.jsx", "src/**/*.ts", "src/**/*.tsx"],
     "references": [
         {
+            "path": "../../packages/admin/users/tsconfig.lib.json"
+        },
+        {
+            "path": "../../packages/admin/projects/tsconfig.lib.json"
+        },
+        {
             "path": "../../packages/admin/signin/tsconfig.lib.json"
         },
         {

@@ -2,9 +2,9 @@ import { injectable } from 'inversify';
 import { SigninService } from './services/signin.service';
 import type { FastifyRequest } from 'fastify';
 import type { User } from '../user/user.schema';
-import { toSigninDto } from './dtos/signin.dto';
+import { toSigninRequestDto } from './dtos/signin.dto';
 import { type TokenResponseDto, toTokenResponseDto } from './dtos/token.dto';
-import { type UserDto, toUserResponseDto } from './dtos/user.dto';
+import { type UserResponseDto, toUserResponseDto } from './dtos/user.dto';
 
 /**
  * Controller responsible for handling authentication-related requests
@@ -26,7 +26,7 @@ export class AuthController {
      */
     async signin(request: FastifyRequest): Promise<TokenResponseDto> {
         return toTokenResponseDto(
-            await this.signinService.signin(toSigninDto(request))
+            await this.signinService.signin(toSigninRequestDto(request))
         );
     }
 
@@ -35,7 +35,7 @@ export class AuthController {
      * @param request - The incoming request containing the user
      * @returns {Promise<UserDto>} The user response containing user details
      */
-    async getMe(request: FastifyRequest): Promise<UserDto> {
+    async getMe(request: FastifyRequest): Promise<UserResponseDto> {
         return toUserResponseDto(
             (request as FastifyRequest & { user: User }).user
         );

@@ -1,7 +1,7 @@
 import { renderElement, usePlugins } from '@avyyx/admin-utils';
 import { Typography, Navbar, List } from '@material-tailwind/react';
-import { SLOTS } from '../../constants';
 import { Fragment } from 'react/jsx-runtime';
+import { SLOTS } from '../../constants';
 
 export const MainNavbar = () => {
     const { getComponentsBySlot } = usePlugins();
@@ -12,8 +12,7 @@ export const MainNavbar = () => {
             <div className="flex items-center text-white">
                 <Typography
                     as="a"
-                    href="#"
-                    type="small"
+                    href="/"
                     className="ml-2 mr-2 block py-1 font-semibold"
                 >
                     Avyyx Studio

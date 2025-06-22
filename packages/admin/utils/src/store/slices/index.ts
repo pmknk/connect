@@ -1,13 +1,13 @@
 import auth from './auth';
-// import user from './user';
-// import permission from './permission';
+import user from './user';
+import permission from './permission';
 
 export const reducers = {
     auth,
-    // user,
-    // permission
+    user,
+    permission
 };
 
 export * from './auth';
-// export * from './user';
-// export * from './permission';
+export * from './user';
+export * from './permission';

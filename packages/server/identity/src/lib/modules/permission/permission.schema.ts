@@ -1,4 +1,12 @@
 import { SchemaDefinition } from "@avyyx/server-database";
+import { Role } from "../role/role.schema";
+
+export interface Permission {
+    id: string;
+    action: string;
+    resource: string;
+    roles: Role[];
+}
 
 export const PermissionSchema: SchemaDefinition = {
     name: 'Permissions',

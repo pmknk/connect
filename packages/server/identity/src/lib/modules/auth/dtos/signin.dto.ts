@@ -1,12 +1,12 @@
 import { FastifyRequest } from "fastify";
 
-export type SigninDto = {
+export type SigninRequestDto = {
     email: string;
     password: string;
 };
 
-export const toSigninDto = (request: FastifyRequest): SigninDto => {
-    const { email, password } = request.body as SigninDto;
+export const toSigninRequestDto = (request: FastifyRequest): SigninRequestDto => {
+    const { email, password } = request.body as SigninRequestDto;
     return { email, password };
 };
 

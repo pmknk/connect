@@ -2,7 +2,7 @@ import { UnauthorizedError } from '@avyyx/server-utils';
 import { injectable } from 'inversify';
 import { JwtService } from './jwt.service';
 import { UserRepository } from '../../user/user.repository';
-import { SigninDto } from '../dtos/signin.dto';
+import { SigninRequestDto } from '../dtos/signin.dto';
 import { generateHash } from '../../../utils';
 import { ACCESS_TOKEN_EXPIRES_IN, REFRESH_TOKEN_EXPIRES_IN, TOKEN_SCOPES } from '../../../constants';
 
@@ -28,7 +28,7 @@ export class SigninService {
      * @param dto - The signin DTO.
      * @returns The tokens pair.
      */
-    async signin(dto: SigninDto) {
+    async signin(dto: SigninRequestDto) {
         const user = await this.userRepository.findByEmail(dto.email);
 
         if (!user) throw new UnauthorizedError('Invalid email or password');
