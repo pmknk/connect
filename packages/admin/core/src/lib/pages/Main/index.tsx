@@ -1,7 +1,9 @@
 import { Outlet } from 'react-router-dom'
+import { FullPageLoader } from '@avyyx/admin-ui';
 import { MainNavbar } from '../../component/MainNavbar';
 import { useMeQuery } from '../../hooks/useMeQuery';
 import { usePermissionsQuery } from '../../hooks/usePermissionsQuery';
+import { FormattedMessage } from 'react-intl';
 
 const Main = () => {
     const { isLoading: isLoadingMe, error: errorMe } = useMeQuery();
@@ -9,7 +11,15 @@ const Main = () => {
 
 
     if (isLoadingMe || isLoadingPermissions) {
-        return <div>Loading...</div>;
+        return <FullPageLoader
+            showLogo
+            loadingText={
+                <FormattedMessage
+                    id="main.loading"
+                    defaultMessage="Please wait while we load the application..."
+                />
+            }
+        />;
     }
 
     if (errorMe || errorPermissions) {
