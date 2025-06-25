@@ -1,14 +1,14 @@
-import { User } from "../../user/user.schema";
+import { User } from '../../user/user.schema';
 
 export type UserResponseDto = {
     data: {
         id: string;
         email: string;
         fullName: string;
-        createdAt: Date;
-        updatedAt: Date;
-    }
-}
+        createdAt?: Date;
+        updatedAt?: Date;
+    };
+};
 
 export const toUserResponseDto = (user: User): UserResponseDto => ({
     data: {

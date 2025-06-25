@@ -9,6 +9,7 @@ import {
     ErrorBoundary,
     PluginDefinition,
 } from '@avyyx/admin-utils';
+import { InternalServerError } from '@avyyx/admin-ui';
 
 type CoreProps = {
     environment: {
@@ -22,9 +23,7 @@ export function Core({ environment, plugins = [] }: CoreProps) {
     return (
         <IntlProvider locale={'en'}>
             <ErrorBoundary
-                fallback={() => {
-                    return <div>Error</div>;
-                }}
+                fallback={InternalServerError}
             >
                 <HttpClientProvider api={environment.api}>
                     <ReduxStoreProvider store={store}>

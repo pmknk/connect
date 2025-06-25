@@ -1,6 +1,6 @@
-import { injectable } from "inversify";
-import { PermissionRepository } from "./permission.repository";
-import { Permission } from "./permission.schema";
+import { injectable } from 'inversify';
+import { PermissionRepository } from './permission.repository';
+import { Permission } from './permission.schema';
 
 /**
  * Service for managing permissions
@@ -18,11 +18,7 @@ export class PermissionService {
      * @param userId - The unique identifier of the user
      * @returns Promise resolving to an array of permissions without role information
      */
-    async findByUserId(userId: string): Promise<Omit<Permission, 'roles'>[]> {
-        return (await this.permissionRepository.findByUserId(userId)).map(permission => ({
-            id: permission.id,
-            action: permission.action,
-            resource: permission.resource,
-        }));
+    async findByUserId(userId: string): Promise<Permission[]> {
+        return await this.permissionRepository.findByUserId(userId);
     }
 }

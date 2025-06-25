@@ -1,9 +1,5 @@
 const Projects = () => {
-    return (
-        <div>
-            <h1>Projects</h1>
-        </div>
-    )
-}
+    return <div className="max-w-6xl mx-auto w-full my-8 px-8 "></div>;
+};
 
-export default Projects
+export default Projects;

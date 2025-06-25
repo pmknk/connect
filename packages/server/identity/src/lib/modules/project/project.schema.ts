@@ -1,4 +1,15 @@
 import { SchemaDefinition } from '@avyyx/server-database';
+import { User } from '../user/user.schema';
+
+export type Project = {
+    id: string;
+    slug: string;
+    name: string;
+    description?: string;
+    icon?: string;
+    color?: string;
+    users: User[];
+};
 
 export const ProjectSchema: SchemaDefinition = {
     name: 'Projects',
@@ -15,11 +26,11 @@ export const ProjectSchema: SchemaDefinition = {
         name: {
             type: 'string',
             nullable: false,
-            unique: true,
+            unique: true
         },
         description: {
             type: 'string',
-            nullable: true,
+            nullable: true
         },
         icon: {
             type: 'string',

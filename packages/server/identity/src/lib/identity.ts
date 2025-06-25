@@ -42,9 +42,8 @@ class IdentityPluginInitializer {
         fastify.di.get(InitModule).initialize(fastify);
         fastify.di.get(AuthModule).initialize(fastify);
         fastify.di.get(PermissionModule).initialize(fastify);
-        
+        fastify.di.get(ProjectModule).initialize(fastify);
         fastify.di.get(PermissionGroupModule).initialize();
-        fastify.di.get(ProjectModule).initialize();
 
         fastify.addHook('onListen', async () => {
             const connection = fastify.di.get(ConnectionService).client;
