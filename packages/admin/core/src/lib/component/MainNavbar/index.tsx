@@ -1,4 +1,4 @@
-import { Bell, ProfileCircle } from 'iconoir-react';
+import { CircleUser, Bell } from 'lucide-react';
 import { MainMenuIconItem } from '@avyyx/admin-ui';
 import { renderElement, usePlugins } from '@avyyx/admin-utils';
 import { Typography, Navbar, List } from '@material-tailwind/react';
@@ -28,13 +28,13 @@ export const MainNavbar = () => {
             <div className="flex items-center gap-x-4 mr-2">
                 <MainMenuIconItem
                     key="bell"
-                    icon={<Bell className="h-4 w-4" />}
+                    icon={<Bell size={18} />}
                     label="Bell"
                     selected={false}
                 />
                 <MainMenuIconItem
                     key="profile"
-                    icon={<ProfileCircle className="h-4 w-4" />}
+                    icon={<CircleUser size={18} />}
                     label="Profile"
                     selected={false}
                 />

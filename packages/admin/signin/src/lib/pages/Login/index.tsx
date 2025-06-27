@@ -1,4 +1,3 @@
-import { ErrorBoundary } from '@avyyx/admin-utils';
 import { FormattedMessage } from 'react-intl';
 import { FormWrapper } from '../../components/FormWrapper';
 import { LoginFormData, useLoginForm } from '../../hooks/useLoginForm';
@@ -40,9 +39,5 @@ export const Login = () => {
 };
 
 export default () => {
-    return (
-        <ErrorBoundary fallback={() => <div>Error</div>}>
-            <Login />
-        </ErrorBoundary>
-    );
+    return <Login />;
 };

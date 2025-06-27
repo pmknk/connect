@@ -6,7 +6,7 @@ import { Context, createContext } from 'react';
  * @property {() => void} reload - Function to reload the wrapped component.
  */
 export interface ErrorBoundaryContextValue {
-    showError: (error: Error) => void;
+    showError: (error: Error | null) => void;
     reload: () => void;
 }
 
