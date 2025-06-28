@@ -1,4 +1,5 @@
 export * from './lib/components/FormField';
+export * from './lib/components/FormTextarea';
 export * from './lib/components/MainMenuIconItem';
 export * from './lib/components/MainMenuItem';
 export * from './lib/components/FullPageLoader';

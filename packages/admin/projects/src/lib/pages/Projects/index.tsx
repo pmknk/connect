@@ -21,8 +21,6 @@ const ProjectCard = () => {
 
 const Projects = () => {
     const { data: projects, isLoading, error } = useProjectsQuery();
-    console.log(projects);
-
     const hasProjects = projects && projects.length > 0;
 
     return (
