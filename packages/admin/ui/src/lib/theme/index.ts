@@ -9,6 +9,7 @@ import { MuiAlert } from './components/MuiAlert';
 import { MuiOutlinedInput } from './components/MuiOutlinedInput';
 import { MuiInputLabel } from './components/MuiInputLabel';
 import { MuiInputBase } from './components/MuiInputBase';
+import { MuiIconButton } from './components/MuiIconButton';
 
 export const theme = createTheme({
     breakpoints: breakpoints,
@@ -37,5 +38,6 @@ export const theme = createTheme({
         MuiOutlinedInput,
         MuiInputLabel,
         MuiInputBase,
+        MuiIconButton
     }
 });

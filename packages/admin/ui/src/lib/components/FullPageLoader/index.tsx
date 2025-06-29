@@ -1,4 +1,6 @@
-import { Spinner } from "@material-tailwind/react";
+import CircularProgress from "@mui/material/CircularProgress";
+import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
 
 type FullPageLoaderProps = {
     showLogo?: boolean;
@@ -16,22 +18,25 @@ export const FullPageLoader = ({
     loadingText
 }: FullPageLoaderProps) => {
     return (
-        <div
-            className={
-                'h-full w-full flex flex-col justify-center items-center'
-            }
+        <Stack
+            spacing={1}
+            direction="column"
+            justifyContent="center"
+            alignItems="center"
+            height="100%"
+            width="100%"
         >
-            {showSpinner && <Spinner></Spinner>}
+            {showSpinner && <CircularProgress />}
             {showLogo && (
-                <div className="text-lg flex items-center gap-2 text-default-600">
-                    <h1 className="text-2xl font-extralight">Avyyx Studio</h1>
-                </div>
+                <Typography variant="h5" fontWeight={300}>
+                    Avyyx Studio
+                </Typography>
             )}
             {loadingText && (
-                <p className="mt-4 text-default-400 font-light">
+                <Typography variant="body1" color="text.secondary">
                     {loadingText}
-                </p>
+                </Typography>
             )}
-        </div>
+        </Stack>
     );
 };

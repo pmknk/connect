@@ -1,5 +1,7 @@
-import { IconButton, ListItem } from "@material-tailwind/react"
+import IconButton from "@mui/material/IconButton"
+import { useTheme } from "@mui/material/styles"
 import { ReactNode } from "react"
+import { ExtendedTheme } from "../../types"
 
 /**
  * Props for the MainMenuIconItem component
@@ -26,12 +28,17 @@ type MainMenuIconItemProps = {
  * @returns A ListItem component with icon and styling based on selection state
  */
 export const MainMenuIconItem = ({ key, icon, selected }: MainMenuIconItemProps) => {
+    const {palette} = useTheme<ExtendedTheme>()
     return (
         <IconButton
             key={key}
-            className={`text-gray-100 hover:text-white hover:bg-gray-100/15 rounded-md active:bg-gray-100/15 ${selected ? 'bg-gray-100/15' : 'bg-transparent'}`}
-            variant="ghost"
-            size="sm"
+            sx={{
+                color: palette.slate[100],
+                backgroundColor: selected ? palette.slate[700] : 'transparent',
+                '&:hover': {
+                    backgroundColor: selected ? palette.slate[700] : palette.slate[800],
+                },
+            }}
         >
             {icon}
         </IconButton>

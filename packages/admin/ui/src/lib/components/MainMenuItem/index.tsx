@@ -1,6 +1,11 @@
-import { ReactNode } from "react"
+import { ExtendedTheme } from "@avyyx/admin-ui"
+
+import Button from "@mui/material/Button"
+import Typography from "@mui/material/Typography"
+import { useTheme } from "@mui/material/styles"
+
 import { Link } from "react-router-dom"
-import { ListItem, Typography } from "@material-tailwind/react"
+import { ReactNode } from "react"
 
 /**
  * Props for the MainMenuItem component
@@ -27,15 +32,29 @@ type MainMenuItemProps = {
  * @returns A clickable menu item with hover and selection states
  */
 export const MainMenuItem = ({ key, href, label, selected }: MainMenuItemProps) => {
+    const {palette, spacing} = useTheme<ExtendedTheme>()
     return (
-        <Link to={href} key={key}>
-            <ListItem 
-                className={`text-gray-100 hover:text-white hover:bg-gray-100/15 rounded-sm active:bg-gray-100/15 ${selected ? 'bg-gray-100/15' : 'bg-transparent'}`}
-            >
-                <Typography type='small'>
-                    {label}
-                </Typography>
-            </ListItem>
-        </Link>
+        <Button
+            component={Link}
+            to={href}
+            key={key}
+            variant="text"
+            size="small"
+            sx={{
+                height: 34,
+                minHeight: 34,
+                borderRadius: 0.8,
+                color: palette.slate[100],
+                backgroundColor: selected ? palette.slate[700] : 'transparent',
+                px: spacing(1.5),
+                '&:hover': {
+                    backgroundColor: selected ? palette.slate[700] : palette.slate[800],
+                },
+            }}
+        >
+            <Typography variant="body2" color="white" fontWeight={300}>
+                {label}
+            </Typography>
+        </Button>
     )
 }
