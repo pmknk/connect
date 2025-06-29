@@ -38,6 +38,6 @@ export const theme = createTheme({
         MuiOutlinedInput,
         MuiInputLabel,
         MuiInputBase,
-        MuiIconButton
+        MuiIconButton,
     }
 });

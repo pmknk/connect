@@ -1,14 +1,14 @@
-import { MainMenuItem } from '@avyyx/admin-ui';
+import { AppBarButton } from '@avyyx/admin-ui';
 import { FormattedMessage } from 'react-intl';
 import { useLocation } from 'react-router-dom';
 
 const PROJECTS_ROUTE = '/projects'
 
-export const ProjectsMainNavbarItem = () => {
+export const ProjectsAppBarButton = () => {
     const { pathname } = useLocation();
 
     return (
-        <MainMenuItem
+        <AppBarButton
             key={'projects'}
             href={PROJECTS_ROUTE}
             selected={pathname.includes(PROJECTS_ROUTE)}

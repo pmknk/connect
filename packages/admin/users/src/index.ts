@@ -1,4 +1,4 @@
-import { UsersMainNavbarItem } from "./lib/components/UsersMainNavbarItem";
+import { UsersAppBarButton } from "./lib/components/UsersAppBarButton";
 import Users from "./lib/users";
 
 export const users = () => ({
@@ -9,9 +9,9 @@ export const users = () => ({
     },  
     slots: [
         {
-            key: 'usersMainNavbarItem',
+            key: 'usersAppBarButton',
             slot: 'navbarLeftMenuItem',
-            component: UsersMainNavbarItem
+            component: UsersAppBarButton
         }
     ]
 })

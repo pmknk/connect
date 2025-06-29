@@ -10,7 +10,7 @@ import { ReactNode } from "react"
 /**
  * Props for the MainMenuItem component
  */
-type MainMenuItemProps = {
+type AppBarButtonProps = {
     /** Unique identifier for the menu item */
     key: string
     /** URL path for navigation */
@@ -31,7 +31,7 @@ type MainMenuItemProps = {
  * @param props.selected - Whether the menu item is currently selected
  * @returns A clickable menu item with hover and selection states
  */
-export const MainMenuItem = ({ key, href, label, selected }: MainMenuItemProps) => {
+export const AppBarButton = ({ key, href, label, selected }: AppBarButtonProps) => {
     const {palette, spacing} = useTheme<ExtendedTheme>()
     return (
         <Button

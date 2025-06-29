@@ -6,7 +6,7 @@ import { ExtendedTheme } from "../../types"
 /**
  * Props for the MainMenuIconItem component
  */
-type MainMenuIconItemProps = {
+type AppBarIconButtonProps = {
     /** Unique identifier for the menu item */
     key: string
     /** Icon element to display */
@@ -27,7 +27,7 @@ type MainMenuIconItemProps = {
  * @param props.selected - Whether the menu item is currently selected
  * @returns A ListItem component with icon and styling based on selection state
  */
-export const MainMenuIconItem = ({ key, icon, selected }: MainMenuIconItemProps) => {
+export const AppBarIconButton = ({ key, icon, selected }: AppBarIconButtonProps) => {
     const {palette} = useTheme<ExtendedTheme>()
     return (
         <IconButton

@@ -1,6 +1,10 @@
-import { FormField, FormTextarea } from '@avyyx/admin-ui';
+
 import { FormattedMessage } from 'react-intl';
 import { Control } from 'react-hook-form';
+
+import { FormField, FormTextarea } from '@avyyx/admin-ui';
+import Stack from '@mui/material/Stack';
+
 import { type CreateProjectFormData } from '../../../hooks/useCreateProjectForm';
 
 type CreateProjectFormProps = {
@@ -13,55 +17,56 @@ export const CreateProjectForm = ({
     isLoading
 }: CreateProjectFormProps) => {
     return (
-        <>
+        <Stack spacing={2}>
             <FormField
                 control={control}
                 name="name"
-                label={
-                    <FormattedMessage
-                        id="projects.create.name"
-                        defaultMessage="Name"
-                    />
-                }
                 inputProps={{
+                    labelPlacement: 'outside',
+                    label: (
+                        <FormattedMessage
+                            id="projects.create.name"
+                            defaultMessage="Name"
+                        />
+                    ),
                     type: 'text',
                     placeholder: 'My Project',
-                    size: 'lg',
-                    disabled: isLoading
+                    disabled: isLoading,
                 }}
             />
             <FormField
                 control={control}
                 name="slug"
-                label={
-                    <FormattedMessage
-                        id="projects.create.slug"
-                        defaultMessage="Slug"
-                    />
-                }
                 inputProps={{
+                    labelPlacement: 'outside',
+                    label: (
+                        <FormattedMessage
+                            id="projects.create.slug"
+                            defaultMessage="Slug"
+                        />
+                    ),
                     type: 'text',
                     placeholder: 'my-project',
-                    size: 'lg',
                     disabled: isLoading
                 }}
             />
-            <FormTextarea
+            {/* <FormField
                 control={control}
                 name="description"
-                label={
-                    <FormattedMessage
-                        id="projects.create.description"
-                        defaultMessage="Description"
-                    />
-                }
-                textareaProps={{
+                inputProps={{
+                    labelPlacement: 'outside',
+                    label: (
+                        <FormattedMessage
+                            id="projects.create.description"
+                            defaultMessage="Description"
+                        />
+                    ),
                     placeholder: 'My Project Description',
-                    size: 'lg',
                     disabled: isLoading,
-                    rows: 4
+                    multiline: true,
+                    rows: 4,
                 }}
-            />
-        </>
+            /> */}
+        </Stack>
     );
 };

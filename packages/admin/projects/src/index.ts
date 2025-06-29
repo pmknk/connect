@@ -1,4 +1,4 @@
-import { ProjectsMainNavbarItem } from "./lib/components/ProjectsMainNavbarItem";
+import { ProjectsAppBarButton } from "./lib/components/ProjectsAppBarButton";
 import Projects from "./lib/projects";
 
 export const projects = () => ({
@@ -9,9 +9,9 @@ export const projects = () => ({
     },  
     slots: [
         {
-            key: 'projectsMainNavbarItem',
+            key: 'projectsAppBarButton',
             slot: 'navbarLeftMenuItem',
-            component: ProjectsMainNavbarItem
+            component: ProjectsAppBarButton
         }
     ]
 })

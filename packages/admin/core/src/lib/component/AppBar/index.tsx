@@ -1,29 +1,28 @@
 // import { CircleUser, Bell } from 'lucide-react';
 // import { MainMenuIconItem } from '@avyyx/admin-ui';
 import { renderElement, usePlugins } from '@avyyx/admin-utils';
-import { ExtendedTheme, MainMenuIconItem } from '@avyyx/admin-ui';
+import { ExtendedTheme, AppBarIconButton } from '@avyyx/admin-ui';
 
 import { Fragment } from 'react/jsx-runtime';
 
 import { useTheme } from '@mui/material/styles';
-import AppBar from '@mui/material/AppBar';
+import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import Stack from '@mui/material/Stack';
-import Box from '@mui/material/Box';
 
 import { SLOTS } from '../../constants';
 import { Bell, CircleUser } from 'lucide-react';
 
-export const MainNavbar = () => {
+export const AppBar = () => {
     const {palette} = useTheme<ExtendedTheme>()
     const { getComponentsBySlot } = usePlugins();
     const navbarLeftMenuItems =
         getComponentsBySlot(SLOTS.NAVBAR_LEFT_MENU_ITEM) ?? [];
 
     return (
-        <AppBar position="static">
+        <MuiAppBar position="static">
             <Toolbar variant="dense" sx={{
                 backgroundColor: palette.slate[900],
                 height: 56,
@@ -48,13 +47,13 @@ export const MainNavbar = () => {
                     </Stack>
                 </Stack>
                 <Stack direction="row" alignItems="center" spacing={2}>
-                    <MainMenuIconItem
+                    <AppBarIconButton
                         key="bell"
                         icon={<Bell size={18} />}
                         label="Bell"
                         selected={false}
                     />
-                    <MainMenuIconItem
+                    <AppBarIconButton
                         key="profile"
                         icon={<CircleUser size={18} />}
                         label="Profile"
@@ -62,7 +61,7 @@ export const MainNavbar = () => {
                     />
                     </Stack>
             </Toolbar>
-        </AppBar>
+        </MuiAppBar>
     )
         
     // return (

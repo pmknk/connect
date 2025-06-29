@@ -16,6 +16,7 @@ export const LoginFooter = ({ isLoading }: LoginFooterProps) => {
                 color="primary"
                 loading={isLoading}
                 type="submit"
+                size="large"
             >
                 <FormattedMessage
                     id="auth.admin.pages.login.submit"

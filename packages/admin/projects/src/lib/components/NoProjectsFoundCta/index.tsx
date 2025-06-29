@@ -1,35 +1,50 @@
 import { FolderX } from 'lucide-react';
 import { FormattedMessage } from 'react-intl';
+
+import Box from '@mui/material/Box';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
+
+import { useTheme } from '@mui/material/styles';
+import { ExtendedTheme } from '@avyyx/admin-ui';
 import { PermissionAccess } from '@avyyx/admin-utils';
+
 import { CreateProject } from '../CreateProject';
 
 export const NoProjectsFoundCta = () => {
+    const {palette} = useTheme<ExtendedTheme>()
     return (
-        <div className="h-full pb-32">
-            <div className="flex flex-col items-center justify-center h-full gap-2 text-center [text-wrap:balance]">
-                <FolderX size={60} className="text-gray-400" strokeWidth={1} />
-                <h1 className="text-2xl">
-                    <FormattedMessage
-                        id="projects.empty"
-                        defaultMessage="No projects found"
-                    />
-                </h1>
-                <p className="text-gray-500">
-                    <FormattedMessage
-                        id="projects.empty.description"
-                        defaultMessage="You don't have any projects you are working on"
-                    />
-                </p>
-                <PermissionAccess
-                    permissions={[
-                        { action: 'create', resource: 'admin:project' }
-                    ]}
-                >
-                    <div className="mt-2">
-                        <CreateProject />
-                    </div>
-                </PermissionAccess>
-            </div>
-        </div>
-    );
+        <Stack 
+            direction="column" 
+            spacing={1} 
+            alignItems="center" 
+            justifyContent="center" 
+            height="100%"
+            paddingBottom={30}
+            textAlign="center"
+        >
+            <FolderX size={60} color={palette.slate[400]} strokeWidth={1} />
+            <Typography variant="h5">
+                <FormattedMessage
+                    id="projects.empty"
+                    defaultMessage="No projects found"
+                />
+            </Typography>
+            <Typography variant="body1" color="text.secondary">
+                <FormattedMessage
+                    id="projects.empty.description"
+                    defaultMessage="You don't have any projects you are working on"
+                />
+            </Typography>
+            <PermissionAccess
+                permissions={[
+                    { action: 'create', resource: 'admin:project' }
+                ]}
+            >
+                <Box paddingTop={2}>
+                    <CreateProject />
+                </Box>
+            </PermissionAccess>
+        </Stack>
+    )
 };

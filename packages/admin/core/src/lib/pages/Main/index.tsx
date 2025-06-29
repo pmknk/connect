@@ -1,11 +1,14 @@
+import { useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
+import Box from '@mui/material/Box';
+
 import { useErrorBoundary } from '@avyyx/admin-utils';
 import { FullPageLoader } from '@avyyx/admin-ui';
-import { MainNavbar } from '../../component/MainNavbar';
+
+import { AppBar } from '../../component/AppBar';
 import { useMeQuery } from '../../hooks/useMeQuery';
 import { usePermissionsQuery } from '../../hooks/usePermissionsQuery';
-import { useEffect } from 'react';
 
 const Main = () => {
     const { showError } = useErrorBoundary();
@@ -34,12 +37,12 @@ const Main = () => {
     }
 
     return (
-        <div className="h-full">
-            <MainNavbar />
-            <div className="h-full">
+        <Box height="100%">
+            <AppBar />
+            <Box height="100%">
                 <Outlet />
-            </div>
-        </div>
+            </Box>
+        </Box>
     );
 };
 

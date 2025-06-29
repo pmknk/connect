@@ -124,13 +124,10 @@ export const useCreateProjectForm = () => {
     const name = form.watch('name');
 
     useEffect(() => {
-        if (name) {
-            form.setValue(
-                'slug',
-                name.toLowerCase().replace(/[^a-z0-9]/g, '-')
-            );
-            form.trigger('slug');
-        }
+        form.setValue(
+            'slug',
+            name ? name.toLowerCase().replace(/[^a-z0-9]/g, '-') : ''
+        );
     }, [name]);
 
     return form;
