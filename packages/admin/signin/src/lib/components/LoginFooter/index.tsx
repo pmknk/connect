@@ -1,5 +1,7 @@
-import { Button, Spinner, Typography } from "@material-tailwind/react";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage } from 'react-intl';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import Link from '@mui/material/Link';
 
 interface LoginFooterProps {
     isLoading: boolean;
@@ -8,33 +10,44 @@ interface LoginFooterProps {
 export const LoginFooter = ({ isLoading }: LoginFooterProps) => {
     return (
         <>
-            <Button type="submit" isFullWidth size="lg" className="mb-4" disabled={isLoading}>
-                {isLoading && <Spinner size="sm" className="mr-2" />}
-                <FormattedMessage id="auth.admin.pages.login.submit" defaultMessage="Sign in" />
-            </Button>
-            <Typography
-                as="p"
-                type="small"
-                className="text-center block mx-auto max-w-xs text-foreground"
+            <Button
+                fullWidth
+                variant="contained"
+                color="primary"
+                loading={isLoading}
+                type="submit"
             >
-                <FormattedMessage 
-                    id="auth.admin.pages.login.terms" 
-                    defaultMessage="By signing in, you consent to abide by our" 
-                />{" "}
-                <a href="#" className="text-orange-500 dark:text-white">
-                    <FormattedMessage 
-                        id="auth.admin.pages.login.terms.link" 
-                        defaultMessage="Terms of Service" 
+                <FormattedMessage
+                    id="auth.admin.pages.login.submit"
+                    defaultMessage="Sign in"
+                />
+            </Button>
+
+            <Typography
+                component="p"
+                variant="body2"
+                color="text.secondary"
+                textAlign="center"
+                px={6}
+            >
+                <FormattedMessage
+                    id="auth.admin.pages.login.terms"
+                    defaultMessage="By signing in, you consent to abide by our"
+                />{' '}
+                <Link href="#">
+                    <FormattedMessage
+                        id="auth.admin.pages.login.terms.link"
+                        defaultMessage="Terms of Service"
                     />
-                </a>{" "}
-                &{" "}
-                <a href="#" className="text-orange-500 dark:text-white">
-                    <FormattedMessage 
-                        id="auth.admin.pages.login.terms.link" 
-                        defaultMessage="Privacy Policy" 
+                </Link>{' '}
+                &{' '}
+                <Link href="#">
+                    <FormattedMessage
+                        id="auth.admin.pages.login.terms.link"
+                        defaultMessage="Privacy Policy"
                     />
-                </a>
+                </Link>
             </Typography>
         </>
     );
-}; 
+};

@@ -1,6 +1,6 @@
 import { IntlProvider } from 'react-intl';
 import { Provider as ReduxStoreProvider } from 'react-redux';
-import { Router } from './router';
+import { ThemeProvider } from '@mui/material';
 
 import { 
     store,
@@ -9,7 +9,9 @@ import {
     ErrorBoundary,
     PluginDefinition,
 } from '@avyyx/admin-utils';
-import { InternalServerError } from '@avyyx/admin-ui';
+import { InternalServerError, theme } from '@avyyx/admin-ui';
+
+import { Router } from './router';
 
 type CoreProps = {
     environment: {
@@ -21,19 +23,21 @@ type CoreProps = {
 
 export function Core({ environment, plugins = [] }: CoreProps) {
     return (
-        <IntlProvider locale={'en'}>
-            <ErrorBoundary
-                fallback={InternalServerError}
-            >
-                <HttpClientProvider api={environment.api}>
-                    <ReduxStoreProvider store={store}>
-                        <PluginsRegistryProvider plugins={plugins}>
-                            <Router />
-                        </PluginsRegistryProvider>
-                    </ReduxStoreProvider>
-                </HttpClientProvider>
-            </ErrorBoundary>
-        </IntlProvider>
+        <ThemeProvider theme={theme}>
+            <IntlProvider locale={'en'}>
+                <ErrorBoundary
+                    fallback={InternalServerError}
+                >
+                    <HttpClientProvider api={environment.api}>
+                        <ReduxStoreProvider store={store}>
+                            <PluginsRegistryProvider plugins={plugins}>
+                                <Router />
+                            </PluginsRegistryProvider>
+                        </ReduxStoreProvider>
+                    </HttpClientProvider>
+                </ErrorBoundary>
+            </IntlProvider>
+        </ThemeProvider>
     );
 }
 

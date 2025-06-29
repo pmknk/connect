@@ -1,4 +1,8 @@
-import { Card, Typography  } from "@material-tailwind/react"
+import Stack from "@mui/material/Stack"
+import Typography from "@mui/material/Typography"
+
+import { useTheme } from "@mui/material/styles"
+import { ExtendTheme } from "packages/admin/ui/src"
 
 type FormWrapperProps = {
     title: string | React.ReactNode
@@ -9,26 +13,33 @@ type FormWrapperProps = {
 }
 
 export const FormWrapper = ({ title, subtitle, body, footer, onSubmit }: FormWrapperProps) => {
+    const theme = useTheme<ExtendTheme>();
     return (
-        <div className="flex h-full overflow-auto">
-            <form onSubmit={onSubmit} className="mx-auto flex-grow flex flex-col items-center py-14 overflow-auto m-auto">
-                <Card variant="ghost" className="max-w-md mx-auto">
-                    <Card.Header className="p-6 m-0 w-full text-center">
-                        <Typography as="h2" type="h5" color="default" className="mb-2 mt-4">
+        <Stack
+            direction="row"
+            justifyContent="center"
+            alignItems="center"
+            height="100%"
+            overflow="auto"
+        >
+            <form onSubmit={onSubmit}>
+                <Stack maxWidth={390} spacing={4}>
+                    <Stack spacing={1} textAlign="center">
+                        <Typography variant="h5">
                             {title}
                         </Typography>
-                        <Typography className="text-foreground max-w-xs mx-auto">
+                        <Typography variant="body1" color="text.secondary">
                             {subtitle}
                         </Typography>
-                    </Card.Header>
-                    <Card.Body className="p-6 space-y-4">
+                    </Stack>
+                    <Stack spacing={4}>
                         {body}
-                    </Card.Body>
-                    <Card.Footer className="p-6 space-y-4">
+                    </Stack>
+                    <Stack spacing={4}>
                         {footer}
-                    </Card.Footer>
-                </Card>
+                    </Stack>
+                </Stack>
             </form>
-        </div>
+        </Stack>
     )
 }
