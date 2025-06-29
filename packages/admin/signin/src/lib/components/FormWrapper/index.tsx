@@ -1,9 +1,6 @@
 import Stack from "@mui/material/Stack"
 import Typography from "@mui/material/Typography"
 
-import { useTheme } from "@mui/material/styles"
-import { ExtendTheme } from "packages/admin/ui/src"
-
 type FormWrapperProps = {
     title: string | React.ReactNode
     subtitle: string | React.ReactNode
@@ -13,7 +10,6 @@ type FormWrapperProps = {
 }
 
 export const FormWrapper = ({ title, subtitle, body, footer, onSubmit }: FormWrapperProps) => {
-    const theme = useTheme<ExtendTheme>();
     return (
         <Stack
             direction="row"

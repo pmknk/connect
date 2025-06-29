@@ -1,10 +1,20 @@
 import { createTheme } from '@mui/material/styles';
 import { colors } from './colors';
 import { breakpoints } from './breakpoints';
+
 import { MuiButton } from './components/MuiButton';
+import { MuiLink } from './components/MuiLink';
+import { MuiTextField } from './components/MuiTextField';
+import { MuiAlert } from './components/MuiAlert';
+import { MuiOutlinedInput } from './components/MuiOutlinedInput';
+import { MuiInputLabel } from './components/MuiInputLabel';
+import { MuiInputBase } from './components/MuiInputBase';
 
 export const theme = createTheme({
     breakpoints: breakpoints,
+    shape: {
+        borderRadius: '0.8rem',
+    },
     palette: {
         ...colors,
         action: {
@@ -20,14 +30,12 @@ export const theme = createTheme({
         fontFamily: 'Inter, sans-serif',
     },
     components: {
-        MuiButton: MuiButton,
-        MuiLink: {
-            styleOverrides: {
-                root: {
-                    color: colors.orange[500],
-                    textDecoration: 'none',
-                },
-            },
-        },
+        MuiButton,
+        MuiLink,
+        MuiTextField,
+        MuiAlert,
+        MuiOutlinedInput,
+        MuiInputLabel,
+        MuiInputBase,
     }
 });

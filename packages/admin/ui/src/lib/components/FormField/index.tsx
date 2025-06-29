@@ -1,5 +1,9 @@
+import Stack from "@mui/material/Stack"
+import Typography from "@mui/material/Typography"
+import TextField, { type TextFieldProps } from "@mui/material/TextField"
+
+import { useTheme } from "@mui/material/styles"
 import { Control, Controller, useFormState } from "react-hook-form"
-import { Input, InputProps, Typography } from "@material-tailwind/react"
 
 /**
  * Props for the FormField component
@@ -10,9 +14,10 @@ type FormFieldProps = {
     /** React Hook Form control object for managing form state */
     control: Control<any>
     /** Label text or element to display above the input field */
-    label: string | React.ReactNode
     /** Optional props to pass to the underlying Input component */
-    inputProps?: InputProps
+    inputProps?: TextFieldProps & {
+        labelPlacement?: 'outside'
+    }
 }
 
 /**
@@ -29,8 +34,9 @@ type FormFieldProps = {
  * @param props.inputProps - Optional props to pass to the underlying Input component
  * @returns A form field with label, input, and error display
  */
-export const FormField = ({ control, name, label, inputProps }: FormFieldProps) => {
+export const FormField = ({ control, name, inputProps }: FormFieldProps) => {
     const { errors } = useFormState({ control })
+    const theme = useTheme()
     return (
         <Controller
             name={name}
@@ -39,29 +45,27 @@ export const FormField = ({ control, name, label, inputProps }: FormFieldProps) 
             render={({ field }) => {
                 const error = errors[name]
                 return (
-                    <div className="space-y-1">
-                        <Typography
-                            as="label"
-                            htmlFor={name}
-                            type="small"
-                            color="default"
-                            className="font-semibold"
-                        >
-                            {label}
-                        </Typography>
-                        <Input
-                            id={name} 
-                            {...inputProps}
-                            {...field} 
-                            isError={!!error}
-                            color={error ? "error" : (inputProps?.color || "primary")}
-                        />
-                        {error && (
-                            <Typography type="small" color="error" className="mt-1 block">
-                                {error.message}
+                    <Stack spacing={1} sx={{
+                        opacity: inputProps?.disabled ? 0.5 : 1,
+                    }}>
+                        {inputProps?.labelPlacement === 'outside' && (
+                            <Typography component="label" htmlFor={name} sx={{
+                                fontSize: '0.875rem',
+                                lineHeight: '1rem',
+                                marginLeft: '0.25rem',
+                                color: error ? theme.palette.error.main : theme.palette.text.primary,
+                            }}>
+                                {inputProps?.label}
                             </Typography>
                         )}
-                    </div>
+                        <TextField
+                            error={!!error}
+                            {...inputProps}
+                            {...field}
+                            label={inputProps?.labelPlacement === 'outside' ? undefined : inputProps?.label}
+                            helperText={error ? error.message as string : inputProps?.helperText as string}
+                        />
+                    </Stack>
                 )
             }}
         />

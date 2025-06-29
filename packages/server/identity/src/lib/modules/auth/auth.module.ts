@@ -48,5 +48,10 @@ export class AuthModule {
                     request as FastifyRequest & { user: User | null }
                 );
         });
+
+        fastify.addHook('onRequest', async (request, reply) => {
+            await new Promise(resolve => setTimeout(resolve, 500));
+            console.log('onRequest');
+        });
     }
 }

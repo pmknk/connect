@@ -1,8 +1,9 @@
 import { FormField } from '@avyyx/admin-ui';
-import { Alert } from '@material-tailwind/react';
+import { Alert, AlertTitle } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 import { Control } from 'react-hook-form';
 import { AlertCircle } from 'lucide-react';
+
 
 interface LoginBodyProps {
     control: Control<any>;
@@ -18,48 +19,49 @@ export const LoginBody = ({
     return (
         <>
             {isUnauthorized && !isLoading && (
-                <Alert color="error">
-                    <Alert.Icon className="mt-1">
-                        <AlertCircle size={20} />
-                    </Alert.Icon>
-                    <Alert.Content className="leading-normal">
+                <Alert color="error" icon={<AlertCircle size={20} />}>
+                    <AlertTitle>
                         <FormattedMessage
                             id="auth.admin.pages.login.unauthorized"
-                            defaultMessage="The email address or password you entered is incorrect. Please double-check your credentials and try again."
+                            defaultMessage="Authorization failed"
                         />
-                    </Alert.Content>
+                    </AlertTitle>
+                    <FormattedMessage
+                        id="auth.admin.pages.login.unauthorized"
+                        defaultMessage="The email address or password you entered is incorrect. Please double-check your credentials and try again."
+                    />
                 </Alert>
             )}
             <FormField
                 control={control}
                 name="email"
-                label={
-                    <FormattedMessage
-                        id="auth.admin.pages.login.email"
-                        defaultMessage="Email"
-                    />
-                }
                 inputProps={{
+                    labelPlacement: 'outside',
+                    label: (
+                        <FormattedMessage
+                            id="auth.admin.pages.login.email"
+                            defaultMessage="Email"
+                        />
+                    ),
                     type: 'email',
                     placeholder: 'john@doe.com',
-                    size: 'lg',
                     disabled: isLoading
                 }}
             />
             <FormField
                 control={control}
                 name="password"
-                label={
-                    <FormattedMessage
-                        id="auth.admin.pages.login.password"
-                        defaultMessage="Password"
-                    />
-                }
                 inputProps={{
                     type: 'password',
                     placeholder: '••••••••••••',
-                    size: 'lg',
-                    disabled: isLoading
+                    disabled: isLoading,
+                    labelPlacement: 'outside',
+                    label: (
+                        <FormattedMessage
+                            id="auth.admin.pages.login.password"
+                            defaultMessage="Password"
+                        />
+                    ),
                 }}
             />
         </>
