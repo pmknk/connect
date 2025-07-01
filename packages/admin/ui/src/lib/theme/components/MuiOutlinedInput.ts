@@ -9,7 +9,6 @@ export const MuiOutlinedInput = {
         },
         input: {
             padding: '0.75rem',
-            lineHeight: '100px'
         }
     },
 }; 

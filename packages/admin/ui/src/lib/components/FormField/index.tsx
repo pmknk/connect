@@ -37,6 +37,9 @@ type FormFieldProps = {
 export const FormField = ({ control, name, inputProps }: FormFieldProps) => {
     const { errors } = useFormState({ control })
     const theme = useTheme()
+
+    const isTextarea = inputProps?.multiline
+
     return (
         <Controller
             name={name}
@@ -59,11 +62,19 @@ export const FormField = ({ control, name, inputProps }: FormFieldProps) => {
                             </Typography>
                         )}
                         <TextField
-                            error={!!error}
                             {...inputProps}
                             {...field}
+                            value={field.value || ''}
+                            error={!!error}
                             label={inputProps?.labelPlacement === 'outside' ? undefined : inputProps?.label}
                             helperText={error ? error.message as string : inputProps?.helperText as string}
+                            sx={{
+                                '& .MuiInputBase-root': {
+                                    lineHeight: isTextarea ? undefined : 12,
+                                    height: isTextarea ? 'auto' : undefined,
+                                    padding: 0
+                                },
+                            }}
                         />
                     </Stack>
                 )

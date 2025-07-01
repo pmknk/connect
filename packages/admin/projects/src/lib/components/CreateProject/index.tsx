@@ -33,12 +33,17 @@ export const CreateProject = () => {
                     <CreateProjectForm
                         control={control}
                         isLoading={false}
-                    />
+                     />
                 )}
                 actions={(
-                    <div>
-                        abc 
-                    </div>
+                    <Button variant="contained" color="primary" onClick={handleSubmit((data) => {
+                        console.log(data)
+                    })}>
+                        <FormattedMessage
+                            id="projects.create.button"
+                            defaultMessage="Create"
+                        />
+                    </Button>
                 )}
             />
         </>

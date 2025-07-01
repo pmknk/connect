@@ -116,7 +116,7 @@ export const useCreateProjectForm = () => {
     const form = useForm<CreateProjectFormData>({
         resolver: ajvResolver(schema, {
             allErrors: true,
-            strict: false,
+            strict: true,
             $data: true
         })
     });
@@ -128,6 +128,7 @@ export const useCreateProjectForm = () => {
             'slug',
             name ? name.toLowerCase().replace(/[^a-z0-9]/g, '-') : ''
         );
+        form.clearErrors('slug');
     }, [name]);
 
     return form;

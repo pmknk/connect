@@ -9,6 +9,7 @@ import DialogTitle from "@mui/material/DialogTitle"
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import { useTheme } from "@mui/material/styles";
+import Button from "@mui/material/Button";
 
 type CreateProjectDialogProps = {
     open: boolean;
@@ -56,8 +57,11 @@ export const CreateProjectDialog = ({ open, onClose, content, actions }: CreateP
             <DialogContent>
                 {content}
             </DialogContent>
-            <DialogActions>
-
+            <DialogActions sx={{
+                px: 3,
+                py: 2,
+            }}>
+                {actions}
             </DialogActions>
         </Dialog>
     )

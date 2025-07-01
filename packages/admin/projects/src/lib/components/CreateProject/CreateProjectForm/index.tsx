@@ -2,10 +2,12 @@
 import { FormattedMessage } from 'react-intl';
 import { Control } from 'react-hook-form';
 
-import { FormField, FormTextarea } from '@avyyx/admin-ui';
+import { FormField, FormSelect } from '@avyyx/admin-ui';
 import Stack from '@mui/material/Stack';
 
 import { type CreateProjectFormData } from '../../../hooks/useCreateProjectForm';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
 
 type CreateProjectFormProps = {
     control: Control<CreateProjectFormData>;
@@ -56,7 +58,7 @@ export const CreateProjectForm = ({
                     )
                 }}
             />
-            {/* <FormField
+            <FormField
                 control={control}
                 name="description"
                 inputProps={{
@@ -72,7 +74,40 @@ export const CreateProjectForm = ({
                     multiline: true,
                     rows: 4,
                 }}
-            /> */}
+            />
+            <FormSelect
+                control={control}
+                name="iconName"
+                selectProps={{
+                    labelPlacement: 'outside',
+                    label: (
+                        <FormattedMessage
+                            id="projects.create.users"
+                            defaultMessage="Users"
+                        />
+                    ),
+                    helperText: (
+                        <FormattedMessage
+                            id="projects.create.users.description"
+                            defaultMessage="Select the users who will be able to access this project."
+                        />
+                    ),
+                }}
+                options={[
+                    {
+                        label: 'John Doe',
+                        value: 'john-doe',
+                    },
+                    {
+                        label: 'Jane Doe',
+                        value: 'jane-doe',
+                    },
+                    {
+                        label: 'Jim Doe',
+                        value: 'jim-doe',
+                    },
+                ]}
+            />
         </Stack>
     );
 };
