@@ -5,7 +5,6 @@ export const MuiButton: Components['MuiButton'] = {
         root: {
             textTransform: 'none',
             boxShadow: 'none',
-            borderRadius: '0.8rem',
             fontWeight: 500,
             '&:hover': {
                 boxShadow: 'none',

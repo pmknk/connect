@@ -17,7 +17,7 @@ export const CreateProjectForm = ({
     isLoading
 }: CreateProjectFormProps) => {
     return (
-        <Stack spacing={2}>
+        <Stack spacing={3}>
             <FormField
                 control={control}
                 name="name"
@@ -47,7 +47,13 @@ export const CreateProjectForm = ({
                     ),
                     type: 'text',
                     placeholder: 'my-project',
-                    disabled: isLoading
+                    disabled: isLoading,
+                    helperText: (
+                        <FormattedMessage
+                            id="projects.create.slug.description"
+                            defaultMessage="A unique identifier for your project that will be used in URLs and API requests. This cannot be changed once the project is created."
+                        />
+                    )
                 }}
             />
             {/* <FormField

@@ -23,7 +23,7 @@ export const NoProjectsFoundCta = () => {
             paddingBottom={30}
             textAlign="center"
         >
-            <FolderX size={60} color={palette.slate[400]} strokeWidth={1} />
+            <FolderX size={60} color={palette.primary.main} strokeWidth={1} />
             <Typography variant="h5">
                 <FormattedMessage
                     id="projects.empty"

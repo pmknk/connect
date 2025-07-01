@@ -14,7 +14,7 @@ import { MuiIconButton } from './components/MuiIconButton';
 export const theme = createTheme({
     breakpoints: breakpoints,
     shape: {
-        borderRadius: '0.8rem',
+        borderRadius: '0.6rem',
     },
     palette: {
         ...colors,

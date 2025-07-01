@@ -52,7 +52,7 @@ export const FormField = ({ control, name, inputProps }: FormFieldProps) => {
                             <Typography component="label" htmlFor={name} sx={{
                                 fontSize: '0.875rem',
                                 lineHeight: '1rem',
-                                marginLeft: '0.25rem',
+                                marginLeft: '0.25rem !important',
                                 color: error ? theme.palette.error.main : theme.palette.text.primary,
                             }}>
                                 {inputProps?.label}
