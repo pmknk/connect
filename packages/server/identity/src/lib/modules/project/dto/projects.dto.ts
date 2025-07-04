@@ -6,8 +6,6 @@ export type ProjectsResponseDto = {
         slug: string;
         name: string;
         description?: string;
-        icon?: string;
-        color?: string;
         users: {
             id: string;
             fullName: string;
@@ -25,8 +23,6 @@ export const toProjectsResponseDto = (
             slug: project.slug,
             name: project.name,
             description: project.description,
-            icon: project.icon,
-            color: project.color,
             users: project.users.map((user) => ({
                 id: user.id,
                 fullName: user.fullName,

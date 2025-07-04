@@ -1,4 +1,4 @@
-import { EntryService, Transaction } from '@avyyx/server-database';
+import { EntryService, FindPayload, Transaction } from '@avyyx/server-database';
 import { injectable } from 'inversify';
 import { User } from './user.schema';
 
@@ -20,9 +20,9 @@ export class UserRepository {
      * @returns {Promise<User>} The created user
      */
     async create(
-        userDto: Omit<User, 'id' | 'createdAt' | 'updatedAt' | 'deletedAt'>,
+        userDto: Omit<User, 'id' | 'createdAt' | 'updatedAt' | 'deletedAt' | 'projects' | 'roles'>,
         transaction: Transaction
-    ) {
+    ): Promise<User> {
         return await this.entryService.create<User>({
             schema: 'Users',
             values: userDto,
@@ -37,8 +37,8 @@ export class UserRepository {
      * @param transaction - The database transaction to use
      * @returns {Promise<any>} The created user-role association
      */
-    async addRole(userId: string, roleId: string, transaction: Transaction) {
-        return await this.entryService.create({
+    async addRole(userId: string, roleId: string, transaction: Transaction): Promise<void> {
+        await this.entryService.create({
             schema: 'UserRoles',
             values: { userId, roleId },
             transaction
@@ -50,7 +50,7 @@ export class UserRepository {
      * @param slug - The role slug to search for
      * @returns {Promise<User | null>} The found user or null if not found
      */
-    async findByRoleSlug(slug: string) {
+    async findByRoleSlug(slug: string): Promise<User | null> {
         return await this.entryService.findOne<User>({
             schema: 'Users',
             include: [
@@ -69,7 +69,7 @@ export class UserRepository {
      * @param email - The email to search for
      * @returns {Promise<User | null>} The found user or null if not found
      */
-    async findByEmail(email: string) {
+    async findByEmail(email: string): Promise<User | null> {
         return await this.entryService.findOne<User>({
             schema: 'Users',
             where: { email }
@@ -81,10 +81,29 @@ export class UserRepository {
      * @param id - The ID of the user
      * @returns {Promise<User | null>} The found user or null if not found
      */
-    async findById(id: string) {
+    async findById(id: string): Promise<User | null> {
         return await this.entryService.findOne<User>({
             schema: 'Users',
             where: { id }
         });
+    }
+
+    /**
+     * Finds all users with pagination
+     * @param findOptions - The options for finding users
+     * @returns {Promise<{ count: number, users: User[] }>} The count and users
+     */
+    async findAllPaginated(findOptions: Omit<FindPayload<User>, 'schema'>): Promise<{ count: number; users: User[]; }> {
+        const count = await this.entryService.count<User>({
+            ...findOptions,
+            schema: 'Users',
+        });
+
+        const users = await this.entryService.find<User>({
+            ...findOptions,
+            schema: 'Users',
+        });
+
+        return { count, users };
     }
 }

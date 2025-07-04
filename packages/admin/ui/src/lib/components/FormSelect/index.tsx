@@ -4,7 +4,6 @@ import Typography from "@mui/material/Typography"
 import { useTheme } from "@mui/material/styles"
 import { Control, Controller, useFormState } from "react-hook-form"
 import Select, { type SelectProps } from "@mui/material/Select"
-import MenuItem from "@mui/material/MenuItem"
 import FormHelperText from "@mui/material/FormHelperText"
 
 /**
@@ -16,17 +15,12 @@ type FormSelectProps = {
     /** React Hook Form control object for managing form state */
     control: Control<any>
     /** Options to display in the select dropdown */
-    options: {
-        label: string
-        value: string
-    }[]
     /** Optional props to pass to the underlying Select component */
     selectProps?: SelectProps & {
         labelPlacement?: 'outside'
         helperText?: React.ReactNode | string
     }
-    /** Optional component to render each option */
-    renderOption?: (option: { label: string; value: string }) => React.ReactNode
+    children?: SelectProps['children']
 }
 
 /**
@@ -44,7 +38,7 @@ type FormSelectProps = {
  * @param props.renderOption - Optional component to render each option
  * @returns A form field with label, select, and error display
  */
-export const FormSelect = ({ control, name, options, selectProps, renderOption }: FormSelectProps) => {
+export const FormSelect = ({ control, name, selectProps, children }: FormSelectProps) => {
     const { errors } = useFormState({ control })
     const theme = useTheme()
 
@@ -76,11 +70,7 @@ export const FormSelect = ({ control, name, options, selectProps, renderOption }
                             error={!!error}
                             label={selectProps?.labelPlacement === 'outside' ? undefined : selectProps?.label}
                         >
-                            {options.map((option) => (
-                                <MenuItem key={option.value} value={option.value}>
-                                    {renderOption ? renderOption(option) : option.label}
-                                </MenuItem>
-                            ))}
+                            {children}
                         </Select>
                         {error && (
                             <FormHelperText error>

@@ -1,23 +1,73 @@
 
-import { FormattedMessage } from 'react-intl';
+import { defineMessages, FormattedMessage, useIntl } from 'react-intl';
 import { Control } from 'react-hook-form';
 
-import { FormField, FormSelect } from '@avyyx/admin-ui';
+import { ExtendedTheme, FormField, FormSelect } from '@avyyx/admin-ui';
 import Stack from '@mui/material/Stack';
 
 import { type CreateProjectFormData } from '../../../hooks/useCreateProjectForm';
-import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
+import Typography from '@mui/material/Typography';
+import { useTheme } from '@mui/material/styles';
 
 type CreateProjectFormProps = {
     control: Control<CreateProjectFormData>;
     isLoading: boolean;
 };
 
+const intlMessages = defineMessages({
+    name: {
+        id: 'projects.create.name',
+        defaultMessage: 'Name',
+    },
+    slug: {
+        id: 'projects.create.slug',
+        defaultMessage: 'Slug',
+    },
+    slugDescription: {
+        id: 'projects.create.slug.description',
+        defaultMessage: 'A unique identifier for your project that will be used in URLs and API requests. This cannot be changed once the project is created.',
+    },
+    description: {
+        id: 'projects.create.description',
+        defaultMessage: 'Description',
+    },
+    users: {
+        id: 'projects.create.users',
+        defaultMessage: 'Users',
+    },
+    usersDescription: {
+        id: 'projects.create.users.description',
+        defaultMessage: 'Select the users who will be able to access this project.',
+    },
+    descriptionPlaceholder: {
+        id: 'projects.create.description.placeholder',
+        defaultMessage: 'My Project Description',
+    },
+    namePlaceholder: {
+        id: 'projects.create.name.placeholder',
+        defaultMessage: 'My Project',
+    },
+    slugPlaceholder: {
+        id: 'projects.create.slug.placeholder',
+        defaultMessage: 'my-project',
+    },
+    usersPlaceholder: {
+        id: 'projects.create.users.placeholder',
+        defaultMessage: 'Select Users',
+    },
+    usersHelperText: {
+        id: 'projects.create.users.helperText',
+    }
+})
+
 export const CreateProjectForm = ({
     control,
     isLoading
 }: CreateProjectFormProps) => {
+    const { formatMessage } = useIntl();
+    const { palette } = useTheme<ExtendedTheme>()
+    
     return (
         <Stack spacing={3}>
             <FormField
@@ -26,13 +76,10 @@ export const CreateProjectForm = ({
                 inputProps={{
                     labelPlacement: 'outside',
                     label: (
-                        <FormattedMessage
-                            id="projects.create.name"
-                            defaultMessage="Name"
-                        />
+                        formatMessage(intlMessages.name)
                     ),
                     type: 'text',
-                    placeholder: 'My Project',
+                    placeholder: formatMessage(intlMessages.namePlaceholder),
                     disabled: isLoading,
                 }}
             />
@@ -42,13 +89,10 @@ export const CreateProjectForm = ({
                 inputProps={{
                     labelPlacement: 'outside',
                     label: (
-                        <FormattedMessage
-                            id="projects.create.slug"
-                            defaultMessage="Slug"
-                        />
+                        formatMessage(intlMessages.slug)
                     ),
                     type: 'text',
-                    placeholder: 'my-project',
+                    placeholder: formatMessage(intlMessages.slugPlaceholder),
                     disabled: isLoading,
                     helperText: (
                         <FormattedMessage
@@ -64,12 +108,9 @@ export const CreateProjectForm = ({
                 inputProps={{
                     labelPlacement: 'outside',
                     label: (
-                        <FormattedMessage
-                            id="projects.create.description"
-                            defaultMessage="Description"
-                        />
+                        formatMessage(intlMessages.description)
                     ),
-                    placeholder: 'My Project Description',
+                    placeholder: formatMessage(intlMessages.descriptionPlaceholder),
                     disabled: isLoading,
                     multiline: true,
                     rows: 4,
@@ -81,33 +122,33 @@ export const CreateProjectForm = ({
                 selectProps={{
                     labelPlacement: 'outside',
                     label: (
-                        <FormattedMessage
-                            id="projects.create.users"
-                            defaultMessage="Users"
-                        />
+                        formatMessage(intlMessages.users)
                     ),
                     helperText: (
-                        <FormattedMessage
-                            id="projects.create.users.description"
-                            defaultMessage="Select the users who will be able to access this project."
-                        />
+                        formatMessage(intlMessages.usersDescription)
                     ),
+                    displayEmpty: true,
+                    renderValue: (value) => {
+                        if (!value) {
+                            return (
+                                <Typography color={'text.primary'} sx={{
+                                    fontSize: '14px',
+                                    fontWeight: 400,
+                                    opacity: 0.4,
+                                }}>
+                                    {formatMessage(intlMessages.usersPlaceholder)}
+                                </Typography>
+                            )
+                        }
+
+                        return 'abc'
+                    }
                 }}
-                options={[
-                    {
-                        label: 'John Doe',
-                        value: 'john-doe',
-                    },
-                    {
-                        label: 'Jane Doe',
-                        value: 'jane-doe',
-                    },
-                    {
-                        label: 'Jim Doe',
-                        value: 'jim-doe',
-                    },
-                ]}
-            />
+            >
+                <MenuItem value="john-doe">John Doe</MenuItem>
+                <MenuItem value="jane-doe">Jane Doe</MenuItem>
+                <MenuItem value="jim-doe">Jim Doe</MenuItem>
+            </FormSelect>
         </Stack>
     );
 };

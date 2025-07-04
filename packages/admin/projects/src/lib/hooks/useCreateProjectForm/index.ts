@@ -15,10 +15,6 @@ export interface CreateProjectFormData {
     slug: string;
     /** Project description */
     description: string;
-    /** Icon name for the project */
-    iconName: string;
-    /** Icon color for the project */
-    iconColor: string;
     /** Array of user IDs associated with the project */
     users: string[];
 }
@@ -103,8 +99,6 @@ export const useCreateProjectForm = () => {
                         )
                     }
                 },
-                iconName: { type: 'string' },
-                iconColor: { type: 'string' },
                 users: { type: 'array', items: { type: 'string' } }
             },
             required: ['name', 'slug'],

@@ -32,14 +32,6 @@ export const ProjectSchema: SchemaDefinition = {
             type: 'string',
             nullable: true
         },
-        icon: {
-            type: 'string',
-            nullable: true
-        },
-        color: {
-            type: 'string',
-            nullable: true
-        },
         users: {
             type: 'relation',
             relationType: 'belongsToMany',

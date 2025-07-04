@@ -1,4 +1,4 @@
-import { BelongsToManyOptions, BelongsToOptions, CreateOptions, FindOptions, HasManyOptions, HasOneOptions, ModelValidateOptions, Transaction as SequelizeTransaction } from "sequelize";
+import { BelongsToManyOptions, BelongsToOptions, CountOptions, CreateOptions, FindOptions, HasManyOptions, HasOneOptions, ModelValidateOptions, Transaction as SequelizeTransaction } from "sequelize";
 
 /**
  * Supported data types for schema fields
@@ -91,6 +91,8 @@ export type BaseFindOptions<T> = {
 
 export type FindOnePayload<T> = BaseFindOptions<T> & FindOptions<T>;
 export type FindPayload<T> = BaseFindOptions<T> & FindOptions<T>;
+export type CountPayload<T> = BaseFindOptions<T> & CountOptions<T>;
+
 export type CreateOnePayload<T> = BaseFindOptions<T> & CreateOptions<T> & {
     values: Partial<T>;
 }

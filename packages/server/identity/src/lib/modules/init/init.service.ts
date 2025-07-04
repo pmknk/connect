@@ -1,4 +1,4 @@
-import { ConnectionService } from '@avyyx/server-database';
+import { ConnectionService, Transaction } from '@avyyx/server-database';
 import { ConflictError, NotFoundError } from '@avyyx/server-utils';
 import { injectable } from 'inversify';
 
@@ -57,7 +57,7 @@ export class InitService {
     private async createUserWithRole(
         dto: InitAdminUserDto,
         roleId: string,
-        transaction: any
+        transaction: Transaction
     ) {
         const { salt, hash } = generateHash(dto.password);
 

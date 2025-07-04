@@ -1,5 +1,7 @@
 import { SchemaDefinition } from '@avyyx/server-database';
 import { v4 as uuidv4 } from 'uuid';
+import type { Project } from '../project/project.schema';
+import type { Role } from '../role/role.schema';
 
 export interface User {
     id: string;
@@ -10,6 +12,8 @@ export interface User {
     createdAt: Date;
     updatedAt: Date;
     deletedAt: Date;
+    projects: Project[];
+    roles: Role[];
 }
 
 export const UserSchema: SchemaDefinition = {

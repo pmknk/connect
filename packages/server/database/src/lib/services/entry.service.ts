@@ -1,6 +1,6 @@
 import { injectable } from "inversify";
 import { ModelService } from "./model.service";
-import type { CreateOnePayload, FindOnePayload, FindPayload } from "../types";
+import type { CountPayload, CreateOnePayload, FindOnePayload, FindPayload } from "../types";
 
 /**
  * Service for handling database entry operations
@@ -34,6 +34,17 @@ export class EntryService {
     async find<T>(payload: FindPayload<T>) {
         const model = this.modelService.getModel(payload.schema);
         return (await model.findAll(payload))?.map(item => item.toJSON()) as T[];
+    }
+
+    /**
+     * Counts the number of entries in the database
+     * @template T - The type of the entries to count
+     * @param payload - Configuration object containing schema and count options
+     * @returns Promise resolving to the number of entries
+     */
+    async count<T>(payload: CountPayload<T>) {
+        const model = this.modelService.getModel(payload.schema);
+        return await model.count(payload);
     }
 
     /**
