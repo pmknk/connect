@@ -5,15 +5,26 @@ import Button from '@mui/material/Button';
 
 import { CreateProjectForm } from './CreateProjectForm';
 import {
-    CreateProjectFormData,
     useCreateProjectForm
 } from '../../hooks/useCreateProjectForm';
 import { CreateProjectDialog } from './CreateProjectDialog';
+import Stack from '@mui/material/Stack';
 
 export const CreateProject = () => {
     const [open, setOpen] = useState(false);
     const { control, handleSubmit, reset } = useCreateProjectForm();
     
+
+    const handleClose = () => {
+        setOpen(false);
+        reset({
+            name: '',
+            description: '',
+            users: [],
+            allUsersSelected: false,
+        });
+    }
+
     return (
         <>
             <Button
@@ -28,7 +39,7 @@ export const CreateProject = () => {
             </Button>
             <CreateProjectDialog
                 open={open}
-                onClose={() => setOpen(false)}
+                onClose={handleClose}
                 content={(
                     <CreateProjectForm
                         control={control}
@@ -36,6 +47,13 @@ export const CreateProject = () => {
                      />
                 )}
                 actions={(
+                    <Stack direction="row" spacing={1}>
+                        <Button variant="text" color="error" onClick={handleClose}>
+                            <FormattedMessage
+                                id="projects.create.cancel"
+                                defaultMessage="Cancel"
+                            />
+                        </Button>
                     <Button variant="contained" color="primary" onClick={handleSubmit((data) => {
                         console.log(data)
                     })}>
@@ -44,6 +62,7 @@ export const CreateProject = () => {
                             defaultMessage="Create"
                         />
                     </Button>
+                    </Stack>
                 )}
             />
         </>
