@@ -17,6 +17,8 @@ export interface CreateProjectFormData {
     description: string;
     /** Array of user IDs associated with the project */
     users: string[];
+    /** Whether all users are selected */
+    allUsersSelected: boolean;
 }
 
 /**
@@ -99,6 +101,7 @@ export const useCreateProjectForm = () => {
                         )
                     }
                 },
+                allUsersSelected: { type: 'boolean' },
                 users: { type: 'array', items: { type: 'string' } }
             },
             required: ['name', 'slug'],
@@ -108,6 +111,9 @@ export const useCreateProjectForm = () => {
     );
 
     const form = useForm<CreateProjectFormData>({
+        defaultValues: {
+            users: []
+        },
         resolver: ajvResolver(schema, {
             allErrors: true,
             strict: true,

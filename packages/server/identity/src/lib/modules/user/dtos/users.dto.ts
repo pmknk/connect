@@ -1,5 +1,5 @@
-import { FastifyRequest } from "fastify";
-import { User } from "../user.schema";
+import { FastifyRequest } from 'fastify';
+import { User } from '../user.schema';
 
 export type UsersRequestDto = {
     offset?: number;
@@ -16,11 +16,11 @@ export const usersRequestSchema = {
     properties: {
         offset: {
             type: 'number',
-            default: 0,
+            default: 0
         },
         limit: {
             type: 'number',
-            default: 10,
+            default: 10
         }
     }
 } as const;
@@ -53,7 +53,10 @@ export type UsersResponseDto = {
     };
 };
 
-export const toUsersResponseDto = (users: User[], meta: UsersResponseDto['meta']): UsersResponseDto => {
+export const toUsersResponseDto = (
+    users: User[],
+    meta: UsersResponseDto['meta']
+): UsersResponseDto => {
     return {
         data: users.map((user) => ({
             id: user.id,
@@ -62,13 +65,13 @@ export const toUsersResponseDto = (users: User[], meta: UsersResponseDto['meta']
             createdAt: user.createdAt,
             updatedAt: user.updatedAt,
             deletedAt: user.deletedAt,
-            projects: user.projects.map((project) => ({
+            projects: user.projects?.map((project) => ({
                 id: project.id,
                 name: project.name,
                 slug: project.slug,
-                description: project.description,
+                description: project.description
             })),
-            roles: user.roles.map((role) => ({
+            roles: user.roles?.map((role) => ({
                 id: role.id,
                 slug: role.slug,
                 name: role.name,
