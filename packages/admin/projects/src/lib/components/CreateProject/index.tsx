@@ -13,7 +13,6 @@ import Stack from '@mui/material/Stack';
 export const CreateProject = () => {
     const [open, setOpen] = useState(false);
     const { control, handleSubmit, reset } = useCreateProjectForm();
-    
 
     const handleClose = () => {
         setOpen(false);
