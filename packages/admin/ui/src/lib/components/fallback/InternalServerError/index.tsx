@@ -1,6 +1,6 @@
 import { CloudAlert } from 'lucide-react';
-import { GenericPageErrorFallback } from '../GenericPageErrorFallback';
 import { FormattedMessage } from 'react-intl';
+import { GenericPageErrorFallback } from '../GenericPageErrorFallback';
 
 /**
  * InternalServerError component for displaying 500 error states

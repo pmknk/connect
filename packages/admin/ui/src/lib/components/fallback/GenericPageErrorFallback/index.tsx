@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { Typography } from '@material-tailwind/react';
+import { Typography, Box, Container } from '@mui/material';
 
 /**
  * Props for the GenericErrorFallback component
@@ -37,28 +37,49 @@ export const GenericPageErrorFallback = ({
     className = ''
 }: GenericErrorFallbackProps) => {
     return (
-        <section
-            className={`min-h-screen grid place-items-center ${className}`}
+        <Box
+            component="section"
+            sx={{
+                minHeight: '100vh',
+                display: 'grid',
+                placeItems: 'center'
+            }}
+            className={className}
         >
-            <div className="container mx-auto">
-                <div className="text-center flex flex-col items-center">
+            <Container maxWidth="lg">
+                <Box
+                    sx={{
+                        textAlign: 'center',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center'
+                    }}
+                >
                     {icon && icon}
                     <Typography
-                        as="h4"
-                        type="h4"
-                        className="mt-8 mb-6 font-normal"
+                        variant="h4"
+                        component="h4"
+                        sx={{
+                            mt: 4,
+                            mb: 3,
+                            fontWeight: 'normal'
+                        }}
                     >
                         {title}
                     </Typography>
                     <Typography
-                        type="lead"
-                        className="text-foreground max-w-xl mx-auto"
+                        variant="body1"
+                        sx={{
+                            color: 'text.secondary',
+                            maxWidth: '600px',
+                            mx: 'auto'
+                        }}
                     >
                         {subtitle}
                     </Typography>
-                    {actions && <div className="mt-8">{actions}</div>}
-                </div>
-            </div>
-        </section>
+                    {actions && <Box sx={{ mt: 4 }}>{actions}</Box>}
+                </Box>
+            </Container>
+        </Box>
     );
 };

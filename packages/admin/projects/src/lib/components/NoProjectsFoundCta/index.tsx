@@ -12,15 +12,14 @@ import { PermissionAccess } from '@avyyx/admin-utils';
 import { CreateProject } from '../CreateProject';
 
 export const NoProjectsFoundCta = () => {
-    const {palette} = useTheme<ExtendedTheme>()
+    const { palette } = useTheme<ExtendedTheme>();
     return (
-        <Stack 
-            direction="column" 
-            spacing={1} 
-            alignItems="center" 
-            justifyContent="center" 
-            height="100%"
-            paddingBottom={30}
+        <Stack
+            direction="column"
+            spacing={1}
+            alignItems="center"
+            justifyContent="center"
+            height="calc(100vh - 170px)"
             textAlign="center"
         >
             <FolderX size={60} color={palette.primary.main} strokeWidth={1} />
@@ -37,14 +36,12 @@ export const NoProjectsFoundCta = () => {
                 />
             </Typography>
             <PermissionAccess
-                permissions={[
-                    { action: 'create', resource: 'admin:project' }
-                ]}
+                permissions={[{ action: 'create', resource: 'admin:project' }]}
             >
                 <Box paddingTop={2}>
                     <CreateProject />
                 </Box>
             </PermissionAccess>
         </Stack>
-    )
+    );
 };

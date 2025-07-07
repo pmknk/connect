@@ -11,6 +11,12 @@ export type Project = {
     users: User[];
 };
 
+export type ProjectUser = {
+    id: string;
+    projectId: string;
+    userId: string;
+};
+
 export const ProjectSchema: SchemaDefinition = {
     name: 'Projects',
     fields: {

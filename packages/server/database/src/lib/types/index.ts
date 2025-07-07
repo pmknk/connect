@@ -1,4 +1,14 @@
-import { BelongsToManyOptions, BelongsToOptions, CountOptions, CreateOptions, FindOptions, HasManyOptions, HasOneOptions, ModelValidateOptions, Transaction as SequelizeTransaction } from "sequelize";
+import {
+    BelongsToManyOptions,
+    BelongsToOptions,
+    CountOptions,
+    CreateOptions,
+    FindOptions,
+    HasManyOptions,
+    HasOneOptions,
+    ModelValidateOptions,
+    Transaction as SequelizeTransaction
+} from 'sequelize';
 
 /**
  * Supported data types for schema fields
@@ -28,15 +38,21 @@ export type SchemaFieldDefinition = {
     primaryKey?: boolean;
     nullable?: boolean;
     unique?: boolean;
-    defaultValue?: string | number | boolean | Date | null | (() => string | number | boolean | Date | null);
+    defaultValue?:
+        | string
+        | number
+        | boolean
+        | Date
+        | null
+        | (() => string | number | boolean | Date | null);
     values?: string[] | number[];
     validate?: ModelValidateOptions;
 } & (
-    | {
-        type: 'relation';
-    } & SchemaRelationDefinition
+    | ({
+          type: 'relation';
+      } & SchemaRelationDefinition)
     | {}
-)
+);
 
 /**
  * Definition of a relationship between models
@@ -84,24 +100,29 @@ export type SchemaDefinition = {
     options?: SchemaOptions;
 };
 
-
 export type BaseFindOptions<T> = {
-    schema: string
+    schema: string;
 };
 
 export type FindOnePayload<T> = BaseFindOptions<T> & FindOptions<T>;
 export type FindPayload<T> = BaseFindOptions<T> & FindOptions<T>;
 export type CountPayload<T> = BaseFindOptions<T> & CountOptions<T>;
 
-export type CreateOnePayload<T> = BaseFindOptions<T> & CreateOptions<T> & {
-    values: Partial<T>;
-}
+export type CreateOnePayload<T> = BaseFindOptions<T> &
+    CreateOptions<T> & {
+        values: Partial<T>;
+    };
+
+export type BulkCreatePayload<T> = BaseFindOptions<T> &
+    CreateOptions<T> & {
+        values: Partial<T>[];
+    };
 
 export type AddRelationPayload<T, R> = {
     name: string;
     firstRelation: T;
     secondRelation: R;
     transaction?: Transaction;
-}
+};
 
 export type Transaction = SequelizeTransaction;

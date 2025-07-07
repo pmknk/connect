@@ -5,10 +5,11 @@ import { useUser } from '@avyyx/admin-utils';
 import { FormSelect, FormCheckbox } from '@avyyx/admin-ui';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+import MenuItem from '@mui/material/MenuItem';
 
 import { type CreateProjectFormData } from '../../../../hooks/useCreateProjectForm';
 import { useUsersQuery } from '../../../../hooks/useUsersQuery';
-import { UserMenuItem } from '../UserMenuItem';
 import { LoadingMenuItem } from '../LoadingMenuItem';
 
 type UserSelectionFieldProps = {
@@ -41,6 +42,10 @@ const intlMessages = defineMessages({
     usersSelectedPlural: {
         id: 'projects.create.users.selected.plural',
         defaultMessage: '{count} Users selected'
+    },
+    selectAllUsers: {
+        id: 'projects.create.users.selectAllUsers',
+        defaultMessage: 'Select All available users'
     }
 });
 
@@ -48,16 +53,14 @@ export const UserSelectionField = ({
     control,
     isLoading
 }: UserSelectionFieldProps) => {
-    const { user: { id: currentUserId } } = useUser();
-    const { formatMessage } = useIntl();
-    const { allUsersSelected } = useWatch({ control });
-
     const {
-        users,
-        fetchNextPage,
-        hasNextPage,
-        isFetchingNextPage,
-    } = useUsersQuery(10);
+        user: { id: currentUserId }
+    } = useUser();
+    const { formatMessage } = useIntl();
+    const { assignAvailableUsers } = useWatch({ control });
+
+    const { users, fetchNextPage, hasNextPage, isFetchingNextPage } =
+        useUsersQuery(10);
 
     const handleScrollEnd = () => {
         if (hasNextPage && !isFetchingNextPage) {
@@ -66,10 +69,7 @@ export const UserSelectionField = ({
     };
 
     const renderSelectedValue = (value: any) => {
-        if (
-            !value ||
-            (Array.isArray(value) && value.length === 0)
-        ) {
+        if (!value || (Array.isArray(value) && value.length === 0)) {
             return (
                 <Typography
                     color={'text.primary'}
@@ -89,13 +89,15 @@ export const UserSelectionField = ({
                 value.includes(user.id)
             );
             const count = selectedUsers.length;
-            
+
             if (count === 0) {
                 return '';
             } else if (count === 1) {
                 return formatMessage(intlMessages.usersSelected, { count: 1 });
             } else {
-                return formatMessage(intlMessages.usersSelectedPlural, { count });
+                return formatMessage(intlMessages.usersSelectedPlural, {
+                    count
+                });
             }
         }
 
@@ -103,10 +105,10 @@ export const UserSelectionField = ({
     };
 
     return (
-        <Stack spacing={1}>
+        <Stack spacing={2}>
             <FormSelect
                 control={control}
-                name="users"
+                name="userIds"
                 selectProps={{
                     MenuProps: {
                         PaperProps: {
@@ -121,23 +123,43 @@ export const UserSelectionField = ({
                     helperText: formatMessage(intlMessages.usersDescription),
                     displayEmpty: true,
                     multiple: true,
-                    disabled: isLoading || allUsersSelected,
+                    disabled: isLoading || assignAvailableUsers,
                     renderValue: renderSelectedValue
                 }}
             >
-                {users.filter((user) => user.id !== currentUserId).map((user) => (
-                    <UserMenuItem key={user.id} user={user} />
-                ))}
+                {users
+                    .filter((user) => user.id !== currentUserId)
+                    .map((user) => (
+                        <MenuItem value={user.id} key={user.id}>
+                            <Box
+                                sx={{
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    alignItems: 'flex-start'
+                                }}
+                            >
+                                <Typography variant="body2">
+                                    {user.fullName}
+                                </Typography>
+                                <Typography
+                                    variant="caption"
+                                    color="text.secondary"
+                                >
+                                    {user.email}
+                                </Typography>
+                            </Box>
+                        </MenuItem>
+                    ))}
                 {isFetchingNextPage && <LoadingMenuItem />}
             </FormSelect>
             <FormCheckbox
                 control={control}
                 name="allUsersSelected"
                 checkboxProps={{
-                    label: 'Select All',
+                    label: formatMessage(intlMessages.selectAllUsers),
                     disabled: isLoading
                 }}
             />
         </Stack>
     );
-}; 
+};

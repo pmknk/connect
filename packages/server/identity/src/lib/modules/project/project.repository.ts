@@ -1,6 +1,6 @@
-import { EntryService } from '@avyyx/server-database';
+import { EntryService, Transaction } from '@avyyx/server-database';
 import { injectable } from 'inversify';
-import { Project } from './project.schema';
+import type { Project, ProjectUser } from './project.schema';
 
 /**
  * Repository class for managing Project entities in the database.
@@ -32,6 +32,45 @@ export class ProjectRepository {
                     }
                 }
             ]
+        });
+    }
+
+    /**
+     * Creates a new project in the database.
+     * @param project - The project to create.
+     * @param transaction - An optional transaction object to use for the operation.
+     * @returns A promise that resolves to the created project.
+     */
+    async create(
+        project: Partial<Project>,
+        transaction?: Transaction
+    ): Promise<Project> {
+        return await this.entryService.create<Project>({
+            schema: 'Projects',
+            values: project,
+            transaction
+        });
+    }
+
+    /**
+     * Adds users to a project
+     * @param projectId - The unique identifier of the project.
+     * @param userIds - An array of unique identifiers of the users to add to the project.
+     * @param transaction - An optional transaction object to use for the operation.
+     * @returns A promise that resolves to an array of ProjectUser objects that were added to the project.
+     */
+    async addUsers(
+        projectId: string,
+        userIds: string[],
+        transaction?: Transaction
+    ): Promise<ProjectUser[]> {
+        return await this.entryService.bulkCreate<ProjectUser>({
+            schema: 'ProjectUsers',
+            values: userIds.map((userId) => ({
+                projectId,
+                userId
+            })),
+            transaction
         });
     }
 }

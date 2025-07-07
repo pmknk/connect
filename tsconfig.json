@@ -31,9 +31,6 @@
             "path": "./packages/server/utils"
         },
         {
-            "path": "./packages/cli"
-        },
-        {
             "path": "./packages/admin/utils"
         },
         {

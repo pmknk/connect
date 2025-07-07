@@ -20,7 +20,15 @@ export class UserRepository {
      * @returns {Promise<User>} The created user
      */
     async create(
-        userDto: Omit<User, 'id' | 'createdAt' | 'updatedAt' | 'deletedAt' | 'projects' | 'roles'>,
+        userDto: Omit<
+            User,
+            | 'id'
+            | 'createdAt'
+            | 'updatedAt'
+            | 'deletedAt'
+            | 'projects'
+            | 'roles'
+        >,
         transaction: Transaction
     ): Promise<User> {
         return await this.entryService.create<User>({
@@ -37,7 +45,11 @@ export class UserRepository {
      * @param transaction - The database transaction to use
      * @returns {Promise<any>} The created user-role association
      */
-    async addRole(userId: string, roleId: string, transaction: Transaction): Promise<void> {
+    async addRole(
+        userId: string,
+        roleId: string,
+        transaction: Transaction
+    ): Promise<void> {
         await this.entryService.create({
             schema: 'UserRoles',
             values: { userId, roleId },
@@ -93,17 +105,33 @@ export class UserRepository {
      * @param findOptions - The options for finding users
      * @returns {Promise<{ count: number, users: User[] }>} The count and users
      */
-    async findAllPaginated(findOptions: Omit<FindPayload<User>, 'schema'>): Promise<{ count: number; users: User[]; }> {
+    async findAllPaginated(
+        findOptions: Omit<FindPayload<User>, 'schema'>
+    ): Promise<{ count: number; users: User[] }> {
         const count = await this.entryService.count<User>({
             ...findOptions,
-            schema: 'Users',
+            schema: 'Users'
         });
 
         const users = await this.entryService.find<User>({
             ...findOptions,
-            schema: 'Users',
+            schema: 'Users'
         });
 
         return { count, users };
+    }
+
+    /**
+     * Finds all users
+     * @param findOptions - The options for finding users
+     * @returns {Promise<User[]>} The found users
+     */
+    async findAll(
+        findOptions?: Omit<FindPayload<User>, 'schema'>
+    ): Promise<User[]> {
+        return await this.entryService.find<User>({
+            ...findOptions,
+            schema: 'Users'
+        });
     }
 }

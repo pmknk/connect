@@ -1,10 +1,11 @@
-import { injectable } from "inversify";
-import { UserRepository } from "./user.repository";
-import { UsersRequestDto } from "./dtos/users.dto";
+import { injectable } from 'inversify';
+import { UserRepository } from './user.repository';
+import type { UsersRequestDto } from './dtos/users.dto';
+import type { User } from './user.schema';
 
 /**
  * Service for handling user-related business logic
- * 
+ *
  * This class provides methods for user management operations,
  * acting as an intermediary between controllers and the repository layer.
  */
@@ -18,13 +19,13 @@ export class UserService {
 
     /**
      * Retrieves a paginated list of users
-     * 
+     *
      * Fetches users from the database with pagination support,
      * including offset and limit parameters for efficient data retrieval.
-     * 
+     *
      * @param {UsersRequestDto} dto - Data transfer object containing pagination parameters
      * @returns {Promise<{ count: number; users: User[] }>} Promise resolving to an object containing the total count and array of users
-     * 
+     *
      * @example
      * ```typescript
      * const userService = new UserService(userRepository);
@@ -32,10 +33,11 @@ export class UserService {
      * console.log(`Found ${result.count} users`);
      * ```
      */
-    async getUsers(dto: UsersRequestDto) {
+    async getUsers(
+        dto: UsersRequestDto
+    ): Promise<{ count: number; users: User[] }> {
         return await this.userRepository.findAllPaginated({
             ...dto
-        })
+        });
     }
-    
 }

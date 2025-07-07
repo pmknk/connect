@@ -1,6 +1,12 @@
-import { injectable } from "inversify";
-import { ModelService } from "./model.service";
-import type { CountPayload, CreateOnePayload, FindOnePayload, FindPayload } from "../types";
+import { injectable } from 'inversify';
+import { ModelService } from './model.service';
+import type {
+    BulkCreatePayload,
+    CountPayload,
+    CreateOnePayload,
+    FindOnePayload,
+    FindPayload
+} from '../types';
 
 /**
  * Service for handling database entry operations
@@ -13,7 +19,7 @@ export class EntryService {
      * @param modelService - Service for managing database models
      */
     constructor(private readonly modelService: ModelService) {}
-    
+
     /**
      * Finds a single entry in the database
      * @template T - The type of the entry to find
@@ -33,7 +39,9 @@ export class EntryService {
      */
     async find<T>(payload: FindPayload<T>) {
         const model = this.modelService.getModel(payload.schema);
-        return (await model.findAll(payload))?.map(item => item.toJSON()) as T[];
+        return (await model.findAll(payload))?.map((item) =>
+            item.toJSON()
+        ) as T[];
     }
 
     /**
@@ -56,5 +64,18 @@ export class EntryService {
     async create<T>(payload: CreateOnePayload<T>) {
         const model = this.modelService.getModel(payload.schema);
         return (await model.create(payload.values, payload))?.toJSON() as T;
+    }
+
+    /**
+     * Creates multiple entries in the database
+     * @template T - The type of the entries to create
+     * @param payload - Configuration object containing schema, create options, and values
+     * @returns Promise resolving to an array of created entries as T[]
+     */
+    async bulkCreate<T>(payload: BulkCreatePayload<T>) {
+        const model = this.modelService.getModel(payload.schema);
+        return (await model.bulkCreate(payload.values, payload))?.map((item) =>
+            item.toJSON()
+        ) as T[];
     }
 }

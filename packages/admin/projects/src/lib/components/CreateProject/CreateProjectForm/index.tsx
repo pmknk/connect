@@ -10,8 +10,6 @@ type CreateProjectFormProps = {
     isLoading: boolean;
 };
 
-
-
 export const CreateProjectForm = ({
     control,
     isLoading
