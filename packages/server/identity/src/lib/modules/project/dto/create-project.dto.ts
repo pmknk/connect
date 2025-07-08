@@ -19,7 +19,7 @@ export const toCreateProjectRequestDto = (
 
 export const createProjectRequestSchema = {
     type: 'object',
-    required: ['name', 'users'],
+    required: ['name', 'userIds'],
     properties: {
         name: { type: 'string' },
         description: { type: 'string' },

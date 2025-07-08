@@ -23,11 +23,11 @@ export const toProjectsResponseDto = (
             slug: project.slug,
             name: project.name,
             description: project.description,
-            users: project.users.map((user) => ({
+            users: project.users?.map((user) => ({
                 id: user.id,
                 fullName: user.fullName,
                 email: user.email
-            }))
+            })) || []
         }))
     };
 };

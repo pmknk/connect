@@ -86,9 +86,6 @@ export const FormSelect = ({
                                     : null);
 
                             if (menuElement) {
-                                console.log(
-                                    'Found menu element, attaching scroll listener'
-                                );
                                 observer.disconnect();
 
                                 menuElement.addEventListener(
@@ -110,9 +107,7 @@ export const FormSelect = ({
                                             isAtBottom &&
                                             !isAtBottomRef.current
                                         ) {
-                                            console.log(
-                                                'Scrolled to bottom via event listener!'
-                                            );
+
                                             isAtBottomRef.current = true;
                                             selectProps?.onScrollEnd?.();
                                         } else if (!isAtBottom) {

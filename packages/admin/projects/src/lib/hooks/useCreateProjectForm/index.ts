@@ -112,7 +112,8 @@ export const useCreateProjectForm = () => {
 
     const form = useForm<CreateProjectFormData>({
         defaultValues: {
-            userIds: []
+            userIds: [],
+            assignAvailableUsers: false
         },
         resolver: ajvResolver(schema, {
             allErrors: true,

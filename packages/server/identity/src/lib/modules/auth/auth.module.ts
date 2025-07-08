@@ -51,7 +51,6 @@ export class AuthModule {
 
         fastify.addHook('onRequest', async (request, reply) => {
             await new Promise(resolve => setTimeout(resolve, 500));
-            console.log('onRequest');
         });
     }
 }

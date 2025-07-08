@@ -1,4 +1,5 @@
 import { SchemaDefinition } from '@avyyx/server-database';
+import { v4 as uuidv4 } from 'uuid';
 import { User } from '../user/user.schema';
 
 export type Project = {
@@ -22,7 +23,8 @@ export const ProjectSchema: SchemaDefinition = {
     fields: {
         id: {
             type: 'uuid',
-            primaryKey: true
+            primaryKey: true,
+            defaultValue: uuidv4()
         },
         slug: {
             type: 'string',

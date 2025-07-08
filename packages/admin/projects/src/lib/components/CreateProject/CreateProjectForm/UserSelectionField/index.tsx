@@ -154,7 +154,7 @@ export const UserSelectionField = ({
             </FormSelect>
             <FormCheckbox
                 control={control}
-                name="allUsersSelected"
+                name="assignAvailableUsers"
                 checkboxProps={{
                     label: formatMessage(intlMessages.selectAllUsers),
                     disabled: isLoading

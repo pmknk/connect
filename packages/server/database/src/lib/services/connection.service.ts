@@ -16,12 +16,4 @@ export class ConnectionService {
     get client() {
         return this.sequelize;
     }
-
-    /**
-     * Gets the transaction method from the Sequelize instance
-     * @returns The transaction method
-     */
-    get transaction() {
-        return this.sequelize.transaction;
-    }
 }

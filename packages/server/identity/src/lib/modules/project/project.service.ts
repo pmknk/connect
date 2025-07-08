@@ -32,7 +32,7 @@ export class ProjectService {
         assignAvailableUsers,
         ...dto
     }: CreateProjectRequestDto): Promise<Project> {
-        const transaction = await this.connectionService.transaction();
+        const transaction = await this.connectionService.client.transaction();
         try {
             const project = await this.projectRepository.create(
                 {
