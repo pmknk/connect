@@ -9,7 +9,7 @@ export class InitRouter {
 
     initialize(fastify: FastifyApplicationInstance) {
         const ROUTE_PATHS = {
-            INIT: '/identity/init'
+            INIT: '/api/v1/identity/init'
         }
 
         fastify.post(

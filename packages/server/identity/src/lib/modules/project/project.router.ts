@@ -10,7 +10,7 @@ export class ProjectRouter {
 
     async initialize(fastify: FastifyApplicationInstance) {
         const ROUTE_PATHS = {
-            PROJECTS: '/identity/projects'
+            PROJECTS: '/api/v1/identity/projects'
         };
 
         fastify.get(

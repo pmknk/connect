@@ -9,7 +9,7 @@ export class PermissionRouter {
 
     async initialize(fastify: FastifyApplicationInstance) {
         const ROUTE_PATHS = {
-            GET_PERMISSIONS: '/identity/permissions'
+            GET_PERMISSIONS: '/api/v1/identity/permissions'
         }
 
         fastify.get(ROUTE_PATHS.GET_PERMISSIONS, {

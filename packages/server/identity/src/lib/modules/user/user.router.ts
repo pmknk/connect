@@ -34,7 +34,7 @@ export class UserRouter {
      */
     initialize(fastify: FastifyApplicationInstance) {
         const ROUTE_PATHS = {
-            GET_USERS: '/identity/users'
+            GET_USERS: '/api/v1/identity/users'
         }
 
         fastify.get(

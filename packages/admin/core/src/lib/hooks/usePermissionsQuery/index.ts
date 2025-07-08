@@ -39,7 +39,7 @@ export type PermissionsQueryResponse = {
  * )
  * ```
  */
-const PERMISSIONS_ROUTE = '/identity/permissions';
+const PERMISSIONS_ROUTE = '/api/v1/identity/permissions';
 
 export const usePermissionsQuery = () => {
     const httpClient = useHttpClient();

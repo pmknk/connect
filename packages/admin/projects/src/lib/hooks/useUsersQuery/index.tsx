@@ -14,7 +14,7 @@ export type UsersQueryResponse = {
     };
 };
 
-const GET_ALL_USERS_ROUTE = '/identity/users';
+const GET_ALL_USERS_ROUTE = '/api/v1/identity/users';
 const DEFAULT_LIMIT = 20;
 
 /**

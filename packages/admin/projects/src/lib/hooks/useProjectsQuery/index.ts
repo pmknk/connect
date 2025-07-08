@@ -18,7 +18,7 @@ export type ProjectsQueryResponse = {
     }[];
 };
 
-const GET_ALL_PROJECTS_ROUTE = '/identity/projects';
+const GET_ALL_PROJECTS_ROUTE = '/api/v1/identity/projects';
 
 /**
  * Custom hook for fetching and managing projects data

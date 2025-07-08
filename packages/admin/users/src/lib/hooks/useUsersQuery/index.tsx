@@ -6,6 +6,6 @@ export const useUsersQuery = () => {
 
     return useQuery({
         queryKey: ['users'],
-        queryFn: () => httpClient.get('/identity/users')
+        queryFn: () => httpClient.get('/api/v1/identity/users')
     });
 };
