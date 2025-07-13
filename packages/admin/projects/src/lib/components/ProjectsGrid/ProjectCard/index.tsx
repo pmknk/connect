@@ -48,23 +48,26 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
                     }
                 }
             }}>
-                <Stack direction="row" alignItems="center" spacing={2}>
-                    <Avatar variant="rounded" sx={{ backgroundColor: palette.primary.main }}>
-                        {project.name.charAt(0)}
-                    </Avatar>
-                    <Stack>
-                        <Typography variant="h6" component="h2">
-                            {project.name}
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                            {formatMessage(
-                                contentItemsCount === 1 
-                                    ? intlMessages.contentItemsSingular 
-                                    : intlMessages.contentItems,
-                                { count: contentItemsCount }
-                            )}
-                        </Typography>
+                <Stack>
+                    <Stack direction="row" alignItems="center" spacing={2}>
+                        <Avatar variant="rounded" sx={{ backgroundColor: palette.primary.main }}>
+                            {project.name.charAt(0)}
+                        </Avatar>
+                        <Stack>
+                            <Typography variant="h6" component="h2">
+                                {project.name}
+                            </Typography>
+                            <Typography variant="body2" color="text.secondary">
+                                {formatMessage(
+                                    contentItemsCount === 1 
+                                        ? intlMessages.contentItemsSingular 
+                                        : intlMessages.contentItems,
+                                    { count: contentItemsCount }
+                                )}
+                            </Typography>
+                        </Stack>
                     </Stack>
+                    <></>
                 </Stack>
                 {project.description && (
                     <Typography 

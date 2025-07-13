@@ -25,6 +25,7 @@ export const toProjectsResponseDto = (
             description: project.description,
             createdAt: project.createdAt,
             updatedAt: project.updatedAt,
+            deletedAt: project.deletedAt,
             users: project.users?.map((user) => ({
                 id: user.id,
                 fullName: user.fullName,

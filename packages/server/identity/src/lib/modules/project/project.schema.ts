@@ -12,6 +12,7 @@ export type Project = {
     users: User[];
     createdAt: Date;
     updatedAt: Date;
+    deletedAt: Date | null;
 };
 
 export type ProjectUser = {

@@ -17,6 +17,7 @@ export type ProjectsQueryResponse = {
         description: string;
         createdAt: Date;
         updatedAt: Date;
+        deletedAt: Date | null;
     }[];
 };
 
