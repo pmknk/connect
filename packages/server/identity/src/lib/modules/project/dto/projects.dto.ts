@@ -23,6 +23,8 @@ export const toProjectsResponseDto = (
             slug: project.slug,
             name: project.name,
             description: project.description,
+            createdAt: project.createdAt,
+            updatedAt: project.updatedAt,
             users: project.users?.map((user) => ({
                 id: user.id,
                 fullName: user.fullName,

@@ -4,6 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 
+import { PermissionAccess } from '@avyyx/admin-utils';
 import { CreateProjectForm } from './CreateProjectForm';
 import { useCreateProjectForm } from '../../hooks/useCreateProjectForm';
 import { CreateProjectDialog } from './CreateProjectDialog';
@@ -26,16 +27,20 @@ export const CreateProject = () => {
 
     return (
         <>
-            <Button
-                variant="contained"
-                color="primary"
-                onClick={() => setOpen(true)}
+            <PermissionAccess
+                permissions={[{ action: 'create', resource: 'admin:project' }]}
             >
-                <FormattedMessage
-                    id="projects.create.title"
-                    defaultMessage="Create Project"
-                />
-            </Button>
+                <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={() => setOpen(true)}
+                >
+                    <FormattedMessage
+                        id="projects.create.title"
+                        defaultMessage="Create Project"
+                    />
+                </Button>
+            </PermissionAccess>
             <CreateProjectDialog
                 open={open}
                 onClose={handleClose}

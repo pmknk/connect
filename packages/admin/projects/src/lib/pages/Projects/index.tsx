@@ -1,11 +1,14 @@
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
+import TextField from '@mui/material/TextField';
 
 import { FormattedMessage } from 'react-intl';
 
 import { useProjectsQuery } from '../../hooks/useProjectsQuery';
 import { NoProjectsFoundCta } from '../../components/NoProjectsFoundCta/index';
+import { ProjectsGrid, ProjectGridSkeleton } from '../../components/ProjectsGrid';
+import { CreateProject } from '../../components/CreateProject';
 
 const Projects = () => {
     const { data: projects, isLoading, error } = useProjectsQuery();
@@ -33,7 +36,26 @@ const Projects = () => {
                     />
                 </Typography>
             </Stack>
-            {hasProjects ? <div>projects</div> : <NoProjectsFoundCta />}
+            {isLoading ? (
+                <ProjectGridSkeleton />
+            ) : hasProjects ? (
+                <Stack sx={{ mt: 4 }}>
+                    <Stack direction="row" spacing={2} alignItems="center" justifyContent="space-between">
+                        <TextField
+                            name="search"
+                            type="text"
+                            placeholder="Search"
+                            onChange={() => {}}
+                            value=""
+                            size="small"
+                        />
+                        <CreateProject />
+                    </Stack>
+                    <ProjectsGrid projects={projects} />
+                </Stack>
+            ) : (
+                <NoProjectsFoundCta />
+            )}
         </Container>
     );
 };

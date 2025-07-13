@@ -15,6 +15,8 @@ export type ProjectsQueryResponse = {
         name: string;
         slug: string;
         description: string;
+        createdAt: Date;
+        updatedAt: Date;
     }[];
 };
 

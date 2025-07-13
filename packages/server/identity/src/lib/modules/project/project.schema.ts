@@ -10,6 +10,8 @@ export type Project = {
     icon?: string;
     color?: string;
     users: User[];
+    createdAt: Date;
+    updatedAt: Date;
 };
 
 export type ProjectUser = {
