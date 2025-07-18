@@ -3,7 +3,7 @@ import { ModelService } from './model.service';
 import { resolveSequelizeType } from '../utils';
 import { ConnectionService } from './connection.service';
 
-import type { IndexesOptions, ModelAttributes } from 'sequelize'; 
+import { DataTypes, type IndexesOptions, type ModelAttributes } from 'sequelize'; 
 import type { SchemaDefinition, SchemaRelationDefinition } from '../types';
 
 
@@ -85,7 +85,13 @@ export class SchemaRegistryService {
                 type,
                 allowNull: field.nullable ?? true,
                 primaryKey: field.primaryKey ?? false,
-                defaultValue: field.defaultValue ? (typeof field.defaultValue === 'function' ? field.defaultValue() : field.defaultValue) : undefined,
+                defaultValue: (field.type === 'uuid' && field.primaryKey)
+                    ? DataTypes.UUIDV4
+                    : field.defaultValue
+                        ? (typeof field.defaultValue === 'function'
+                            ? field.defaultValue()
+                            : field.defaultValue)
+                        : undefined,
                 validate: field.validate ?? undefined
             };
         }

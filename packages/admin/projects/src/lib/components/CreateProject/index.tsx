@@ -10,10 +10,14 @@ import { useCreateProjectForm } from '../../hooks/useCreateProjectForm';
 import { CreateProjectDialog } from './CreateProjectDialog';
 import { useCreateProjectsMutation } from '../../hooks/useCreateProjectsMutation';
 
-export const CreateProject = () => {
+type CreateProjectProps = {
+    onSuccess?: () => void;
+};
+
+export const CreateProject = ({ onSuccess }: CreateProjectProps) => {
     const [open, setOpen] = useState(false);
     const { control, handleSubmit, reset } = useCreateProjectForm();
-    const { mutate: createProject } = useCreateProjectsMutation();
+    const { mutate: createProject, isPending } = useCreateProjectsMutation();
 
     const handleClose = () => {
         setOpen(false);
@@ -48,11 +52,12 @@ export const CreateProject = () => {
                     createProject(data, {
                         onSuccess: () => {
                             handleClose();
+                            onSuccess?.();
                         }
                     });
                 })}
                 content={
-                    <CreateProjectForm control={control} isLoading={false} />
+                    <CreateProjectForm control={control} isLoading={isPending} />
                 }
                 actions={
                     <Stack direction="row" spacing={1}>
@@ -60,6 +65,7 @@ export const CreateProject = () => {
                             variant="text"
                             color="error"
                             onClick={handleClose}
+                            disabled={isPending}
                         >
                             <FormattedMessage
                                 id="projects.create.cancel"
@@ -70,6 +76,7 @@ export const CreateProject = () => {
                             variant="contained"
                             color="primary"
                             type="submit"
+                            loading={isPending}
                         >
                             <FormattedMessage
                                 id="projects.create.button"

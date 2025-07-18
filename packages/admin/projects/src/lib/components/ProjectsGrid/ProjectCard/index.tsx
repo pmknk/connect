@@ -3,7 +3,7 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import Avatar from "@mui/material/Avatar";
 
-import { Divider, Stack, useTheme } from "@mui/material";
+import { CardActions, Chip, Divider, Stack, useTheme } from "@mui/material";
 import { defineMessages, useIntl } from "react-intl";
 
 import type { ProjectsQueryResponse } from "../../../hooks/useProjectsQuery";
@@ -21,6 +21,14 @@ const intlMessages = defineMessages({
     lastUpdated: {
         id: 'projects.grid.lastUpdated',
         defaultMessage: 'Last Updated'
+    },
+    active: {
+        id: 'projects.grid.active',
+        defaultMessage: 'Active'
+    },
+    inactive: {
+        id: 'projects.grid.inactive',
+        defaultMessage: 'Inactive'
     }
 });
 
@@ -38,7 +46,11 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
     return (
         <Card elevation={0} sx={{ 
             border: `1px solid ${palette.divider}`,
-            borderRadius: 2
+            borderRadius: 2,
+            height: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
         }}>
             <CardContent sx={{
                 '&.MuiCardContent-root': {
@@ -49,43 +61,51 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
                 }
             }}>
                 <Stack>
-                    <Stack direction="row" alignItems="center" spacing={2}>
-                        <Avatar variant="rounded" sx={{ backgroundColor: palette.primary.main }}>
-                            {project.name.charAt(0)}
-                        </Avatar>
-                        <Stack>
-                            <Typography variant="h6" component="h2">
-                                {project.name}
-                            </Typography>
-                            <Typography variant="body2" color="text.secondary">
-                                {formatMessage(
-                                    contentItemsCount === 1 
-                                        ? intlMessages.contentItemsSingular 
-                                        : intlMessages.contentItems,
-                                    { count: contentItemsCount }
-                                )}
-                            </Typography>
-                        </Stack>
+                    <Stack direction="row" justifyContent="space-between">
+                        <Stack direction="row" alignItems="center" spacing={2}>
+                            <Avatar variant="rounded" sx={{ backgroundColor: palette.primary.main }}>
+                                {project.name.charAt(0)}
+                            </Avatar>
+                            <Stack>
+                                <Typography variant="h6" component="h2">
+                                    {project.name}
+                                </Typography>
+                                <Typography variant="body2" color="text.secondary">
+                                    {formatMessage(
+                                        contentItemsCount === 1 
+                                            ? intlMessages.contentItemsSingular 
+                                            : intlMessages.contentItems,
+                                        { count: contentItemsCount }
+                                    )}
+                                </Typography>
+                            </Stack>
+                        </Stack> 
+                        {!project.deletedAt ? 
+                            <Chip color="success" variant="outlined" label={formatMessage(intlMessages.active)} size="small"/> :
+                            <Chip color="error" variant="outlined" label={formatMessage(intlMessages.inactive)} size="small"/>}
                     </Stack>
-                    <></>
+                    {project.description && (
+                        <Typography 
+                            variant="body2" 
+                            color="text.secondary" 
+                            sx={{ 
+                                mt: 2,
+                                overflow: 'hidden',
+                                display: '-webkit-box',
+                                WebkitLineClamp: 3,
+                                WebkitBoxOrient: 'vertical'
+                            }}
+                        >
+                            {project.description}
+                        </Typography>
+                    )}
                 </Stack>
-                {project.description && (
-                    <Typography 
-                        variant="body2" 
-                        color="text.secondary" 
-                        sx={{ 
-                            mt: 2,
-                            overflow: 'hidden',
-                            display: '-webkit-box',
-                            WebkitLineClamp: 3,
-                            WebkitBoxOrient: 'vertical'
-                        }}
-                    >
-                        {project.description}
-                    </Typography>
-                )}
-                <Divider sx={{ mt: 2 }} />
-                <Stack spacing={0.2} sx={{ mt: 2 }}>
+            </CardContent>
+            <CardActions sx={{
+                p: 2,
+                borderTop: `1px solid ${palette.divider}`,
+            }}>
+                <Stack spacing={0.2}>
                     <Typography variant="body2">
                         {formatMessage(intlMessages.lastUpdated)}
                     </Typography>
@@ -97,7 +117,7 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
                         })}
                     </Typography>
                 </Stack>
-            </CardContent>
+            </CardActions>
         </Card>
     );
 }; 

@@ -11,6 +11,7 @@ import { MuiInputLabel } from './components/MuiInputLabel';
 import { MuiInputBase } from './components/MuiInputBase';
 import { MuiIconButton } from './components/MuiIconButton';
 import { MuiCheckbox } from './components/MuiCheckbox';
+import { MuiChip } from './components/MuiChip';
 
 export const theme = createTheme({
     breakpoints: breakpoints,
@@ -41,5 +42,6 @@ export const theme = createTheme({
         MuiInputBase,
         MuiIconButton,
         MuiCheckbox,
+        MuiChip,
     }
 });

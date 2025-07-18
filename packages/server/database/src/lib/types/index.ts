@@ -44,7 +44,7 @@ export type SchemaFieldDefinition = {
         | boolean
         | Date
         | null
-        | (() => string | number | boolean | Date | null);
+        | (() => string | number | boolean | Date | null)
     values?: string[] | number[];
     validate?: ModelValidateOptions;
 } & (

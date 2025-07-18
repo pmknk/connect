@@ -2,7 +2,7 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Skeleton from "@mui/material/Skeleton";
 
-import { Divider, Stack, useTheme } from "@mui/material";
+import { CardActions, Stack, useTheme } from "@mui/material";
 import { ExtendedTheme } from "@avyyx/admin-ui";
 
 export const ProjectCardSkeleton = () => {
@@ -34,12 +34,16 @@ export const ProjectCardSkeleton = () => {
                     height={60} 
                     sx={{ mt: 2, borderRadius: 1 }}
                 />
-                <Divider sx={{ mt: 2 }} />
-                <Stack spacing={0.2} sx={{ mt: 2 }}>
+            </CardContent>
+            <CardActions sx={{
+                p: 2,
+                borderTop: `1px solid ${palette.divider}`,
+            }}>
+                <Stack spacing={0.2}>
                     <Skeleton variant="text" width={80} height={20} />
                     <Skeleton variant="text" width={140} height={16} />
                 </Stack>
-            </CardContent>
+            </CardActions>
         </Card>
     );
 }; 

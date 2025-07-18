@@ -9,7 +9,11 @@ import { ExtendedTheme } from '@avyyx/admin-ui';
 
 import { CreateProject } from '../CreateProject';
 
-export const NoProjectsFoundCta = () => {
+type NoProjectsFoundCtaProps = {
+    onSuccess?: () => void;
+};
+
+export const NoProjectsFoundCta = ({ onSuccess }: NoProjectsFoundCtaProps) => {
     const { palette } = useTheme<ExtendedTheme>();
     return (
         <Stack
@@ -33,7 +37,7 @@ export const NoProjectsFoundCta = () => {
                     defaultMessage="You don't have any projects you are working on"
                 />
             </Typography>
-            <CreateProject />
+            <CreateProject onSuccess={onSuccess} />
         </Stack>
     );
 };

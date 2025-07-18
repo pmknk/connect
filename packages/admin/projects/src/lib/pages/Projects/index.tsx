@@ -9,10 +9,18 @@ import { useProjectsQuery } from '../../hooks/useProjectsQuery';
 import { NoProjectsFoundCta } from '../../components/NoProjectsFoundCta/index';
 import { ProjectsGrid, ProjectGridSkeleton } from '../../components/ProjectsGrid';
 import { CreateProject } from '../../components/CreateProject';
+import { useMemo, useState } from 'react';
 
 const Projects = () => {
-    const { data: projects, isLoading, error } = useProjectsQuery();
+    const { data: projects, isLoading, refetch, isFetching } = useProjectsQuery();
     const hasProjects = projects && projects.length > 0;
+
+    const [search, setSearch] = useState('');
+
+    const filteredProjects = useMemo(
+        () => projects?.filter((project) => project.name.toLowerCase().includes(search.toLowerCase())) || [],
+        [projects, search]
+    );
 
     return (
         <Container
@@ -36,25 +44,25 @@ const Projects = () => {
                     />
                 </Typography>
             </Stack>
-            {isLoading ? (
+            {isLoading || isFetching ? (
                 <ProjectGridSkeleton />
             ) : hasProjects ? (
-                <Stack sx={{ mt: 4 }}>
+                <Stack sx={{ mt: 4 }} gap={2}>
                     <Stack direction="row" spacing={2} alignItems="center" justifyContent="space-between">
                         <TextField
                             name="search"
                             type="text"
                             placeholder="Search"
-                            onChange={() => {}}
-                            value=""
+                            onChange={(e) => setSearch(e.target.value)}
+                            value={search}
                             size="small"
                         />
-                        <CreateProject />
+                        <CreateProject onSuccess={refetch} />
                     </Stack>
-                    <ProjectsGrid projects={projects} />
+                    <ProjectsGrid projects={filteredProjects} />
                 </Stack>
             ) : (
-                <NoProjectsFoundCta />
+                <NoProjectsFoundCta onSuccess={refetch} />
             )}
         </Container>
     );

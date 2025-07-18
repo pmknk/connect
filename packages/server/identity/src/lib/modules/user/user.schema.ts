@@ -1,5 +1,4 @@
 import { SchemaDefinition } from '@avyyx/server-database';
-import { v4 as uuidv4 } from 'uuid';
 import type { Project } from '../project/project.schema';
 import type { Role } from '../role/role.schema';
 
@@ -22,7 +21,6 @@ export const UserSchema: SchemaDefinition = {
         id: {
             type: 'uuid',
             primaryKey: true,
-            defaultValue: uuidv4()
         },
         email: {
             type: 'string',
