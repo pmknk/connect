@@ -26,8 +26,7 @@ const Projects = () => {
         <Container
             maxWidth="lg"
             sx={{
-                py: 6,
-                height: '100%'
+                my: 6,
             }}
         >
             <Stack direction="column" spacing={1}>

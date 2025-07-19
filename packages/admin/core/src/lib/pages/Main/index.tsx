@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 import Box from '@mui/material/Box';
+import Stack from '@mui/material/Stack';
 
 import { useErrorBoundary } from '@avyyx/admin-utils';
 import { FullPageLoader } from '@avyyx/admin-ui';
@@ -37,12 +38,12 @@ const Main = () => {
     }
 
     return (
-        <Box height="100%">
+        <Stack height="100%" flexDirection="column">
             <AppBar />
-            <Box height="100%">
+            <Box height="100%" overflow="auto">
                 <Outlet />
             </Box>
-        </Box>
+        </Stack>
     );
 };
 

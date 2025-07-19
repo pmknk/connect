@@ -23,6 +23,7 @@ export const CreateProject = ({ onSuccess }: CreateProjectProps) => {
         setOpen(false);
         reset({
             name: '',
+            slug: '',
             description: '',
             userIds: [],
             assignAvailableUsers: false

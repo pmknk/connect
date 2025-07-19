@@ -13,7 +13,7 @@ export const ProjectsGrid = ({ projects }: ProjectsGridProps) => {
             {projects.map((project) => (
                 <Grid size={{
                     xs: 12,
-                    md: 6,
+                    md: 4,
                 }} key={project.id}>
                     <ProjectCard project={project} />
                 </Grid>

@@ -19,13 +19,15 @@ export const toCreateProjectRequestDto = (
 
 export const createProjectRequestSchema = {
     type: 'object',
-    required: ['name', 'userIds'],
+    required: ['name', 'slug', 'userIds'],
     properties: {
         name: { type: 'string' },
+        slug: { type: 'string' },
         description: { type: 'string' },
         userIds: { type: 'array', items: { type: 'string' } },
         assignAvailableUsers: { type: 'boolean' }
-    }
+    },
+    additionalProperties: false
 } as const;
 
 export type CreateProjectResponseDto = {

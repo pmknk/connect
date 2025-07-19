@@ -2,15 +2,12 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Skeleton from "@mui/material/Skeleton";
 
-import { CardActions, Stack, useTheme } from "@mui/material";
-import { ExtendedTheme } from "@avyyx/admin-ui";
+import { CardActions, Stack } from "@mui/material";
 
 export const ProjectCardSkeleton = () => {
-    const { palette } = useTheme<ExtendedTheme>();
 
     return (
-        <Card elevation={0} sx={{ 
-            border: `1px solid ${palette.divider}`,
+        <Card variant="outlined" sx={{ 
             borderRadius: 2
         }}>
             <CardContent sx={{
@@ -21,7 +18,7 @@ export const ProjectCardSkeleton = () => {
                     }
                 }
             }}>
-                <Stack direction="row" alignItems="center" spacing={2}>
+                <Stack spacing={1}>
                     <Skeleton variant="rounded" width={40} height={40} />
                     <Stack>
                         <Skeleton variant="text" width={120} height={24} />
@@ -37,7 +34,6 @@ export const ProjectCardSkeleton = () => {
             </CardContent>
             <CardActions sx={{
                 p: 2,
-                borderTop: `1px solid ${palette.divider}`,
             }}>
                 <Stack spacing={0.2}>
                     <Skeleton variant="text" width={80} height={20} />
