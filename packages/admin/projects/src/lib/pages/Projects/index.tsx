@@ -55,6 +55,10 @@ const Projects = () => {
                             onChange={(e) => setSearch(e.target.value)}
                             value={search}
                             size="small"
+                            sx={{
+                                width: '100%',
+                                maxWidth: '320px',
+                            }}
                         />
                         <CreateProject onSuccess={refetch} />
                     </Stack>
