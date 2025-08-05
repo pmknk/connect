@@ -38,6 +38,9 @@ export const CreateProject = ({ onSuccess }: CreateProjectProps) => {
                 <Button
                     variant="contained"
                     color="primary"
+                    sx={{
+                        width: '150px',
+                    }}
                     onClick={() => setOpen(true)}
                 >
                     <FormattedMessage

@@ -3,7 +3,7 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import Avatar from "@mui/material/Avatar";
 
-import { CardActionArea, CardActions, Chip, Stack, useTheme } from "@mui/material";
+import { Box, CardActionArea, CardActions, Chip, Stack, useTheme } from "@mui/material";
 import { defineMessages, useIntl } from "react-intl";
 
 import type { ProjectsQueryResponse } from "../../../hooks/useProjectsQuery";
@@ -40,6 +40,7 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
     const { palette } = useTheme<ExtendedTheme>();
     const { formatDate, formatMessage } = useIntl();
 
+
     // TODO: Replace this with actual content items count from API
     const contentItemsCount = Math.floor(Math.random() * 100) + 1;
 
@@ -56,6 +57,8 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
                 justifyContent: 'space-between',
             }}>
                 <CardContent sx={{
+                    width: '100%',
+                    boxSizing: 'border-box',
                     '&.MuiCardContent-root': {
                         p: 2,
                         '&:last-child': {
@@ -65,10 +68,29 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
                 }}>
                     <Stack>
                         <Stack direction="row" justifyContent="space-between">
-                            <Stack spacing={1}>
-                                <Avatar variant="rounded" sx={{ backgroundColor: palette.primary.main }}>
-                                    {project.name.charAt(0)}
-                                </Avatar>
+                            <Stack spacing={1} width="100%">
+                                <Stack direction="row" spacing={1} width="100%" justifyContent="space-between">
+                                    <Avatar variant="rounded" sx={{ backgroundColor: palette.primary.main }}>
+                                        {project.name.charAt(0)}
+                                    </Avatar>
+                                    <Box display="flex" gap={1}>
+                                        {project.deletedAt ? (
+                                            <Chip
+                                                color="error"
+                                                variant="outlined"
+                                                label={formatMessage(intlMessages.inactive)}
+                                                size="small"
+                                            />
+                                        ) : (
+                                            <Chip
+                                                color="success"
+                                                variant="outlined"
+                                                label={formatMessage(intlMessages.active)}
+                                                size="small"
+                                            />
+                                        )}
+                                    </Box>
+                                </Stack>
                                 <Stack>
                                     <Typography variant="h6" component="h2">
                                         {project.name}

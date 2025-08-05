@@ -24,7 +24,7 @@ const Projects = () => {
 
     return (
         <Container
-            maxWidth="lg"
+            maxWidth="xl"
             sx={{
                 my: 6,
             }}
