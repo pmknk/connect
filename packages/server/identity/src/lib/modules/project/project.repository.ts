@@ -28,10 +28,10 @@ export class ProjectRepository {
                     association: 'Users',
                     where: {
                         id: userId,
-                        deletedAt: null
                     }
                 }
-            ]
+            ],
+            paranoid: false
         });
     }
 
