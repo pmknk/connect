@@ -166,8 +166,7 @@ const Projects = () => {
                         left: 0,
                         right: 0,
                         zIndex: 1000,
-                        px: 2,
-                        py: 1,
+                        p: 2,
                         backgroundColor: 'background.paper',
                         borderTop: '1px solid',
                         borderColor: 'divider'

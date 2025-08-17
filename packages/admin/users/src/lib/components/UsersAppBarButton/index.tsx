@@ -1,11 +1,36 @@
 import { FormattedMessage } from 'react-intl';
-import { AppBarButton } from '@avyyx/admin-ui'
-import { useLocation } from 'react-router-dom';
+import { AppBarButton, ExtendedTheme } from '@avyyx/admin-ui'
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useTheme } from '@mui/material/styles';
+import { MenuItem, Typography, useMediaQuery } from '@mui/material';
 
 const USERS_ROUTE = '/users'
 
-export const UsersAppBarButton = () => {
+type UsersAppBarButtonProps = {
+    onClick?: () => void;
+}
+
+export const UsersAppBarButton = ({ onClick }: UsersAppBarButtonProps) => {
     const { pathname } = useLocation();
+    const navigate = useNavigate();
+    const { breakpoints } = useTheme<ExtendedTheme>();
+    const isMobile = useMediaQuery(breakpoints.down('sm'));
+
+    if (isMobile) {
+        return (
+            <MenuItem selected={pathname.includes(USERS_ROUTE)} onClick={() => {
+                navigate(USERS_ROUTE)
+                onClick?.()
+            }}>
+                <Typography variant="body2">
+                    <FormattedMessage
+                        id="main.navbar.users"
+                        defaultMessage="Users"
+                    />
+                </Typography>
+            </MenuItem>
+        )
+    }
     return (
         <AppBarButton
             key={'users'}
