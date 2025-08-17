@@ -4,6 +4,11 @@ import { FormattedMessage } from 'react-intl';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 
+import { useTheme } from '@mui/material/styles';
+import { useMediaQuery } from '@mui/material';
+
+import { ExtendedTheme } from '@avyyx/admin-ui';
+
 import { PermissionAccess } from '@avyyx/admin-utils';
 import { CreateProjectForm } from './CreateProjectForm';
 import { useCreateProjectForm } from '../../hooks/useCreateProjectForm';
@@ -15,6 +20,8 @@ type CreateProjectProps = {
 };
 
 export const CreateProject = ({ onSuccess }: CreateProjectProps) => {
+    const { breakpoints } = useTheme<ExtendedTheme>();
+    const isMobile = useMediaQuery(breakpoints.down('sm'));
     const [open, setOpen] = useState(false);
     const { control, handleSubmit, reset } = useCreateProjectForm();
     const { mutate: createProject, isPending } = useCreateProjectsMutation();
@@ -39,7 +46,7 @@ export const CreateProject = ({ onSuccess }: CreateProjectProps) => {
                     variant="contained"
                     color="primary"
                     sx={{
-                        width: '150px',
+                        width: isMobile ? '100%' : '150px',
                     }}
                     onClick={() => setOpen(true)}
                 >

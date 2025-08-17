@@ -9,6 +9,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle"
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
+import { useMediaQuery } from "@mui/material";
 
 type CreateProjectDialogProps = {
     open: boolean;
@@ -19,17 +20,19 @@ type CreateProjectDialogProps = {
 }
 
 export const CreateProjectDialog = ({ open, onClose, content, actions, onSubmit }: CreateProjectDialogProps) => {
-    const {palette} = useTheme<ExtendedTheme>()
+    const {palette, breakpoints} = useTheme<ExtendedTheme>()
+    const isMobile = useMediaQuery(breakpoints.down('sm'));
     return (
         <Dialog
             open={open}
             onClose={onClose}
             sx={{
                 '& .MuiDialog-paper': {
-                    maxWidth: '420px',
                     width: '100%',
+                    maxWidth: isMobile ? '100%' : '420px',
                 }
             }}
+            fullScreen={isMobile}
         >
             <form onSubmit={onSubmit}>
                 <DialogTitle sx={{

@@ -2,12 +2,18 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import Avatar from "@mui/material/Avatar";
+import Box from "@mui/material/Box";
+import CardActionArea from "@mui/material/CardActionArea";
+import CardActions from "@mui/material/CardActions";
+import Chip from "@mui/material/Chip";
+import Stack from "@mui/material/Stack";
 
-import { Box, CardActionArea, CardActions, Chip, Stack, useTheme } from "@mui/material";
+import { ExtendedTheme } from "@avyyx/admin-ui";
+import { useTheme } from "@mui/material";
 import { defineMessages, useIntl } from "react-intl";
+import { ArrowUpRight } from "lucide-react";
 
 import type { ProjectsQueryResponse } from "../../../hooks/useProjectsQuery";
-import { ExtendedTheme } from "@avyyx/admin-ui";
 
 const intlMessages = defineMessages({
     contentItems: {
@@ -125,6 +131,10 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
                 </CardContent>
                 <CardActions sx={{
                     p: 2,
+                    width: '100%',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    boxSizing: 'border-box',
                 }}>
                     <Stack spacing={0.2}>
                         <Typography variant="body2">
@@ -138,6 +148,7 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
                             })}
                         </Typography>
                     </Stack>
+                    <ArrowUpRight size={24} />
                 </CardActions>
             </CardActionArea>
         </Card>
