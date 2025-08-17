@@ -1,21 +1,16 @@
-import { Core } from "@avyyx/admin-core";
-import { signin } from "@avyyx/admin-signin";
-import { projects } from '@avyyx/admin-projects'
-import { users } from '@avyyx/admin-users'
+import { Core } from '@avyyx/admin-core';
+import { signin } from '@avyyx/admin-signin';
+import { projects } from '@avyyx/admin-projects';
+import { users } from '@avyyx/admin-users';
 
 export function App() {
     return (
-        <Core 
+        <Core
             environment={{
                 production: false,
-                api: "http://localhost:4001"
+                api: 'http://localhost:4001'
             }}
-            plugins={[
-                signin(),
-                projects(),
-                users()
-            ]}
-
+            plugins={[signin(), projects(), users()]}
         />
     );
 }

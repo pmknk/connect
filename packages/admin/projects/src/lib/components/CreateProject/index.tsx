@@ -46,7 +46,7 @@ export const CreateProject = ({ onSuccess }: CreateProjectProps) => {
                     variant="contained"
                     color="primary"
                     sx={{
-                        width: isMobile ? '100%' : '150px',
+                        width: isMobile ? '100%' : '150px'
                     }}
                     onClick={() => setOpen(true)}
                 >
@@ -68,7 +68,10 @@ export const CreateProject = ({ onSuccess }: CreateProjectProps) => {
                     });
                 })}
                 content={
-                    <CreateProjectForm control={control} isLoading={isPending} />
+                    <CreateProjectForm
+                        control={control}
+                        isLoading={isPending}
+                    />
                 }
                 actions={
                     <Stack direction="row" spacing={1}>

@@ -13,7 +13,9 @@ export const useProjectsFilter = (): UseProjectsFilterReturn => {
 
     const activityParam = searchParams.get('activity');
     const activityFilter: ProjectsActivityFilterValue =
-        activityParam === 'active' || activityParam === 'inactive' ? activityParam : 'all';
+        activityParam === 'active' || activityParam === 'inactive'
+            ? activityParam
+            : 'all';
 
     const search = searchParams.get('search') || '';
 
@@ -39,7 +41,6 @@ export const useProjectsFilter = (): UseProjectsFilterReturn => {
         activityFilter,
         setActivityFilter,
         search,
-        setSearch,
+        setSearch
     };
 };
-

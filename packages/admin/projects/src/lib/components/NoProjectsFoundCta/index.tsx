@@ -17,7 +17,12 @@ type NoProjectsFoundCtaProps = {
     onSuccess?: () => void;
 };
 
-export const NoProjectsFoundCta = ({ onSuccess, title, description, showCreateProject = true }: NoProjectsFoundCtaProps) => {
+export const NoProjectsFoundCta = ({
+    onSuccess,
+    title,
+    description,
+    showCreateProject = true
+}: NoProjectsFoundCtaProps) => {
     const { palette } = useTheme<ExtendedTheme>();
     return (
         <Stack
@@ -29,9 +34,7 @@ export const NoProjectsFoundCta = ({ onSuccess, title, description, showCreatePr
             textAlign="center"
         >
             <FolderX size={60} color={palette.primary.main} strokeWidth={1} />
-            <Typography variant="h5">
-                {title}
-            </Typography>
+            <Typography variant="h5">{title}</Typography>
             <Typography variant="body1" color="text.secondary">
                 {description}
             </Typography>
