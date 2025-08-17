@@ -11,7 +11,8 @@ export const ProjectGridSkeleton = ({ count = 4 }: ProjectGridSkeletonProps) => 
             {Array.from({ length: count }).map((_, index) => (
                 <Grid size={{
                     xs: 12,
-                    md: 4,
+                    md: 6,
+                    lg: 4,
                 }} key={index}>
                     <ProjectCardSkeleton />
                 </Grid>

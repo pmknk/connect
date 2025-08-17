@@ -8,12 +8,14 @@ type ProjectsGridProps = {
 };
 
 export const ProjectsGrid = ({ projects }: ProjectsGridProps) => {
+    
     return (
         <Grid container spacing={4} sx={{ mt: 2 }}>
             {projects.map((project) => (
                 <Grid size={{
                     xs: 12,
-                    md: 4,
+                    md: 6,
+                    lg: 4,
                 }} key={project.id}>
                     <ProjectCard project={project} />
                 </Grid>
