@@ -30,8 +30,8 @@ export const NoProjectsFoundCta = ({
             gap={1}
             alignItems="center"
             justifyContent="center"
-            height="calc(100vh - 300px)"
             textAlign="center"
+            mt={20}
         >
             <FolderX size={60} color={palette.primary.main} strokeWidth={1} />
             <Typography variant="h5">{title}</Typography>
