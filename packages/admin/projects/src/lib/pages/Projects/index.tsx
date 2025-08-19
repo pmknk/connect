@@ -64,7 +64,7 @@ const Projects = () => {
             <Container
                 maxWidth="xl"
                 sx={{
-                    my: isMobile ? 3 : 6,
+                    my: isMobile ? 3 : 4,
                     pb: isMobile ? 8 : 0
                 }}
             >
