@@ -107,7 +107,7 @@ export const UsersTable = ({ usersQueryResponse, onPageChange, onRowsPerPageChan
             </TableContainer>
             <TablePagination
                 count={usersQueryResponse.meta.total }
-                page={usersQueryResponse.meta.offset}
+                page={Math.floor(usersQueryResponse.meta.offset / usersQueryResponse.meta.limit)}
                 rowsPerPage={usersQueryResponse.meta.limit}
                 rowsPerPageOptions={[10, 20, 50, 100]}
                 onPageChange={(_, page) => {

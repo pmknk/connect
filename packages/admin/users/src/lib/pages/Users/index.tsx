@@ -4,12 +4,28 @@ import { ExtendedTheme } from "@avyyx/admin-ui";
 import { FormattedMessage } from "react-intl";
 import { UsersTable } from "../../components/UsersTable";
 import { useUsersQuery } from "../../hooks/useUsersQuery";
+import { useMemo } from "react";
+import { useSearchParams } from "react-router-dom";
 
 const Users = () => {
     const { breakpoints } = useTheme<ExtendedTheme>();
     const isMobile = useMediaQuery(breakpoints.down('sm'));
 
-    const { data: usersQueryResponse } = useUsersQuery()
+    const [searchParams, setSearchParams] = useSearchParams();
+
+    const rowsPerPage = useMemo(() => {
+        const limitParam = Number(searchParams.get('limit'));
+        const allowed = [10, 20, 50, 100];
+        return allowed.includes(limitParam) ? limitParam : 10;
+    }, [searchParams]);
+
+    const page = useMemo(() => {
+        const pageParam = Number(searchParams.get('page'));
+        // Store page in URL as 1-based; convert to 0-based for UI state
+        return Number.isFinite(pageParam) && pageParam >= 1 ? pageParam - 1 : 0;
+    }, [searchParams]);
+
+    const { data: usersQueryResponse } = useUsersQuery(page + 1, rowsPerPage)
 
     return (
         <Container
@@ -37,11 +53,16 @@ const Users = () => {
                 <Stack sx={{ mt: 4 }}>
                     <UsersTable 
                         usersQueryResponse={usersQueryResponse}
-                        onPageChange={() => {
-                            console.log('page');
+                        onPageChange={(newPage) => {
+                            const next = new URLSearchParams(searchParams);
+                            next.set('page', String(newPage + 1));
+                            setSearchParams(next, { replace: true });
                         }}
-                        onRowsPerPageChange={() => {
-                            console.log('rowsPerPage');
+                        onRowsPerPageChange={(newRowsPerPage) => {
+                            const next = new URLSearchParams(searchParams);
+                            next.set('limit', String(newRowsPerPage));
+                            next.set('page', '1');
+                            setSearchParams(next, { replace: true });
                         }}
                     />
                 </Stack>
