@@ -6,6 +6,7 @@ import { UsersTable } from "../../components/UsersTable";
 import { useUsersQuery } from "../../hooks/useUsersQuery";
 import { useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
+import { UsersTableSkeleton } from "../../components/UsersTable/UsersTableSkeleton";
 
 const Users = () => {
     const { breakpoints } = useTheme<ExtendedTheme>();
@@ -25,7 +26,7 @@ const Users = () => {
         return Number.isFinite(pageParam) && pageParam >= 1 ? pageParam - 1 : 0;
     }, [searchParams]);
 
-    const { data: usersQueryResponse } = useUsersQuery(page + 1, rowsPerPage)
+    const { data: usersQueryResponse, isLoading, isFetching } = useUsersQuery(page + 1, rowsPerPage)
 
     return (
         <Container
@@ -49,7 +50,11 @@ const Users = () => {
                     />
                 </Typography>
             </Stack>
-            {usersQueryResponse && (
+            {(isLoading || isFetching) ? (
+                <Stack sx={{ mt: 4 }}>
+                    <UsersTableSkeleton rows={rowsPerPage} />
+                </Stack>
+            ) : usersQueryResponse ? (
                 <Stack sx={{ mt: 4 }}>
                     <UsersTable 
                         usersQueryResponse={usersQueryResponse}
@@ -66,7 +71,7 @@ const Users = () => {
                         }}
                     />
                 </Stack>
-            )}
+            ) : null}
         </Container>
     )
 }
