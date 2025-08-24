@@ -79,6 +79,7 @@ const Users = () => {
                             onChange={(e) => {
                                 const next = new URLSearchParams(searchParams);
                                 next.set('search', e.target.value);
+                                next.set('page', '1');
                                 setSearchParams(next, { replace: true });
                             }}
                             value={search}

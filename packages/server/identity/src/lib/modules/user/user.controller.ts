@@ -23,6 +23,7 @@ export class UserController {
     async getUsers(request: FastifyRequest): Promise<UsersResponseDto> {
         const requestDto = toUsersRequestDto(request);
         const { count, users } = await this.userService.getUsers(requestDto);
+
         return toUsersResponseDto(
             users,
             {

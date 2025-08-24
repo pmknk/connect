@@ -110,7 +110,8 @@ export class UserRepository {
     ): Promise<{ count: number; users: User[] }> {
         const count = await this.entryService.count<User>({
             ...findOptions,
-            schema: 'Users'
+            schema: 'Users',
+            distinct: true
         });
 
         const users = await this.entryService.find<User>({

@@ -47,7 +47,7 @@ export class UserService {
                     { fullName: { [Op.iLike]: `%${search}%` } },
                     { email: { [Op.iLike]: `%${search}%` } },
                 ]
-            }
+            },
         });
     }
 }

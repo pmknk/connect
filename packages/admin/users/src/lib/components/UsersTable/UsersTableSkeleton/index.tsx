@@ -21,7 +21,7 @@ export const UsersTableSkeleton = ({ rows = 10 }: UsersTableSkeletonProps) => {
             boxShadow: 'none',
             border: '1px solid',
             borderColor: 'divider',
-            p: 2
+            p: 2,
         }}>
             <Table>
                 <TableHead>
