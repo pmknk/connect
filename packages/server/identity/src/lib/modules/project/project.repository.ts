@@ -25,7 +25,7 @@ export class ProjectRepository {
             include: [
                 {
                     required: true,
-                    association: 'Users',
+                    association: 'users',
                     where: {
                         id: userId,
                     }

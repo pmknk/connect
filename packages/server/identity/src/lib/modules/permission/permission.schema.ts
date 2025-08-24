@@ -30,7 +30,8 @@ export const PermissionSchema: SchemaDefinition = {
             options: {
                 through: 'RolePermissions',
                 foreignKey: 'permissionId',
-                otherKey: 'roleId'
+                otherKey: 'roleId',
+                as: 'roles'
             }
         },
         permissionGroup: {
@@ -38,7 +39,8 @@ export const PermissionSchema: SchemaDefinition = {
             relationType: 'belongsTo',
             target: 'PermissionGroups',
             options: {
-                foreignKey: 'permissionGroupId'
+                foreignKey: 'permissionGroupId',
+                as: 'permissionGroup'
             }
         }
     },

@@ -48,7 +48,8 @@ export const ProjectSchema: SchemaDefinition = {
             options: {
                 through: 'ProjectUsers',
                 foreignKey: 'projectId',
-                otherKey: 'userId'
+                otherKey: 'userId',
+                as: 'users'
             }
         }
     },

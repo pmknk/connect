@@ -47,9 +47,21 @@ export const UserSchema: SchemaDefinition = {
             relationType: 'belongsToMany',
             target: 'Roles',
             options: {
+                as: 'roles',
                 through: 'UserRoles',
                 foreignKey: 'userId',
                 otherKey: 'roleId'
+            }
+        },
+        projects: {
+            type: 'relation',
+            relationType: 'belongsToMany',
+            target: 'Projects',
+            options: {
+                as: 'projects',
+                through: 'ProjectUsers',
+                foreignKey: 'userId',
+                otherKey: 'projectId'
             }
         }
     },

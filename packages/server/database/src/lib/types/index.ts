@@ -60,6 +60,7 @@ export type SchemaFieldDefinition = {
 export type SchemaRelationDefinition = {
     relationType: 'hasOne' | 'hasMany' | 'belongsTo' | 'belongsToMany';
     target: string;
+    as?: string;
     options:
         | HasOneOptions
         | HasManyOptions

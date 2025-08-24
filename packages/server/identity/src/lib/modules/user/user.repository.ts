@@ -67,7 +67,7 @@ export class UserRepository {
             schema: 'Users',
             include: [
                 {
-                    association: 'Roles',
+                    association: 'roles',
                     where: {
                         slug
                     }

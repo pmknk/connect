@@ -9,9 +9,7 @@ const Users = () => {
     const { breakpoints } = useTheme<ExtendedTheme>();
     const isMobile = useMediaQuery(breakpoints.down('sm'));
 
-    const { data: users } = useUsersQuery()
-
-    console.log(users)
+    const { data: usersQueryResponse } = useUsersQuery()
 
     return (
         <Container
@@ -35,9 +33,11 @@ const Users = () => {
                     />
                 </Typography>
             </Stack>
-            <Stack sx={{ mt: 4 }}>
-                <UsersTable />
-            </Stack>
+            {usersQueryResponse && (
+                <Stack sx={{ mt: 4 }}>
+                    <UsersTable usersQueryResponse={usersQueryResponse} />
+                </Stack>
+            )}
         </Container>
     )
 }

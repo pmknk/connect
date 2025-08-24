@@ -15,7 +15,9 @@ export class UserService {
      * Creates a new UserService instance
      * @param {UserRepository} userRepository - Repository for user data operations
      */
-    constructor(private readonly userRepository: UserRepository) {}
+    constructor(
+        private readonly userRepository: UserRepository,
+    ) {}
 
     /**
      * Retrieves a paginated list of users
@@ -37,7 +39,7 @@ export class UserService {
         dto: UsersRequestDto
     ): Promise<{ count: number; users: User[] }> {
         return await this.userRepository.findAllPaginated({
-            ...dto
+            ...dto,
         });
     }
 }

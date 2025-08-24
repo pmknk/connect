@@ -20,13 +20,11 @@ export class PermissionRepository {
             schema: 'Permissions',
             include: [
                 {
-                    association: 'Roles',
-                    as: 'roles',
+                    association: 'roles',
                     required: true,
                     include: [
                         {
-                            association: 'Users',
-                            as: 'users',
+                            association: 'users',
                             required: true,
                             where: {
                                 id: userId

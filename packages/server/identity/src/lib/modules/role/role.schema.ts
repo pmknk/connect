@@ -36,7 +36,8 @@ export const RoleSchema: SchemaDefinition = {
             options: {
                 through: 'UserRoles',
                 foreignKey: 'roleId',
-                otherKey: 'userId'
+                otherKey: 'userId',
+                as: 'users'
             }
         }
     }

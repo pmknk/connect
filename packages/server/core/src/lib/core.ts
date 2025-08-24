@@ -1,3 +1,4 @@
+import qs from 'qs';
 import { Container } from 'inversify';
 import fastify, { FastifyListenOptions } from 'fastify';
 import { type FastifyApplicationInstance } from '../types';
@@ -20,7 +21,8 @@ export class Application {
         const DI_BIND_NAME = 'di';
 
         this.fastifyInstance = fastify({
-            logger: true
+            logger: true,
+            querystringParser: (str) => qs.parse(str)
         }) as unknown as FastifyApplicationInstance;
         this.register = this.fastifyInstance.register.bind(
             this.fastifyInstance

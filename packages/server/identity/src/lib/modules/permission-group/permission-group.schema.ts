@@ -35,6 +35,7 @@ export const PermissionGroupSchema: SchemaDefinition = {
             target: 'Permissions',
             options: {
                 foreignKey: 'permissionGroupId',
+                as: 'permissions'
             }
         }
     }

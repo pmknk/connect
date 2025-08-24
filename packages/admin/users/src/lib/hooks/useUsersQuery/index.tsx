@@ -9,6 +9,21 @@ export type UsersQueryResponse = {
         id: string;
         fullName: string;
         email: string;
+        createdAt: string;
+        updatedAt: string;
+        deletedAt: string;
+        roles: {
+            id: string;
+            name: string;
+            slug: string;
+            description: string;
+        }[];
+        projects: {
+            id: string;
+            name: string;
+            slug: string;
+            description: string;
+        }[];
     }[];
     meta: {
         total: number;
@@ -18,7 +33,7 @@ export type UsersQueryResponse = {
 };
 
 const GET_ALL_USERS_ROUTE = '/api/v1/identity/users';
-const DEFAULT_LIMIT = 20;
+const DEFAULT_LIMIT = 10;
 
 /**
  * React hook to fetch paginated users from the API.
@@ -43,7 +58,9 @@ export const useUsersQuery = (page: number = 1, limit: number = DEFAULT_LIMIT) =
                 signal,
                 params: {
                     offset: (page - 1) * limit,
-                    limit
+                    limit,
+                    include: [{ association: 'roles' }, { association: 'projects' }],
+                    paranoid: false
                 }
             }),
         select: ({ data }) => data

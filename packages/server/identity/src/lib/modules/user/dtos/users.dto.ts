@@ -4,11 +4,15 @@ import { User } from '../user.schema';
 export type UsersRequestDto = {
     offset?: number;
     limit?: number;
+    include?: {
+        association: string;
+    }[];
+    paranoid?: boolean;
 };
 
 export const toUsersRequestDto = (request: FastifyRequest): UsersRequestDto => {
-    const { offset, limit } = request.query as UsersRequestDto;
-    return { offset, limit };
+    const { offset, limit, include, paranoid } = request.query as UsersRequestDto;
+    return { offset, limit, include, paranoid };
 };
 
 export const usersRequestSchema = {
@@ -21,6 +25,20 @@ export const usersRequestSchema = {
         limit: {
             type: 'number',
             default: 10
+        },
+        include: {
+            type: 'array',
+            items: {
+                type: 'object',
+                properties: {
+                    association: { type: 'string' },
+                }
+            },
+            default: []
+        },
+        paranoid: {
+            type: 'boolean',
+            default: true
         }
     }
 } as const;
