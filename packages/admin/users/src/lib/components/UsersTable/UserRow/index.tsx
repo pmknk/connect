@@ -7,6 +7,7 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import Chip from '@mui/material/Chip';
 import { useTheme } from '@mui/material/styles';
+import Tooltip from '@mui/material/Tooltip';
 
 import { ChevronDown, EllipsisVertical } from 'lucide-react';
 
@@ -65,7 +66,17 @@ export const UserRow = ({ user, onOpenProjects, onOpenActions, hasDeletePermissi
                 </Stack>
             </TableCell>
             <TableCell align="left">
-                {user.roles && user.roles.length > 0 ? user.roles[0].name : ''}
+                <Tooltip 
+                    title={user.roles[0].description}
+                    sx={{
+                        cursor: 'pointer',
+                    }}
+                    placement="top"
+                >
+                    <Typography variant="body2">
+                        {user.roles && user.roles.length > 0 ? user.roles[0].name : ''}
+                    </Typography>
+                </Tooltip>
             </TableCell>
             <TableCell align="left">
                 {user.projects && user.projects.length > 0 ? <Button 
