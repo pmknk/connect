@@ -2,6 +2,7 @@ import { injectable } from 'inversify';
 import { UserRepository } from './user.repository';
 import type { UsersRequestDto } from './dtos/users.dto';
 import type { User } from './user.schema';
+import { Op } from 'sequelize';
 
 /**
  * Service for handling user-related business logic
@@ -38,8 +39,15 @@ export class UserService {
     async getUsers(
         dto: UsersRequestDto
     ): Promise<{ count: number; users: User[] }> {
+        const { search, ...rest } = dto;
         return await this.userRepository.findAllPaginated({
-            ...dto,
+            ...rest,
+            where: {
+                [Op.or]: [
+                    { fullName: { [Op.iLike]: `%${search}%` } },
+                    { email: { [Op.iLike]: `%${search}%` } },
+                ]
+            }
         });
     }
 }

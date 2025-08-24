@@ -1,5 +1,5 @@
 import { useHttpClient } from '@avyyx/admin-utils';
-import { useQuery } from '@tanstack/react-query';
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
 /**
  * Response type for the users query.
@@ -48,21 +48,23 @@ const DEFAULT_LIMIT = 10;
  * const { data, isLoading, error } = useUsersQuery(2, 10);
  * // data.data contains the array of users for page 2, 10 per page
  */
-export const useUsersQuery = (page: number = 1, limit: number = DEFAULT_LIMIT) => {
+export const useUsersQuery = (page: number = 1, limit: number = DEFAULT_LIMIT, search?: string) => {
     const httpClient = useHttpClient();
 
     return useQuery({
-        queryKey: ['users', page, limit],
+        queryKey: ['users', page, limit, search ?? ''],
         queryFn: ({ signal }) =>
             httpClient.get<UsersQueryResponse>(GET_ALL_USERS_ROUTE, {
                 signal,
                 params: {
                     offset: (page - 1) * limit,
                     limit,
+                    search,
                     include: [{ association: 'roles' }, { association: 'projects' }],
                     paranoid: false
                 }
             }),
-        select: ({ data }) => data
+        select: ({ data }) => data,
+        placeholderData: keepPreviousData
     });
 };

@@ -2,6 +2,7 @@ import { FastifyRequest } from 'fastify';
 import { User } from '../user.schema';
 
 export type UsersRequestDto = {
+    search?: string;
     offset?: number;
     limit?: number;
     include?: {
@@ -11,8 +12,8 @@ export type UsersRequestDto = {
 };
 
 export const toUsersRequestDto = (request: FastifyRequest): UsersRequestDto => {
-    const { offset, limit, include, paranoid } = request.query as UsersRequestDto;
-    return { offset, limit, include, paranoid };
+    const { offset, limit, include, paranoid, search } = request.query as UsersRequestDto;
+    return { offset, limit, include, paranoid, search };
 };
 
 export const usersRequestSchema = {
@@ -25,6 +26,10 @@ export const usersRequestSchema = {
         limit: {
             type: 'number',
             default: 10
+        },
+        search: {
+            type: 'string',
+            default: ''
         },
         include: {
             type: 'array',
