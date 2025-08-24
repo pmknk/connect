@@ -35,7 +35,15 @@ const Users = () => {
             </Stack>
             {usersQueryResponse && (
                 <Stack sx={{ mt: 4 }}>
-                    <UsersTable usersQueryResponse={usersQueryResponse} />
+                    <UsersTable 
+                        usersQueryResponse={usersQueryResponse}
+                        onPageChange={() => {
+                            console.log('page');
+                        }}
+                        onRowsPerPageChange={() => {
+                            console.log('rowsPerPage');
+                        }}
+                    />
                 </Stack>
             )}
         </Container>
