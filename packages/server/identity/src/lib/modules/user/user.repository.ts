@@ -58,6 +58,44 @@ export class UserRepository {
     }
 
     /**
+     * Associates a single project with a user.
+     * @param userId - The ID of the user.
+     * @param projectId - The ID of the project to associate.
+     * @param transaction - The database transaction to use.
+     * @returns {Promise<void>} Resolves when the association is created.
+     */
+    async addProject(
+        userId: string,
+        projectId: string,
+        transaction: Transaction
+    ): Promise<void> {
+        await this.entryService.create({
+            schema: 'UserProjects',
+            values: { userId, projectId },
+            transaction
+        });
+    }
+
+    /**
+     * Associates multiple projects with a user.
+     * @param userId - The ID of the user.
+     * @param projectIds - An array of project IDs to associate with the user.
+     * @param transaction - The database transaction to use.
+     * @returns {Promise<void>} Resolves when all associations are created.
+     */
+    async addProjects(
+        userId: string,
+        projectIds: string[],
+        transaction: Transaction
+    ): Promise<void> {
+        await this.entryService.bulkCreate({
+            schema: 'UserProjects',
+            values: projectIds.map((projectId) => ({ userId, projectId })),
+            transaction
+        });
+    }
+
+    /**
      * Finds a user by their associated role slug
      * @param slug - The role slug to search for
      * @returns {Promise<User | null>} The found user or null if not found

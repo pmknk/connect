@@ -35,9 +35,9 @@ export class AuthRouter {
      */
     initialize(fastify: FastifyApplicationInstance) {
         const ROUTE_PATHS = {
-            SIGNIN: '/identity/auth/signin',
-            GET_ME: '/identity/auth/me',
-            REFRESH_TOKEN: '/identity/auth/refresh-token'
+            SIGNIN: '/api/v1/identity/auth/signin',
+            GET_ME: '/api/v1/identity/auth/me',
+            REFRESH_TOKEN: '/api/v1/identity/auth/refresh-token'
         }
 
         fastify.post(

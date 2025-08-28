@@ -24,4 +24,16 @@ export class RoleRepository {
             where: { slug }
         });
     }
+
+    /**
+     * Finds a role by its ID
+     * @param id - The ID to search for
+     * @returns {Promise<Role | null>} The found role or null if not found
+     */
+    async findById(id: string) {
+        return await this.entryService.findOne<Role>({
+            schema: 'Roles',
+            where: { id }
+        });
+    }
 }

@@ -69,6 +69,7 @@ export const UsersTable = ({ usersQueryResponse }: UsersTableProps) => {
             boxShadow: 'none',
             border: '1px solid',
             borderColor: 'divider',
+            boxSizing: 'border-box',
             p: 2,
         }}>
             <Table>

@@ -5,7 +5,7 @@ import { injectable } from 'inversify';
 import { ROLE_CODES } from '../../constants';
 import { UserRepository } from '../user/user.repository';
 import { RoleRepository } from '../role/role.repository';
-import { InitAdminUserDto } from './dto/init.dto';
+import { InitAdminUserDto } from './dtos/init.dto';
 import { generateHash } from '../../utils';
 
 /**

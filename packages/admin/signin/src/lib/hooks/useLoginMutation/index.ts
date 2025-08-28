@@ -33,7 +33,7 @@ export type LoginMutationResponse = {
  * }
  * ```
  */
-const SIGNIN_ROUTE = '/identity/auth/signin';
+const SIGNIN_ROUTE = '/api/v1/identity/auth/signin';
 
 export const useLoginMutation = () => {
     const httpClient = useHttpClient();

@@ -1,18 +1,20 @@
 import { SchemaDefinition } from '@avyyx/server-database';
 import type { Project } from '../project/project.schema';
 import type { Role } from '../role/role.schema';
+import type { Invite } from '../invite/invite.schema';
 
 export interface User {
     id: string;
     email: string;
     fullName: string;
-    password: string;
-    salt: string;
+    password?: string;
+    salt?: string;
     createdAt: Date;
     updatedAt: Date;
     deletedAt: Date;
     projects: Project[];
     roles: Role[];
+    invite?: Invite;
 }
 
 export const UserSchema: SchemaDefinition = {
@@ -36,11 +38,11 @@ export const UserSchema: SchemaDefinition = {
         },
         password: {
             type: 'string',
-            nullable: false
+            nullable: true
         },
         salt: {
             type: 'string',
-            nullable: false
+            nullable: true
         },
         roles: {
             type: 'relation',
@@ -62,6 +64,15 @@ export const UserSchema: SchemaDefinition = {
                 through: 'ProjectUsers',
                 foreignKey: 'userId',
                 otherKey: 'projectId'
+            }
+        },
+        invite: {
+            type: 'relation',
+            relationType: 'hasOne',
+            target: 'Invites',
+            options: {
+                as: 'invite',
+                foreignKey: 'userId'
             }
         }
     },

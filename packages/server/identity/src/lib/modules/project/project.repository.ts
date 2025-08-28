@@ -73,4 +73,17 @@ export class ProjectRepository {
             transaction
         });
     }
+
+    /**
+     * Finds projects by their IDs.
+     * @param ids - An array of project IDs.
+     * @returns A promise that resolves to an array of Project objects that match the provided IDs.
+     */
+    async findByIds(ids: string[]): Promise<Project[]> {
+        return await this.entryService.find<Project>({
+            schema: 'Projects',
+            where: { id: { $in: ids } },
+            paranoid: false
+        });
+    }
 }

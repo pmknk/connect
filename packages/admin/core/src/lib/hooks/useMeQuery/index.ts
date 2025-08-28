@@ -33,7 +33,7 @@ export type MeQueryResponse = {
  * return <div>Welcome, {user?.fullName}</div>
  * ```
  */
-const ME_ROUTE = '/identity/auth/me';
+const ME_ROUTE = '/api/v1/identity/auth/me';
 
 export const useMeQuery = () => {
     const httpClient = useHttpClient();

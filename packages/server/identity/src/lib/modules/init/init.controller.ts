@@ -1,7 +1,7 @@
 import { injectable } from "inversify";
 import { FastifyReply, FastifyRequest } from "fastify";
 import { InitService } from "./init.service";
-import { InitAdminUserDto } from "./dto/init.dto";
+import { InitAdminUserDto } from "./dtos/init.dto";
 
 @injectable()
 export class InitController { 
