@@ -36,4 +36,14 @@ export class RoleRepository {
             where: { id }
         });
     }
+
+    /**
+     * Finds all roles
+     * @returns {Promise<Role[]>} The found roles
+     */
+    async findAll() {
+        return await this.entryService.find<Role>({
+            schema: 'Roles'
+        });
+    }
 }

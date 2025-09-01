@@ -1,5 +1,6 @@
 import { useHttpClient } from '@avyyx/admin-utils';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
+import { ROWS_PER_USERS_PAGE_OPTIONS } from '../../constants';
 
 /**
  * Response type for the users query.
@@ -33,7 +34,7 @@ export type UsersQueryResponse = {
 };
 
 const GET_ALL_USERS_ROUTE = '/api/v1/identity/users';
-const DEFAULT_LIMIT = 10;
+const DEFAULT_LIMIT = ROWS_PER_USERS_PAGE_OPTIONS[0];
 
 /**
  * React hook to fetch paginated users from the API.

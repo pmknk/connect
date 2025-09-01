@@ -7,6 +7,8 @@ import { useUsersQuery } from "../../hooks/useUsersQuery";
 import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { UsersTableSkeleton } from "../../components/UsersTable/UsersTableSkeleton";
+import { CreateUser } from "../../components/CreateUser";
+import { ROWS_PER_USERS_PAGE_OPTIONS } from "../../constants";
 
 const Users = () => {
     const [initialLoading, setInitialLoading] = useState(true);
@@ -21,8 +23,8 @@ const Users = () => {
 
     const rowsPerPage = useMemo(() => {
         const limitParam = Number(searchParams.get('limit'));
-        const allowed = [10, 20, 50, 100];
-        return allowed.includes(limitParam) ? limitParam : 10;
+        const allowed = ROWS_PER_USERS_PAGE_OPTIONS;
+        return allowed.includes(limitParam) ? limitParam : ROWS_PER_USERS_PAGE_OPTIONS[0];
     }, [searchParams]);
 
     const page = useMemo(() => {
@@ -71,6 +73,7 @@ const Users = () => {
                         spacing={2}
                         alignItems="center"
                         width="100%"
+                        justifyContent="space-between"
                     >
                         <TextField
                             name="search"
@@ -89,6 +92,7 @@ const Users = () => {
                                 maxWidth: '320px'
                             }}
                         />
+                        <CreateUser />
                     </Stack>
                     <Stack gap={2}>
                         {(isLoading || isFetching) && <UsersTableSkeleton rows={rowsPerPage} />}
@@ -100,7 +104,7 @@ const Users = () => {
                             count={usersQueryResponse.meta.total }
                             page={Math.floor(usersQueryResponse.meta.offset / usersQueryResponse.meta.limit)}
                             rowsPerPage={usersQueryResponse.meta.limit}
-                            rowsPerPageOptions={[10, 20, 50, 100]}
+                            rowsPerPageOptions={ROWS_PER_USERS_PAGE_OPTIONS}
                             onPageChange={(_, page) => {
                                 const next = new URLSearchParams(searchParams);
                                 next.set('page', String(page + 1));
