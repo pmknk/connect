@@ -6,14 +6,14 @@ import { ConnectionService } from '@avyyx/server-database';
 
 import initializeDataSeed from './seeds/initialization-data';
 
-import { UserModule } from './modules/user/user.module';
-import { RoleModule } from './modules/role/role.module';
-import { ProjectModule } from './modules/project/project.module';
-import { InitModule } from './modules/init/init.module';
-import { AuthModule } from './modules/auth/auth.module';
-import { InviteModule } from './modules/invite/invite.module';
-import { PermissionModule } from './modules/permission/permission.module';
-import { PermissionGroupModule } from './modules/permission-group/permission-group.module';
+import { UserModule } from './features/user/user.module';
+import { RoleModule } from './features/role/role.module';
+import { ProjectModule } from './features/project/project.module';
+import { InitModule } from './features/init/init.module';
+import { AuthModule } from './features/auth/auth.module';
+import { InviteModule } from './features/invite/invite.module';
+import { PermissionModule } from './features/permission/permission.module';
+import { PermissionGroupModule } from './features/permission-group/permission-group.module';
 
 import { IDENTITY_PLUGIN_OPTIONS_DI_PROVIDER } from './constants';
 import type { IdentityPluginOptions } from './types';
