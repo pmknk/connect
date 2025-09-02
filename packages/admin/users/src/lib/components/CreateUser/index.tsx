@@ -1,14 +1,17 @@
-import { Button, Stack, useMediaQuery, useTheme } from "@mui/material";
+import { Button, Stack, useMediaQuery, useTheme } from '@mui/material';
 
-import { PermissionAccess } from "@avyyx/admin-utils";
-import { ExtendedTheme } from "@avyyx/admin-ui";
+import { PermissionAccess } from '@avyyx/admin-utils';
+import { ExtendedTheme } from '@avyyx/admin-ui';
 
-import { FormattedMessage } from "react-intl";
-import { useEffect, useState } from "react";
-import { CreateUserDialog } from "./CreateUserDialog";
-import { CreateUserForm } from "./CreateUserForm";
-import { CreateUserFormData, useCreateUserForm } from "../../hooks/useCreateUserForm";
-import { useCreateUserMutation } from "../../hooks/useCreateUserMutation";
+import { FormattedMessage } from 'react-intl';
+import { useEffect, useState } from 'react';
+import { CreateUserDialog } from './CreateUserDialog';
+import { CreateUserForm } from './CreateUserForm';
+import {
+    CreateUserFormData,
+    useCreateUserForm
+} from '../../hooks/useCreateUserForm';
+import { useCreateUserMutation } from '../../hooks/useCreateUserMutation';
 
 export const CreateUser = () => {
     const { breakpoints } = useTheme<ExtendedTheme>();
@@ -18,14 +21,13 @@ export const CreateUser = () => {
     const { control, handleSubmit, reset } = useCreateUserForm();
     const { mutate: createUser, isPending } = useCreateUserMutation();
 
-
     useEffect(() => {
         if (open) {
             reset({
                 fullname: '',
                 email: '',
                 roleId: '',
-                projectIds: [],
+                projectIds: []
             });
         }
     }, [reset, open]);
@@ -64,14 +66,16 @@ export const CreateUser = () => {
             <CreateUserDialog
                 open={open}
                 onClose={handleClose}
-                content={<CreateUserForm control={control} />}
+                content={
+                    <CreateUserForm control={control} disabled={isPending} />
+                }
                 actions={
                     <Stack direction="row" spacing={1}>
                         <Button
                             variant="text"
                             color="error"
                             onClick={handleClose}
-                            disabled={false}
+                            disabled={isPending}
                         >
                             <FormattedMessage
                                 id="users.create.cancel"
@@ -82,17 +86,17 @@ export const CreateUser = () => {
                             variant="contained"
                             color="primary"
                             type="submit"
-                            loading={false}
+                            loading={isPending}
                         >
                             <FormattedMessage
                                 id="users.create.button"
                                 defaultMessage="Invite"
                             />
-                    </Button>
-                </Stack>
+                        </Button>
+                    </Stack>
                 }
                 onSubmit={handleSubmit(handleCreateUser)}
             />
         </>
-    )
+    );
 };

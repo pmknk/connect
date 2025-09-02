@@ -46,6 +46,10 @@ const intlMessages = defineMessages({
     selectAllUsers: {
         id: 'projects.create.users.selectAllUsers',
         defaultMessage: 'Select All available users'
+    },
+    noUsersFound: {
+        id: 'projects.create.users.empty',
+        defaultMessage: 'No users found'
     }
 });
 
@@ -150,6 +154,15 @@ export const UserSelectionField = ({
                             </Box>
                         </MenuItem>
                     ))}
+                {users.filter((user) => user.id !== currentUserId).length ===
+                    0 &&
+                    !isFetchingNextPage && (
+                        <MenuItem disabled>
+                            <Typography variant="body2" color="text.secondary">
+                                {formatMessage(intlMessages.noUsersFound)}
+                            </Typography>
+                        </MenuItem>
+                    )}
                 {isFetchingNextPage && <LoadingMenuItem />}
             </FormSelect>
             <FormCheckbox

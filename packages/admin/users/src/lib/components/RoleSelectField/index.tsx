@@ -1,17 +1,19 @@
-import MenuItem from "@mui/material/MenuItem";
-import Typography from "@mui/material/Typography";
+import MenuItem from '@mui/material/MenuItem';
+import Typography from '@mui/material/Typography';
 
-import { FormSelect } from "@avyyx/admin-ui"
-import { Control } from "react-hook-form"
-import { defineMessages, useIntl } from "react-intl"
+import { FormSelect } from '@avyyx/admin-ui';
+import { Control } from 'react-hook-form';
+import { defineMessages, useIntl } from 'react-intl';
 
-import { CreateUserFormData } from "../../hooks/useCreateUserForm"
-import { useRolesQuery } from "../../hooks/useRolesQuery"
-import Stack from "@mui/material/Stack";
+import { CreateUserFormData } from '../../hooks/useCreateUserForm';
+import { useRolesQuery } from '../../hooks/useRolesQuery';
+import Stack from '@mui/material/Stack';
+import { SelectProps } from '@mui/material';
 
 type RoleSelectFieldProps = {
-    control: Control<CreateUserFormData>
-}
+    control: Control<CreateUserFormData>;
+    selectProps?: SelectProps;
+};
 
 const intlMessages = defineMessages({
     role: {
@@ -26,34 +28,38 @@ const intlMessages = defineMessages({
         id: 'users.create.roleDescription',
         defaultMessage: 'Select the role the user will have'
     }
-})
+});
 
-export const RoleSelectField = ({ control }: RoleSelectFieldProps) => {
-    const { formatMessage } = useIntl()
+export const RoleSelectField = ({
+    control,
+    selectProps = {}
+}: RoleSelectFieldProps) => {
+    const { formatMessage } = useIntl();
     const { data: roles } = useRolesQuery();
-
 
     const renderSelectedValue = (value: any) => {
         const role = roles?.find((role) => role.id === value);
-        return role?.name || (
-            <Typography
-                color={'text.primary'}
-                sx={{
-                    fontSize: '14px',
-                    fontWeight: 400,
-                    opacity: 0.4
-                }}
-            >
-                {formatMessage(intlMessages.rolePlaceholder)}
-            </Typography>
-        )
-    }
+        return (
+            role?.name || (
+                <Typography
+                    color={'text.primary'}
+                    sx={{
+                        fontSize: '14px',
+                        fontWeight: 400,
+                        opacity: 0.4
+                    }}
+                >
+                    {formatMessage(intlMessages.rolePlaceholder)}
+                </Typography>
+            )
+        );
+    };
 
     return (
         <FormSelect
             control={control}
             name="roleId"
-            selectProps={{ 
+            selectProps={{
                 label: formatMessage(intlMessages.role),
                 labelPlacement: 'outside',
                 MenuProps: {
@@ -65,21 +71,25 @@ export const RoleSelectField = ({ control }: RoleSelectFieldProps) => {
                 },
                 displayEmpty: true,
                 renderValue: renderSelectedValue,
-                helperText: formatMessage(intlMessages.roleDescription)
+                helperText: formatMessage(intlMessages.roleDescription),
+                ...selectProps
             }}
         >
             {roles?.map((role) => (
                 <MenuItem value={role.id} key={role.id}>
-                    <Stack spacing={0.5} direction="column" sx={{ maxWidth: '340px' }}>
-                        <Typography variant="body2"
-
->
-                            {role.name}
-                        </Typography>
+                    <Stack
+                        spacing={0.5}
+                        direction="column"
+                        sx={{ maxWidth: '340px' }}
+                    >
+                        <Typography variant="body2">{role.name}</Typography>
                         <Typography
                             variant="caption"
                             color="text.secondary"
-                            sx={{ wordBreak: 'break-word', whiteSpace: 'pre-line' }}
+                            sx={{
+                                wordBreak: 'break-word',
+                                whiteSpace: 'pre-line'
+                            }}
                         >
                             {role.description}
                         </Typography>
@@ -87,5 +97,5 @@ export const RoleSelectField = ({ control }: RoleSelectFieldProps) => {
                 </MenuItem>
             ))}
         </FormSelect>
-    )
-}
+    );
+};

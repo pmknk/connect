@@ -1,13 +1,12 @@
-import { FastifyRequest } from "fastify";
-import { type Invite } from "../invite.schema";
+import { FastifyRequest } from 'fastify';
+import { type Invite } from '../invite.schema';
 
 export type CreateInviteDto = {
     email: string;
-    fullName: string;
+    fullname: string;
     roleId: string;
     projectIds: string[];
 };
-
 
 export type CreateInviteResponse = {
     data: {
@@ -16,15 +15,17 @@ export type CreateInviteResponse = {
 };
 
 export const toCreateInviteDto = (request: FastifyRequest): CreateInviteDto => {
-    const { email, fullName, roleId, projectIds } = request.body as CreateInviteDto;
-    return { email, fullName, roleId, projectIds };
+    const { email, fullname, roleId, projectIds } =
+        request.body as CreateInviteDto;
+    return { email, fullname, roleId, projectIds };
 };
 
-export const toCreateInviteResponse = (invite: Invite): CreateInviteResponse => {
+export const toCreateInviteResponse = (
+    invite: Invite
+): CreateInviteResponse => {
     const { id } = invite;
     return { data: { id } };
 };
-
 
 export const createInviteRequestSchema = {
     body: {
@@ -36,6 +37,5 @@ export const createInviteRequestSchema = {
             projectIds: { type: 'array', items: { type: 'string' } }
         }
     },
-    required: ['email', 'fullName', 'roleId',]
+    required: ['email', 'fullName', 'roleId']
 };
-

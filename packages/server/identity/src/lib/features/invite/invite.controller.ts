@@ -1,7 +1,10 @@
-import { FastifyReply, FastifyRequest } from "fastify";
-import { injectable } from "inversify";
-import { toCreateInviteDto, toCreateInviteResponse } from "./dtos/create-invite.dto";
-import { InviteService } from "./invite.service";
+import { FastifyReply, FastifyRequest } from 'fastify';
+import { injectable } from 'inversify';
+import {
+    toCreateInviteDto,
+    toCreateInviteResponse
+} from './dtos/create-invite.dto';
+import { InviteService } from './invite.service';
 
 /**
  * Controller class for handling invite-related HTTP requests.
@@ -16,16 +19,22 @@ export class InviteController {
 
     /**
      * Handles the creation of a new invite.
-     * 
+     *
      * @param request - The Fastify request object containing invite data.
      * @param reply - The Fastify reply object used to send the response.
      * @returns {Promise<void>} A promise that resolves when the response is sent.
      */
-    async createInvite(request: FastifyRequest, reply: FastifyReply): Promise<void> {
+    async createInvite(
+        request: FastifyRequest,
+        reply: FastifyReply
+    ): Promise<void> {
         const inviteDto = toCreateInviteDto(request);
-        await this.inviteService.create(inviteDto);
-        return reply.status(201).send(toCreateInviteResponse(
-            await this.inviteService.create(inviteDto)
-        ));
+        return reply
+            .status(201)
+            .send(
+                toCreateInviteResponse(
+                    await this.inviteService.create(inviteDto)
+                )
+            );
     }
 }

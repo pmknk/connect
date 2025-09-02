@@ -1,8 +1,8 @@
-import { useHttpClient } from "@avyyx/admin-utils";
-import { useMutation, UseMutationResult } from "@tanstack/react-query";
-import { CreateUserFormData } from "../useCreateUserForm";
+import { useHttpClient } from '@avyyx/admin-utils';
+import { useMutation } from '@tanstack/react-query';
+import { CreateUserFormData } from '../useCreateUserForm';
 
-const CREATE_USER_ROUTE = '/api/v1/identity/invite';
+const CREATE_USER_ROUTE = '/api/v1/identity/invites';
 
 /**
  * The response type returned from the create user mutation.
@@ -18,7 +18,7 @@ type CreateUserMutationResponse = {
  *
  * This hook uses React Query's `useMutation` to handle the mutation state and logic.
  *
- * @returns {UseMutationResult<CreateUserMutationResponse, unknown, CreateUserFormData>} 
+ * @returns {UseMutationResult<CreateUserMutationResponse, unknown, CreateUserFormData>}
  *   The mutation object returned by `useMutation`, which includes methods and state for the mutation.
  *
  * @example
@@ -31,6 +31,6 @@ export const useCreateUserMutation = () => {
     return useMutation({
         mutationKey: ['create-user'],
         mutationFn: (data: CreateUserFormData) =>
-            httpClient.post<CreateUserMutationResponse>(CREATE_USER_ROUTE, data),
+            httpClient.post<CreateUserMutationResponse>(CREATE_USER_ROUTE, data)
     });
 };

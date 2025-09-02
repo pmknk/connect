@@ -1,5 +1,7 @@
 import { EntryService, Transaction } from '@avyyx/server-database';
 import { injectable } from 'inversify';
+import { Op } from 'sequelize';
+
 import type { Project, ProjectUser } from './project.schema';
 
 /**
@@ -81,7 +83,7 @@ export class ProjectRepository {
     async findByIds(ids: string[]): Promise<Project[]> {
         return await this.entryService.find<Project>({
             schema: 'Projects',
-            where: { id: { $in: ids } },
+            where: { id: { [Op.in]: ids } },
             paranoid: false
         });
     }

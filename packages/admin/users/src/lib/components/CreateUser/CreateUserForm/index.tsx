@@ -1,50 +1,53 @@
-import { Stack } from "@mui/material"
-import { FormField } from "@avyyx/admin-ui"
-import { Control } from "react-hook-form"
-import { CreateUserFormData } from "../../../hooks/useCreateUserForm"
-import { defineMessages, useIntl } from "react-intl"
-import { RoleSelectField } from "../../RoleSelectField"
-import { ProjectsSelectField } from "../../ProjectsSelectField"
+import { Stack } from '@mui/material';
+import { FormField } from '@avyyx/admin-ui';
+import { Control } from 'react-hook-form';
+import { CreateUserFormData } from '../../../hooks/useCreateUserForm';
+import { defineMessages, useIntl } from 'react-intl';
+import { RoleSelectField } from '../../RoleSelectField';
+import { ProjectsSelectField } from '../../ProjectsSelectField';
 
 type CreateUserFormProps = {
-    control: Control<CreateUserFormData>
-}
+    control: Control<CreateUserFormData>;
+    disabled: boolean;
+};
 
 const intlMessages = defineMessages({
     fullname: {
         id: 'users.create.fullname',
-        defaultMessage: 'Fullname'
+        defaultMessage: 'Full Name'
     },
     email: {
         id: 'users.create.email',
         defaultMessage: 'Email'
     }
-})
+});
 
-export const CreateUserForm = ({ control }: CreateUserFormProps) => {
-    const { formatMessage } = useIntl()
+export const CreateUserForm = ({ control, disabled }: CreateUserFormProps) => {
+    const { formatMessage } = useIntl();
     return (
-<       Stack spacing={3}>
-            <FormField 
+        <Stack spacing={3}>
+            <FormField
                 control={control}
                 name="fullname"
-                inputProps={{ 
+                inputProps={{
                     label: formatMessage(intlMessages.fullname),
                     labelPlacement: 'outside',
-                    placeholder: 'John Doe'
+                    placeholder: 'John Doe',
+                    disabled
                 }}
             />
             <FormField
                 control={control}
                 name="email"
-                inputProps={{ 
+                inputProps={{
                     label: formatMessage(intlMessages.email),
                     labelPlacement: 'outside',
-                    placeholder: 'john@doe.com'
+                    placeholder: 'john@doe.com',
+                    disabled
                 }}
             />
-            <RoleSelectField control={control} />
-            <ProjectsSelectField control={control} />
+            <RoleSelectField control={control} selectProps={{ disabled }} />
+            <ProjectsSelectField control={control} selectProps={{ disabled }} />
         </Stack>
-    )
-}
+    );
+};

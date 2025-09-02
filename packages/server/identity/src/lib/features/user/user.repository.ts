@@ -70,7 +70,7 @@ export class UserRepository {
         transaction: Transaction
     ): Promise<void> {
         await this.entryService.create({
-            schema: 'UserProjects',
+            schema: 'ProjectUsers',
             values: { userId, projectId },
             transaction
         });
@@ -89,7 +89,7 @@ export class UserRepository {
         transaction: Transaction
     ): Promise<void> {
         await this.entryService.bulkCreate({
-            schema: 'UserProjects',
+            schema: 'ProjectUsers',
             values: projectIds.map((projectId) => ({ userId, projectId })),
             transaction
         });

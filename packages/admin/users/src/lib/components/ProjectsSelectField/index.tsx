@@ -1,17 +1,19 @@
-import MenuItem from "@mui/material/MenuItem";
-import Typography from "@mui/material/Typography";
-import Stack from "@mui/material/Stack";
+import MenuItem from '@mui/material/MenuItem';
+import Typography from '@mui/material/Typography';
+import Stack from '@mui/material/Stack';
+import { SelectProps } from '@mui/material';
 
-import { FormSelect } from "@avyyx/admin-ui"
-import { Control } from "react-hook-form"
-import { defineMessages, useIntl } from "react-intl"
+import { FormSelect } from '@avyyx/admin-ui';
+import { Control } from 'react-hook-form';
+import { defineMessages, useIntl } from 'react-intl';
 
-import { CreateUserFormData } from "../../hooks/useCreateUserForm"
-import { useProjectsQuery } from "../../hooks/useProjectsQuery";
+import { CreateUserFormData } from '../../hooks/useCreateUserForm';
+import { useProjectsQuery } from '../../hooks/useProjectsQuery';
 
 type ProjectsSelectFieldProps = {
-    control: Control<CreateUserFormData>
-}
+    control: Control<CreateUserFormData>;
+    selectProps?: SelectProps;
+};
 
 const intlMessages = defineMessages({
     projects: {
@@ -32,14 +34,21 @@ const intlMessages = defineMessages({
     },
     projectsDescription: {
         id: 'users.create.projects.description',
-        defaultMessage: 'Select one or more projects that this user should have access to. You can select multiple projects if the user needs access to more than one.'
+        defaultMessage:
+            'Select one or more projects that this user should have access to. You can select multiple projects if the user needs access to more than one.'
     },
-})
+    noProjectsFound: {
+        id: 'users.create.projects.empty',
+        defaultMessage: 'No projects found'
+    }
+});
 
-export const ProjectsSelectField = ({ control }: ProjectsSelectFieldProps) => {
-    const { formatMessage } = useIntl()
+export const ProjectsSelectField = ({
+    control,
+    selectProps = {}
+}: ProjectsSelectFieldProps) => {
+    const { formatMessage } = useIntl();
     const { data: projects } = useProjectsQuery();
-
 
     const renderSelectedValue = (value: any) => {
         if (!value || (Array.isArray(value) && value.length === 0)) {
@@ -66,7 +75,9 @@ export const ProjectsSelectField = ({ control }: ProjectsSelectFieldProps) => {
             if (count === 0) {
                 return '';
             } else if (count === 1) {
-                return formatMessage(intlMessages.projectsSelected, { count: 1 });
+                return formatMessage(intlMessages.projectsSelected, {
+                    count: 1
+                });
             } else {
                 return formatMessage(intlMessages.projectsSelectedPlural, {
                     count
@@ -81,7 +92,7 @@ export const ProjectsSelectField = ({ control }: ProjectsSelectFieldProps) => {
         <FormSelect
             control={control}
             name="projectIds"
-            selectProps={{ 
+            selectProps={{
                 label: formatMessage(intlMessages.projects),
                 labelPlacement: 'outside',
                 MenuProps: {
@@ -94,26 +105,40 @@ export const ProjectsSelectField = ({ control }: ProjectsSelectFieldProps) => {
                 multiple: true,
                 displayEmpty: true,
                 renderValue: renderSelectedValue,
-                helperText: formatMessage(intlMessages.projectsDescription)
+                helperText: formatMessage(intlMessages.projectsDescription),
+                ...selectProps
             }}
         >
+            {(!projects || projects.length === 0) && (
+                <MenuItem disabled>
+                    <Typography variant="body2" color="text.secondary">
+                        {formatMessage(intlMessages.noProjectsFound)}
+                    </Typography>
+                </MenuItem>
+            )}
             {projects?.map((project) => (
                 <MenuItem value={project.id} key={project.id}>
-                    <Stack spacing={0.5} direction="column" sx={{ maxWidth: '340px' }}>
-                        <Typography variant="body2"
-                        >
-                            {project.name}
-                        </Typography>
-                        {project.description && <Typography
-                            variant="caption"
-                            color="text.secondary"
-                            sx={{ wordBreak: 'break-word', whiteSpace: 'pre-line' }}
-                        >
-                            {project.description}
-                        </Typography>}
+                    <Stack
+                        spacing={0.5}
+                        direction="column"
+                        sx={{ maxWidth: '340px' }}
+                    >
+                        <Typography variant="body2">{project.name}</Typography>
+                        {project.description && (
+                            <Typography
+                                variant="caption"
+                                color="text.secondary"
+                                sx={{
+                                    wordBreak: 'break-word',
+                                    whiteSpace: 'pre-line'
+                                }}
+                            >
+                                {project.description}
+                            </Typography>
+                        )}
                     </Stack>
                 </MenuItem>
             ))}
         </FormSelect>
-    )
-}
+    );
+};
