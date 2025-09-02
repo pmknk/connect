@@ -3,8 +3,6 @@ import Typography from '@mui/material/Typography';
 import Select, { type SelectProps } from '@mui/material/Select';
 import FormHelperText from '@mui/material/FormHelperText';
 
-import type { MenuProps } from '@mui/material/Menu';
-
 import { useTheme } from '@mui/material/styles';
 import { Control, Controller, useFormState } from 'react-hook-form';
 import { useEffect, useRef } from 'react';
@@ -151,7 +149,7 @@ export const FormSelect = ({
                 const error = errors[name];
                 return (
                     <Stack
-                        spacing={1}
+                        spacing={0.5}
                         sx={{
                             opacity: selectProps?.disabled ? 0.5 : 1
                         }}
@@ -184,6 +182,9 @@ export const FormSelect = ({
                             }
                             MenuProps={{
                                 ...selectProps?.MenuProps,
+                                sx: {
+                                    mt: 1
+                                },
                                 PaperProps: {
                                     ...selectProps?.MenuProps?.PaperProps,
                                     onScroll: selectProps?.onScrollEnd
@@ -200,7 +201,7 @@ export const FormSelect = ({
                                 {error.message as string}
                             </FormHelperText>
                         )}
-                        {selectProps?.helperText && (
+                        {selectProps?.helperText && !error && (
                             <FormHelperText>
                                 {selectProps.helperText}
                             </FormHelperText>

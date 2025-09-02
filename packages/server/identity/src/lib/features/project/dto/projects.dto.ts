@@ -6,11 +6,6 @@ export type ProjectsResponseDto = {
         slug: string;
         name: string;
         description?: string;
-        users: {
-            id: string;
-            fullName: string;
-            email: string;
-        }[];
     }[];
 };
 
@@ -26,11 +21,6 @@ export const toProjectsResponseDto = (
             createdAt: project.createdAt,
             updatedAt: project.updatedAt,
             deletedAt: project.deletedAt,
-            users: project.users?.map((user) => ({
-                id: user.id,
-                fullName: user.fullName,
-                email: user.email
-            })) || []
         }))
     };
 };

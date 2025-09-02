@@ -1,6 +1,6 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { injectable } from "inversify";
-import { toCreateInviteDto } from "./dtos/create-invite.dto";
+import { toCreateInviteDto, toCreateInviteResponse } from "./dtos/create-invite.dto";
 import { InviteService } from "./invite.service";
 
 /**
@@ -23,7 +23,9 @@ export class InviteController {
      */
     async createInvite(request: FastifyRequest, reply: FastifyReply): Promise<void> {
         const inviteDto = toCreateInviteDto(request);
-        const invite = await this.inviteService.create(inviteDto);
-        return reply.status(201).send(invite);
+        await this.inviteService.create(inviteDto);
+        return reply.status(201).send(toCreateInviteResponse(
+            await this.inviteService.create(inviteDto)
+        ));
     }
 }

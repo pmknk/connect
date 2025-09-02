@@ -4,17 +4,43 @@ import { PermissionAccess } from "@avyyx/admin-utils";
 import { ExtendedTheme } from "@avyyx/admin-ui";
 
 import { FormattedMessage } from "react-intl";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CreateUserDialog } from "./CreateUserDialog";
 import { CreateUserForm } from "./CreateUserForm";
-import { useCreateUserForm } from "../../hooks/useCreateUserForm";
+import { CreateUserFormData, useCreateUserForm } from "../../hooks/useCreateUserForm";
+import { useCreateUserMutation } from "../../hooks/useCreateUserMutation";
 
 export const CreateUser = () => {
     const { breakpoints } = useTheme<ExtendedTheme>();
     const isMobile = useMediaQuery(breakpoints.down('sm'));
     const [open, setOpen] = useState(false);
 
-    const { control, handleSubmit } = useCreateUserForm();
+    const { control, handleSubmit, reset } = useCreateUserForm();
+    const { mutate: createUser, isPending } = useCreateUserMutation();
+
+
+    useEffect(() => {
+        if (open) {
+            reset({
+                fullname: '',
+                email: '',
+                roleId: '',
+                projectIds: [],
+            });
+        }
+    }, [reset, open]);
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    const handleCreateUser = (data: CreateUserFormData) => {
+        createUser(data, {
+            onSuccess: () => {
+                handleClose();
+            }
+        });
+    };
 
     return (
         <>
@@ -37,14 +63,14 @@ export const CreateUser = () => {
             </PermissionAccess>
             <CreateUserDialog
                 open={open}
-                onClose={() => setOpen(false)}
+                onClose={handleClose}
                 content={<CreateUserForm control={control} />}
                 actions={
                     <Stack direction="row" spacing={1}>
                         <Button
                             variant="text"
                             color="error"
-                            onClick={() => setOpen(false)}
+                            onClick={handleClose}
                             disabled={false}
                         >
                             <FormattedMessage
@@ -65,7 +91,7 @@ export const CreateUser = () => {
                     </Button>
                 </Stack>
                 }
-                onSubmit={() => {}}
+                onSubmit={handleSubmit(handleCreateUser)}
             />
         </>
     )

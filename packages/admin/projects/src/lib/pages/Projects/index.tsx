@@ -64,8 +64,9 @@ const Projects = () => {
             <Container
                 maxWidth="xl"
                 sx={{
-                    my: isMobile ? 3 : 4,
-                    pb: isMobile ? 8 : 0
+                    pt: isMobile ? 4 : 3,
+                    pb: isMobile ? 8 : 0,
+                    height: '100%'
                 }}
             >
                 <Stack direction="column" spacing={1}>

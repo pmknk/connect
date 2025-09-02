@@ -67,14 +67,15 @@ export const useCreateUserForm = () => {
                 },
                 email: {
                     type: 'string',
-                    format: 'email',
                     minLength: 1,
                     maxLength: 64,
+                    pattern:
+                        '^(?!.*\\.\\.)[A-Za-z0-9._%+-]+@(?:[A-Za-z0-9-]+\\.)+[A-Za-z]{2,}$',
                     errorMessage: {
                         minLength: formatMessage(
                             intlMessages.emailRequiredMessage
                         ),
-                        format: formatMessage(
+                        pattern: formatMessage(
                             intlMessages.emailFormatMessage
                         ),
                         maxLength: formatMessage(
@@ -84,8 +85,9 @@ export const useCreateUserForm = () => {
                 },
                 roleId: {
                     type: 'string',
+                    minLength: 1,
                     errorMessage: {
-                        required: formatMessage(
+                        minLength: formatMessage(
                             intlMessages.roleIdRequiredMessage
                         )
                     }

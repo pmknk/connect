@@ -24,11 +24,10 @@ export class ProjectRepository {
             schema: 'Projects',
             include: [
                 {
-                    required: true,
                     association: 'users',
-                    where: {
-                        id: userId,
-                    }
+                    required: true,
+                    where: { id: userId },
+                    attributes: []
                 }
             ],
             paranoid: false

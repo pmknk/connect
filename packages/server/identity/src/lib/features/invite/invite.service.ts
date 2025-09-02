@@ -10,6 +10,7 @@ import { UserRepository } from "../user/user.repository";
 import { CreateInviteDto } from "./dtos/create-invite.dto";
 import { RoleRepository } from "../role/role.repository";
 import { ProjectRepository } from "../project/project.repository";
+import { type Invite } from "./invite.schema";
 @injectable()
 export class InviteService {
     constructor(
@@ -22,7 +23,7 @@ export class InviteService {
 
     async create(
         inviteDto: CreateInviteDto,
-    ): Promise<void> {
+    ): Promise<Invite> {
         const transaction = await this.connectionService.client.transaction();
         const role = await this.roleRepository.findById(inviteDto.roleId);
         const projects = await this.projectRepository.findByIds(inviteDto.projectIds);
@@ -41,11 +42,12 @@ export class InviteService {
             await this.userRepository.addRole(user.id, role.id, transaction);
             await this.userRepository.addProjects(user.id, projects.map((project) => project.id), transaction);
 
-            await this.inviteRepository.create({
+            const invite = await this.inviteRepository.create({
                 code,
                 userId: user.id,
             }, transaction);
             await transaction.commit();
+            return invite;
         } catch (error) {
             await transaction.rollback();
             throw error;
