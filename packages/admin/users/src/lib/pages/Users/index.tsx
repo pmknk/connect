@@ -32,7 +32,7 @@ const Users = () => {
         return Number.isFinite(pageParam) && pageParam >= 1 ? pageParam - 1 : 0;
     }, [searchParams]);
 
-    const { data: usersQueryResponse, isLoading, isFetching } = useUsersQuery(page + 1, rowsPerPage, search)
+    const { data: usersQueryResponse, isLoading, isFetching, refetch } = useUsersQuery(page + 1, rowsPerPage, search)
 
     useEffect(() => {
         if (usersQueryResponse) {
@@ -92,7 +92,7 @@ const Users = () => {
                                 maxWidth: '320px'
                             }}
                         />
-                        <CreateUser />
+                        <CreateUser onSuccess={refetch} />
                     </Stack>
                     <Stack gap={2}>
                         {(isLoading || isFetching) && <UsersTableSkeleton rows={rowsPerPage} />}

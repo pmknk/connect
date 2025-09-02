@@ -61,7 +61,7 @@ export const useUsersQuery = (page: number = 1, limit: number = DEFAULT_LIMIT, s
                     offset: (page - 1) * limit,
                     limit,
                     search,
-                    include: [{ association: 'roles' }, { association: 'projects' }],
+                    include: [{ association: 'roles' }, { association: 'projects' }, { association: 'invite' }],
                     paranoid: false
                 }
             }),

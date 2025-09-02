@@ -27,18 +27,12 @@ export class InviteService {
             inviteDto.projectIds
         );
 
-        console.log('STARTING CREATE INVITE');
-
         if (!role) {
             throw new Error('Role not found');
         }
 
-        console.log('ROLE FOUND');
-
         try {
             const code = Math.random().toString(36).slice(2, 14);
-            console.log('CODE GENERATED', code);
-
             const user = await this.userRepository.create(
                 {
                     email: inviteDto.email,
@@ -54,8 +48,7 @@ export class InviteService {
                 user.id,
                 projects.map((project) => project.id),
                 transaction
-            );
-            console.log('PROJECTS ADDED');
+            )
 
             const invite = await this.inviteRepository.create(
                 {
@@ -64,7 +57,6 @@ export class InviteService {
                 },
                 transaction
             );
-            console.log('INVITE CREATED', invite);
 
             await transaction.commit();
             return invite;

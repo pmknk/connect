@@ -68,6 +68,10 @@ export type UsersResponseDto = {
             name: string;
             description: string;
         }[];
+        invite?: {
+            id?: string;
+            code?: string;
+        };
     }[];
     meta: {
         total: number;
@@ -99,7 +103,11 @@ export const toUsersResponseDto = (
                 slug: role.slug,
                 name: role.name,
                 description: role.description
-            }))
+            })),
+            invite: user.invite ? {
+                id: user.invite?.id,
+                code: user.invite?.code
+            } : undefined
         })),
         meta: {
             total: meta.total,

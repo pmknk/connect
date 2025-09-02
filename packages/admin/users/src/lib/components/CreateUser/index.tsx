@@ -13,7 +13,11 @@ import {
 } from '../../hooks/useCreateUserForm';
 import { useCreateUserMutation } from '../../hooks/useCreateUserMutation';
 
-export const CreateUser = () => {
+type CreateUserProps = {
+    onSuccess?: () => void;
+};
+
+export const CreateUser = ({ onSuccess }: CreateUserProps) => {
     const { breakpoints } = useTheme<ExtendedTheme>();
     const isMobile = useMediaQuery(breakpoints.down('sm'));
     const [open, setOpen] = useState(false);
@@ -40,6 +44,7 @@ export const CreateUser = () => {
         createUser(data, {
             onSuccess: () => {
                 handleClose();
+                onSuccess?.();
             }
         });
     };
