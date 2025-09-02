@@ -21,6 +21,10 @@ const intlMessages = defineMessages({
     rolePlaceholder: {
         id: 'users.create.rolePlaceholder',
         defaultMessage: 'Select a role'
+    },
+    roleDescription: {
+        id: 'users.create.roleDescription',
+        defaultMessage: 'Select the role the user will have'
     }
 })
 
@@ -60,7 +64,8 @@ export const RoleSelectField = ({ control }: RoleSelectFieldProps) => {
                     }
                 },
                 displayEmpty: true,
-                renderValue: renderSelectedValue
+                renderValue: renderSelectedValue,
+                helperText: formatMessage(intlMessages.roleDescription)
             }}
         >
             {roles?.map((role) => (

@@ -4,6 +4,7 @@ import { Control } from "react-hook-form"
 import { CreateUserFormData } from "../../../hooks/useCreateUserForm"
 import { defineMessages, useIntl } from "react-intl"
 import { RoleSelectField } from "../../RoleSelectField"
+import { ProjectsSelectField } from "../../ProjectsSelectField"
 
 type CreateUserFormProps = {
     control: Control<CreateUserFormData>
@@ -43,6 +44,7 @@ export const CreateUserForm = ({ control }: CreateUserFormProps) => {
                 }}
             />
             <RoleSelectField control={control} />
+            <ProjectsSelectField control={control} />
         </Stack>
     )
 }
