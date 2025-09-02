@@ -25,6 +25,10 @@ export type UsersQueryResponse = {
             slug: string;
             description: string;
         }[];
+        invite?: {
+            id: string;
+            code: string;
+        };
     }[];
     meta: {
         total: number;

@@ -30,6 +30,37 @@ export const UserRow = ({ user, onOpenProjects, onOpenActions, hasDeletePermissi
 
     const isCurrentUser = currentUser?.id === user.id;
 
+    const getUserStatus = () => {
+        if (user.deletedAt) {
+            return (
+                <Chip
+                    color="error"
+                    variant="outlined"
+                    label={'Inactive'}
+                    size="small"
+                />
+            )
+        }
+        if (user.invite) {
+            return (
+                <Chip
+                    color="warning"
+                    variant="outlined"
+                    label={'Invited'}
+                    size="small"
+                />
+            )
+        }
+        return (
+            <Chip
+                color="success"
+                variant="outlined"
+                label={'Active'}
+                size="small"
+            />
+        )
+    }
+
     return (
         <TableRow
             key={user.id}
@@ -99,21 +130,7 @@ export const UserRow = ({ user, onOpenProjects, onOpenActions, hasDeletePermissi
                 </Button> : '-'}
             </TableCell>
             <TableCell align="left">
-                {user.deletedAt ? (
-                    <Chip
-                        color="error"
-                        variant="outlined"
-                        label={'Inactive'}
-                        size="small"
-                    />
-                ) : (
-                    <Chip
-                        color="success"
-                        variant="outlined"
-                        label={'Active'}
-                        size="small"
-                    />
-                )}
+                {getUserStatus()}
             </TableCell>
             <TableCell align="left">
                 {isCurrentUser ? null : (
