@@ -5,9 +5,11 @@ import { type ModelStatic } from 'sequelize';
 import { type Project } from '../schemas/project.schema';
 import { type CreateProjectRequestDto } from '../dtos/create-project.dto';
 import { type ProjectUsers } from '../schemas/project-users.schema';
+import { type User } from '../schemas/user.schema';
 
 @injectable()
 export class ProjectService {
+    private readonly userModel: ModelStatic<User>;
     private readonly projectModel: ModelStatic<Project>;
     private readonly projectUsersModel: ModelStatic<ProjectUsers>;
     
@@ -17,6 +19,7 @@ export class ProjectService {
     ) {
         this.projectModel = this.modelService.getModel<Project>('Projects');
         this.projectUsersModel = this.modelService.getModel<ProjectUsers>('ProjectUsers');
+        this.userModel = this.modelService.getModel<User>('Users');
     }
 
     /**
@@ -26,11 +29,15 @@ export class ProjectService {
      */
     async findAllByUserId(userId: string): Promise<Project[]> {
         return await this.projectModel.findAll({
-            where: {
-                users: {
-                    id: userId
+            include: [
+                {
+                    model: this.userModel,
+                    as: 'users',
+                    where: {
+                        id: userId
+                    }
                 }
-            }
+            ]
         });
     }
 

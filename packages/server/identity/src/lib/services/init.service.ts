@@ -46,7 +46,13 @@ export class InitService {
      */
     private async validateAdminCreation() {
         const existingAdmin = await this.userModel.findOne({
-            where: { roles: { slug: ROLE_CODES.ADMIN } }
+            include: [
+                {
+                    model: this.roleModel,
+                    as: 'roles',
+                    where: { slug: ROLE_CODES.ADMIN }
+                }
+            ]
         });
         if (existingAdmin) {
             throw new ConflictError('Admin user already exists');

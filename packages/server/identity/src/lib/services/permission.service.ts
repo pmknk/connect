@@ -2,12 +2,16 @@ import { injectable } from 'inversify';
 import { ModelService } from '@avyyx/server-database';
 import { type ModelStatic } from 'sequelize';
 import { type Permission } from '../schemas/permission.schema';
+import { type Role } from '../schemas/role.schema';
+import { type User } from '../schemas/user.schema';
 
 /**
  * Service for managing permissions
  */
 @injectable()
 export class PermissionService {
+    private readonly roleModel: ModelStatic<Role>;
+    private readonly userModel: ModelStatic<User>;
     private readonly permissionModel: ModelStatic<Permission>;
     /**
      * Creates an instance of PermissionService
@@ -16,6 +20,8 @@ export class PermissionService {
     constructor(private readonly modelService: ModelService) {
         this.permissionModel =
             this.modelService.getModel<Permission>('Permissions');
+        this.roleModel = this.modelService.getModel<Role>('Roles');
+        this.userModel = this.modelService.getModel<User>('Users');
     }
 
     /**
@@ -25,13 +31,21 @@ export class PermissionService {
      */
     async findByUserId(userId: string): Promise<Permission[]> {
         return await this.permissionModel.findAll({
-            where: {
-                roles: {
-                    users: {
-                        id: userId
-                    }
+            include: [
+                {
+                    model: this.roleModel,
+                    as: 'roles',
+                    include: [
+                        {
+                            model: this.userModel,
+                            as: 'users',
+                            where: {
+                                id: userId
+                            }
+                        }
+                    ]
                 }
-            }
+            ]
         });
     }
 }
