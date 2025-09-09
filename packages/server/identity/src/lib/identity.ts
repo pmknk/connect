@@ -29,7 +29,7 @@ import { InitRouter } from './routes/init.router';
 import { UserRouter } from './routes/user.router';
 import { UserService } from './services/user.service';
 import { UserController } from './controllers/user.controller';
-import { UserSchema } from './schemas/user.schema';
+import { User, UserSchema } from './schemas/user.schema';
 
 // Project Users
 import { ProjectUsersSchema } from './schemas/project-users.schema';
@@ -55,6 +55,15 @@ import { ProjectService } from './services/project.service';
 import { ProjectRouter } from './routes/project.router';
 import { ProjectController } from './controllers/project.controller';
 
+// Auth
+import { AuthController } from './controllers/auth.controller';
+import { AuthRouter } from './routes/auth.router';
+import { AuthService } from './services/auth.service';
+import { SigninService } from './services/signin.service';
+import { JwtService } from './services/jwt.service';
+import { AuthMiddleware } from './middlewares/auth.middleware';
+import { FastifyRequest } from 'fastify';
+
 class IdentityPluginInitializer {
     /**
      * Registers the Identity Plugin with the provided Fastify instance and options.
@@ -70,6 +79,7 @@ class IdentityPluginInitializer {
             .toConstantValue(options);
 
         const schemaService = fastify.di.get(SchemaRegistryService);
+
         schemaService.defineSchema(RoleSchema);
         schemaService.defineSchema(PermissionGroupSchema);
         schemaService.defineSchema(ProjectUsersSchema);
@@ -78,6 +88,16 @@ class IdentityPluginInitializer {
         schemaService.defineSchema(PermissionSchema);
         schemaService.defineSchema(ProjectSchema);
         schemaService.defineSchema(InviteSchema);
+
+        await schemaService.sync();
+
+        fastify.di.bind(AuthRouter).toSelf();
+        fastify.di.bind(AuthController).toSelf();
+        fastify.di.bind(AuthService).toSelf();
+        fastify.di.bind(JwtService).toSelf();
+        fastify.di.bind(SigninService).toSelf();
+        fastify.di.bind(AuthMiddleware).toSelf();
+        fastify.di.get(AuthRouter).initialize(fastify);
 
         fastify.di.bind(RoleController).toSelf();
         fastify.di.bind(RoleRouter).toSelf();
@@ -112,6 +132,14 @@ class IdentityPluginInitializer {
         fastify.addHook('onListen', async () => {
             const connection = fastify.di.get(ConnectionService).client;
             await initializeDataSeed.up(connection);
+        });
+
+        fastify.addHook('preHandler', async (request, reply) => {
+            await fastify.di
+                .get(AuthMiddleware)
+                .authenticate(
+                    request as FastifyRequest & { user: User | null }
+                );
         });
     }
 }
