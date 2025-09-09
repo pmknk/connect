@@ -1,7 +1,17 @@
-import { injectable } from "inversify";
-import { ConnectionService } from "./connection.service";
+import { injectable } from 'inversify';
+import { ConnectionService } from './connection.service';
 
-import type { BelongsToManyOptions, BelongsToOptions, HasManyOptions, HasOneOptions, Model, ModelAttributes, ModelCtor, ModelOptions } from "sequelize";
+import type {
+    BelongsToManyOptions,
+    BelongsToOptions,
+    HasManyOptions,
+    HasOneOptions,
+    Model,
+    ModelAttributes,
+    ModelCtor,
+    ModelOptions,
+    ModelStatic
+} from 'sequelize';
 
 /**
  * Defines a relationship between two models
@@ -9,12 +19,16 @@ import type { BelongsToManyOptions, BelongsToOptions, HasManyOptions, HasOneOpti
 export type RelationDefinition = {
     type: 'hasOne' | 'hasMany' | 'belongsTo' | 'belongsToMany';
     target: string;
-    options: HasOneOptions | HasManyOptions | BelongsToOptions | BelongsToManyOptions;
+    options:
+        | HasOneOptions
+        | HasManyOptions
+        | BelongsToOptions
+        | BelongsToManyOptions;
 };
 
 /**
  * Service for managing Sequelize models and their relationships
- */ 
+ */
 @injectable()
 export class ModelService {
     constructor(private readonly connectionService: ConnectionService) {}
@@ -25,7 +39,11 @@ export class ModelService {
      * @param attributes - The attributes/columns of the model
      * @param options - Additional model options
      */
-    defineModel(name: string, attributes: ModelAttributes, options: ModelOptions) {
+    defineModel(
+        name: string,
+        attributes: ModelAttributes,
+        options: ModelOptions
+    ) {
         this.connectionService.client.define(name, attributes, options);
     }
 
@@ -42,14 +60,26 @@ export class ModelService {
         relation: RelationDefinition
     ) {
         const relationMap = {
-            hasOne: (model: ModelCtor<Model>, target: ModelCtor<Model>, opts: HasOneOptions) => 
-                model.hasOne(target, opts),
-            hasMany: (model: ModelCtor<Model>, target: ModelCtor<Model>, opts: HasManyOptions) => 
-                model.hasMany(target, opts),
-            belongsTo: (model: ModelCtor<Model>, target: ModelCtor<Model>, opts: BelongsToOptions) => 
-                model.belongsTo(target, opts),
-            belongsToMany: (model: ModelCtor<Model>, target: ModelCtor<Model>, opts: BelongsToManyOptions) => 
-                model.belongsToMany(target, opts)
+            hasOne: (
+                model: ModelCtor<Model>,
+                target: ModelCtor<Model>,
+                opts: HasOneOptions
+            ) => model.hasOne(target, opts),
+            hasMany: (
+                model: ModelCtor<Model>,
+                target: ModelCtor<Model>,
+                opts: HasManyOptions
+            ) => model.hasMany(target, opts),
+            belongsTo: (
+                model: ModelCtor<Model>,
+                target: ModelCtor<Model>,
+                opts: BelongsToOptions
+            ) => model.belongsTo(target, opts),
+            belongsToMany: (
+                model: ModelCtor<Model>,
+                target: ModelCtor<Model>,
+                opts: BelongsToManyOptions
+            ) => model.belongsToMany(target, opts)
         };
 
         const relationFn = relationMap[relation.type];
@@ -65,7 +95,7 @@ export class ModelService {
      * @param name - The name of the model
      * @returns The model
      */
-    getModel(name: string): ModelCtor<Model> {
-        return this.connectionService.client.models[name] as ModelCtor<Model>;
+    getModel<T extends Model>(name: string): ModelStatic<T> {
+        return this.connectionService.client.models[name] as ModelStatic<T>;
     }
 }
