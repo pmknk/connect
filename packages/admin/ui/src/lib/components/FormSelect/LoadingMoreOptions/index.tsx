@@ -1,19 +1,13 @@
-import { defineMessages, useIntl } from 'react-intl';
 import MenuItem from '@mui/material/MenuItem';
 import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 
-const intlMessages = defineMessages({
-    loadingMoreUsers: {
-        id: 'projects.create.users.loadingMoreUsers',
-        defaultMessage: 'Loading more users...'
-    }
-});
+type LoadingMenuItemProps = {
+    label: React.ReactNode;
+};
 
-export const LoadingMenuItem = () => {
-    const { formatMessage } = useIntl();
-
+export const LoadingMoreOptions = ({ label }: LoadingMenuItemProps) => {
     return (
         <MenuItem disabled>
             <Box
@@ -25,9 +19,9 @@ export const LoadingMenuItem = () => {
             >
                 <CircularProgress size={16} />
                 <Typography variant="body2">
-                    {formatMessage(intlMessages.loadingMoreUsers)}
+                    {label}
                 </Typography>
             </Box>
         </MenuItem>
     );
-}; 
+};

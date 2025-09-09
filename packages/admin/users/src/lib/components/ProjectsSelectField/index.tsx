@@ -3,8 +3,8 @@ import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import { SelectProps } from '@mui/material';
 
-import { FormSelect } from '@avyyx/admin-ui';
-import { Control } from 'react-hook-form';
+import { FormCheckbox, FormSelect, SelectedValue } from '@avyyx/admin-ui';
+import { Control, useWatch } from 'react-hook-form';
 import { defineMessages, useIntl } from 'react-intl';
 
 import { CreateUserFormData } from '../../hooks/useCreateUserForm';
@@ -40,6 +40,10 @@ const intlMessages = defineMessages({
     noProjectsFound: {
         id: 'users.create.projects.empty',
         defaultMessage: 'No projects found'
+    },
+    selectAllProjects: {
+        id: 'users.create.projects.selectAllProjects',
+        defaultMessage: 'Select All available projects'
     }
 });
 
@@ -49,96 +53,77 @@ export const ProjectsSelectField = ({
 }: ProjectsSelectFieldProps) => {
     const { formatMessage } = useIntl();
     const { data: projects } = useProjectsQuery();
-
-    const renderSelectedValue = (value: any) => {
-        if (!value || (Array.isArray(value) && value.length === 0)) {
-            return (
-                <Typography
-                    color={'text.primary'}
-                    sx={{
-                        fontSize: '14px',
-                        fontWeight: 400,
-                        opacity: 0.4
-                    }}
-                >
-                    {formatMessage(intlMessages.projectsPlaceholder)}
-                </Typography>
-            );
-        }
-
-        if (Array.isArray(value)) {
-            const selectedProjects = projects?.filter((project) =>
-                value.includes(project.id)
-            );
-            const count = selectedProjects?.length || 0;
-
-            if (count === 0) {
-                return '';
-            } else if (count === 1) {
-                return formatMessage(intlMessages.projectsSelected, {
-                    count: 1
-                });
-            } else {
-                return formatMessage(intlMessages.projectsSelectedPlural, {
-                    count
-                });
-            }
-        }
-
-        return '';
-    };
-
+    const { assignAvailableProjects } = useWatch({ control });
     return (
-        <FormSelect
-            control={control}
-            name="projectIds"
-            selectProps={{
-                label: formatMessage(intlMessages.projects),
-                labelPlacement: 'outside',
-                MenuProps: {
-                    PaperProps: {
-                        sx: {
-                            maxHeight: '200px'
+        <Stack spacing={1}>
+            <FormSelect
+                control={control}
+                name="projectIds"
+                selectProps={{
+                    label: formatMessage(intlMessages.projects),
+                    labelPlacement: 'outside',
+                    MenuProps: {
+                        PaperProps: {
+                            sx: {
+                                maxHeight: '200px'
+                            }
                         }
-                    }
-                },
-                multiple: true,
-                displayEmpty: true,
-                renderValue: renderSelectedValue,
-                helperText: formatMessage(intlMessages.projectsDescription),
-                ...selectProps
-            }}
-        >
-            {(!projects || projects.length === 0) && (
-                <MenuItem disabled>
-                    <Typography variant="body2" color="text.secondary">
-                        {formatMessage(intlMessages.noProjectsFound)}
-                    </Typography>
-                </MenuItem>
-            )}
-            {projects?.map((project) => (
-                <MenuItem value={project.id} key={project.id}>
-                    <Stack
-                        spacing={0.5}
-                        direction="column"
-                        sx={{ maxWidth: '340px' }}
-                    >
-                        <Typography variant="body2">{project.name}</Typography>
-                        {project.description && (
-                            <Typography
-                                variant="caption"
-                                color="text.secondary"
-                                sx={{
-                                    wordBreak: 'break-word',
-                                    whiteSpace: 'pre-line'
-                                }}
-                            >
-                                {project.description}
-                            </Typography>
-                        )}
-                    </Stack>
-                </MenuItem>
-            ))}
-        </FormSelect>
+                    },
+                    multiple: true,
+                    displayEmpty: true,
+                    renderValue: (value: any) => {
+                        return <SelectedValue
+                            value={value}
+                            messages={{
+                                placeholder: formatMessage(intlMessages.projectsPlaceholder),
+                                single: (count: number) => formatMessage(intlMessages.projectsSelected, { count }),
+                                plural: (count: number) => formatMessage(intlMessages.projectsSelectedPlural, { count })
+                            }}
+                        />
+                    },
+                    helperText: formatMessage(intlMessages.projectsDescription),
+                    disabled: selectProps.disabled || assignAvailableProjects
+                }}
+            >
+                {(!projects || projects.length === 0) && (
+                    <MenuItem disabled>
+                        <Typography variant="body2" color="text.secondary">
+                            {formatMessage(intlMessages.noProjectsFound)}
+                        </Typography>
+                    </MenuItem>
+                )}
+                {projects?.map((project) => (
+                    <MenuItem value={project.id} key={project.id}>
+                        <Stack
+                            spacing={0.5}
+                            direction="column"
+                            sx={{ maxWidth: '340px' }}
+                        >
+                            <Typography variant="body2">{project.name}</Typography>
+                            {project.description && (
+                                <Typography
+                                    variant="caption"
+                                    color="text.secondary"
+                                    sx={{
+                                        wordBreak: 'break-word',
+                                        whiteSpace: 'pre-line'
+                                    }}
+                                >
+                                    {project.description}
+                                </Typography>
+                            )}
+                        </Stack>
+                    </MenuItem>
+                ))}
+            </FormSelect>
+            <FormCheckbox
+                control={control}
+                name="assignAvailableProjects"
+                checkboxProps={{
+                    label: formatMessage(intlMessages.selectAllProjects),
+                    disabled: selectProps.disabled
+                }}
+            />
+        </Stack>
     );
 };
