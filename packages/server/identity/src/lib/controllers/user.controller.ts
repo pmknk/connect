@@ -1,8 +1,16 @@
 import { injectable } from 'inversify';
 import type { FastifyReply, FastifyRequest } from 'fastify';
 import { UserService } from '../services/user.service';
-import { type GetUsersResponseDto, toGetUsersResponseDto } from '../dtos/get-users.dto';
-import { toGetUsersRequestDto } from '../dtos/get-users.dto';
+import {
+    type GetUsersResponseDto,
+    toGetUsersResponseDto,
+    toGetUsersRequestDto
+} from '../dtos/get-users.dto';
+import {
+    type GetUserResponseDto,
+    toGetUserRequestDto,
+    toGetUserResponseDto
+} from '../dtos/get-user.dto';
 
 /**
  * Controller class for handling user-related HTTP requests
@@ -21,19 +29,33 @@ export class UserController {
      * @param reply - The Fastify reply object used to send the response
      * @returns {Promise<GetUsersResponseDto>} A paginated response containing users and metadata
      */
-    async getUsers(request: FastifyRequest, reply: FastifyReply): Promise<GetUsersResponseDto> {
+    async getUsers(
+        request: FastifyRequest,
+        reply: FastifyReply
+    ): Promise<GetUsersResponseDto> {
         const requestDto = toGetUsersRequestDto(request);
         const { count, users } = await this.userService.findAllPaginated(
             requestDto
         );
 
-        return reply
-            .status(200)
-            .send(toGetUsersResponseDto(users, {
+        return reply.status(200).send(
+            toGetUsersResponseDto(users, {
                 total: count,
                 offset: requestDto.offset ?? 0,
                 limit: requestDto.limit ?? 10
             })
         );
+    }
+
+    async getUser(
+        request: FastifyRequest,
+        reply: FastifyReply
+    ): Promise<GetUserResponseDto> {
+        const requestDto = toGetUserRequestDto(request);
+        const user = await this.userService.findById(
+            requestDto.id,
+            requestDto.include
+        );
+        return reply.status(200).send(toGetUserResponseDto(user));
     }
 }

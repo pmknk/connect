@@ -5,6 +5,7 @@ import { ModelService } from '@avyyx/server-database';
 
 import type { GetUsersRequestDto } from '../dtos/get-users.dto';
 import type { User } from '../schemas/user.schema';
+import { NotFoundError } from '@avyyx/server-utils';
 
 /**
  * Service for handling user-related business logic
@@ -61,5 +62,29 @@ export class UserService {
         });
 
         return { count, users };
+    }
+
+    /**
+     * Finds a user by their ID
+     * @param id - The unique identifier of the user.
+     * @param include - The associations to include.
+     * @returns A promise that resolves to the User object.
+     */
+    async findById(
+        id: string,
+        include?: { association: string }[]
+    ): Promise<User> {
+        const user = await this.userModel.findByPk(id, {
+            include: include?.map((association) => ({
+                model: this.modelService.getModel(association.association),
+                as: association.association
+            }))
+        });
+
+        if (!user) {
+            throw new NotFoundError('User not found');
+        }
+
+        return user;
     }
 }
