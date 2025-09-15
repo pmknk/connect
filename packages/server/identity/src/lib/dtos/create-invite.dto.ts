@@ -11,6 +11,7 @@ export type CreateInviteDto = {
 export type CreateInviteResponse = {
     data: {
         id: string;
+        code: string;
     };
 };
 
@@ -23,8 +24,8 @@ export const toCreateInviteDto = (request: FastifyRequest): CreateInviteDto => {
 export const toCreateInviteResponse = (
     invite: Invite
 ): CreateInviteResponse => {
-    const { id } = invite;
-    return { data: { id } };
+    const { id, code } = invite;
+    return { data: { id, code } };
 };
 
 export const createInviteRequestSchema = {

@@ -5,6 +5,7 @@ import {
     toCreateInviteResponse
 } from '../dtos/create-invite.dto';
 import { InviteService } from '../services/invite.service';
+import { toDeleteInviteDto, toDeleteInviteResponseDto } from '../dtos/delete-invite.dto';
 
 /**
  * Controller class for handling invite-related HTTP requests.
@@ -35,6 +36,25 @@ export class InviteController {
                 toCreateInviteResponse(
                     await this.inviteService.create(inviteDto)
                 )
+            );
+    }
+
+    /**
+     * Handles the deletion of an invite.
+     *
+     * @param request - The Fastify request object containing invite data.
+     * @param reply - The Fastify reply object used to send the response.
+     * @returns {Promise<void>} A promise that resolves when the response is sent.
+     */
+    async deleteInvite(
+        request: FastifyRequest,
+        reply: FastifyReply
+    ): Promise<void> {
+        const inviteDto = toDeleteInviteDto(request);
+        return reply
+            .status(200)
+            .send(
+                toDeleteInviteResponseDto(await this.inviteService.deleteInvite(inviteDto))
             );
     }
 }

@@ -1,13 +1,22 @@
-import { Stack, TablePagination, TextField, Typography, useMediaQuery, useTheme } from "@mui/material";
+import Stack from "@mui/material/Stack";
+import TablePagination from "@mui/material/TablePagination";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import Container from "@mui/material/Container"
+import { useTheme } from "@mui/material";
+
 import { ExtendedTheme } from "@avyyx/admin-ui";
-import { FormattedMessage } from "react-intl";
-import { UsersTable } from "../../components/UsersTable";
-import { useUsersQuery } from "../../hooks/useUsersQuery";
+
 import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import { FormattedMessage } from "react-intl";
+
+import { UsersTable } from "../../components/UsersTable";
 import { UsersTableSkeleton } from "../../components/UsersTable/UsersTableSkeleton";
 import { CreateUser } from "../../components/CreateUser";
+
+import { useUsersQuery } from "../../hooks/useUsersQuery";
 import { ROWS_PER_USERS_PAGE_OPTIONS } from "../../constants";
 
 const Users = () => {

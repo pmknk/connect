@@ -3,6 +3,7 @@ import { InviteController } from '../controllers/invite.controller';
 import { FastifyApplicationInstance } from '@avyyx/server-core';
 import { createInviteRequestSchema } from '../dtos/create-invite.dto';
 import { TOKEN_SCOPES } from '../constants';
+import { deleteInviteRequestSchema } from '../dtos/delete-invite.dto';
 
 @injectable()
 export class InviteRouter {
@@ -23,6 +24,18 @@ export class InviteRouter {
                 }
             },
             this.inviteController.createInvite.bind(this.inviteController)
+        );
+
+        fastify.delete(
+            ROUTE_PATHS.INVITES,
+            {
+                schema: deleteInviteRequestSchema,
+                config: {
+                    auth: true,
+                    scope: TOKEN_SCOPES.ADMIN_ACCESS
+                }
+            },
+            this.inviteController.deleteInvite.bind(this.inviteController)
         );
     }
 }

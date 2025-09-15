@@ -6,25 +6,33 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import Chip from '@mui/material/Chip';
-import { useTheme } from '@mui/material/styles';
 import Tooltip from '@mui/material/Tooltip';
+import { useTheme } from '@mui/material/styles';
 
-import { ChevronDown, EllipsisVertical } from 'lucide-react';
+import { ChevronDown, Pencil } from 'lucide-react';
 
 import { ExtendedTheme } from '@avyyx/admin-ui';
-import { useUser } from '@avyyx/admin-utils';
+import { PermissionAccess, useUser } from '@avyyx/admin-utils';
 
 import { UsersQueryResponse } from '../../../hooks/useUsersQuery';
+import { defineMessages, useIntl } from 'react-intl';
+import { Link } from 'react-router-dom';
 
 type UserRowProps = {
     user: UsersQueryResponse['data'][number];
     onOpenProjects: (event: React.MouseEvent<HTMLElement>, projects: UsersQueryResponse['data'][number]['projects']) => void;
     onOpenActions: (event: React.MouseEvent<HTMLElement>, user: UsersQueryResponse['data'][number]) => void;
-    hasDeletePermission: boolean;
-    hasUpdatePermission: boolean;
 };
 
-export const UserRow = ({ user, onOpenProjects, onOpenActions, hasDeletePermission, hasUpdatePermission }: UserRowProps) => {
+const intlMessages = defineMessages({
+    edit: {
+        id: 'users.table.edit',
+        defaultMessage: 'Edit'
+    }
+});
+
+export const UserRow = ({ user, onOpenProjects, onOpenActions }: UserRowProps) => {
+    const { formatMessage } = useIntl();
     const { palette } = useTheme<ExtendedTheme>();
     const { user: currentUser } = useUser();
 
@@ -134,9 +142,16 @@ export const UserRow = ({ user, onOpenProjects, onOpenActions, hasDeletePermissi
             </TableCell>
             <TableCell align="left">
                 {isCurrentUser ? null : (
-                    hasUpdatePermission || hasDeletePermission ? <IconButton onClick={(e) => onOpenActions(e, user)}>
-                        <EllipsisVertical size={16} />
-                    </IconButton> : null
+                    <PermissionAccess permissions={[
+                        { action: 'update', resource: 'admin:user' },
+                        { action: 'delete', resource: 'admin:user' }
+                    ]} operator="OR">
+                        <Tooltip title={formatMessage(intlMessages.edit)}>
+                            <IconButton component={Link} to={`/users/${user.id}`}>
+                                <Pencil size={16} />
+                            </IconButton>
+                        </Tooltip>
+                    </PermissionAccess>
                 )}
             </TableCell>
         </TableRow>

@@ -1,17 +1,16 @@
 import MenuItem from '@mui/material/MenuItem';
 import Typography from '@mui/material/Typography';
+import Stack from '@mui/material/Stack';
+import { SelectProps } from '@mui/material';
 
 import { FormSelect } from '@avyyx/admin-ui';
 import { Control } from 'react-hook-form';
 import { defineMessages, useIntl } from 'react-intl';
 
-import { CreateUserFormData } from '../../hooks/useCreateUserForm';
 import { useRolesQuery } from '../../hooks/useRolesQuery';
-import Stack from '@mui/material/Stack';
-import { SelectProps } from '@mui/material';
 
 type RoleSelectFieldProps = {
-    control: Control<CreateUserFormData>;
+    control: Control<any>;
     selectProps?: SelectProps;
 };
 

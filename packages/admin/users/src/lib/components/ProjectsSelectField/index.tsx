@@ -7,11 +7,10 @@ import { FormCheckbox, FormSelect, SelectedValue } from '@avyyx/admin-ui';
 import { Control, useWatch } from 'react-hook-form';
 import { defineMessages, useIntl } from 'react-intl';
 
-import { CreateUserFormData } from '../../hooks/useCreateUserForm';
 import { useProjectsQuery } from '../../hooks/useProjectsQuery';
 
 type ProjectsSelectFieldProps = {
-    control: Control<CreateUserFormData>;
+    control: Control<any>;
     selectProps?: SelectProps;
 };
 

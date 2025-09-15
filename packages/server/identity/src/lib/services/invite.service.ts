@@ -9,8 +9,9 @@ import { Op, type ModelStatic, type Transaction } from 'sequelize';
 import { type Role } from '../schemas/role.schema';
 import { type Project } from '../schemas/project.schema';
 import { type User } from '../schemas/user.schema';
-import { UserRoles } from '../schemas/user-roles.schema';
-import { ProjectUsers } from '../schemas/project-users.schema';
+import { type UserRoles } from '../schemas/user-roles.schema';
+import { type ProjectUsers } from '../schemas/project-users.schema';
+import { type DeleteInviteDto } from '../dtos/delete-invite.dto';
 
 /**
  * Service for creating user invites and wiring related associations.
@@ -135,5 +136,45 @@ export class InviteService {
             { code, userId },
             { transaction }
         );
+    }
+
+    /**
+     * Deletes an invite within a transaction.
+     */
+    async deleteInvite({ id }: DeleteInviteDto) {
+        const transaction = await this.connectionService.client.transaction();
+        try {
+            const invite = await this.findInviteOrThrow(id);
+            const user = invite.user;
+            if (user) {
+                await this.userModel.destroy({ where: { id: user.id }, transaction });
+            }
+            await this.inviteModel.destroy({ where: { id }, transaction });
+            await transaction.commit();
+            return {
+                id
+            }
+        } catch (error) {
+            await transaction.rollback();
+            throw error;
+        }
+    }
+
+    /**
+     * Loads an invite by id or throws if not found.
+     */
+    private async findInviteOrThrow(id: string): Promise<Invite> {
+        const invite = await this.inviteModel.findByPk(id, {
+            include: [
+                {
+                    model: this.userModel,
+                    as: 'user'
+                }
+            ]
+        });
+        if (!invite) {
+            throw new Error('Invite not found');
+        }
+        return invite;
     }
 }

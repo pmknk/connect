@@ -4,7 +4,7 @@ import Users from "./lib/users";
 export const users = () => ({
     name: 'users',
     route: {
-        path: '/users',
+        path: '/users/*',
         component: Users
     },  
     slots: [
