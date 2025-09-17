@@ -74,11 +74,9 @@ export class UserService {
         id: string,
         include?: { association: string }[]
     ): Promise<User> {
-        const user = await this.userModel.findByPk(id, {
-            include: include?.map((association) => ({
-                model: this.modelService.getModel(association.association),
-                as: association.association
-            }))
+        const user = await this.userModel.findOne({
+            where: { id },
+            include,
         });
 
         if (!user) {

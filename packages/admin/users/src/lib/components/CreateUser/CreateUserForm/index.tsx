@@ -24,6 +24,8 @@ const intlMessages = defineMessages({
 
 export const CreateUserForm = ({ control, disabled }: CreateUserFormProps) => {
     const { formatMessage } = useIntl();
+
+    console.log(control._formValues)
     return (
         <Stack spacing={3}>
             <FormField

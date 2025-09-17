@@ -29,7 +29,16 @@ export const getUserRequestSchema = {
     querystring: {
         type: 'object',
         properties: {
-            include: { type: 'array', items: { type: 'string' } }
+            include: {
+                type: 'array',
+                items: {
+                    type: 'object',
+                    properties: {
+                        association: { type: 'string' }
+                    }
+                },
+                default: []
+            },
         }
     }
 } as const;

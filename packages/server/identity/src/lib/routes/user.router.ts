@@ -3,6 +3,7 @@ import { injectable } from 'inversify';
 import { UserController } from '../controllers/user.controller';
 import { getUsersRequestSchema } from '../dtos/get-users.dto';
 import { TOKEN_SCOPES } from '../constants';
+import { getUserRequestSchema } from '../dtos/get-user.dto';
 
 /**
  * Router responsible for handling user-related routes
@@ -49,6 +50,14 @@ export class UserRouter {
                 }
             },
             this.userController.getUsers.bind(this.userController)
+        );
+
+        fastify.get(
+            `${ROUTE_PATHS.GET_USERS}/:id`,
+            {
+                schema: getUserRequestSchema
+            },
+            this.userController.getUser.bind(this.userController)
         );
     }
 }
