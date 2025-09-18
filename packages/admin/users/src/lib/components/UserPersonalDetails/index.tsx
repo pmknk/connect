@@ -8,6 +8,7 @@ import { RoleSelectField } from "../RoleSelectField";
 import { ProjectsSelectField } from "../ProjectsSelectField";
 import { UserPersonalDetailsDangerZone } from "./UserPersonalDetailsDangerZone";
 import { usePermissionAccess } from "@avyyx/admin-utils";
+import { UserQueryResponse } from "../../hooks/useUserQuery";
 
 const mockUser = {
     id: 'b7e23ec9-8e4b-4c2a-9c7a-1e2f3d4b5c6d',
@@ -36,9 +37,19 @@ const intlMessages = defineMessages({
     },
 })
 
-export const UserPersonalDetails = () => {
+type UserPersonalDetailsProps = {
+    user: UserQueryResponse['data'];
+}
+
+export const UserPersonalDetails = ({ user }: UserPersonalDetailsProps) => {
     const { palette } = useTheme<ExtendedTheme>();
-    const { control } = useUserForm(mockUser);
+    const { control } = useUserForm({
+        id: user.id,
+        fullname: user.fullName,
+        email: user.email,
+        roleId: user.roles[0].id,
+        projectIds: user.projects.map((project) => project.id)
+    });
     const { formatMessage } = useIntl();
     const hasUpdatePermission = usePermissionAccess({
         permissions: [
@@ -58,7 +69,7 @@ export const UserPersonalDetails = () => {
     });
 
     return (
-        <Stack spacing={3} sx={{ maxWidth: '500px' }}>
+        <Stack spacing={3} sx={{ maxWidth: '560px' }}>
             <Stack spacing={6} direction="row">
                 <Avatar variant="rounded" sx={{
                     backgroundColor: palette.primary.main,

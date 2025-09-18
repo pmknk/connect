@@ -13,6 +13,7 @@ import { useState } from 'react';
 import { defineMessages, useIntl } from 'react-intl';
 import { UserPersonalDetails } from '../../components/UserPersonalDetails';
 import { UserSecurity } from '../../components/UserSecurity';
+import { UserPageSkeleton } from '../../components/UserPageSkeleton';
 import { useParams } from 'react-router-dom';
 import { useUserQuery } from '../../hooks/useUserQuery';
 
@@ -76,7 +77,7 @@ const User = () => {
     const isMobile = useMediaQuery(breakpoints.down('sm'));
     const { id } = useParams();
 
-    const { data: userQueryResponse } = useUserQuery(id);
+    const { data: userQueryResponse, isLoading } = useUserQuery(id);
 
     const handleChange = (event: React.SyntheticEvent, newValue: number) => {
         setValue(newValue);
@@ -92,35 +93,41 @@ const User = () => {
                 pb: isMobile ? 8 : 0
             }}
         >
-            <Typography variant="h5">
-                {formatMessage(intlMessages.userProfile)}
-            </Typography>
-            <Box sx={{ mt: 4 }}>
-                <Tabs
-                    value={value}
-                    onChange={handleChange}
-                    sx={{
-                        '& .MuiTabs-flexContainer': { gap: isMobile ? 1 : 3 }
-                    }}
-                >
-                    <Tab label={formatMessage(intlMessages.profile)} />
-                    <Tab label={formatMessage(intlMessages.security)} />
-                </Tabs>
-            </Box>
-            <TabPanel
-                value={value}
-                index={0}
-                title={formatMessage(intlMessages.personalDetails)}
-            >
-                <UserPersonalDetails />
-            </TabPanel>
-            <TabPanel
-                value={value}
-                index={1}
-                title={formatMessage(intlMessages.security)}
-            >
-                <UserSecurity />
-            </TabPanel>
+            {isLoading ? (
+                <UserPageSkeleton />
+            ) : (
+                <>
+                    <Typography variant="h5">
+                        {formatMessage(intlMessages.userProfile)}
+                    </Typography>
+                    <Box sx={{ mt: 4 }}>
+                        <Tabs
+                            value={value}
+                            onChange={handleChange}
+                            sx={{
+                                '& .MuiTabs-flexContainer': { gap: isMobile ? 1 : 3 }
+                            }}
+                        >
+                            <Tab label={formatMessage(intlMessages.profile)} />
+                            <Tab label={formatMessage(intlMessages.security)} />
+                        </Tabs>
+                    </Box>
+                    <TabPanel
+                        value={value}
+                        index={0}
+                        title={formatMessage(intlMessages.personalDetails)}
+                    >
+                        {userQueryResponse && <UserPersonalDetails user={userQueryResponse} />}
+                    </TabPanel>
+                    <TabPanel
+                        value={value}
+                        index={1}
+                        title={formatMessage(intlMessages.security)}
+                    >
+                        <UserSecurity />
+                    </TabPanel>
+                </>
+            )}
         </Container>
     );
 };
