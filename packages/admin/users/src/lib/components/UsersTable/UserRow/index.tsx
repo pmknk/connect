@@ -9,14 +9,15 @@ import Chip from '@mui/material/Chip';
 import Tooltip from '@mui/material/Tooltip';
 import { useTheme } from '@mui/material/styles';
 
+import { defineMessages, useIntl } from 'react-intl';
+import { Link, useLocation } from 'react-router-dom';
 import { ChevronDown, Pencil } from 'lucide-react';
 
 import { ExtendedTheme } from '@avyyx/admin-ui';
 import { PermissionAccess, useUser } from '@avyyx/admin-utils';
 
 import { UsersQueryResponse } from '../../../hooks/useUsersQuery';
-import { defineMessages, useIntl } from 'react-intl';
-import { Link } from 'react-router-dom';
+import { USERS_ROUTE } from '../../../constants';
 
 type UserRowProps = {
     user: UsersQueryResponse['data'][number];
@@ -32,10 +33,10 @@ const intlMessages = defineMessages({
 });
 
 export const UserRow = ({ user, onOpenProjects, onOpenActions }: UserRowProps) => {
+    const location = useLocation();
     const { formatMessage } = useIntl();
     const { palette } = useTheme<ExtendedTheme>();
     const { user: currentUser } = useUser();
-
     const isCurrentUser = currentUser?.id === user.id;
 
     const getUserStatus = () => {
@@ -147,7 +148,13 @@ export const UserRow = ({ user, onOpenProjects, onOpenActions }: UserRowProps) =
                         { action: 'delete', resource: 'admin:user' }
                     ]} operator="OR">
                         <Tooltip title={formatMessage(intlMessages.edit)}>
-                            <IconButton component={Link} to={`/users/${user.id}`}>
+                            <IconButton 
+                                component={Link} 
+                                to={`${USERS_ROUTE}/${user.id}`}
+                                state={{ backUrl: 
+                                    location.pathname + location.search
+                                }}
+                            >
                                 <Pencil size={16} />
                             </IconButton>
                         </Tooltip>

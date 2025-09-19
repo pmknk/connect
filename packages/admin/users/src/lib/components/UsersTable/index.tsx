@@ -11,6 +11,7 @@ import { UsersQueryResponse } from '../../hooks/useUsersQuery';
 import TableHeader from './TableHeader';
 import UserRow from './UserRow';
 import ProjectsMenu from './ProjectsMenu';
+import { UserTableEmptyState } from './UserTableEmptyState';
 
 
 type UsersTableProps = {
@@ -45,7 +46,7 @@ export const UsersTable = ({ usersQueryResponse }: UsersTableProps) => {
                     <TableHeader />
                 </TableHead>
                 <TableBody>
-                {usersQueryResponse.data.map((user) => (
+                    {usersQueryResponse.data.map((user) => (
                         <UserRow 
                             key={user.id}
                             user={user}
@@ -53,6 +54,9 @@ export const UsersTable = ({ usersQueryResponse }: UsersTableProps) => {
                             onOpenActions={() => {}}
                         />
                     ))}
+                    {usersQueryResponse.data.length === 0 && (
+                        <UserTableEmptyState />
+                    )}
                 </TableBody>
             </Table>
             <ProjectsMenu 

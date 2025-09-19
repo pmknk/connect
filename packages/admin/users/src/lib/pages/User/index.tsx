@@ -3,6 +3,9 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
+import IconButton from '@mui/material/IconButton';
+import Stack from '@mui/material/Stack';
+import Tooltip from '@mui/material/Tooltip';
 
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
@@ -11,11 +14,14 @@ import { ExtendedTheme } from '@avyyx/admin-ui';
 
 import { useState } from 'react';
 import { defineMessages, useIntl } from 'react-intl';
+import { Link, useParams, useLocation } from 'react-router-dom';
+import { ChevronLeft } from 'lucide-react';
+
 import { UserPersonalDetails } from '../../components/UserPersonalDetails';
 import { UserSecurity } from '../../components/UserSecurity';
 import { UserPageSkeleton } from '../../components/UserPageSkeleton';
-import { useParams } from 'react-router-dom';
 import { useUserQuery } from '../../hooks/useUserQuery';
+import { USERS_ROUTE } from '../../constants';
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -40,6 +46,10 @@ const intlMessages = defineMessages({
     personalDetails: {
         id: 'user.personalDetails',
         defaultMessage: 'Personal Details'
+    },
+    back: {
+        id: 'user.back',
+        defaultMessage: 'Back to users'
     }
 });
 
@@ -71,11 +81,14 @@ const TabPanel = ({
 };
 
 const User = () => {
+    const { state: locationState } = useLocation();
+    const { id } = useParams();
+
     const { breakpoints } = useTheme<ExtendedTheme>();
     const { formatMessage } = useIntl();
     const [value, setValue] = useState(0);
     const isMobile = useMediaQuery(breakpoints.down('sm'));
-    const { id } = useParams();
+
 
     const { data: userQueryResponse, isLoading } = useUserQuery(id);
 
@@ -83,7 +96,7 @@ const User = () => {
         setValue(newValue);
     };
 
-    console.log(userQueryResponse);
+    const backUrl = locationState?.backUrl || USERS_ROUTE;
 
     return (
         <Container
@@ -97,9 +110,16 @@ const User = () => {
                 <UserPageSkeleton />
             ) : (
                 <>
-                    <Typography variant="h5">
-                        {formatMessage(intlMessages.userProfile)}
-                    </Typography>
+                    <Stack direction="row" alignItems="center" gap={0.5}>
+                        <Tooltip title={formatMessage(intlMessages.back)}>
+                            <IconButton size="small" component={Link} to={backUrl}>
+                                <ChevronLeft />
+                            </IconButton>
+                        </Tooltip>
+                        <Typography variant="h5">
+                            {formatMessage(intlMessages.userProfile)}
+                        </Typography>
+                    </Stack>
                     <Box sx={{ mt: 4 }}>
                         <Tabs
                             value={value}

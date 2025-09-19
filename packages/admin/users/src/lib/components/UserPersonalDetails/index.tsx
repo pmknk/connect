@@ -21,7 +21,7 @@ const mockUser = {
 const intlMessages = defineMessages({
     save: {
         id: 'users.personalDetails.save',
-        defaultMessage: 'Save'
+        defaultMessage: 'Save changes'
     },
     fullname: {
         id: 'users.personalDetails.fullname',
@@ -69,7 +69,7 @@ export const UserPersonalDetails = ({ user }: UserPersonalDetailsProps) => {
     });
 
     return (
-        <Stack spacing={3} sx={{ maxWidth: '560px' }}>
+        <Stack spacing={3} sx={{ maxWidth: '490px' }}>
             <Stack spacing={6} direction="row">
                 <Avatar variant="rounded" sx={{
                     backgroundColor: palette.primary.main,
@@ -108,7 +108,7 @@ export const UserPersonalDetails = ({ user }: UserPersonalDetailsProps) => {
                     {formatMessage(intlMessages.save)}
                 </Button>
             </Stack>
-            {hasDeletePermission && <UserPersonalDetailsDangerZone />}
+            {/* {hasDeletePermission && <UserPersonalDetailsDangerZone />} */}
         </Stack>
     )
 }

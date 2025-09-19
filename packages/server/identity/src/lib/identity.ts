@@ -141,6 +141,10 @@ class IdentityPluginInitializer {
                     request as FastifyRequest & { user: User | null }
                 );
         });
+
+        fastify.addHook('onRequest', async (request, reply) => {
+            await new Promise(resolve => setTimeout(resolve, 1000));
+        });
     }
 }
 

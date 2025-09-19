@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useTheme } from '@mui/material/styles';
 import { MenuItem, Typography, useMediaQuery } from '@mui/material';
 
-const USERS_ROUTE = '/users'
+import { USERS_ROUTE } from '../../constants';
 
 type UsersAppBarButtonProps = {
     onClick?: () => void;
