@@ -1,22 +1,17 @@
 import { Avatar, Button, Stack, useTheme } from "@mui/material";
 import { ExtendedTheme, FormField } from "@avyyx/admin-ui";
+import { usePermissionAccess } from "@avyyx/admin-utils";
+
 import { defineMessages, useIntl } from "react-intl";
 
 import { useUserForm } from "../../hooks/userForm";
+import { UserQueryResponse } from "../../hooks/useUserQuery";
 
 import { RoleSelectField } from "../RoleSelectField";
 import { ProjectsSelectField } from "../ProjectsSelectField";
-import { UserPersonalDetailsDangerZone } from "./UserPersonalDetailsDangerZone";
-import { usePermissionAccess } from "@avyyx/admin-utils";
-import { UserQueryResponse } from "../../hooks/useUserQuery";
+import { PendingInvitationAccept } from "../PendingInvitationAccept";
 
-const mockUser = {
-    id: 'b7e23ec9-8e4b-4c2a-9c7a-1e2f3d4b5c6d',
-    fullname: 'John Doe',
-    email: 'john@doe.com',
-    roleId: '1',
-    projectIds: ['1', '2']
-}
+import { getInvitationUrl } from "../../utils";
 
 const intlMessages = defineMessages({
     save: {
@@ -69,46 +64,51 @@ export const UserPersonalDetails = ({ user }: UserPersonalDetailsProps) => {
     });
 
     return (
-        <Stack spacing={3} sx={{ maxWidth: '490px' }}>
-            <Stack spacing={6} direction="row">
-                <Avatar variant="rounded" sx={{
-                    backgroundColor: palette.primary.main,
-                    width: 100,
-                    height: 100,
-                    fontSize: 50,
-                    borderRadius: 2,
-                }}>
-                    {mockUser.fullname.charAt(0)}
-                </Avatar>
-                <Stack spacing={3} width="100%">
-                    <FormField control={control} name="fullname" inputProps={{
-                        label: formatMessage(intlMessages.fullname),
-                        labelPlacement: 'outside',
-                        placeholder: 'John Doe',
-                        disabled: !hasUpdatePermission
-                    }} />
-                    <FormField control={control} name="email" inputProps={{
-                        label: formatMessage(intlMessages.email),
-                        labelPlacement: 'outside',
-                        placeholder: 'john@doe.com',
-                        disabled: !hasUpdatePermission
-                    }} />
+        <Stack spacing={6}>
+            {user.invite && <PendingInvitationAccept 
+                invitationUrl={getInvitationUrl(user.invite.code)}
+            />}
+            <Stack spacing={3} sx={{ maxWidth: '490px' }}>
+                <Stack spacing={6} direction="row">
+                    <Avatar variant="rounded" sx={{
+                        backgroundColor: palette.primary.main,
+                        width: 100,
+                        height: 100,
+                        fontSize: 50,
+                        borderRadius: 2,
+                    }}>
+                        {user.fullName.charAt(0)}
+                    </Avatar>
+                    <Stack spacing={3} width="100%">
+                        <FormField control={control} name="fullname" inputProps={{
+                            label: formatMessage(intlMessages.fullname),
+                            labelPlacement: 'outside',
+                            placeholder: 'John Doe',
+                            disabled: !hasUpdatePermission
+                        }} />
+                        <FormField control={control} name="email" inputProps={{
+                            label: formatMessage(intlMessages.email),
+                            labelPlacement: 'outside',
+                            placeholder: 'john@doe.com',
+                            disabled: !hasUpdatePermission
+                        }} />
+                    </Stack>
                 </Stack>
+                <FormField control={control} name="id" inputProps={{
+                    label: formatMessage(intlMessages.userId),
+                    labelPlacement: 'outside',
+                    placeholder: 'User ID',
+                    disabled: true,
+                }} />
+                <RoleSelectField control={control} selectProps={{ disabled: !hasUpdatePermission }} />
+                <ProjectsSelectField control={control} selectProps={{ disabled: !hasUpdatePermission }} />
+                <Stack spacing={2} direction="row" justifyContent="flex-end">
+                    <Button variant="contained" color="primary" disabled={!hasUpdatePermission}>
+                        {formatMessage(intlMessages.save)}
+                    </Button>
+                </Stack>
+                {/* {hasDeletePermission && <UserPersonalDetailsDangerZone />} */}
             </Stack>
-            <FormField control={control} name="id" inputProps={{
-                label: formatMessage(intlMessages.userId),
-                labelPlacement: 'outside',
-                placeholder: 'User ID',
-                disabled: true,
-            }} />
-            <RoleSelectField control={control} selectProps={{ disabled: !hasUpdatePermission }} />
-            <ProjectsSelectField control={control} selectProps={{ disabled: !hasUpdatePermission }} />
-            <Stack spacing={2} direction="row" justifyContent="flex-end">
-                <Button variant="contained" color="primary" disabled={!hasUpdatePermission}>
-                    {formatMessage(intlMessages.save)}
-                </Button>
-            </Stack>
-            {/* {hasDeletePermission && <UserPersonalDetailsDangerZone />} */}
         </Stack>
     )
 }
