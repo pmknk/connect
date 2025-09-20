@@ -46,10 +46,12 @@ type PendingInvitationAcceptProps = {
 export const PendingInvitationAccept = ({ invitationUrl }: PendingInvitationAcceptProps) => {
     const { formatMessage } = useIntl();
     const [_copied, setCopied] = useState(false);
+    const [open, setOpen] = useState(false);
 
     const handleCopy = useCallback(async (text: string) => {
         await navigator.clipboard.writeText(text);
         setCopied(true);
+        setOpen(true);
     }, []);
 
     return (
@@ -78,9 +80,9 @@ export const PendingInvitationAccept = ({ invitationUrl }: PendingInvitationAcce
                 </Stack>
             </Alert>
             <Snackbar
-                open={_copied}
-                autoHideDuration={1500}
-                onClose={() => setCopied(false)}
+                open={open}
+                autoHideDuration={3000}
+                onClose={() => setOpen(false)}
                 anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
             >
                 <Alert severity="success">
