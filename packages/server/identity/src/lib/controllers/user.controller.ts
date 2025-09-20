@@ -47,6 +47,12 @@ export class UserController {
         );
     }
 
+    /**
+     * Retrieves a user by their ID
+     * @param request - The Fastify request object containing the user ID
+     * @param reply - The Fastify reply object used to send the response
+     * @returns {Promise<GetUserResponseDto>} The user response containing user details
+     */
     async getUser(
         request: FastifyRequest,
         reply: FastifyReply

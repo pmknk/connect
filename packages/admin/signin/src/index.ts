@@ -4,7 +4,7 @@ export const signin = () => ({
     name: 'signin',
     route: {
         public: true,
-        path: '/signin',
+        path: '/signin/*',
         component: Signin
     }
 })

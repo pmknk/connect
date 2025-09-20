@@ -17,10 +17,12 @@ import { defineMessages, useIntl } from 'react-intl';
 import { Link, useParams, useLocation } from 'react-router-dom';
 import { ChevronLeft } from 'lucide-react';
 
-import { UserPersonalDetails } from '../../components/UserPersonalDetails';
-import { UserSecurity } from '../../components/UserSecurity';
-import { UserPageSkeleton } from '../../components/UserPageSkeleton';
 import { useUserQuery } from '../../hooks/useUserQuery';
+
+import { UserPersonalDetails } from '../../components/UserPersonalDetails';
+import { UserSecurityDetails } from '../../components/UserSecurityDetails';
+import { UserPageSkeleton } from '../../components/UserPageSkeleton';
+
 import { USERS_ROUTE } from '../../constants';
 
 interface TabPanelProps {
@@ -144,7 +146,7 @@ const User = () => {
                         index={1}
                         title={formatMessage(intlMessages.security)}
                     >
-                        <UserSecurity />
+                        <UserSecurityDetails />
                     </TabPanel>
                 </>
             )}

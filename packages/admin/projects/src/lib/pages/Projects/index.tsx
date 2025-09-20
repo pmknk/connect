@@ -153,7 +153,7 @@ const Projects = () => {
                         description={
                             <FormattedMessage
                                 id="projects.empty.description"
-                                defaultMessage="You don't have any projects you are working on"
+                                        defaultMessage="Projects in this CMS group your content, settings, and workflows. Create your first project to manage entries, media, and publishing."
                             />
                         }
                     />

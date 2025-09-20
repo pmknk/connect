@@ -1,5 +1,5 @@
 import { FormattedMessage } from 'react-intl';
-import { Box } from 'lucide-react';
+import { Box, FileBox } from 'lucide-react';
 import { type ExtendedTheme } from '@avyyx/admin-ui';
 import { useTheme } from '@mui/material/styles';
 
@@ -9,6 +9,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
+
 import { useMediaQuery } from '@mui/material';
 
 type CreateProjectDialogProps = {
@@ -50,7 +51,7 @@ export const CreateProjectDialog = ({
                         gap: 2
                     }}
                 >
-                    <Box
+                    <FileBox
                         size={74}
                         strokeWidth={0.8}
                         color={palette.primary.main}

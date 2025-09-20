@@ -1,6 +1,6 @@
 import Stack from "@mui/material/Stack"
 
-export const UserSecurity = () => {
+export const UserSecurityDetails = () => {
     return (
         <Stack spacing={2}>
             user security

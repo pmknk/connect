@@ -55,7 +55,11 @@ export class UserRouter {
         fastify.get(
             `${ROUTE_PATHS.GET_USERS}/:id`,
             {
-                schema: getUserRequestSchema
+                schema: getUserRequestSchema,
+                config: {
+                    auth: true,
+                    scope: TOKEN_SCOPES.ADMIN_ACCESS
+                }
             },
             this.userController.getUser.bind(this.userController)
         );

@@ -1,14 +1,14 @@
-import { FolderX } from 'lucide-react';
-import { FormattedMessage } from 'react-intl';
+import { Box as BoxIcon } from 'lucide-react';
 
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
+import Card from '@mui/material/Card';
+import Box from '@mui/material/Box';
 
 import { useTheme } from '@mui/material/styles';
 import { ExtendedTheme } from '@avyyx/admin-ui';
 
 import { CreateProject } from '../CreateProject';
-import { Box, Card } from '@mui/material';
 
 type NoProjectsFoundCtaProps = {
     title?: string | React.ReactNode;
@@ -37,9 +37,9 @@ export const NoProjectsFoundCta = ({
                 justifyContent="center"
                 textAlign="center"
             >
-                <FolderX size={60} color={palette.primary.main} strokeWidth={1} />
+                <BoxIcon size={60} color={palette.primary.main} strokeWidth={1} />
                 <Typography variant="h5">{title}</Typography>
-                <Typography variant="body1" color="text.secondary">
+                <Typography variant="body1" color="text.secondary" maxWidth="600px">
                     {description}
                 </Typography>
                 {showCreateProject && (
