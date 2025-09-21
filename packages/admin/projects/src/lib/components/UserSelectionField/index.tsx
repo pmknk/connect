@@ -90,6 +90,9 @@ export const UserSelectionField = ({
                             sx: {
                                 maxHeight: '200px'
                             }
+                        },
+                        MenuListProps: {
+                            autoFocusItem: false
                         }
                     },
                     onScrollEnd: handleScrollEnd,

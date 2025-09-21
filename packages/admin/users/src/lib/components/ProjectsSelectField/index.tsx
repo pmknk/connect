@@ -1,9 +1,11 @@
+import { useMemo, useState } from 'react';
+
 import MenuItem from '@mui/material/MenuItem';
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import { SelectProps } from '@mui/material';
 
-import { FormCheckbox, FormSelect, SelectedValue } from '@avyyx/admin-ui';
+import { FormCheckbox, FormSelect, SearchMenuItem, SelectedValue } from '@avyyx/admin-ui';
 import { Control, useWatch } from 'react-hook-form';
 import { defineMessages, useIntl } from 'react-intl';
 
@@ -43,6 +45,10 @@ const intlMessages = defineMessages({
     selectAllProjects: {
         id: 'users.create.projects.selectAllProjects',
         defaultMessage: 'Select All available projects'
+    },
+    searchProjects: {
+        id: 'users.create.projects.search',
+        defaultMessage: 'Search projects'
     }
 });
 
@@ -53,6 +59,12 @@ export const ProjectsSelectField = ({
     const { formatMessage } = useIntl();
     const { data: projects } = useProjectsQuery();
     const { assignAvailableProjects } = useWatch({ control });
+    const [search, setSearch] = useState('');
+
+    const filteredProjects = useMemo(() => {
+        return projects?.filter((project) => project.name.toLowerCase().includes(search.toLowerCase()));
+    }, [projects, search]);
+
     return (
         <Stack spacing={1}>
             <FormSelect
@@ -66,6 +78,9 @@ export const ProjectsSelectField = ({
                             sx: {
                                 maxHeight: '200px'
                             }
+                        },
+                        MenuListProps: {
+                            autoFocusItem: false
                         }
                     },
                     multiple: true,
@@ -84,14 +99,23 @@ export const ProjectsSelectField = ({
                     disabled: selectProps.disabled || assignAvailableProjects
                 }}
             >
-                {(!projects || projects.length === 0) && (
+                <SearchMenuItem
+                    textFieldProps={{
+                        placeholder: formatMessage(intlMessages.searchProjects),
+                        onChange: (e) => {
+                            setSearch(e.target.value);
+                        },
+                        value: search
+                    }}
+                />
+                {(!filteredProjects || filteredProjects.length === 0) && (
                     <MenuItem disabled>
                         <Typography variant="body2" color="text.secondary">
                             {formatMessage(intlMessages.noProjectsFound)}
                         </Typography>
                     </MenuItem>
                 )}
-                {projects?.map((project) => (
+                {filteredProjects?.map((project) => (
                     <MenuItem value={project.id} key={project.id}>
                         <Stack
                             spacing={0.5}

@@ -185,6 +185,10 @@ export const FormSelect = ({
                                 sx: {
                                     mt: 1
                                 },
+                                MenuListProps: {
+                                    ...selectProps?.MenuProps?.MenuListProps,
+                                    autoFocusItem: false
+                                },
                                 PaperProps: {
                                     ...selectProps?.MenuProps?.PaperProps,
                                     onScroll: selectProps?.onScrollEnd

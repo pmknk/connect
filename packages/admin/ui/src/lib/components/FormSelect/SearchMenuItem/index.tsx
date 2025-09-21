@@ -11,7 +11,11 @@ export const SearchMenuItem = ({ listSubheaderProps, textFieldProps }: SearchMen
             px: 1,
             borderBottom: '1px solid',
             borderColor: 'divider',
-            mb:1
+            mb:1,
+            position: 'sticky',
+            top: 8,
+            zIndex: 1,
+            bgcolor: 'background.paper'
         }} {...listSubheaderProps}>
             <TextField
                 type="text"
@@ -22,7 +26,17 @@ export const SearchMenuItem = ({ listSubheaderProps, textFieldProps }: SearchMen
                         borderRadius: '0.4rem'
                     }
                 }}
-                onKeyDown={(e) => e.stopPropagation()}
+                onKeyDown={(e) => {
+                    e.stopPropagation();
+                }}
+                onKeyUp={(e) => {
+                    e.stopPropagation();
+                }}
+                onKeyPress={(e) => {
+                    e.stopPropagation();
+                }}
+                onClick={(e) => e.stopPropagation()}
+                onChange={(e) => e.stopPropagation()}
                 {...textFieldProps}
             />
         </ListSubheader>
