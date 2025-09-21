@@ -1,8 +1,9 @@
+import { use, useEffect, useState } from 'react';
 import { defineMessages, useIntl } from 'react-intl';
 import { Control, useWatch } from 'react-hook-form';
 import { useUser } from '@avyyx/admin-utils';
 
-import { FormSelect, FormCheckbox, SelectedValue, LoadingMoreOptions } from '@avyyx/admin-ui';
+import { FormSelect, FormCheckbox, SelectedValue, LoadingMoreOptions, SearchMenuItem } from '@avyyx/admin-ui';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
@@ -32,7 +33,7 @@ const intlMessages = defineMessages({
     },
     loadingMoreUsers: {
         id: 'projects.create.users.loadingMoreUsers',
-        defaultMessage: 'Loading more users...'
+        defaultMessage: 'Loading users...'
     },
     usersSelected: {
         id: 'projects.create.users.selected',
@@ -49,8 +50,14 @@ const intlMessages = defineMessages({
     noUsersFound: {
         id: 'projects.create.users.empty',
         defaultMessage: 'No users found'
+    },
+    searchUsers: {
+        id: 'projects.create.users.search',
+        defaultMessage: 'Search users'
     }
 });
+
+const USER_LIMIT = 20;
 
 export const UserSelectionField = ({
     control,
@@ -62,8 +69,9 @@ export const UserSelectionField = ({
     const { formatMessage } = useIntl();
     const { assignAvailableUsers } = useWatch({ control });
 
-    const { users, fetchNextPage, hasNextPage, isFetchingNextPage } =
-        useUsersQuery(10);
+    const [search, setSearch] = useState('');
+    const { users, fetchNextPage, hasNextPage, isFetchingNextPage, isFetching } =
+        useUsersQuery(USER_LIMIT, search);
 
     const handleScrollEnd = () => {
         if (hasNextPage && !isFetchingNextPage) {
@@ -103,6 +111,15 @@ export const UserSelectionField = ({
                     }
                 }}
             >
+                <SearchMenuItem
+                    textFieldProps={{
+                        placeholder: formatMessage(intlMessages.searchUsers),
+                        onChange: (e) => {
+                            setSearch(e.target.value);
+                        },
+                        value: search
+                    }}
+                />
                 {users
                     .filter((user) => user.id !== currentUserId)
                     .map((user) => (
@@ -128,14 +145,14 @@ export const UserSelectionField = ({
                     ))}
                 {users.filter((user) => user.id !== currentUserId).length ===
                     0 &&
-                    !isFetchingNextPage && (
+                    !isFetchingNextPage && !isFetching && (
                         <MenuItem disabled>
                             <Typography variant="body2" color="text.secondary">
                                 {formatMessage(intlMessages.noUsersFound)}
                             </Typography>
                         </MenuItem>
                     )}
-                {isFetchingNextPage && <LoadingMoreOptions label={formatMessage(intlMessages.loadingMoreUsers)} />}
+                {(isFetchingNextPage || isFetching) && <LoadingMoreOptions label={formatMessage(intlMessages.loadingMoreUsers)} />}
             </FormSelect>
             <FormCheckbox
                 control={control}

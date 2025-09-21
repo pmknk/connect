@@ -38,17 +38,18 @@ const DEFAULT_LIMIT = 20;
  * };
  * ```
  */
-export const useUsersQuery = (limit: number = DEFAULT_LIMIT) => {
+export const useUsersQuery = (limit: number = DEFAULT_LIMIT, search?: string) => {
     const httpClient = useHttpClient();
 
     const query = useInfiniteQuery({
-        queryKey: ['users', 'infinite'],
+        queryKey: ['users', 'infinite', { limit, search: search ?? '' }],
         queryFn: ({ pageParam = 0, signal }) =>
             httpClient.get<UsersQueryResponse>(GET_ALL_USERS_ROUTE, {
                 signal,
                 params: {
                     offset: pageParam * limit,
-                    limit
+                    limit,
+                    search
                 }
             }),
         initialPageParam: 0,
