@@ -1,19 +1,27 @@
-import { Alert, Avatar, Button, Snackbar, Stack, useTheme } from "@mui/material";
-import { ExtendedTheme, FormField } from "@avyyx/admin-ui";
-import { usePermissionAccess } from "@avyyx/admin-utils";
+import {
+    Alert,
+    Avatar,
+    Button,
+    CircularProgress,
+    Snackbar,
+    Stack,
+    useTheme
+} from '@mui/material';
+import { ExtendedTheme, FormField } from '@avyyx/admin-ui';
+import { usePermissionAccess } from '@avyyx/admin-utils';
 
-import { useState } from "react";
-import { defineMessages, useIntl } from "react-intl";
+import { useState } from 'react';
+import { defineMessages, useIntl } from 'react-intl';
 
-import { useUserForm } from "../../hooks/useUserForm";
-import { UserQueryResponse } from "../../hooks/useUserQuery";
-import { useUpdateUserMutation } from "../../hooks/useUpdateUserMutation";
+import { useUserForm } from '../../hooks/useUserForm';
+import { UserQueryResponse } from '../../hooks/useUserQuery';
+import { useUpdateUserMutation } from '../../hooks/useUpdateUserMutation';
 
-import { RoleSelectField } from "../RoleSelectField";
-import { ProjectsSelectField } from "../ProjectsSelectField";
-import { PendingInvitationAccept } from "../PendingInvitationAccept";
+import { RoleSelectField } from '../RoleSelectField';
+import { ProjectsSelectField } from '../ProjectsSelectField';
+import { PendingInvitationAccept } from '../PendingInvitationAccept';
 
-import { getInvitationUrl } from "../../utils";
+import { getInvitationUrl } from '../../utils';
 
 const intlMessages = defineMessages({
     save: {
@@ -36,12 +44,11 @@ const intlMessages = defineMessages({
         id: 'users.personalDetails.updatedSuccessfully',
         defaultMessage: 'User updated successfully'
     }
-})
+});
 
 type UserPersonalDetailsProps = {
     user: UserQueryResponse['data'];
-}
-
+};
 
 export const UserPersonalDetails = ({ user }: UserPersonalDetailsProps) => {
     const { palette } = useTheme<ExtendedTheme>();
@@ -54,11 +61,11 @@ export const UserPersonalDetails = ({ user }: UserPersonalDetailsProps) => {
         projectIds: user.projects.map((project) => project.id)
     });
     const { mutate: updateUser, isPending } = useUpdateUserMutation(() => {
-        setOpenSnackbar(true)
+        setOpenSnackbar(true);
     });
 
     const { formatMessage } = useIntl();
-    
+
     const hasUpdatePermission = usePermissionAccess({
         permissions: [
             {
@@ -68,49 +75,88 @@ export const UserPersonalDetails = ({ user }: UserPersonalDetailsProps) => {
         ]
     });
     return (
-        <form onSubmit={handleSubmit(async (formData) => {
-            updateUser(formData)
-        })}>
+        <form
+            onSubmit={handleSubmit(async (formData) => {
+                updateUser(formData);
+            })}
+        >
             <Stack spacing={6}>
-                {user.invite && <PendingInvitationAccept 
-                    invitationUrl={getInvitationUrl(user.invite.code)}
-                />}
+                {user.invite && (
+                    <PendingInvitationAccept
+                        invitationCode={user.invite.code}
+                    />
+                )}
                 <Stack spacing={3} sx={{ maxWidth: '490px' }}>
                     <Stack spacing={6} direction="row">
-                        <Avatar variant="rounded" sx={{
-                            backgroundColor: palette.primary.main,
-                            width: 100,
-                            height: 100,
-                            fontSize: 50,
-                            borderRadius: 2,
-                        }}>
+                        <Avatar
+                            variant="rounded"
+                            sx={{
+                                backgroundColor: palette.primary.main,
+                                width: 100,
+                                height: 100,
+                                fontSize: 50,
+                                borderRadius: 2
+                            }}
+                        >
                             {user.fullName.charAt(0)}
                         </Avatar>
                         <Stack spacing={3} width="100%">
-                            <FormField control={control} name="fullName" inputProps={{
-                                label: formatMessage(intlMessages.fullname),
-                                labelPlacement: 'outside',
-                                placeholder: 'John Doe',
-                                disabled: !hasUpdatePermission || isPending
-                            }} />
-                            <FormField control={control} name="email" inputProps={{
-                                label: formatMessage(intlMessages.email),
-                                labelPlacement: 'outside',
-                                placeholder: 'john@doe.com',
-                                disabled: !hasUpdatePermission || isPending
-                            }} />
+                            <FormField
+                                control={control}
+                                name="fullName"
+                                inputProps={{
+                                    label: formatMessage(intlMessages.fullname),
+                                    labelPlacement: 'outside',
+                                    placeholder: 'John Doe',
+                                    disabled: !hasUpdatePermission || isPending
+                                }}
+                            />
+                            <FormField
+                                control={control}
+                                name="email"
+                                inputProps={{
+                                    label: formatMessage(intlMessages.email),
+                                    labelPlacement: 'outside',
+                                    placeholder: 'john@doe.com',
+                                    disabled: !hasUpdatePermission || isPending
+                                }}
+                            />
                         </Stack>
                     </Stack>
-                    <FormField control={control} name="id" inputProps={{
-                        label: formatMessage(intlMessages.userId),
-                        labelPlacement: 'outside',
-                        placeholder: 'User ID',
-                        disabled: true,
-                    }} />
-                    <RoleSelectField control={control} selectProps={{ disabled: !hasUpdatePermission || isPending }} />
-                    <ProjectsSelectField control={control} selectProps={{ disabled: !hasUpdatePermission || isPending }} />
-                    <Stack spacing={2} direction="row" justifyContent="flex-end">
-                        <Button variant="contained" color="primary" disabled={!hasUpdatePermission} type="submit">
+                    <FormField
+                        control={control}
+                        name="id"
+                        inputProps={{
+                            label: formatMessage(intlMessages.userId),
+                            labelPlacement: 'outside',
+                            placeholder: 'User ID',
+                            disabled: true
+                        }}
+                    />
+                    <RoleSelectField
+                        control={control}
+                        selectProps={{
+                            disabled: !hasUpdatePermission || isPending
+                        }}
+                    />
+                    <ProjectsSelectField
+                        control={control}
+                        selectProps={{
+                            disabled: !hasUpdatePermission || isPending
+                        }}
+                    />
+                    <Stack
+                        spacing={2}
+                        direction="row"
+                        justifyContent="flex-end"
+                    >
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            disabled={!hasUpdatePermission}
+                            type="submit"
+                            loading={isPending}
+                        >
                             {formatMessage(intlMessages.save)}
                         </Button>
                     </Stack>
@@ -119,7 +165,7 @@ export const UserPersonalDetails = ({ user }: UserPersonalDetailsProps) => {
             <Snackbar
                 open={openSnackbar}
                 onClose={() => {
-                    setOpenSnackbar(false)
+                    setOpenSnackbar(false);
                 }}
                 message={formatMessage(intlMessages.updatedSuccessfully)}
                 autoHideDuration={3000}
@@ -130,5 +176,5 @@ export const UserPersonalDetails = ({ user }: UserPersonalDetailsProps) => {
                 </Alert>
             </Snackbar>
         </form>
-    )
-}
+    );
+};

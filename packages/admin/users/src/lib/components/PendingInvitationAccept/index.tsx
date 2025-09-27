@@ -23,7 +23,7 @@ const intlMessages = defineMessages({
     },
     invitationUrlLabel: {
         id: 'invitationUrlLabel',
-        defaultMessage: 'Invitation URL'
+        defaultMessage: 'Invitation Code'
     },
     copy: {
         id: 'copy',
@@ -40,10 +40,10 @@ const intlMessages = defineMessages({
 })
 
 type PendingInvitationAcceptProps = {
-    invitationUrl: string;
+    invitationCode: string;
 }
 
-export const PendingInvitationAccept = ({ invitationUrl }: PendingInvitationAcceptProps) => {
+export const PendingInvitationAccept = ({ invitationCode }: PendingInvitationAcceptProps) => {
     const { formatMessage } = useIntl();
     const [_copied, setCopied] = useState(false);
     const [open, setOpen] = useState(false);
@@ -69,9 +69,9 @@ export const PendingInvitationAccept = ({ invitationUrl }: PendingInvitationAcce
                             {formatMessage(intlMessages.invitationUrlLabel)}:
                         </Typography>
                         <Box sx={{ flexGrow: 1, overflowWrap: 'anywhere', display: 'flex', alignItems: 'center', gap: 0.2 }}>
-                            <Typography variant="body2">{invitationUrl}</Typography>
+                            <Typography variant="body2">{invitationCode}</Typography>
                             <Tooltip title={_copied ? formatMessage(intlMessages.copied) : formatMessage(intlMessages.copy)}>
-                                <IconButton onClick={() => handleCopy(invitationUrl)}>
+                                <IconButton onClick={() => handleCopy(invitationCode)}>
                                     <>{_copied ? <Check size={16} /> : <Copy size={16} />}</>
                                 </IconButton>
                             </Tooltip>
