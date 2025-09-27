@@ -1,11 +1,13 @@
-import { Avatar, Button, Stack, useTheme } from "@mui/material";
+import { Alert, Avatar, Button, Snackbar, Stack, useTheme } from "@mui/material";
 import { ExtendedTheme, FormField } from "@avyyx/admin-ui";
 import { usePermissionAccess } from "@avyyx/admin-utils";
 
+import { useState } from "react";
 import { defineMessages, useIntl } from "react-intl";
 
-import { useUserForm } from "../../hooks/userForm";
+import { useUserForm } from "../../hooks/useUserForm";
 import { UserQueryResponse } from "../../hooks/useUserQuery";
+import { useUpdateUserMutation } from "../../hooks/useUpdateUserMutation";
 
 import { RoleSelectField } from "../RoleSelectField";
 import { ProjectsSelectField } from "../ProjectsSelectField";
@@ -30,22 +32,33 @@ const intlMessages = defineMessages({
         id: 'users.personalDetails.userId',
         defaultMessage: 'User ID'
     },
+    updatedSuccessfully: {
+        id: 'users.personalDetails.updatedSuccessfully',
+        defaultMessage: 'User updated successfully'
+    }
 })
 
 type UserPersonalDetailsProps = {
     user: UserQueryResponse['data'];
 }
 
+
 export const UserPersonalDetails = ({ user }: UserPersonalDetailsProps) => {
     const { palette } = useTheme<ExtendedTheme>();
-    const { control } = useUserForm({
+    const [openSnackbar, setOpenSnackbar] = useState(false);
+    const { control, handleSubmit } = useUserForm({
         id: user.id,
-        fullname: user.fullName,
+        fullName: user.fullName,
         email: user.email,
         roleId: user.roles[0].id,
         projectIds: user.projects.map((project) => project.id)
     });
+    const { mutate: updateUser, isPending } = useUpdateUserMutation(() => {
+        setOpenSnackbar(true)
+    });
+
     const { formatMessage } = useIntl();
+    
     const hasUpdatePermission = usePermissionAccess({
         permissions: [
             {
@@ -54,61 +67,68 @@ export const UserPersonalDetails = ({ user }: UserPersonalDetailsProps) => {
             }
         ]
     });
-    const hasDeletePermission = usePermissionAccess({
-        permissions: [
-            {
-                action: 'delete',
-                resource: 'admin:user'
-            }
-        ]
-    });
-
     return (
-        <Stack spacing={6}>
-            {user.invite && <PendingInvitationAccept 
-                invitationUrl={getInvitationUrl(user.invite.code)}
-            />}
-            <Stack spacing={3} sx={{ maxWidth: '490px' }}>
-                <Stack spacing={6} direction="row">
-                    <Avatar variant="rounded" sx={{
-                        backgroundColor: palette.primary.main,
-                        width: 100,
-                        height: 100,
-                        fontSize: 50,
-                        borderRadius: 2,
-                    }}>
-                        {user.fullName.charAt(0)}
-                    </Avatar>
-                    <Stack spacing={3} width="100%">
-                        <FormField control={control} name="fullname" inputProps={{
-                            label: formatMessage(intlMessages.fullname),
-                            labelPlacement: 'outside',
-                            placeholder: 'John Doe',
-                            disabled: !hasUpdatePermission
-                        }} />
-                        <FormField control={control} name="email" inputProps={{
-                            label: formatMessage(intlMessages.email),
-                            labelPlacement: 'outside',
-                            placeholder: 'john@doe.com',
-                            disabled: !hasUpdatePermission
-                        }} />
+        <form onSubmit={handleSubmit(async (formData) => {
+            updateUser(formData)
+        })}>
+            <Stack spacing={6}>
+                {user.invite && <PendingInvitationAccept 
+                    invitationUrl={getInvitationUrl(user.invite.code)}
+                />}
+                <Stack spacing={3} sx={{ maxWidth: '490px' }}>
+                    <Stack spacing={6} direction="row">
+                        <Avatar variant="rounded" sx={{
+                            backgroundColor: palette.primary.main,
+                            width: 100,
+                            height: 100,
+                            fontSize: 50,
+                            borderRadius: 2,
+                        }}>
+                            {user.fullName.charAt(0)}
+                        </Avatar>
+                        <Stack spacing={3} width="100%">
+                            <FormField control={control} name="fullName" inputProps={{
+                                label: formatMessage(intlMessages.fullname),
+                                labelPlacement: 'outside',
+                                placeholder: 'John Doe',
+                                disabled: !hasUpdatePermission || isPending
+                            }} />
+                            <FormField control={control} name="email" inputProps={{
+                                label: formatMessage(intlMessages.email),
+                                labelPlacement: 'outside',
+                                placeholder: 'john@doe.com',
+                                disabled: !hasUpdatePermission || isPending
+                            }} />
+                        </Stack>
+                    </Stack>
+                    <FormField control={control} name="id" inputProps={{
+                        label: formatMessage(intlMessages.userId),
+                        labelPlacement: 'outside',
+                        placeholder: 'User ID',
+                        disabled: true,
+                    }} />
+                    <RoleSelectField control={control} selectProps={{ disabled: !hasUpdatePermission || isPending }} />
+                    <ProjectsSelectField control={control} selectProps={{ disabled: !hasUpdatePermission || isPending }} />
+                    <Stack spacing={2} direction="row" justifyContent="flex-end">
+                        <Button variant="contained" color="primary" disabled={!hasUpdatePermission} type="submit">
+                            {formatMessage(intlMessages.save)}
+                        </Button>
                     </Stack>
                 </Stack>
-                <FormField control={control} name="id" inputProps={{
-                    label: formatMessage(intlMessages.userId),
-                    labelPlacement: 'outside',
-                    placeholder: 'User ID',
-                    disabled: true,
-                }} />
-                <RoleSelectField control={control} selectProps={{ disabled: !hasUpdatePermission }} />
-                <ProjectsSelectField control={control} selectProps={{ disabled: !hasUpdatePermission }} />
-                <Stack spacing={2} direction="row" justifyContent="flex-end">
-                    <Button variant="contained" color="primary" disabled={!hasUpdatePermission}>
-                        {formatMessage(intlMessages.save)}
-                    </Button>
-                </Stack>
-                {/* {hasDeletePermission && <UserPersonalDetailsDangerZone />} */}
             </Stack>
-        </Stack>
+            <Snackbar
+                open={openSnackbar}
+                onClose={() => {
+                    setOpenSnackbar(false)
+                }}
+                message={formatMessage(intlMessages.updatedSuccessfully)}
+                autoHideDuration={3000}
+                anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+            >
+                <Alert severity="success">
+                    {formatMessage(intlMessages.updatedSuccessfully)}
+                </Alert>
+            </Snackbar>
+        </form>
     )
 }

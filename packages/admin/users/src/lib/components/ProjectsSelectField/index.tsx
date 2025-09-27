@@ -42,10 +42,6 @@ const intlMessages = defineMessages({
         id: 'users.create.projects.empty',
         defaultMessage: 'No projects found'
     },
-    selectAllProjects: {
-        id: 'users.create.projects.selectAllProjects',
-        defaultMessage: 'Select All available projects'
-    },
     searchProjects: {
         id: 'users.create.projects.search',
         defaultMessage: 'Search projects'
@@ -58,7 +54,6 @@ export const ProjectsSelectField = ({
 }: ProjectsSelectFieldProps) => {
     const { formatMessage } = useIntl();
     const { data: projects } = useProjectsQuery();
-    const { assignAvailableProjects } = useWatch({ control });
     const [search, setSearch] = useState('');
 
     const filteredProjects = useMemo(() => {
@@ -96,7 +91,7 @@ export const ProjectsSelectField = ({
                         />
                     },
                     helperText: formatMessage(intlMessages.projectsDescription),
-                    disabled: selectProps.disabled || assignAvailableProjects
+                    disabled: selectProps.disabled
                 }}
             >
                 <SearchMenuItem
@@ -139,14 +134,6 @@ export const ProjectsSelectField = ({
                     </MenuItem>
                 ))}
             </FormSelect>
-            <FormCheckbox
-                control={control}
-                name="assignAvailableProjects"
-                checkboxProps={{
-                    label: formatMessage(intlMessages.selectAllProjects),
-                    disabled: selectProps.disabled
-                }}
-            />
         </Stack>
     );
 };

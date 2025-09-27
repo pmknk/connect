@@ -4,6 +4,7 @@ import { UserController } from '../controllers/user.controller';
 import { getUsersRequestSchema } from '../dtos/get-users.dto';
 import { TOKEN_SCOPES } from '../constants';
 import { getUserRequestSchema } from '../dtos/get-user.dto';
+import { updateUserRequestSchema } from '../dtos/update-user.dto';
 
 /**
  * Router responsible for handling user-related routes
@@ -35,11 +36,11 @@ export class UserRouter {
      */
     initialize(fastify: FastifyApplicationInstance) {
         const ROUTE_PATHS = {
-            GET_USERS: '/api/v1/identity/users'
+            USERS: '/api/v1/identity/users'
         };
 
         fastify.get(
-            ROUTE_PATHS.GET_USERS,
+            ROUTE_PATHS.USERS,
             {
                 schema: {
                     querystring: getUsersRequestSchema
@@ -53,7 +54,7 @@ export class UserRouter {
         );
 
         fastify.get(
-            `${ROUTE_PATHS.GET_USERS}/:id`,
+            `${ROUTE_PATHS.USERS}/:id`,
             {
                 schema: getUserRequestSchema,
                 config: {
@@ -62,6 +63,14 @@ export class UserRouter {
                 }
             },
             this.userController.getUser.bind(this.userController)
+        );
+
+        fastify.put(
+            ROUTE_PATHS.USERS,
+            {
+                schema: updateUserRequestSchema
+            },
+            this.userController.updateUser.bind(this.userController)
         );
     }
 }

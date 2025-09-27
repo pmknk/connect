@@ -32,7 +32,6 @@ export const CreateUser = ({ onSuccess }: CreateUserProps) => {
                 email: '',
                 roleId: '',
                 projectIds: [],
-                assignAvailableProjects: false
             });
         }
     }, [reset, open]);

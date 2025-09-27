@@ -65,6 +65,6 @@ export const useUserQuery = (id?: string) => {
                 }
             ),
         select: ({ data }) => data.data,
-        enabled: !!id
+        enabled: !!id,
     });
 };

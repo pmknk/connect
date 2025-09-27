@@ -12,7 +12,6 @@ export interface CreateUserFormData {
     email: string
     roleId: string
     projectIds: string[]
-    assignAvailableProjects: boolean
 }
 
 const intlMessages = defineMessages({
@@ -94,7 +93,6 @@ export const useCreateUserForm = () => {
                     }
                 },
                 projectIds: { type: 'array', items: { type: 'string' } },
-                assignAvailableProjects: { type: 'boolean' }
             },
             required: ['fullname', 'email', 'roleId']
         }),
@@ -103,7 +101,6 @@ export const useCreateUserForm = () => {
     return useForm<CreateUserFormData>({
         defaultValues: {
             projectIds: [],
-            assignAvailableProjects: false
         },
         resolver: ajvResolver(schema, {
             allErrors: true,

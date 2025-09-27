@@ -33,7 +33,6 @@ export const CreateProject = ({ onSuccess }: CreateProjectProps) => {
             slug: '',
             description: '',
             userIds: [],
-            assignAvailableUsers: false
         });
     };
 

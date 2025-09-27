@@ -6,15 +6,14 @@ export type CreateProjectRequestDto = {
     slug: string;
     description?: string;
     userIds: string[];
-    assignAvailableUsers: boolean;
 };
 
 export const toCreateProjectRequestDto = (
     request: FastifyRequest
 ): CreateProjectRequestDto => {
-    const { name, slug, description, userIds, assignAvailableUsers } =
+    const { name, slug, description, userIds } =
         request.body as CreateProjectRequestDto;
-    return { name, slug, description, userIds, assignAvailableUsers };
+    return { name, slug, description, userIds };
 };
 
 export const createProjectRequestSchema = {
@@ -25,7 +24,6 @@ export const createProjectRequestSchema = {
         slug: { type: 'string' },
         description: { type: 'string' },
         userIds: { type: 'array', items: { type: 'string' } },
-        assignAvailableUsers: { type: 'boolean' }
     },
     additionalProperties: false
 } as const;

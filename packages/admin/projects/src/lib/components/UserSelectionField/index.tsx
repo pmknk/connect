@@ -1,9 +1,9 @@
-import { use, useEffect, useState } from 'react';
+import { useState } from 'react';
 import { defineMessages, useIntl } from 'react-intl';
 import { Control, useWatch } from 'react-hook-form';
 import { useUser } from '@avyyx/admin-utils';
 
-import { FormSelect, FormCheckbox, SelectedValue, LoadingMoreOptions, SearchMenuItem } from '@avyyx/admin-ui';
+import { FormSelect, SelectedValue, LoadingMoreOptions, SearchMenuItem } from '@avyyx/admin-ui';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
@@ -43,10 +43,6 @@ const intlMessages = defineMessages({
         id: 'projects.create.users.selected.plural',
         defaultMessage: '{count} Users selected'
     },
-    selectAllUsers: {
-        id: 'projects.create.users.selectAllUsers',
-        defaultMessage: 'Select All available users'
-    },
     noUsersFound: {
         id: 'projects.create.users.empty',
         defaultMessage: 'No users found'
@@ -67,7 +63,6 @@ export const UserSelectionField = ({
         user: { id: currentUserId }
     } = useUser();
     const { formatMessage } = useIntl();
-    const { assignAvailableUsers } = useWatch({ control });
 
     const [search, setSearch] = useState('');
     const { users, fetchNextPage, hasNextPage, isFetchingNextPage, isFetching } =
@@ -101,7 +96,7 @@ export const UserSelectionField = ({
                     helperText: formatMessage(intlMessages.usersDescription),
                     displayEmpty: true,
                     multiple: true,
-                    disabled: isLoading || assignAvailableUsers,
+                    disabled: isLoading,
                     renderValue: (value: any) => {
                         return <SelectedValue
                             value={value}
@@ -157,14 +152,6 @@ export const UserSelectionField = ({
                     )}
                 {(isFetchingNextPage || isFetching) && <LoadingMoreOptions label={formatMessage(intlMessages.loadingMoreUsers)} />}
             </FormSelect>
-            <FormCheckbox
-                control={control}
-                name="assignAvailableUsers"
-                checkboxProps={{
-                    label: formatMessage(intlMessages.selectAllUsers),
-                    disabled: isLoading
-                }}
-            />
         </Stack>
     );
 };

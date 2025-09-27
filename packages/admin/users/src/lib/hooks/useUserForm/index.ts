@@ -6,7 +6,7 @@ import { defineMessages, useIntl } from 'react-intl';
 
 export interface UserFormData {
     id: string
-    fullname: string;
+    fullName: string;
     email: string;
     roleId: string;
     projectIds: string[];
@@ -56,7 +56,7 @@ export const useUserForm = (
                     // id is often not a user-editable field; keep validation minimal
                     minLength: 0
                 },
-                fullname: {
+                fullName: {
                     type: 'string',
                     minLength: 1,
                     maxLength: 64,
@@ -98,7 +98,7 @@ export const useUserForm = (
                 },
                 projectIds: { type: 'array', items: { type: 'string' } }
             },
-            required: ['fullname', 'email', 'roleId']
+            required: ['fullName', 'email', 'roleId']
         }),
         []
     );

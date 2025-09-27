@@ -18,7 +18,7 @@ export type CreateInviteDto = {
 /**
  * DTO for the response after creating an invite.
  */
-export type CreateInviteResponse = {
+export type CreateInviteResponseDto = {
     data: {
         /** The unique ID of the created invite */
         id: string;
@@ -45,7 +45,7 @@ export const toCreateInviteDto = (request: FastifyRequest): CreateInviteDto => {
  */
 export const toCreateInviteResponse = (
     invite: Invite
-): CreateInviteResponse => {
+): CreateInviteResponseDto => {
     const { id, code } = invite;
     return { data: { id, code } };
 };
@@ -60,7 +60,7 @@ export const createInviteRequestSchema = {
             email: { type: 'string', format: 'email' },
             fullName: { type: 'string' },
             roleId: { type: 'string' },
-            projectIds: { type: 'array', items: { type: 'string' } }
+            projectIds: { type: 'array', items: { type: 'string' } },
         }
     },
     required: ['email', 'fullName', 'roleId']

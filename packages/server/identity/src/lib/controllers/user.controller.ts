@@ -11,6 +11,7 @@ import {
     toGetUserRequestDto,
     toGetUserResponseDto
 } from '../dtos/get-user.dto';
+import { toUpdateUserRequestDto, toUpdateUserResponseDto } from '../dtos/update-user.dto';
 
 /**
  * Controller class for handling user-related HTTP requests
@@ -63,5 +64,26 @@ export class UserController {
             requestDto.include
         );
         return reply.status(200).send(toGetUserResponseDto(user));
+    }
+
+    /**
+     * Updates a user
+     * @param request - The Fastify request object containing the user update data
+     * @param reply - The Fastify reply object used to send the response
+     * @returns {Promise<GetUserResponseDto>} The user response containing user details
+     */
+    async updateUser(
+        request: FastifyRequest,
+        reply: FastifyReply
+    ): Promise<GetUserResponseDto> {
+        return reply
+            .status(200)
+            .send(
+                toUpdateUserResponseDto(
+                    await this.userService.update(
+                        toUpdateUserRequestDto(request)
+                    )
+                )
+            );
     }
 }

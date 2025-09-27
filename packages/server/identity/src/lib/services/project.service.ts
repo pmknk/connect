@@ -48,7 +48,6 @@ export class ProjectService {
      */
     async createProject({
         userIds,
-        assignAvailableUsers,
         ...dto
     }: CreateProjectRequestDto): Promise<Project> {
         const transaction = await this.connectionService.client.transaction();
