@@ -86,7 +86,7 @@ export const UserPersonalDetails = ({ user }: UserPersonalDetailsProps) => {
                         invitationCode={user.invite.code}
                     />
                 )}
-                <Stack spacing={3} sx={{ maxWidth: '490px' }}>
+                <Stack spacing={3} sx={{ maxWidth: '540px' }}>
                     <Stack spacing={6} direction="row">
                         <Avatar
                             variant="rounded"

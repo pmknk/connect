@@ -3,6 +3,7 @@ import { AuthController } from '../controllers/auth.controller';
 import { FastifyApplicationInstance } from '@avyyx/server-core';
 import { TOKEN_SCOPES } from '../constants';
 import { signinRequestSchema } from '../dtos/signin.dto';
+import { signupRequestSchema } from '../dtos/signup.dto';
 
 /**
  * Router responsible for handling authentication-related routes
@@ -36,6 +37,7 @@ export class AuthRouter {
     initialize(fastify: FastifyApplicationInstance) {
         const ROUTE_PATHS = {
             SIGNIN: '/api/v1/identity/auth/signin',
+            SIGNUP: '/api/v1/identity/auth/signup',
             GET_ME: '/api/v1/identity/auth/me',
             REFRESH_TOKEN: '/api/v1/identity/auth/refresh-token'
         };
@@ -73,6 +75,16 @@ export class AuthRouter {
                 }
             },
             this.authController.refreshToken.bind(this.authController)
+        );
+
+        fastify.post(
+            ROUTE_PATHS.SIGNUP,
+            {
+                schema: {
+                    body: signupRequestSchema
+                }
+            },
+            this.authController.signup.bind(this.authController)
         );
     }
 }

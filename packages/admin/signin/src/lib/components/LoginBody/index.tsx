@@ -3,21 +3,38 @@ import { Alert, AlertTitle } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 import { Control } from 'react-hook-form';
 import { AlertCircle } from 'lucide-react';
+import { LoginFormData } from '../../hooks/useLoginForm';
 
 
 interface LoginBodyProps {
-    control: Control<any>;
+    control: Control<LoginFormData>;
     isLoading: boolean;
     isUnauthorized: boolean;
+    isSigninSuccess: boolean;
 }
 
 export const LoginBody = ({
     control,
     isLoading,
-    isUnauthorized
+    isUnauthorized,
+    isSigninSuccess
 }: LoginBodyProps) => {
     return (
         <>
+            {isSigninSuccess && !isLoading && (
+                <Alert color="success" icon={<AlertCircle size={20} />}>
+                    <AlertTitle>
+                        <FormattedMessage
+                            id="auth.admin.pages.login.signinSuccess"
+                            defaultMessage="Account created successfully"
+                        />
+                    </AlertTitle>
+                    <FormattedMessage
+                        id="auth.admin.pages.login.signinSuccess"
+                        defaultMessage="You can now sign in to your account. Please enter your email and password to continue."
+                    />
+                </Alert>
+            )}
             {isUnauthorized && !isLoading && (
                 <Alert color="error" icon={<AlertCircle size={20} />}>
                     <AlertTitle>

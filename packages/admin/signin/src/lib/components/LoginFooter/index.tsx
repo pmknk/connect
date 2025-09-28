@@ -23,7 +23,6 @@ export const LoginFooter = ({ isLoading }: LoginFooterProps) => {
                     defaultMessage="Sign in"
                 />
             </Button>
-
             <Typography
                 component="p"
                 variant="body2"
@@ -32,20 +31,13 @@ export const LoginFooter = ({ isLoading }: LoginFooterProps) => {
                 px={6}
             >
                 <FormattedMessage
-                    id="auth.admin.pages.login.terms"
-                    defaultMessage="By signing in, you consent to abide by our"
+                    id="auth.admin.pages.login.join.text"
+                    defaultMessage="Don't have an account?"
                 />{' '}
-                <Link href="#">
+                <Link href="/signin/join">
                     <FormattedMessage
-                        id="auth.admin.pages.login.terms.link"
-                        defaultMessage="Terms of Service"
-                    />
-                </Link>{' '}
-                &{' '}
-                <Link href="#">
-                    <FormattedMessage
-                        id="auth.admin.pages.login.terms.link"
-                        defaultMessage="Privacy Policy"
+                        id="auth.admin.pages.login.join.link"
+                        defaultMessage="Join now"
                     />
                 </Link>
             </Typography>

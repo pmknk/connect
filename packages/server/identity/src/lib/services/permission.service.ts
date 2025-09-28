@@ -11,9 +11,9 @@ import { type User } from '../schemas/user.schema';
 @injectable()
 export class PermissionService {
     private readonly roleModel: ModelStatic<Role>;
-    private readonly userModel: ModelStatic<User>;
     private readonly permissionModel: ModelStatic<Permission>;
-    /**
+    private readonly userModel: ModelStatic<User>;
+        /**
      * Creates an instance of PermissionService
      * @param modelService - Service for managing database models
      */
@@ -30,20 +30,26 @@ export class PermissionService {
      * @returns Promise resolving to an array of permissions without role information
      */
     async findByUserId(userId: string): Promise<Permission[]> {
+        const role = await this.roleModel.findOne({
+            include: [
+                {
+                    model: this.userModel,
+                    as: 'users',
+                    where: {
+                        id: userId
+                    }
+                }
+            ]
+        });
+
         return await this.permissionModel.findAll({
             include: [
                 {
                     model: this.roleModel,
                     as: 'roles',
-                    include: [
-                        {
-                            model: this.userModel,
-                            as: 'users',
-                            where: {
-                                id: userId
-                            }
-                        }
-                    ]
+                    where: {
+                        id: role?.id
+                    }
                 }
             ]
         });

@@ -18,8 +18,8 @@ export const FormWrapper = ({ title, subtitle, body, footer, onSubmit }: FormWra
             height="100%"
             overflow="auto"
         >
-            <form onSubmit={onSubmit}>
-                <Stack maxWidth={390} spacing={4}>
+            <form onSubmit={onSubmit} style={{ width: '100%', maxWidth: '390px' }}>
+                <Stack spacing={4} width="100%">
                     <Stack spacing={1} textAlign="center">
                         <Typography variant="h5">
                             {title}
@@ -31,7 +31,7 @@ export const FormWrapper = ({ title, subtitle, body, footer, onSubmit }: FormWra
                     <Stack spacing={4}>
                         {body}
                     </Stack>
-                    <Stack spacing={4}>
+                    <Stack spacing={3}>
                         {footer}
                     </Stack>
                 </Stack>

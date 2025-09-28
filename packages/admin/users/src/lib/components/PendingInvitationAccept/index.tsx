@@ -35,7 +35,7 @@ const intlMessages = defineMessages({
     },
     invitationCopied: {
         id: 'invitationCopied',
-        defaultMessage: 'Invitation URL copied to clipboard successfully'
+        defaultMessage: 'Invitation code copied to clipboard successfully'
     }
 })
 

@@ -1,7 +1,7 @@
 import { injectable } from 'inversify';
 
 import { ConnectionService, ModelService } from '@avyyx/server-database';
-
+import { NotFoundError } from '@avyyx/server-utils';
 import { type CreateInviteDto } from '../dtos/create-invite.dto';
 
 import { type Invite } from '../schemas/invite.schema';
@@ -173,7 +173,26 @@ export class InviteService {
             ]
         });
         if (!invite) {
-            throw new Error('Invite not found');
+            throw new NotFoundError('Invite not found');
+        }
+        return invite;
+    }
+
+    /**
+     * Loads an invite by code or throws if not found.
+     * @param code - The code of the invite.
+     * @returns The invite object.
+     * @throws If the invite is not found.
+     */
+    async findByCode(code: string): Promise<Invite> {
+        const invite = await this.inviteModel.findOne({
+            where: { code },
+            include: [
+                { model: this.userModel, as: 'user' }
+            ]
+        });
+        if (!invite) {
+            throw new NotFoundError('Invite not found');
         }
         return invite;
     }

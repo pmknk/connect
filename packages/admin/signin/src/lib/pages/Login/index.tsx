@@ -1,13 +1,17 @@
 import { FormattedMessage } from 'react-intl';
+import { useLocation } from 'react-router-dom';
 import { FormWrapper } from '../../components/FormWrapper';
-import { LoginFormData, useLoginForm } from '../../hooks/useLoginForm';
+
 import { LoginBody } from '../../components/LoginBody';
 import { LoginFooter } from '../../components/LoginFooter';
+
+import { LoginFormData, useLoginForm } from '../../hooks/useLoginForm';
 import { useLoginMutation } from '../../hooks/useLoginMutation';
 
 export const Login = () => {
     const { control, handleSubmit } = useLoginForm();
     const { mutate, isPending, isUnauthorized } = useLoginMutation();
+    const location = useLocation();
 
     return (
         <FormWrapper
@@ -31,6 +35,7 @@ export const Login = () => {
                     control={control}
                     isLoading={isPending}
                     isUnauthorized={isUnauthorized}
+                    isSigninSuccess={location.state?.signin}
                 />
             }
             footer={<LoginFooter isLoading={isPending} />}

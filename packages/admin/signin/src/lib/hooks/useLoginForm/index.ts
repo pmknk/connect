@@ -1,8 +1,9 @@
-import { useForm } from 'react-hook-form';
-import { ajvResolver } from '@hookform/resolvers/ajv';
-import { type JSONSchemaType } from 'ajv';
 import { defineMessages, useIntl } from 'react-intl';
 import { useMemo } from 'react';
+import { useForm } from 'react-hook-form';
+
+import { ajvResolver } from '@hookform/resolvers/ajv';
+import { type JSONSchemaType } from 'ajv';
 
 /**
  * Interface for login form data

@@ -7,6 +7,7 @@ import type { FastifyRequest } from 'fastify';
 import type { User } from '../schemas/user.schema';
 import { type TokenResponseDto, toTokenResponseDto } from '../dtos/token.dto';
 import { type UserResponseDto, toUserResponseDto } from '../dtos/user.dto';
+import { type SignupResponseDto, toSignupRequestDto, toSignupResponseDto } from '../dtos/signup.dto';
 
 /**
  * Controller responsible for handling authentication-related requests
@@ -28,6 +29,17 @@ export class AuthController {
         return toTokenResponseDto(
             await this.signinService.signin(toSigninRequestDto(request))
         );
+    }
+
+    /**
+     * Handles user signup request
+     * @param {FastifyRequest} request - The incoming request containing signup credentials
+     * @returns {Promise<TokenResponseDto>} The signup response containing access and refresh tokens
+     */
+    async signup(request: FastifyRequest): Promise<SignupResponseDto> {
+        await this.signinService.signup(toSignupRequestDto(request));
+
+        return toSignupResponseDto({ data: { success: true } });
     }
 
     /**
