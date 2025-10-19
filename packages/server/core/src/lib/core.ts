@@ -8,7 +8,7 @@ import { type FastifyApplicationInstance } from '../types';
  * and provides dependency injection capabilities.
  */
 export class Application {
-    private readonly fastifyInstance: FastifyApplicationInstance;
+    readonly fastifyInstance: FastifyApplicationInstance;
     readonly register: typeof this.fastifyInstance.register;
 
     /**

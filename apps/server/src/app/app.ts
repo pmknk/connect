@@ -12,6 +12,9 @@ async function start() {
     await application.register(cors, config.cors);
     await application.register(database, config.database);
     await application.register(identity, config.identity);
+    application.fastifyInstance.addHook('onRequest', async (request, reply) => {
+        await new Promise(resolve => setTimeout(resolve, 200));
+    });
 
     await application.start(config.server);
 }

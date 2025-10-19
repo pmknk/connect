@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { defineMessages, useIntl } from 'react-intl';
-import { Control, useWatch } from 'react-hook-form';
+import { Control } from 'react-hook-form';
 import { useUser } from '@connect/admin-utils';
 
 import { FormSelect, SelectedValue, LoadingMoreOptions, SearchMenuItem } from '@connect/admin-ui';
