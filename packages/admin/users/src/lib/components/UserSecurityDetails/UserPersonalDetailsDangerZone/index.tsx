@@ -1,5 +1,6 @@
-import { Button, Stack, Typography } from "@mui/material"
+import { Stack, Typography } from "@mui/material"
 import { defineMessages, useIntl } from "react-intl"
+import { ActionAlert } from './ActionAlert'
 
 const intlMessages = defineMessages({
     dangerZone: {
@@ -8,13 +9,29 @@ const intlMessages = defineMessages({
     },
     deactivateAccount: {
         id: 'users.personalDetails.deactivateAccount',
-        defaultMessage: 'Deactivate'
+        defaultMessage: 'Deactivate Account'
     },
     deactivateAccountDescription: {
         id: 'users.personalDetails.deactivateAccountDescription',
-        defaultMessage: 'Deactivate the account of the user. This will prevent the user from logging in and accessing the platform.'
+        defaultMessage: 'Deactivating this account will block the user from logging in or using the platform. Data will not be deleted. You can reactivate the account later.'
+    },
+    cancelInvitation: {
+        id: 'users.personalDetails.cancelInvitation',
+        defaultMessage: 'Cancel Invitation'
+    },
+    cancelInvitationDescription: {
+        id: 'users.personalDetails.cancelInvitationDescription',
+        defaultMessage: 'Cancelling this invitation will remove the user from the system.'
+    },
+    activateAccount: {
+        id: 'users.personalDetails.activateAccount',
+        defaultMessage: 'Activate Account'
+    },
+    activateAccountDescription: {
+        id: 'users.personalDetails.activateAccountDescription',
+        defaultMessage: 'Activating this account will allow the user to log in or use the platform. You can deactivate the account again later.'
     }
-})
+});
 
 export const UserPersonalDetailsDangerZone = () => {
     const { formatMessage } = useIntl();
@@ -23,15 +40,28 @@ export const UserPersonalDetailsDangerZone = () => {
             <Typography variant="body1">
                 {formatMessage(intlMessages.dangerZone)}
             </Typography>
-            <Stack spacing={2}>
-                <Typography variant="body2" color="text.secondary">
-                    {formatMessage(intlMessages.deactivateAccountDescription)}
-                </Typography>
-                <Stack spacing={2} direction="row" justifyContent="flex-end">
-                    <Button variant="contained" color="error">
-                        {formatMessage(intlMessages.deactivateAccount)}
-                    </Button>
-                </Stack>
+            <Stack spacing={3}>
+                <ActionAlert
+                    severity="success"
+                    title={formatMessage(intlMessages.activateAccount)}
+                    description={formatMessage(intlMessages.activateAccountDescription)}
+                    actionLabel={formatMessage(intlMessages.activateAccount)}
+                    actionColor="success"
+                />
+                <ActionAlert
+                    severity="warning"
+                    title={formatMessage(intlMessages.cancelInvitation)}
+                    description={formatMessage(intlMessages.cancelInvitationDescription)}
+                    actionLabel={formatMessage(intlMessages.cancelInvitation)}
+                    actionColor="warning"
+                />
+                <ActionAlert
+                    severity="error"
+                    title={formatMessage(intlMessages.deactivateAccount)}
+                    description={formatMessage(intlMessages.deactivateAccountDescription)}
+                    actionLabel={formatMessage(intlMessages.deactivateAccount)}
+                    actionColor="error"
+                />
             </Stack>
         </Stack>
     )

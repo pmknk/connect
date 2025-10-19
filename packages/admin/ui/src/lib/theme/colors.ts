@@ -27,7 +27,7 @@ export const colors = {
         main: "#EAB308",
         dark: "#CA8A04",
         light: "#FACC15",
-        contrastText: "#030712"
+        contrastText: "#F9FAFB"
     },
     error: {
         main: "#DC2626",

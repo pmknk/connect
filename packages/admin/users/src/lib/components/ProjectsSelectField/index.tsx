@@ -5,8 +5,8 @@ import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import { SelectProps } from '@mui/material';
 
-import { FormCheckbox, FormSelect, SearchMenuItem, SelectedValue } from '@connect/admin-ui';
-import { Control, useWatch } from 'react-hook-form';
+import { FormSelect, SearchMenuItem, SelectedValue } from '@connect/admin-ui';
+import { Control } from 'react-hook-form';
 import { defineMessages, useIntl } from 'react-intl';
 
 import { useProjectsQuery } from '../../hooks/useProjectsQuery';
@@ -57,7 +57,9 @@ export const ProjectsSelectField = ({
     const [search, setSearch] = useState('');
 
     const filteredProjects = useMemo(() => {
-        return projects?.filter((project) => project.name.toLowerCase().includes(search.toLowerCase()));
+        return projects?.filter((project) =>
+            project.name.toLowerCase().includes(search.toLowerCase())
+        );
     }, [projects, search]);
 
     return (
@@ -81,14 +83,26 @@ export const ProjectsSelectField = ({
                     multiple: true,
                     displayEmpty: true,
                     renderValue: (value: any) => {
-                        return <SelectedValue
-                            value={value}
-                            messages={{
-                                placeholder: formatMessage(intlMessages.projectsPlaceholder),
-                                single: (count: number) => formatMessage(intlMessages.projectsSelected, { count }),
-                                plural: (count: number) => formatMessage(intlMessages.projectsSelectedPlural, { count })
-                            }}
-                        />
+                        return (
+                            <SelectedValue
+                                value={value}
+                                messages={{
+                                    placeholder: formatMessage(
+                                        intlMessages.projectsPlaceholder
+                                    ),
+                                    single: (count: number) =>
+                                        formatMessage(
+                                            intlMessages.projectsSelected,
+                                            { count }
+                                        ),
+                                    plural: (count: number) =>
+                                        formatMessage(
+                                            intlMessages.projectsSelectedPlural,
+                                            { count }
+                                        )
+                                }}
+                            />
+                        );
                     },
                     helperText: formatMessage(intlMessages.projectsDescription),
                     disabled: selectProps.disabled
@@ -117,7 +131,9 @@ export const ProjectsSelectField = ({
                             direction="column"
                             sx={{ maxWidth: '340px' }}
                         >
-                            <Typography variant="body2">{project.name}</Typography>
+                            <Typography variant="body2">
+                                {project.name}
+                            </Typography>
                             {project.description && (
                                 <Typography
                                     variant="caption"

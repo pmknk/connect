@@ -1,12 +1,9 @@
-import {
-    Alert,
-    Avatar,
-    Button,
-    CircularProgress,
-    Snackbar,
-    Stack,
-    useTheme
-} from '@mui/material';
+import Alert from '@mui/material/Alert';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import Snackbar from '@mui/material/Snackbar';
+import Stack from '@mui/material/Stack';
+import { useTheme } from '@mui/material';
 import { ExtendedTheme, FormField } from '@connect/admin-ui';
 import { usePermissionAccess } from '@connect/admin-utils';
 
@@ -19,9 +16,7 @@ import { useUpdateUserMutation } from '../../hooks/useUpdateUserMutation';
 
 import { RoleSelectField } from '../RoleSelectField';
 import { ProjectsSelectField } from '../ProjectsSelectField';
-import { PendingInvitationAccept } from '../PendingInvitationAccept';
-
-import { getInvitationUrl } from '../../utils';
+import { PendingInvitationAccept } from './PendingInvitationAccept';
 
 const intlMessages = defineMessages({
     save: {

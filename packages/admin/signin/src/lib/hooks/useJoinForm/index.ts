@@ -1,9 +1,10 @@
-import { useMemo } from "react";
-import { defineMessages, useIntl } from "react-intl";
-import { useForm } from "react-hook-form";
+import { useMemo } from 'react';
+import { defineMessages, useIntl } from 'react-intl';
+import { useForm } from 'react-hook-form';
 
-import { ajvResolver } from "@hookform/resolvers/ajv";
+import { ajvResolver } from '@hookform/resolvers/ajv';
 import { type JSONSchemaType } from 'ajv';
+import { PASSWORD_PATTERN } from '@connect/admin-utils';
 
 export type JoinFormData = {
     code?: string;
@@ -34,77 +35,78 @@ const intlMessages = defineMessages({
     },
     passwordPatternMessage: {
         id: 'auth.admin.pages.join.passwordPatternMessage',
-        defaultMessage: 'Password must contain at least one uppercase letter, one lowercase letter, and one number'
-    },
+        defaultMessage:
+            'Password must contain at least one uppercase letter, one lowercase letter, and one number'
+    }
 });
-
 
 export const useJoinForm = (hasInvite: boolean = false) => {
     const { formatMessage } = useIntl();
 
-    const schema = useMemo(
-        (): JSONSchemaType<JoinFormData> => {
-            const base = {
-                type: 'object',
-                properties: {
-                    code: {
-                        type: 'string',
-                        minLength: 1,
-                        errorMessage: {
-                            minLength: formatMessage(
-                                intlMessages.codeRequiredMessage
-                            )
-                        }
-                    },
-                    password: {
-                        type: 'string',
-                        minLength: 8,
-                        pattern: '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).+$',
-                        errorMessage: {
-                            minLength: formatMessage(
-                                intlMessages.passwordMinLengthMessage
-                            ),
-                            pattern: formatMessage(
-                                intlMessages.passwordPatternMessage
-                            )
-                        }
-                    },
-                    confirmPassword: {
-                        type: 'string',
-                        errorMessage: {
-                            minLength: formatMessage(
-                                intlMessages.confirmPasswordRequiredMessage
-                            )
-                        }
+    const schema = useMemo((): JSONSchemaType<JoinFormData> => {
+        const base = {
+            type: 'object',
+            properties: {
+                code: {
+                    type: 'string',
+                    minLength: 1,
+                    errorMessage: {
+                        minLength: formatMessage(
+                            intlMessages.codeRequiredMessage
+                        )
                     }
                 },
-                required: hasInvite ? ['password', 'confirmPassword'] : ['code'],
-                additionalProperties: false,
-            } as const;
-
-            const withAllOf = hasInvite ? {
-                ...base,
-                allOf: [
-                    {
-                        properties: {
-                            confirmPassword: {
-                                const: { $data: '1/password' }
-                            }
-                        },
-                        errorMessage: {
-                            properties: {
-                                confirmPassword: formatMessage(intlMessages.confirmPasswordMismatchMessage)
-                            }
-                        }
+                password: {
+                    type: 'string',
+                    minLength: 8,
+                    pattern: PASSWORD_PATTERN,
+                    errorMessage: {
+                        minLength: formatMessage(
+                            intlMessages.passwordMinLengthMessage
+                        ),
+                        pattern: formatMessage(
+                            intlMessages.passwordPatternMessage
+                        )
                     }
-                ]
-            } : base;
+                },
+                confirmPassword: {
+                    type: 'string',
+                    errorMessage: {
+                        minLength: formatMessage(
+                            intlMessages.confirmPasswordRequiredMessage
+                        )
+                    }
+                }
+            },
+            required: hasInvite ? ['password', 'confirmPassword'] : ['code'],
+            additionalProperties: false
+        } as const;
 
-            return withAllOf as unknown as JSONSchemaType<JoinFormData>;
-        },
-        [formatMessage, hasInvite]
-    );
-    
+        const withAllOf = hasInvite
+            ? {
+                  ...base,
+                  allOf: [
+                      {
+                          properties: {
+                              confirmPassword: {
+                                  const: { $data: '1/password' }
+                              }
+                          },
+                          errorMessage: {
+                              properties: {
+                                  confirmPassword: formatMessage(
+                                      intlMessages.confirmPasswordMismatchMessage
+                                  )
+                              }
+                          }
+                      }
+                  ]
+              }
+            : base;
+
+        return withAllOf as unknown as JSONSchemaType<JoinFormData>;
+    }, [formatMessage, hasInvite]);
+
     return useForm<JoinFormData>({
         resolver: ajvResolver(schema, {
             allErrors: true,
