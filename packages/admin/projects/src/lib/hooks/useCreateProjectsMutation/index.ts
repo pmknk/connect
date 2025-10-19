@@ -1,4 +1,4 @@
-import { useHttpClient, useUser } from '@avyyx/admin-utils';
+import { useHttpClient, useUser } from '@connect/admin-utils';
 import { useMutation } from '@tanstack/react-query';
 import { CreateProjectFormData } from '../useCreateProjectForm';
 

@@ -7,8 +7,8 @@ import {
     Stack,
     useTheme
 } from '@mui/material';
-import { ExtendedTheme, FormField } from '@avyyx/admin-ui';
-import { usePermissionAccess } from '@avyyx/admin-utils';
+import { ExtendedTheme, FormField } from '@connect/admin-ui';
+import { usePermissionAccess } from '@connect/admin-utils';
 
 import { useState } from 'react';
 import { defineMessages, useIntl } from 'react-intl';
@@ -86,7 +86,7 @@ export const UserPersonalDetails = ({ user }: UserPersonalDetailsProps) => {
                         invitationCode={user.invite.code}
                     />
                 )}
-                <Stack spacing={3} sx={{ maxWidth: '540px' }}>
+                <Stack spacing={3} sx={{ maxWidth: '500px' }}>
                     <Stack spacing={6} direction="row">
                         <Avatar
                             variant="rounded"

@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useHttpClient } from "@avyyx/admin-utils";
+import { useHttpClient } from "@connect/admin-utils";
 import { UserFormData } from "../useUserForm";
 
 const UPDATE_USER_ROUTE = '/api/v1/identity/users';

@@ -1,11 +1,11 @@
 import {
     type FastifyApplicationInstance,
     createPlugin
-} from '@avyyx/server-core';
+} from '@connect/server-core';
 import {
     ConnectionService,
     SchemaRegistryService
-} from '@avyyx/server-database';
+} from '@connect/server-database';
 
 import initializeDataSeed from './seeds/initialization-data';
 

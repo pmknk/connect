@@ -1,7 +1,7 @@
-import { Core } from '@avyyx/admin-core';
-import { signin } from '@avyyx/admin-signin';
-import { projects } from '@avyyx/admin-projects';
-import { users } from '@avyyx/admin-users';
+import { Core } from '@connect/admin-core';
+import { signin } from '@connect/admin-signin';
+import { projects } from '@connect/admin-projects';
+import { users } from '@connect/admin-users';
 
 export function App() {
     return (

@@ -1,4 +1,4 @@
-import { SchemaDefinition } from '@avyyx/server-database';
+import { SchemaDefinition } from '@connect/server-database';
 import { User } from './user.schema';
 import {
     CreationOptional,

@@ -1,5 +1,5 @@
 import { injectable } from 'inversify';
-import { ModelService } from '@avyyx/server-database';
+import { ModelService } from '@connect/server-database';
 import { type ModelStatic } from 'sequelize';
 import { type Role } from '../schemas/role.schema';
 

@@ -1,4 +1,4 @@
-import { AppBarButton, ExtendedTheme } from '@avyyx/admin-ui';
+import { AppBarButton, ExtendedTheme } from '@connect/admin-ui';
 import { MenuItem, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 import { useLocation, useNavigate } from 'react-router-dom';

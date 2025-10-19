@@ -10,7 +10,7 @@ import Tooltip from '@mui/material/Tooltip';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 
-import { ExtendedTheme } from '@avyyx/admin-ui';
+import { ExtendedTheme } from '@connect/admin-ui';
 
 import { useState } from 'react';
 import { defineMessages, useIntl } from 'react-intl';

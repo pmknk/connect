@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { defineMessages, useIntl } from 'react-intl';
 import { Control, useWatch } from 'react-hook-form';
-import { useUser } from '@avyyx/admin-utils';
+import { useUser } from '@connect/admin-utils';
 
-import { FormSelect, SelectedValue, LoadingMoreOptions, SearchMenuItem } from '@avyyx/admin-ui';
+import { FormSelect, SelectedValue, LoadingMoreOptions, SearchMenuItem } from '@connect/admin-ui';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';

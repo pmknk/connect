@@ -1,4 +1,4 @@
-import { useHttpClient } from '@avyyx/admin-utils';
+import { useHttpClient } from '@connect/admin-utils';
 import { useQuery } from '@tanstack/react-query';
 
 /**

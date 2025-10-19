@@ -7,9 +7,9 @@ import Stack from '@mui/material/Stack';
 import { useTheme } from '@mui/material/styles';
 import { useMediaQuery } from '@mui/material';
 
-import { ExtendedTheme } from '@avyyx/admin-ui';
+import { ExtendedTheme } from '@connect/admin-ui';
 
-import { PermissionAccess } from '@avyyx/admin-utils';
+import { PermissionAccess } from '@connect/admin-utils';
 import { CreateProjectForm } from './CreateProjectForm';
 import { useCreateProjectForm } from '../../hooks/useCreateProjectForm';
 import { CreateProjectDialog } from './CreateProjectDialog';

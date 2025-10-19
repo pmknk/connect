@@ -1,6 +1,6 @@
 import { injectable } from 'inversify';
 import { AuthController } from '../controllers/auth.controller';
-import { FastifyApplicationInstance } from '@avyyx/server-core';
+import { FastifyApplicationInstance } from '@connect/server-core';
 import { TOKEN_SCOPES } from '../constants';
 import { signinRequestSchema } from '../dtos/signin.dto';
 import { signupRequestSchema } from '../dtos/signup.dto';

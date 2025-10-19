@@ -10,7 +10,7 @@ const swcJestConfig = JSON.parse(
 swcJestConfig.swcrc = false;
 
 export default {
-    displayName: '@avyyx/server-database',
+    displayName: '@connect/server-database',
     preset: '../../../jest.preset.js',
     testEnvironment: 'node',
     transform: {

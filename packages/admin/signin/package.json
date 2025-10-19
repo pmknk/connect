@@ -1,5 +1,5 @@
 {
-    "name": "@avyyx/admin-signin",
+    "name": "@connect/admin-signin",
     "version": "0.0.1",
     "type": "module",
     "main": "./dist/index.esm.js",

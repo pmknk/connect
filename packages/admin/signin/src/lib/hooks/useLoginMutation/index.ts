@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
-import { useAuth, useErrorBoundary, useHttpClient } from '@avyyx/admin-utils';
+import { useAuth, useErrorBoundary, useHttpClient } from '@connect/admin-utils';
 import { LoginFormData } from '../useLoginForm';
 import { useNavigate } from 'react-router-dom';
 import { AxiosError } from 'axios';

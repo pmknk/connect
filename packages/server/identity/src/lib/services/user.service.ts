@@ -1,7 +1,7 @@
 import { injectable } from 'inversify';
 import { ModelStatic, Op } from 'sequelize';
-import { NotFoundError } from '@avyyx/server-utils';
-import { ConnectionService, ModelService } from '@avyyx/server-database';
+import { NotFoundError } from '@connect/server-utils';
+import { ConnectionService, ModelService } from '@connect/server-database';
 
 import type { User } from '../schemas/user.schema';
 

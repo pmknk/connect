@@ -1,5 +1,5 @@
-import { renderElement, usePlugins } from '@avyyx/admin-utils';
-import { ExtendedTheme, AppBarIconButton } from '@avyyx/admin-ui';
+import { renderElement, usePlugins } from '@connect/admin-utils';
+import { ExtendedTheme, AppBarIconButton } from '@connect/admin-ui';
 
 import { useState } from 'react';
 import { Fragment } from 'react/jsx-runtime';
@@ -72,7 +72,7 @@ export const AppBar = () => {
                         </>
                     )}
                     <Typography variant="body1" color="white" fontWeight={300}>
-                        Avyyx Studio
+                        Connect Studio
                     </Typography>
                     {!isMobile && <>
                         <Divider orientation='vertical' sx={{

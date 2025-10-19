@@ -1,4 +1,4 @@
-import { FastifyApplicationInstance } from '@avyyx/server-core';
+import { FastifyApplicationInstance } from '@connect/server-core';
 import { injectable } from 'inversify';
 import { UserController } from '../controllers/user.controller';
 import { getUsersRequestSchema } from '../dtos/get-users.dto';

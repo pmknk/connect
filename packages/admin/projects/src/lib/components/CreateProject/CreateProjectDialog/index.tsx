@@ -1,6 +1,6 @@
 import { FormattedMessage } from 'react-intl';
 import { Box, FileBox } from 'lucide-react';
-import { type ExtendedTheme } from '@avyyx/admin-ui';
+import { type ExtendedTheme } from '@connect/admin-ui';
 import { useTheme } from '@mui/material/styles';
 
 import Dialog from '@mui/material/Dialog';

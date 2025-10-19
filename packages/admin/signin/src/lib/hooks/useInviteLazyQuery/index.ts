@@ -1,4 +1,4 @@
-import { useHttpClient } from "@avyyx/admin-utils";
+import { useHttpClient } from "@connect/admin-utils";
 import { useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { useState } from "react";

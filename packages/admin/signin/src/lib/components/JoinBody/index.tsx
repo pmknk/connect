@@ -1,4 +1,4 @@
-import { FormField } from "@avyyx/admin-ui";
+import { FormField } from "@connect/admin-ui";
 import { defineMessages, useIntl } from "react-intl";
 import { Control } from "react-hook-form";
 import { JoinFormData } from "../../hooks/useJoinForm";

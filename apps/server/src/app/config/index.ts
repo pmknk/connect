@@ -1,4 +1,4 @@
-import { createConfig } from "@avyyx/server-utils";
+import { createConfig } from "@connect/server-utils";
 import { Dialect } from "sequelize";
 
 export const config = createConfig((env) => ({

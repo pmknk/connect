@@ -2,8 +2,8 @@ import {
     ConnectionService,
     ModelService,
     type Transaction
-} from '@avyyx/server-database';
-import { ConflictError, NotFoundError } from '@avyyx/server-utils';
+} from '@connect/server-database';
+import { ConflictError, NotFoundError } from '@connect/server-utils';
 import { injectable } from 'inversify';
 import { type ModelStatic } from 'sequelize';
 

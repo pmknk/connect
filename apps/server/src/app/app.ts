@@ -1,7 +1,7 @@
-import createApp from '@avyyx/server-core';
+import createApp from '@connect/server-core';
 
-import identity from '@avyyx/server-identity';
-import database from '@avyyx/server-database';
+import identity from '@connect/server-identity';
+import database from '@connect/server-database';
 import cors from '@fastify/cors';
 
 import { config } from './config';

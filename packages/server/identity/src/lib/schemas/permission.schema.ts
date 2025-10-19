@@ -1,4 +1,4 @@
-import { SchemaDefinition } from '@avyyx/server-database';
+import { SchemaDefinition } from '@connect/server-database';
 import { Role } from './role.schema';
 import {
     Model,

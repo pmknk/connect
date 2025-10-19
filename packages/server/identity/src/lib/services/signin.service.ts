@@ -1,5 +1,5 @@
-import { UnauthorizedError } from '@avyyx/server-utils';
-import { ModelService } from '@avyyx/server-database';
+import { UnauthorizedError } from '@connect/server-utils';
+import { ModelService } from '@connect/server-database';
 
 import { ModelStatic } from 'sequelize';
 import { injectable } from 'inversify';

@@ -1,4 +1,4 @@
-import { useHttpClient } from '@avyyx/admin-utils';
+import { useHttpClient } from '@connect/admin-utils';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { ROWS_PER_USERS_PAGE_OPTIONS } from '../../constants';
 

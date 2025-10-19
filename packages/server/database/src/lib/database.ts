@@ -1,7 +1,7 @@
 import {
     type FastifyApplicationInstance,
     createPlugin
-} from '@avyyx/server-core';
+} from '@connect/server-core';
 import { type Options, Sequelize } from 'sequelize';
 import { DATABASE_CONNECTION_CLIENT_PROVIDER } from './constants';
 

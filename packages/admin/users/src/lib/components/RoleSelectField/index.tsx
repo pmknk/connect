@@ -3,7 +3,7 @@ import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import { SelectProps } from '@mui/material';
 
-import { FormSelect } from '@avyyx/admin-ui';
+import { FormSelect } from '@connect/admin-ui';
 import { Control } from 'react-hook-form';
 import { defineMessages, useIntl } from 'react-intl';
 

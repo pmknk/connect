@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { useHttpClient } from "@avyyx/admin-utils";
+import { useHttpClient } from "@connect/admin-utils";
 
 /**
  * Response type for the roles query.

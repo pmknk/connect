@@ -1,4 +1,4 @@
-import { useHttpClient } from '@avyyx/admin-utils';
+import { useHttpClient } from '@connect/admin-utils';
 import { useInfiniteQuery } from '@tanstack/react-query';
 
 export type UsersQueryResponse = {

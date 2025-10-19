@@ -3,7 +3,7 @@ import TableRow from '@mui/material/TableRow';
 import { useTheme } from '@mui/material/styles';
 import { FormattedMessage } from 'react-intl';
 
-import { ExtendedTheme } from '@avyyx/admin-ui';
+import { ExtendedTheme } from '@connect/admin-ui';
 
 export const TableHeader = () => {
     const { palette } = useTheme<ExtendedTheme>();

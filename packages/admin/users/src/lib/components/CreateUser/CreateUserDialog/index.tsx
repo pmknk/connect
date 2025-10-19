@@ -8,7 +8,7 @@ import { useTheme } from "@mui/material/styles";
 import { UsersRound } from "lucide-react";
 import { FormattedMessage } from "react-intl";
 
-import { type ExtendedTheme } from "@avyyx/admin-ui";
+import { type ExtendedTheme } from "@connect/admin-ui";
 import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 

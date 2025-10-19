@@ -1,5 +1,5 @@
 {
-    "name": "@avyyx/server",
+    "name": "@connect/server",
     "version": "0.0.1",
     "private": true,
     "nx": {
@@ -49,15 +49,15 @@
                     "build"
                 ],
                 "options": {
-                    "buildTarget": "@avyyx/server:build",
+                    "buildTarget": "@connect/server:build",
                     "runBuildTargetDependencies": false
                 },
                 "configurations": {
                     "development": {
-                        "buildTarget": "@avyyx/server:build:development"
+                        "buildTarget": "@connect/server:build:development"
                     },
                     "production": {
-                        "buildTarget": "@avyyx/server:build:production"
+                        "buildTarget": "@connect/server:build:production"
                     }
                 }
             },

@@ -1,5 +1,5 @@
 import { injectable } from 'inversify';
-import { FastifyApplicationInstance } from '@avyyx/server-core';
+import { FastifyApplicationInstance } from '@connect/server-core';
 import { PermissionController } from '../controllers/permission.controller';
 import { TOKEN_SCOPES } from '../constants';
 

@@ -1,4 +1,4 @@
-import { FormField } from '@avyyx/admin-ui';
+import { FormField } from '@connect/admin-ui';
 import { Alert, AlertTitle } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 import { Control } from 'react-hook-form';

@@ -6,7 +6,7 @@ import Card from '@mui/material/Card';
 import Box from '@mui/material/Box';
 
 import { useTheme } from '@mui/material/styles';
-import { ExtendedTheme } from '@avyyx/admin-ui';
+import { ExtendedTheme } from '@connect/admin-ui';
 
 import { CreateProject } from '../CreateProject';
 

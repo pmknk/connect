@@ -1,4 +1,4 @@
-import { useHttpClient, usePermissions } from '@avyyx/admin-utils';
+import { useHttpClient, usePermissions } from '@connect/admin-utils';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
 

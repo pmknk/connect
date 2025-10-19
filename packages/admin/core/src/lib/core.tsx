@@ -8,8 +8,8 @@ import {
     PluginsRegistryProvider,
     ErrorBoundary,
     PluginDefinition,
-} from '@avyyx/admin-utils';
-import { InternalServerError, theme } from '@avyyx/admin-ui';
+} from '@connect/admin-utils';
+import { InternalServerError, theme } from '@connect/admin-ui';
 
 import { Router } from './router';
 
