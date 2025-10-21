@@ -10,9 +10,21 @@ import {
     type UserDangerAction
 } from '../../../constants';
 
+/**
+ * Props for the UserPersonalDetailsDangerZone component.
+ */
 type UserPersonalDetailsDangerZoneProps = {
+    /**
+     * Whether the user's invitation is pending acceptance.
+     */
     isPendingInvitationAccepted: boolean;
+    /**
+     * Whether the user is currently deactivated.
+     */
     isDeactivated: boolean;
+    /**
+     * Whether the user is currently active.
+     */
     isActive: boolean;
 };
 
@@ -73,6 +85,13 @@ const intlMessages = defineMessages({
     }
 });
 
+/**
+ * UserPersonalDetailsDangerZone displays critical account management actions for a user
+ * (such as deactivate, activate, or cancel invitation) with appropriate confirmation dialogs.
+ *
+ * @param {UserPersonalDetailsDangerZoneProps} props - The display flags for actionable states.
+ * @returns {JSX.Element} Component display of the danger zone and dialogs.
+ */
 export const UserPersonalDetailsDangerZone = ({
     isPendingInvitationAccepted,
     isDeactivated,
@@ -80,57 +99,62 @@ export const UserPersonalDetailsDangerZone = ({
 }: UserPersonalDetailsDangerZoneProps) => {
     const { formatMessage } = useIntl();
     const [openDialog, setOpenDialog] = useState<UserDangerAction | null>(null);
+
     return (
         <Stack spacing={3} sx={{ mt: 3 }}>
             <Typography variant="body1">
                 {formatMessage(intlMessages.dangerZone)}
             </Typography>
             <Stack spacing={3}>
+                {/* Display activate option if user is deactivated */}
                 {isDeactivated && (
                     <ActionAlert
-                    severity="success"
-                    title={formatMessage(intlMessages.activateAccount)}
+                        severity="success"
+                        title={formatMessage(intlMessages.activateAccount)}
                         description={formatMessage(
                             intlMessages.activateAccountDescription
                         )}
                         actionLabel={formatMessage(
                             intlMessages.activateAccount
                         )}
-                    actionColor="success"
+                        actionColor="success"
                         onAction={() => setOpenDialog(USER_ACTION_ACTIVATE)}
                     />
                 )}
+                {/* Display cancel invitation option if invitation is pending acceptance */}
                 {isPendingInvitationAccepted && (
                     <ActionAlert
-                    severity="warning"
-                    title={formatMessage(intlMessages.cancelInvitation)}
+                        severity="warning"
+                        title={formatMessage(intlMessages.cancelInvitation)}
                         description={formatMessage(
                             intlMessages.cancelInvitationDescription
                         )}
                         actionLabel={formatMessage(
                             intlMessages.cancelInvitation
                         )}
-                    actionColor="warning"
+                        actionColor="warning"
                         onAction={() =>
                             setOpenDialog(USER_ACTION_CANCEL_INVITATION)
                         }
                     />
                 )}
+                {/* Display deactivate option if user is active */}
                 {isActive && (
                     <ActionAlert
-                    severity="error"
-                    title={formatMessage(intlMessages.deactivateAccount)}
+                        severity="error"
+                        title={formatMessage(intlMessages.deactivateAccount)}
                         description={formatMessage(
                             intlMessages.deactivateAccountDescription
                         )}
                         actionLabel={formatMessage(
                             intlMessages.deactivateAccount
                         )}
-                    actionColor="error"
+                        actionColor="error"
                         onAction={() => setOpenDialog(USER_ACTION_DEACTIVATE)}
                     />
                 )}
             </Stack>
+            {/* Confirm dialog for activating an account */}
             <ConfirmDialog
                 open={openDialog === USER_ACTION_ACTIVATE}
                 onClose={() => setOpenDialog(null)}
@@ -150,6 +174,7 @@ export const UserPersonalDetailsDangerZone = ({
                     }
                 ]}
             />
+            {/* Confirm dialog for canceling invitation */}
             <ConfirmDialog
                 open={openDialog === USER_ACTION_CANCEL_INVITATION}
                 onClose={() => setOpenDialog(null)}
@@ -169,6 +194,7 @@ export const UserPersonalDetailsDangerZone = ({
                     }
                 ]}
             />
+            {/* Confirm dialog for deactivating an account */}
             <ConfirmDialog
                 open={openDialog === USER_ACTION_DEACTIVATE}
                 onClose={() => setOpenDialog(null)}
