@@ -1,8 +1,5 @@
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-import Tab from '@mui/material/Tab';
-import Tabs from '@mui/material/Tabs';
 import IconButton from '@mui/material/IconButton';
 import Stack from '@mui/material/Stack';
 import Tooltip from '@mui/material/Tooltip';
@@ -12,7 +9,6 @@ import { useTheme } from '@mui/material/styles';
 
 import { ExtendedTheme } from '@connect/admin-ui';
 
-import { useState } from 'react';
 import { defineMessages, useIntl } from 'react-intl';
 import { Link, useParams, useLocation } from 'react-router-dom';
 import { ChevronLeft } from 'lucide-react';
@@ -23,14 +19,8 @@ import { UserPersonalDetails } from '../../components/UserPersonalDetails';
 import { UserSecurityDetails } from '../../components/UserSecurityDetails';
 import { UserPageSkeleton } from '../../components/UserPageSkeleton';
 
-import { USERS_ROUTE } from '../../constants';
-
-interface TabPanelProps {
-    children?: React.ReactNode;
-    index: number;
-    value: number;
-    title: string;
-}
+import { USERS_ROUTE, USER_TAB_PROFILE, USER_TAB_SECURITY } from '../../constants';
+import { Tabs } from '@connect/admin-ui';
 
 const intlMessages = defineMessages({
     userProfile: {
@@ -55,48 +45,17 @@ const intlMessages = defineMessages({
     }
 });
 
-const TabPanel = ({
-    title,
-    children,
-    value,
-    index,
-    ...other
-}: TabPanelProps) => {
-    return (
-        <div
-            role="tabpanel"
-            hidden={value !== index}
-            id={`user-tabpanel-${index}`}
-            aria-labelledby={`user-tab-${index}`}
-            {...other}
-        >
-            {value === index && (
-                <Box sx={{ py: 6 }}>
-                    <Typography variant="body1" mb={4}>
-                        {title}
-                    </Typography>
-                    {children}
-                </Box>
-            )}
-        </div>
-    );
-};
-
 const User = () => {
     const { state: locationState } = useLocation();
     const { id } = useParams();
 
     const { breakpoints } = useTheme<ExtendedTheme>();
     const { formatMessage } = useIntl();
-    const [value, setValue] = useState(0);
     const isMobile = useMediaQuery(breakpoints.down('sm'));
 
 
     const { data: userQueryResponse, isLoading } = useUserQuery(id);
 
-    const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-        setValue(newValue);
-    };
 
     const backUrl = locationState?.backUrl || USERS_ROUTE;
 
@@ -122,32 +81,24 @@ const User = () => {
                             {formatMessage(intlMessages.userProfile)}
                         </Typography>
                     </Stack>
-                    <Box sx={{ mt: 4 }}>
                         <Tabs
-                            value={value}
-                            onChange={handleChange}
-                            sx={{
-                                '& .MuiTabs-flexContainer': { gap: isMobile ? 1 : 3 }
-                            }}
-                        >
-                            <Tab label={formatMessage(intlMessages.profile)} />
-                            <Tab label={formatMessage(intlMessages.security)} />
-                        </Tabs>
-                    </Box>
-                    <TabPanel
-                        value={value}
-                        index={0}
-                        title={formatMessage(intlMessages.personalDetails)}
-                    >
-                        {userQueryResponse && <UserPersonalDetails user={userQueryResponse} />}
-                    </TabPanel>
-                    <TabPanel
-                        value={value}
-                        index={1}
-                        title={formatMessage(intlMessages.security)}
-                    >
-                        <UserSecurityDetails />
-                    </TabPanel>
+                            paramName="tab"
+                            defaultValue={USER_TAB_PROFILE}
+                            items={[
+                                {
+                                    label: formatMessage(intlMessages.profile),
+                                    value: USER_TAB_PROFILE,
+                                    panelTitle: formatMessage(intlMessages.personalDetails),
+                                    content: userQueryResponse ? <UserPersonalDetails user={userQueryResponse} /> : null,
+                                },
+                                {
+                                    label: formatMessage(intlMessages.security),
+                                    value: USER_TAB_SECURITY,
+                                    panelTitle: formatMessage(intlMessages.security),
+                                    content: <UserSecurityDetails />,
+                                },
+                            ]}
+                        />
                 </>
             )}
         </Container>
