@@ -39,7 +39,7 @@ export class InviteRouter {
         );
 
         fastify.delete(
-            ROUTE_PATHS.INVITES,
+            `${ROUTE_PATHS.INVITES}/:id`,
             {
                 schema: deleteInviteRequestSchema,
                 config: {

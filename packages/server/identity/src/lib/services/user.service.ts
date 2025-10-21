@@ -89,7 +89,8 @@ export class UserService {
     ): Promise<User> {
         const user = await this.userModel.findOne({
             where: { id },
-            include
+            include,
+            paranoid: false
         });
 
         if (!user) {

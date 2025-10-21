@@ -6,7 +6,7 @@ export type DeleteInviteDto = {
 };
 
 export const toDeleteInviteDto = (request: FastifyRequest): DeleteInviteDto => {
-    const { id } = request.body as DeleteInviteDto;
+    const { id } = request.params as DeleteInviteDto;
     return { id };
 };
 

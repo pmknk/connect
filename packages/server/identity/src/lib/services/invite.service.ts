@@ -147,7 +147,7 @@ export class InviteService {
             const invite = await this.findInviteOrThrow(id);
             const user = invite.user;
             if (user) {
-                await this.userModel.destroy({ where: { id: user.id }, transaction });
+                await this.userModel.destroy({ where: { id: user.id }, transaction, force: true });
             }
             await this.inviteModel.destroy({ where: { id }, transaction });
             await transaction.commit();

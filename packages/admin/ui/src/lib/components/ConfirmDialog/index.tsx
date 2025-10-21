@@ -15,6 +15,7 @@ export type ConfirmDialogAction = {
     autoFocus?: boolean;
     disabled?: boolean;
     key?: string;
+    loading?: boolean;
 };
 
 export type ConfirmDialogProps = {
@@ -66,6 +67,7 @@ export const ConfirmDialog = ({
                             variant={action.variant ?? 'text'}
                             autoFocus={action.autoFocus}
                             disabled={action.disabled}
+                            loading={action.loading}
                         >
                             {action.label}
                         </Button>

@@ -7,13 +7,21 @@ import {
     USER_ACTION_ACTIVATE,
     USER_ACTION_CANCEL_INVITATION,
     USER_ACTION_DEACTIVATE,
+    USERS_ROUTE,
     type UserDangerAction
 } from '../../../constants';
+import { useCancelInviteMutation } from '../../../hooks/useCancelInviteMutation';
+import { useQueryClient } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
 
 /**
  * Props for the UserPersonalDetailsDangerZone component.
  */
 type UserPersonalDetailsDangerZoneProps = {
+    /**
+     * The ID of the invite to cancel.
+     */
+    inviteId: string;
     /**
      * Whether the user's invitation is pending acceptance.
      */
@@ -93,12 +101,21 @@ const intlMessages = defineMessages({
  * @returns {JSX.Element} Component display of the danger zone and dialogs.
  */
 export const UserPersonalDetailsDangerZone = ({
+    inviteId,
     isPendingInvitationAccepted,
     isDeactivated,
-    isActive
+    isActive,
 }: UserPersonalDetailsDangerZoneProps) => {
     const { formatMessage } = useIntl();
     const [openDialog, setOpenDialog] = useState<UserDangerAction | null>(null);
+    const queryClient = useQueryClient();
+    const navigate = useNavigate();
+
+    const { mutate: cancelInvite, isPending: isCancelingInvite } = useCancelInviteMutation(() => {
+        setOpenDialog(null);
+        queryClient.invalidateQueries({ queryKey: ['users'] });
+        navigate(USERS_ROUTE);
+    });
 
     return (
         <Stack spacing={3} sx={{ mt: 3 }}>
@@ -183,14 +200,16 @@ export const UserPersonalDetailsDangerZone = ({
                 actions={[
                     {
                         label: formatMessage(intlMessages.cancel),
-                        onClick: () => setOpenDialog(null)
+                        onClick: () => setOpenDialog(null),
+                        disabled: isCancelingInvite,
                     },
                     {
                         label: formatMessage(intlMessages.confirm),
-                        onClick: () => setOpenDialog(null),
+                        onClick: () => cancelInvite(inviteId ?? ''),
                         color: 'warning',
                         variant: 'contained',
-                        autoFocus: true
+                        autoFocus: true,
+                        loading: isCancelingInvite,
                     }
                 ]}
             />
