@@ -1,10 +1,18 @@
 import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
+import Divider from '@mui/material/Divider';
+
+
 import { defineMessages, useIntl } from 'react-intl';
 import { FormField } from '@connect/admin-ui';
 
 import { useUpdatePasswordForm } from '../../hooks/useUpdatePasswordForm';
-import { Button } from '@mui/material';
 import { UserPersonalDetailsDangerZone } from './UserPersonalDetailsDangerZone';
+import { UserQueryResponse } from '../../hooks/useUserQuery';
+
+type UserSecurityDetailsProps = {
+    user: UserQueryResponse['data'];
+};
 
 const intlMessages = defineMessages({
     password: {
@@ -26,13 +34,17 @@ const intlMessages = defineMessages({
     }
 });
 
-export const UserSecurityDetails = () => {
+export const UserSecurityDetails = ({ user }: UserSecurityDetailsProps) => {
     const { formatMessage } = useIntl();
     const {
         control,
         handleSubmit,
         formState: { errors }
     } = useUpdatePasswordForm();
+
+    const isPendingInvitationAccepted = !!user.invite;
+    const isDeactivated = !!user.deletedAt;
+    const isActive = !isPendingInvitationAccepted && !isDeactivated;
 
     return (
         <Stack spacing={6}>
@@ -41,11 +53,12 @@ export const UserSecurityDetails = () => {
                     console.log(formData);
                 })}
             >
-                <Stack spacing={3} sx={{ maxWidth: '400px' }}>
+                <Stack spacing={3} sx={{ maxWidth: '500px' }}>
                     <FormField
                         control={control}
                         name="password"
                         inputProps={{
+                            disabled: !isActive,
                             type: 'password',
                             label: formatMessage(intlMessages.password),
                             labelPlacement: 'outside',
@@ -59,6 +72,7 @@ export const UserSecurityDetails = () => {
                         control={control}
                         name="confirmPassword"
                         inputProps={{
+                            disabled: !isActive,
                             type: 'password',
                             label: formatMessage(intlMessages.confirmPassword),
                             placeholder: '••••••••',
@@ -80,7 +94,12 @@ export const UserSecurityDetails = () => {
                     </Stack>
                 </Stack>
             </form>
-            <UserPersonalDetailsDangerZone />
+            <Divider />
+            <UserPersonalDetailsDangerZone
+                isPendingInvitationAccepted={isPendingInvitationAccepted}
+                isDeactivated={isDeactivated}
+                isActive={isActive}
+            />
         </Stack>
     );
 };
