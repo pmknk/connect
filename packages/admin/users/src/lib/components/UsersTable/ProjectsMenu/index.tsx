@@ -20,7 +20,11 @@ export const ProjectsMenu = ({ anchorEl, projects, onClose }: ProjectsMenuProps)
     if (!projects) return null;
 
     return (
-        <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={onClose}>
+        <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={onClose} sx={{
+            '& .MuiPaper-root': {
+                minWidth: '200px',
+            },
+        }}>
             {projects.map(p => (
                 <MenuItem key={p.id}>
                     <Stack direction="row" spacing={1} alignItems="center">

@@ -95,7 +95,7 @@ const User = () => {
                                 label: formatMessage(intlMessages.profile),
                                 value: USER_TAB_PROFILE,
                                 panelTitle: formatMessage(
-                                    intlMessages.personalDetails
+                                    intlMessages.personalDetails 
                                 ),
                                 content: userQueryResponse ? (
                                     <UserPersonalDetails

@@ -37,7 +37,7 @@ const intlMessages = defineMessages({
     },
     updatedSuccessfully: {
         id: 'users.personalDetails.updatedSuccessfully',
-        defaultMessage: 'User updated successfully'
+        defaultMessage: 'The user details have been updated successfully. All changes are now saved.'
     }
 });
 

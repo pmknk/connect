@@ -1,5 +1,6 @@
 import { injectable } from 'inversify';
 import { ModelStatic, Op } from 'sequelize';
+import type { Transaction } from 'sequelize';
 import { NotFoundError } from '@connect/server-utils';
 import { ConnectionService, ModelService } from '@connect/server-database';
 
@@ -104,77 +105,160 @@ export class UserService {
      * @returns The updated user
      */
     async update(dto: UpdateUserRequestDto): Promise<User> {
-        const user = await this.userModel.findByPk(dto.id, {
-            include: [
-                {
-                    association: 'projects'
-                },
-                {
-                    association: 'roles'
-                }
-            ]
-        });
-        if (!user) {
-            throw new NotFoundError('User not found');
-        }
+        const user = await this.findUserOrThrow(dto.id);
         const transaction = await this.connectionService.client.transaction();
         try {
             const { id, email, fullName, projectIds, roleId } = dto;
-            const existedProjects = user.projects;
-            const existedRole = user.roles?.[0];
 
-            if (existedRole?.id !== roleId) {
-                await this.userRolesModel.destroy({
-                    where: { userId: id },
-                    transaction
-                });
-                if (roleId) {
-                    await this.userRolesModel.create(
-                        { userId: id, roleId },
-                        { transaction }
-                    );
-                }
-            }
-            const existedProjectIds = (existedProjects ?? []).map((p) => p.id);
-            const dtoProjectIds = projectIds ?? [];
+            const existedProjectIds = (user.projects ?? []).map((p) => p.id);
+            const desiredProjectIds = projectIds ?? [];
+            const existedRoleId = user.roles?.[0]?.id;
 
-            const projectIdsToAdd = dtoProjectIds.filter(
-                (pid) => !existedProjectIds.includes(pid)
-            );
-            const projectIdsToRemove = existedProjectIds.filter(
-                (pid) => !dtoProjectIds.includes(pid)
+            await this.updateUserRoleIfChanged(
+                id,
+                existedRoleId,
+                roleId,
+                transaction
             );
 
-            if (projectIdsToAdd.length > 0) {
-                await this.projectUsersModel.bulkCreate(
-                    projectIdsToAdd.map((projectId) => ({
-                        userId: id,
-                        projectId
-                    })),
-                    { transaction }
-                );
+            const { toAdd, toRemove } = this.diffProjects(
+                existedProjectIds,
+                desiredProjectIds
+            );
+
+            if (toAdd.length > 0) {
+                await this.addProjects(id, toAdd, transaction);
             }
 
-            if (projectIdsToRemove.length > 0) {
-                await this.projectUsersModel.destroy({
-                    where: {
-                        userId: id,
-                        projectId: { [Op.in]: projectIdsToRemove }
-                    },
-                    transaction
-                });
+            if (toRemove.length > 0) {
+                await this.removeProjects(id, toRemove, transaction);
             }
 
             await user.update({ email, fullName }, { transaction });
             await transaction.commit();
 
-            await user.reload({
-                include: [{ association: 'projects' }, { association: 'roles' }]
-            });
-            return user;
+            return await this.reloadUserWithAssociations(user);
         } catch (error) {
             await transaction.rollback();
             throw error;
         }
+    }
+
+    /**
+     * Builds the default include array for user queries.
+     * Ensures `projects` and `roles` associations are eagerly loaded.
+     * @returns Array of Sequelize include association descriptors
+     */
+    private defaultUserInclude(): { association: string }[] {
+        return [{ association: 'projects' }, { association: 'roles' }];
+    }
+
+    /**
+     * Finds a user by primary key with default includes or throws if missing.
+     * @param id - User identifier (primary key)
+     * @throws NotFoundError if user is not found
+     * @returns The found user instance with `projects` and `roles` loaded
+     */
+    private async findUserOrThrow(id: string): Promise<User> {
+        const user = await this.userModel.findByPk(id, {
+            include: this.defaultUserInclude()
+        });
+        if (!user) {
+            throw new NotFoundError('User not found');
+        }
+        return user;
+    }
+
+    /**
+     * Updates user role membership if the role has changed.
+     * Replaces existing user-role links with the provided role inside a transaction.
+     * @param userId - The user id to update
+     * @param currentRoleId - The currently assigned role id (if any)
+     * @param newRoleId - The desired new role id (if any)
+     * @param transaction - The Sequelize transaction to use
+     */
+    private async updateUserRoleIfChanged(
+        userId: string,
+        currentRoleId: string | undefined,
+        newRoleId: string | undefined,
+        transaction: Transaction
+    ): Promise<void> {
+        if (currentRoleId === newRoleId) {
+            return;
+        }
+
+        await this.userRolesModel.destroy({
+            where: { userId },
+            transaction
+        });
+
+        if (newRoleId) {
+            await this.userRolesModel.create(
+                { userId, roleId: newRoleId },
+                { transaction }
+            );
+        }
+    }
+
+    /**
+     * Computes the difference between current and desired project id lists.
+     * @param currentIds - Currently linked project ids
+     * @param desiredIds - Desired project ids after update
+     * @returns Object with `toAdd` and `toRemove` arrays
+     */
+    private diffProjects(
+        currentIds: string[],
+        desiredIds: string[]
+    ): { toAdd: string[]; toRemove: string[] } {
+        const toAdd = desiredIds.filter((id) => !currentIds.includes(id));
+        const toRemove = currentIds.filter((id) => !desiredIds.includes(id));
+        return { toAdd, toRemove };
+    }
+
+    /**
+     * Adds links between a user and multiple projects.
+     * @param userId - The user id to link
+     * @param projectIds - Project ids to add
+     * @param transaction - The Sequelize transaction to use
+     */
+    private async addProjects(
+        userId: string,
+        projectIds: string[],
+        transaction: Transaction
+    ): Promise<void> {
+        await this.projectUsersModel.bulkCreate(
+            projectIds.map((projectId) => ({ userId, projectId })),
+            { transaction }
+        );
+    }
+
+    /**
+     * Removes links between a user and multiple projects.
+     * @param userId - The user id to unlink
+     * @param projectIds - Project ids to remove
+     * @param transaction - The Sequelize transaction to use
+     */
+    private async removeProjects(
+        userId: string,
+        projectIds: string[],
+        transaction: Transaction
+    ): Promise<void> {
+        await this.projectUsersModel.destroy({
+            where: {
+                userId,
+                projectId: { [Op.in]: projectIds }
+            },
+            transaction
+        });
+    }
+
+    /**
+     * Reloads a user instance with default associations.
+     * @param user - The user instance to reload
+     * @returns The reloaded user instance
+     */
+    private async reloadUserWithAssociations(user: User): Promise<User> {
+        await user.reload({ include: this.defaultUserInclude() });
+        return user;
     }
 }

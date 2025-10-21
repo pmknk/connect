@@ -66,5 +66,10 @@ export const useUserQuery = (id?: string) => {
             ),
         select: ({ data }) => data.data,
         enabled: !!id,
+        staleTime: 0,
+        gcTime: 0,
+        refetchOnMount: 'always',
+        refetchOnWindowFocus: 'always',
+        refetchOnReconnect: 'always'
     });
 };

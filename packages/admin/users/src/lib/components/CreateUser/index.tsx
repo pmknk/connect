@@ -78,7 +78,6 @@ export const CreateUser = ({ onSuccess }: CreateUserProps) => {
                     <Stack direction="row" spacing={1}>
                         <Button
                             variant="text"
-                            color="error"
                             onClick={handleClose}
                             disabled={isPending}
                         >
