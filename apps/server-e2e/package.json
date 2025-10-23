@@ -1,8 +1,9 @@
 {
-    "name": "server",
+    "name": "@connect/server-e2e",
     "version": "0.0.1",
     "private": true,
     "nx": {
+        "name": "server-e2e",
         "targets": {
             "build": {
                 "executor": "@nx/esbuild:esbuild",
@@ -12,15 +13,15 @@
                 "defaultConfiguration": "production",
                 "options": {
                     "platform": "node",
-                    "outputPath": "apps/server/dist",
+                    "outputPath": "apps/server-e2e/dist",
                     "format": [
                         "cjs"
                     ],
                     "bundle": false,
-                    "main": "apps/server/src/main.ts",
-                    "tsConfig": "apps/server/tsconfig.app.json",
+                    "main": "apps/server-e2e/src/main.ts",
+                    "tsConfig": "apps/server-e2e/tsconfig.app.json",
                     "assets": [
-                        "apps/server/src/assets"
+                        "apps/server-e2e/src/assets"
                     ],
                     "esbuildOptions": {
                         "sourcemap": true,
@@ -49,21 +50,16 @@
                     "build"
                 ],
                 "options": {
-                    "buildTarget": "server:build",
+                    "buildTarget": "server-e2e:build",
                     "runBuildTargetDependencies": false
                 },
                 "configurations": {
                     "development": {
-                        "buildTarget": "server:build:development"
+                        "buildTarget": "server-e2e:build:development"
                     },
                     "production": {
-                        "buildTarget": "server:build:production"
+                        "buildTarget": "server-e2e:build:production"
                     }
-                }
-            },
-            "test": {
-                "options": {
-                    "passWithNoTests": true
                 }
             }
         }

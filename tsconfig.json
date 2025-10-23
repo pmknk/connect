@@ -38,6 +38,12 @@
         },
         {
             "path": "./packages/admin/users"
+        },
+        {
+            "path": "./apps/admin-e2e"
+        },
+        {
+            "path": "./apps/server-e2e"
         }
     ]
 }
