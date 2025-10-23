@@ -7,7 +7,7 @@ import Tooltip from '@mui/material/Tooltip';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 
-import { ExtendedTheme } from '@connect/admin-ui';
+import { ExtendedTheme, Tabs } from '@connect/admin-ui';
 
 import { defineMessages, useIntl } from 'react-intl';
 import { Link, useParams, useLocation } from 'react-router-dom';
@@ -24,7 +24,6 @@ import {
     USER_TAB_PROFILE,
     USER_TAB_SECURITY
 } from '../../constants';
-import { Tabs } from '@connect/admin-ui';
 
 const intlMessages = defineMessages({
     userProfile: {
@@ -57,7 +56,7 @@ const User = () => {
     const { formatMessage } = useIntl();
     const isMobile = useMediaQuery(breakpoints.down('sm'));
 
-    const { data: userQueryResponse, isLoading } = useUserQuery(id);
+    const { data: userQueryResponse, isLoading, error } = useUserQuery(id);
 
     const backUrl = locationState?.backUrl || USERS_ROUTE;
 
