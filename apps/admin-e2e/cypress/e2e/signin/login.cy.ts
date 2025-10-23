@@ -1,42 +1,55 @@
+import { LoginPage } from '../../support/login.po';
+
 describe('Signin Login', () => {
+    const login = new LoginPage();
+
     beforeEach(() => {
-        cy.visit('/signin');
+        login.visit();
     });
 
     it('should show Authentication Error when invalid credentials are provided', () => {
-        cy.intercept('POST', '**/api/v1/identity/auth/signin', {
-            statusCode: 401,
-            body: { message: 'Invalid email or password' }
-        }).as('signinRequest');
+        cy.interceptUnauthorized(
+            'POST',
+            '**/api/v1/identity/auth/signin',
+            { message: 'Invalid email or password' },
+            'signinRequest'
+        );
 
-        cy.get('input[name="email"]').type('test@test.com');
-        cy.get('input[name="password"]').type('password');
+        login.typeEmail('test@test.com');
+        login.typePassword('password');
 
-        cy.get('button[type="submit"]').click();
+        login.submitForm();
         cy.wait('@signinRequest');
 
         cy.contains('Authorization failed').should('be.visible');
-    })
+    });
 
     it('should show Internal Server Error when server returns 500', () => {
-        cy.intercept('POST', '**/api/v1/identity/auth/signin', {
-            statusCode: 500,
-            body: { message: 'Internal Server Error' }
-        }).as('signinRequest');
+        cy.interceptServerError(
+            'POST',
+            '**/api/v1/identity/auth/signin',
+            { message: 'Internal Server Error' },
+            'signinRequest'
+        );
 
-        cy.get('input[name="email"]').type('test@test.com');
-        cy.get('input[name="password"]').type('password');
+        login.typeEmail('test@test.com');
+        login.typePassword('password');
 
-        cy.get('button[type="submit"]').click();
+        login.submitForm();
         cy.wait('@signinRequest');
 
         cy.contains('Internal Server Error').should('be.visible');
-    })
+    });
 
     it('should show required validation messages when submitting empty form', () => {
-        cy.get('button[type="submit"]').click();
+        login.submitForm();
 
         cy.contains('Email is required').should('be.visible');
         cy.contains('Password is required').should('be.visible');
-    })
-})
+    });
+
+    it('should navigate to /signin/join when clicking Join now', () => {
+        login.clickJoinNow();
+        cy.location('pathname').should('eq', '/signin/join');
+    });
+});
