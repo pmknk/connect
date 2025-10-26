@@ -1,13 +1,10 @@
-import Alert from '@mui/material/Alert';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-import Snackbar from '@mui/material/Snackbar';
 import Stack from '@mui/material/Stack';
 import { useTheme } from '@mui/material';
 import { ExtendedTheme, FormField } from '@connect/admin-ui';
-import { usePermissionAccess } from '@connect/admin-utils';
+import { usePermissionAccess, useSnackbar } from '@connect/admin-utils';
 
-import { useState } from 'react';
 import { defineMessages, useIntl } from 'react-intl';
 
 import { useUserForm } from '../../hooks/useUserForm';
@@ -47,7 +44,7 @@ type UserPersonalDetailsProps = {
 
 export const UserPersonalDetails = ({ user }: UserPersonalDetailsProps) => {
     const { palette } = useTheme<ExtendedTheme>();
-    const [openSnackbar, setOpenSnackbar] = useState(false);
+    const { showSnackbar } = useSnackbar();
     const { control, handleSubmit } = useUserForm({
         id: user.id,
         fullName: user.fullName,
@@ -56,7 +53,7 @@ export const UserPersonalDetails = ({ user }: UserPersonalDetailsProps) => {
         projectIds: user.projects.map((project) => project.id)
     });
     const { mutate: updateUser, isPending } = useUpdateUserMutation(() => {
-        setOpenSnackbar(true);
+        showSnackbar({ message: formatMessage(intlMessages.updatedSuccessfully), severity: 'success' });
     });
 
     const { formatMessage } = useIntl();
@@ -157,19 +154,6 @@ export const UserPersonalDetails = ({ user }: UserPersonalDetailsProps) => {
                     </Stack>
                 </Stack>
             </Stack>
-            <Snackbar
-                open={openSnackbar}
-                onClose={() => {
-                    setOpenSnackbar(false);
-                }}
-                message={formatMessage(intlMessages.updatedSuccessfully)}
-                autoHideDuration={3000}
-                anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-            >
-                <Alert severity="success">
-                    {formatMessage(intlMessages.updatedSuccessfully)}
-                </Alert>
-            </Snackbar>
         </form>
     );
 };

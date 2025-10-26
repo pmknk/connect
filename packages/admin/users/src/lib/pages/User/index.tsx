@@ -69,10 +69,10 @@ const User = () => {
     const { formatMessage } = useIntl();
     const isMobile = useMediaQuery(breakpoints.down('sm'));
 
-    const { data: userQueryResponse, isLoading} = useUserQuery(id);
+    const { data: userQueryResponse, isLoading, isFetching} = useUserQuery(id);
 
     const backUrl = locationState?.backUrl || USERS_ROUTE;
-
+    
     return (
         <Container
             maxWidth={'md'}
@@ -81,7 +81,7 @@ const User = () => {
                 pb: isMobile ? 8 : 0
             }}
         >
-            {isLoading ? (
+            {isLoading || isFetching ? (
                 <UserPageSkeleton />
             ) : (
                 <>

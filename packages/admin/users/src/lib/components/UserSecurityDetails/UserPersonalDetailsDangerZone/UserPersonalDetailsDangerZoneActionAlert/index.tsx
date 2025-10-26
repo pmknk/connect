@@ -41,7 +41,7 @@ type ActionAlertProps = {
  * @param {ActionAlertProps} props - The props for the component.
  * @returns {JSX.Element} The rendered alert component.
  */
-export const ActionAlert = ({
+export const UserPersonalDetailsDangerZoneActionAlert = ({
     severity,
     title,
     description,

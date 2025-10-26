@@ -10,7 +10,7 @@ import { ExtendedTheme } from '@connect/admin-ui';
 
 import { useMemo } from 'react';
 import { useProjectsFilter } from '../../hooks/useProjectsFilter';
-import { FormattedMessage } from 'react-intl';
+import { defineMessages, useIntl } from 'react-intl';
 
 import { useProjectsQuery } from '../../hooks/useProjectsQuery';
 import { NoProjectsFoundCta } from '../../components/NoProjectsFoundCta/index';
@@ -22,6 +22,30 @@ import { CreateProject } from '../../components/CreateProject';
 import { ProjectsActivityFilter } from '../../components/ProjectsActivityFilter';
 
 const Projects = () => {
+    const { formatMessage } = useIntl();
+    const intlMessages = defineMessages({
+        title: {
+            id: 'projects.title',
+            defaultMessage: 'Projects'
+        },
+        description: {
+            id: 'projects.description',
+            defaultMessage: 'List of all projects you have access to'
+        },
+        emptyTitle: {
+            id: 'projects.empty.title',
+            defaultMessage: 'No projects found'
+        },
+        emptyFilteredDescription: {
+            id: 'projects.empty.filtered.description',
+            defaultMessage: 'No projects match your current search or filter'
+        },
+        emptyDescription: {
+            id: 'projects.empty.description',
+            defaultMessage:
+                'Projects allow you to group your content, settings, and workflows. Create your first project to manage entries, media, and publishing.'
+        }
+    });
     const { breakpoints } = useTheme<ExtendedTheme>();
     const isMobile = useMediaQuery(breakpoints.down('sm'));
 
@@ -70,16 +94,10 @@ const Projects = () => {
             >
                 <Stack direction="column" spacing={1}>
                     <Typography variant="h5">
-                        <FormattedMessage
-                            id="projects.title"
-                            defaultMessage="Projects"
-                        />
+                        {formatMessage(intlMessages.title)}
                     </Typography>
                     <Typography variant="body1" color="text.secondary">
-                        <FormattedMessage
-                            id="projects.description"
-                            defaultMessage="List of all projects you have access to"
-                        />
+                        {formatMessage(intlMessages.description)}
                     </Typography>
                 </Stack>
                 {isLoading || isFetching ? (
@@ -124,38 +142,18 @@ const Projects = () => {
                         ) : (
                             <NoProjectsFoundCta
                                 onSuccess={refetch}
-                                title={
-                                    <FormattedMessage
-                                        id="projects.empty.title"
-                                        defaultMessage="No projects found"
-                                    />
-                                }
-                                description={
-                                    <FormattedMessage
-                                        id="projects.empty.filtered.description"
-                                        defaultMessage="No projects match your current search or filter"
-                                    />
-                                }
+                                title={formatMessage(intlMessages.emptyTitle)}
+                                description={formatMessage(intlMessages.emptyFilteredDescription)}
                                 showCreateProject={false}
                             />
                         )}
                     </Stack>
                 ) : (
-                    <NoProjectsFoundCta
-                        onSuccess={refetch}
-                        title={
-                            <FormattedMessage
-                                id="projects.empty.title"
-                                defaultMessage="No projects found"
-                            />
-                        }
-                        description={
-                            <FormattedMessage
-                                id="projects.empty.description"
-                                        defaultMessage="Projects allow you to group your content, settings, and workflows. Create your first project to manage entries, media, and publishing."
-                            />
-                        }
-                    />
+                <NoProjectsFoundCta
+                    onSuccess={refetch}
+                    title={formatMessage(intlMessages.emptyTitle)}
+                    description={formatMessage(intlMessages.emptyDescription)}
+                />
                 )}
             </Container>
             {isMobile && hasProjects && (

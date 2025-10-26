@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { FormattedMessage } from 'react-intl';
+import { defineMessages, useIntl } from 'react-intl';
 
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
@@ -9,7 +9,7 @@ import { useMediaQuery } from '@mui/material';
 
 import { ExtendedTheme } from '@connect/admin-ui';
 
-import { PermissionAccess } from '@connect/admin-utils';
+import { PermissionAccess, useSnackbar } from '@connect/admin-utils';
 import { CreateProjectForm } from './CreateProjectForm';
 import { useCreateProjectForm } from '../../hooks/useCreateProjectForm';
 import { CreateProjectDialog } from './CreateProjectDialog';
@@ -19,12 +19,37 @@ type CreateProjectProps = {
     onSuccess?: () => void;
 };
 
+const intlMessages = defineMessages({
+    title: {
+        id: 'projects.create.title',
+        defaultMessage: 'Create Project'
+    },
+    cancel: {
+        id: 'projects.create.cancel',
+        defaultMessage: 'Cancel'
+    },
+    button: {
+        id: 'projects.create.button',
+        defaultMessage: 'Create'
+    },
+    projectCreated: {
+        id: 'projects.create.projectCreated',
+        defaultMessage: 'Project has been created successfully'
+    }
+});
+
 export const CreateProject = ({ onSuccess }: CreateProjectProps) => {
     const { breakpoints } = useTheme<ExtendedTheme>();
     const isMobile = useMediaQuery(breakpoints.down('sm'));
     const [open, setOpen] = useState(false);
     const { control, handleSubmit, reset } = useCreateProjectForm();
-    const { mutate: createProject, isPending } = useCreateProjectsMutation();
+    const { showSnackbar } = useSnackbar();
+    const { mutate: createProject, isPending } = useCreateProjectsMutation(() => {
+        showSnackbar({ message: formatMessage(intlMessages.projectCreated), severity: 'success' });
+        handleClose();
+        onSuccess?.();
+    });
+    const { formatMessage } = useIntl();
 
     const handleClose = () => {
         setOpen(false);
@@ -49,22 +74,14 @@ export const CreateProject = ({ onSuccess }: CreateProjectProps) => {
                     }}
                     onClick={() => setOpen(true)}
                 >
-                    <FormattedMessage
-                        id="projects.create.title"
-                        defaultMessage="Create Project"
-                    />
+                    {formatMessage(intlMessages.title)}
                 </Button>
             </PermissionAccess>
             <CreateProjectDialog
                 open={open}
                 onClose={handleClose}
                 onSubmit={handleSubmit((data) => {
-                    createProject(data, {
-                        onSuccess: () => {
-                            handleClose();
-                            onSuccess?.();
-                        }
-                    });
+                    createProject(data);
                 })}
                 content={
                     <CreateProjectForm
@@ -79,10 +96,7 @@ export const CreateProject = ({ onSuccess }: CreateProjectProps) => {
                             onClick={handleClose}
                             disabled={isPending}
                         >
-                            <FormattedMessage
-                                id="projects.create.cancel"
-                                defaultMessage="Cancel"
-                            />
+                            {formatMessage(intlMessages.cancel)}
                         </Button>
                         <Button
                             variant="contained"
@@ -90,10 +104,7 @@ export const CreateProject = ({ onSuccess }: CreateProjectProps) => {
                             type="submit"
                             loading={isPending}
                         >
-                            <FormattedMessage
-                                id="projects.create.button"
-                                defaultMessage="Create"
-                            />
+                            {formatMessage(intlMessages.button)}
                         </Button>
                     </Stack>
                 }

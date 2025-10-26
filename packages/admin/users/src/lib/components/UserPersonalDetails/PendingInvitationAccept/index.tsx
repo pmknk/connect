@@ -10,7 +10,7 @@ import { Check, Copy } from 'lucide-react';
 import { useCallback, useState } from 'react';
 import { defineMessages, useIntl } from 'react-intl';
 import Tooltip from '@mui/material/Tooltip';
-import { Snackbar } from '@mui/material';
+import { useSnackbar } from '@connect/admin-utils';
 
 const intlMessages = defineMessages({
     pendingInvitation: {
@@ -49,13 +49,13 @@ export const PendingInvitationAccept = ({
 }: PendingInvitationAcceptProps) => {
     const { formatMessage } = useIntl();
     const [_copied, setCopied] = useState(false);
-    const [open, setOpen] = useState(false);
+    const { showSnackbar } = useSnackbar();
 
     const handleCopy = useCallback(async (text: string) => {
         await navigator.clipboard.writeText(text);
         setCopied(true);
-        setOpen(true);
-    }, []);
+        showSnackbar({ message: formatMessage(intlMessages.invitationCopied), severity: 'success' });
+    }, [formatMessage, showSnackbar]);
 
     return (
         <>
@@ -106,16 +106,6 @@ export const PendingInvitationAccept = ({
                     </Stack>
                 </Stack>
             </Alert>
-            <Snackbar
-                open={open}
-                autoHideDuration={3000}
-                onClose={() => setOpen(false)}
-                anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-            >
-                <Alert severity="success">
-                    {formatMessage(intlMessages.invitationCopied)}
-                </Alert>
-            </Snackbar>
         </>
     );
 };

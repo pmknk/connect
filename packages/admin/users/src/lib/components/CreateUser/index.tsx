@@ -1,9 +1,9 @@
 import { Button, Stack, useMediaQuery, useTheme } from '@mui/material';
 
-import { PermissionAccess } from '@connect/admin-utils';
+import { PermissionAccess, useSnackbar } from '@connect/admin-utils';
 import { ExtendedTheme } from '@connect/admin-ui';
 
-import { FormattedMessage } from 'react-intl';
+import { defineMessages, useIntl } from 'react-intl';
 import { useEffect, useState } from 'react';
 import { CreateUserDialog } from './CreateUserDialog';
 import { CreateUserForm } from './CreateUserForm';
@@ -17,13 +17,35 @@ type CreateUserProps = {
     onSuccess?: () => void;
 };
 
+const intlMessages = defineMessages({
+    title: {
+        id: 'users.create.title',
+        defaultMessage: 'Invite User'
+    },
+    invitationSent: {
+        id: 'users.create.invitationSent',
+        defaultMessage: 'Invitation has been created successfully'
+    },
+    cancel: {
+        id: 'users.create.cancel',
+        defaultMessage: 'Cancel'
+    },
+    button: {
+        id: 'users.create.button',
+        defaultMessage: 'Invite'
+    },
+});
+
 export const CreateUser = ({ onSuccess }: CreateUserProps) => {
     const { breakpoints } = useTheme<ExtendedTheme>();
     const isMobile = useMediaQuery(breakpoints.down('sm'));
     const [open, setOpen] = useState(false);
-
+    const { showSnackbar } = useSnackbar();
+    const { formatMessage } = useIntl();
     const { control, handleSubmit, reset } = useCreateUserForm();
-    const { mutate: createUser, isPending } = useCreateUserMutation();
+    const { mutate: createUser, isPending } = useCreateUserMutation(() => {
+        showSnackbar({ message: formatMessage(intlMessages.invitationSent), severity: 'success' });
+    });
 
     useEffect(() => {
         if (open) {
@@ -62,10 +84,7 @@ export const CreateUser = ({ onSuccess }: CreateUserProps) => {
                     }}
                     onClick={() => setOpen(true)}
                 >
-                    <FormattedMessage
-                        id="users.create.title"
-                        defaultMessage="Invite User"
-                    />
+                    {formatMessage(intlMessages.title)}
                 </Button>
             </PermissionAccess>
             <CreateUserDialog
@@ -81,10 +100,7 @@ export const CreateUser = ({ onSuccess }: CreateUserProps) => {
                             onClick={handleClose}
                             disabled={isPending}
                         >
-                            <FormattedMessage
-                                id="users.create.cancel"
-                                defaultMessage="Cancel"
-                            />
+                            {formatMessage(intlMessages.cancel)}
                         </Button>
                         <Button
                             variant="contained"
@@ -92,10 +108,7 @@ export const CreateUser = ({ onSuccess }: CreateUserProps) => {
                             type="submit"
                             loading={isPending}
                         >
-                            <FormattedMessage
-                                id="users.create.button"
-                                defaultMessage="Invite"
-                            />
+                            {formatMessage(intlMessages.button)}
                         </Button>
                     </Stack>
                 }

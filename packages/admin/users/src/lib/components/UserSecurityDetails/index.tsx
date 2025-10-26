@@ -9,7 +9,6 @@ import { FormField } from '@connect/admin-ui';
 import { useUpdatePasswordForm } from '../../hooks/useUpdatePasswordForm';
 import { UserPersonalDetailsDangerZone } from './UserPersonalDetailsDangerZone';
 import { UserQueryResponse } from '../../hooks/useUserQuery';
-import { useCancelInviteMutation } from '../../hooks/useCancelInviteMutation';
 
 type UserSecurityDetailsProps = {
     user: UserQueryResponse['data'];
@@ -98,6 +97,7 @@ export const UserSecurityDetails = ({ user }: UserSecurityDetailsProps) => {
             </form>
             <Divider />
             <UserPersonalDetailsDangerZone
+                userId={user.id}
                 inviteId={user.invite?.id ?? ''}
                 isPendingInvitationAccepted={isPendingInvitationAccepted}
                 isDeactivated={isDeactivated}

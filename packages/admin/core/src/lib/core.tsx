@@ -8,6 +8,7 @@ import {
     PluginsRegistryProvider,
     ErrorBoundary,
     PluginDefinition,
+    SnackbarProvider,
 } from '@connect/admin-utils';
 import { InternalServerError, theme } from '@connect/admin-ui';
 
@@ -31,7 +32,9 @@ export function Core({ environment, plugins = [] }: CoreProps) {
                     <HttpClientProvider api={environment.api}>
                         <ReduxStoreProvider store={store}>
                             <PluginsRegistryProvider plugins={plugins}>
-                                <Router />
+                                <SnackbarProvider>
+                                    <Router />
+                                </SnackbarProvider>
                             </PluginsRegistryProvider>
                         </ReduxStoreProvider>
                     </HttpClientProvider>

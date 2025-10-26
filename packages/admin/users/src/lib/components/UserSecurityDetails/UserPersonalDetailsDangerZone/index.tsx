@@ -1,8 +1,13 @@
-import { Stack, Typography } from '@mui/material';
 import { useState } from 'react';
-import { ConfirmDialog } from '@connect/admin-ui';
+import { useNavigate } from 'react-router-dom';
 import { defineMessages, useIntl } from 'react-intl';
-import { ActionAlert } from './ActionAlert';
+
+import { Stack, Typography } from '@mui/material';
+import { useSnackbar } from '@connect/admin-utils';
+import { ConfirmDialog } from '@connect/admin-ui';
+import { useQueryClient } from '@tanstack/react-query';
+
+import { UserPersonalDetailsDangerZoneActionAlert } from './UserPersonalDetailsDangerZoneActionAlert';
 import {
     USER_ACTION_ACTIVATE,
     USER_ACTION_CANCEL_INVITATION,
@@ -11,13 +16,18 @@ import {
     type UserDangerAction
 } from '../../../constants';
 import { useCancelInviteMutation } from '../../../hooks/useCancelInviteMutation';
-import { useQueryClient } from '@tanstack/react-query';
-import { useNavigate } from 'react-router-dom';
+import { useDeleteUserMutation } from '../../../hooks/useDeleteUserMutation';
+import { useRestoreUserMutation } from '../../../hooks/useRestoreUserMutation';
 
 /**
  * Props for the UserPersonalDetailsDangerZone component.
  */
 type UserPersonalDetailsDangerZoneProps = {
+
+    /**
+     * The ID of the user to delete.
+     */
+    userId: string;
     /**
      * The ID of the invite to cancel.
      */
@@ -83,6 +93,18 @@ const intlMessages = defineMessages({
         defaultMessage:
             'Are you sure you want to deactivate this account? The user will be blocked from logging in. You can reactivate later.'
     },
+    activateAccountSuccess: {
+        id: 'users.personalDetails.activateAccountSuccess',
+        defaultMessage: 'The account has been activated successfully.'
+    },
+    deactivateAccountSuccess: {
+        id: 'users.personalDetails.deactivateAccountSuccess',
+        defaultMessage: 'The account has been deactivated successfully.'
+    },
+    cancelInvitationSuccess: {
+        id: 'users.personalDetails.cancelInvitationSuccess',
+        defaultMessage: 'The invitation has been cancelled successfully.'
+    },
     confirm: {
         id: 'common.confirm',
         defaultMessage: 'Confirm'
@@ -101,6 +123,7 @@ const intlMessages = defineMessages({
  * @returns {JSX.Element} Component display of the danger zone and dialogs.
  */
 export const UserPersonalDetailsDangerZone = ({
+    userId,
     inviteId,
     isPendingInvitationAccepted,
     isDeactivated,
@@ -108,13 +131,23 @@ export const UserPersonalDetailsDangerZone = ({
 }: UserPersonalDetailsDangerZoneProps) => {
     const { formatMessage } = useIntl();
     const [openDialog, setOpenDialog] = useState<UserDangerAction | null>(null);
-    const queryClient = useQueryClient();
+    const { showSnackbar } = useSnackbar();
     const navigate = useNavigate();
 
     const { mutate: cancelInvite, isPending: isCancelingInvite } = useCancelInviteMutation(() => {
         setOpenDialog(null);
-        queryClient.invalidateQueries({ queryKey: ['users'] });
+        showSnackbar({ message: formatMessage(intlMessages.cancelInvitationSuccess), severity: 'success' });
         navigate(USERS_ROUTE);
+    });
+
+    const { mutate: deleteUser, isPending: isDeletingUser } = useDeleteUserMutation(() => {
+        setOpenDialog(null);
+        showSnackbar({ message: formatMessage(intlMessages.deactivateAccountSuccess), severity: 'success' });
+    });
+
+    const { mutate: restoreUser, isPending: isRestoringUser } = useRestoreUserMutation(() => {
+        setOpenDialog(null);
+        showSnackbar({ message: formatMessage(intlMessages.activateAccountSuccess), severity: 'success' });
     });
 
     return (
@@ -125,7 +158,7 @@ export const UserPersonalDetailsDangerZone = ({
             <Stack spacing={3}>
                 {/* Display activate option if user is deactivated */}
                 {isDeactivated && (
-                    <ActionAlert
+                    <UserPersonalDetailsDangerZoneActionAlert
                         severity="success"
                         title={formatMessage(intlMessages.activateAccount)}
                         description={formatMessage(
@@ -140,7 +173,7 @@ export const UserPersonalDetailsDangerZone = ({
                 )}
                 {/* Display cancel invitation option if invitation is pending acceptance */}
                 {isPendingInvitationAccepted && (
-                    <ActionAlert
+                    <UserPersonalDetailsDangerZoneActionAlert
                         severity="warning"
                         title={formatMessage(intlMessages.cancelInvitation)}
                         description={formatMessage(
@@ -157,7 +190,7 @@ export const UserPersonalDetailsDangerZone = ({
                 )}
                 {/* Display deactivate option if user is active */}
                 {isActive && (
-                    <ActionAlert
+                    <UserPersonalDetailsDangerZoneActionAlert
                         severity="error"
                         title={formatMessage(intlMessages.deactivateAccount)}
                         description={formatMessage(
@@ -180,14 +213,16 @@ export const UserPersonalDetailsDangerZone = ({
                 actions={[
                     {
                         label: formatMessage(intlMessages.cancel),
-                        onClick: () => setOpenDialog(null)
+                        onClick: () => setOpenDialog(null),
+                        disabled: isRestoringUser,
                     },
                     {
                         label: formatMessage(intlMessages.confirm),
-                        onClick: () => setOpenDialog(null),
+                        onClick: () => restoreUser(userId),
                         color: 'success',
                         variant: 'contained',
-                        autoFocus: true
+                        autoFocus: true,
+                        loading: isRestoringUser,
                     }
                 ]}
             />
@@ -224,14 +259,16 @@ export const UserPersonalDetailsDangerZone = ({
                 actions={[
                     {
                         label: formatMessage(intlMessages.cancel),
-                        onClick: () => setOpenDialog(null)
+                        onClick: () => setOpenDialog(null),
+                        disabled: isDeletingUser,
                     },
                     {
                         label: formatMessage(intlMessages.confirm),
-                        onClick: () => setOpenDialog(null),
+                        onClick: () => deleteUser(userId),
                         color: 'error',
                         variant: 'contained',
-                        autoFocus: true
+                        autoFocus: true,
+                        loading: isDeletingUser,
                     }
                 ]}
             />

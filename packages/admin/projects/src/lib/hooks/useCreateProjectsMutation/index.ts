@@ -4,7 +4,7 @@ import { CreateProjectFormData } from '../useCreateProjectForm';
 
 const CREATE_PROJECTS_ROUTE = '/api/v1/identity/projects';
 
-export const useCreateProjectsMutation = () => {
+export const useCreateProjectsMutation = (onSuccess?: () => void, onError?: (error: Error) => void) => {
     const httpClient = useHttpClient();
     const { user } = useUser();
 
@@ -14,5 +14,8 @@ export const useCreateProjectsMutation = () => {
                 ...data,
                 userIds: [user?.id, ...data.userIds]
             })
+        ,
+        onSuccess,
+        onError
     });
 };
