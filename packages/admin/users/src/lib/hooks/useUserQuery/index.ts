@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { useHttpClient } from '@connect/admin-utils';
+import { AxiosError } from 'axios';
 
 /**
  * Response type for the user query.
@@ -70,6 +71,7 @@ export const useUserQuery = (id?: string) => {
         gcTime: 0,
         refetchOnMount: 'always',
         refetchOnWindowFocus: 'always',
-        refetchOnReconnect: 'always'
+        refetchOnReconnect: 'always',
+        throwOnError: true
     });
 };

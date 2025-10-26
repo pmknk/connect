@@ -7,7 +7,8 @@ import Tooltip from '@mui/material/Tooltip';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 
-import { ExtendedTheme, Tabs } from '@connect/admin-ui';
+import { ERROR_STATUS_CODES, ErrorBoundary } from '@connect/admin-utils';
+import { ExtendedTheme, InternalServerError, NotFoundError, Tabs } from '@connect/admin-ui';
 
 import { defineMessages, useIntl } from 'react-intl';
 import { Link, useParams, useLocation } from 'react-router-dom';
@@ -24,6 +25,9 @@ import {
     USER_TAB_PROFILE,
     USER_TAB_SECURITY
 } from '../../constants';
+import { useEffect, useState } from 'react';
+import { AxiosError } from 'axios';
+import { Button } from '@mui/material';
 
 const intlMessages = defineMessages({
     userProfile: {
@@ -45,6 +49,18 @@ const intlMessages = defineMessages({
     back: {
         id: 'user.back',
         defaultMessage: 'Back to users'
+    },
+    userNotFound: {
+        id: 'user.userNotFound',
+        defaultMessage: 'User not found'
+    },
+    userNotFoundDescription: {
+        id: 'user.userNotFoundDescription',
+        defaultMessage: 'The user you are looking for does not exist or has been deleted. You can go back to the users list to view all users.'
+    },
+    goToUsers: {
+        id: 'user.goToUsers',
+        defaultMessage: 'Go to users'
     }
 });
 
@@ -56,7 +72,7 @@ const User = () => {
     const { formatMessage } = useIntl();
     const isMobile = useMediaQuery(breakpoints.down('sm'));
 
-    const { data: userQueryResponse, isLoading, error } = useUserQuery(id);
+    const { data: userQueryResponse, isLoading} = useUserQuery(id);
 
     const backUrl = locationState?.backUrl || USERS_ROUTE;
 
@@ -122,4 +138,25 @@ const User = () => {
     );
 };
 
-export default User;
+export default () => {
+    const { formatMessage } = useIntl();
+
+    return (
+        <ErrorBoundary fallback={({ error }) => {
+            if (error instanceof AxiosError && error.response?.status === ERROR_STATUS_CODES.NOT_FOUND) {
+                return <NotFoundError
+                    title={formatMessage(intlMessages.userNotFound)}
+                    subtitle={formatMessage(intlMessages.userNotFoundDescription)}
+                    actions={
+                        <Button variant="contained" color="primary" component={Link} to={USERS_ROUTE}>
+                            {formatMessage(intlMessages.goToUsers)}
+                        </Button>
+                    }
+                />;
+            }
+            return <InternalServerError />;
+        }}>
+            <User />
+        </ErrorBoundary>
+    );
+};

@@ -104,7 +104,7 @@ export class ErrorBoundary extends Component<
             return (
                 <ErrorBoundaryContext.Provider
                     value={{
-                        showError: this.showError,
+                        showError: (error: Error | null) => error && this.showError(error),
                         reload: this.reloadComponent
                     }}
                 >
@@ -119,7 +119,7 @@ export class ErrorBoundary extends Component<
         return (
             <ErrorBoundaryContext.Provider
                 value={{
-                    showError: this.showError,
+                    showError: (error: Error | null) => error && this.showError(error),
                     reload: this.reloadComponent
                 }}
             >

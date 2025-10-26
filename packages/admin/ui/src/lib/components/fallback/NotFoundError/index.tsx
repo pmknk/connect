@@ -7,10 +7,12 @@ import { FormattedMessage } from 'react-intl';
 import { GenericPageErrorFallback } from '../GenericPageErrorFallback';
 
 interface NotFoundErrorProps {
+    title?: string;
+    subtitle?: string;
     actions?: ReactNode;
 }
 
-export const NotFoundError = ({ actions }: NotFoundErrorProps) => {
+export const NotFoundError = ({ title, subtitle, actions }: NotFoundErrorProps) => {
     const location = useLocation();
     const from = (location.state as { from?: unknown } | undefined)?.from;
     const backTo: To =
@@ -19,18 +21,14 @@ export const NotFoundError = ({ actions }: NotFoundErrorProps) => {
             : from && typeof from === 'object'
             ? (from as To)
             : '/';
+
+    const titleContent = title ?? <FormattedMessage id="not-found" defaultMessage="Page Not Found" />;
+    const subtitleContent = subtitle ?? <FormattedMessage id="not-found-description" defaultMessage="The content you are looking for doesn’t exist or has been moved." />;
     return (
         <GenericPageErrorFallback
             icon={<FileQuestion size={80} />}
-            title={
-                <FormattedMessage id="not-found" defaultMessage="Page Not Found" />
-            }
-            subtitle={
-                <FormattedMessage
-                    id="not-found-description"
-                    defaultMessage="The content you are looking for doesn’t exist or has been moved."
-                />
-            }
+            title={titleContent}
+            subtitle={subtitleContent}
             actions={
                 actions ?? (
                     <Stack direction="row" spacing={2} justifyContent="center">
