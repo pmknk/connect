@@ -17,3 +17,4 @@ export * from './store/store';
 export * from './helpers/renderElement';
 
 export * from './constants';
+export * from './utils';

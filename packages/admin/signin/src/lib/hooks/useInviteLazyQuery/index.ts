@@ -1,6 +1,5 @@
-import { ERROR_STATUS_CODES, useHttpClient } from "@connect/admin-utils";
+import { ERROR_STATUS_CODES, isNotFoundError, useHttpClient } from "@connect/admin-utils";
 import { useQueryClient } from "@tanstack/react-query";
-import { AxiosError } from "axios";
 import { useState } from "react";
 
 export type InviteQueryResponse = {
@@ -53,6 +52,6 @@ export const useInviteLazyQuery = () => {
         data,
         error,
         isLoading,
-        isNotFoundError: error instanceof AxiosError && error.response?.status === ERROR_STATUS_CODES.NOT_FOUND
+        isNotFoundError: isNotFoundError(error as Error)
     };
 };

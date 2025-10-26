@@ -3,11 +3,11 @@ import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import Stack from '@mui/material/Stack';
 import Tooltip from '@mui/material/Tooltip';
-
+import Button from '@mui/material/Button';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 
-import { ERROR_STATUS_CODES, ErrorBoundary } from '@connect/admin-utils';
+import { ErrorBoundary, isNotFoundError } from '@connect/admin-utils';
 import { ExtendedTheme, InternalServerError, NotFoundError, Tabs } from '@connect/admin-ui';
 
 import { defineMessages, useIntl } from 'react-intl';
@@ -25,9 +25,6 @@ import {
     USER_TAB_PROFILE,
     USER_TAB_SECURITY
 } from '../../constants';
-import { useEffect, useState } from 'react';
-import { AxiosError } from 'axios';
-import { Button } from '@mui/material';
 
 const intlMessages = defineMessages({
     userProfile: {
@@ -143,7 +140,7 @@ export default () => {
 
     return (
         <ErrorBoundary fallback={({ error }) => {
-            if (error instanceof AxiosError && error.response?.status === ERROR_STATUS_CODES.NOT_FOUND) {
+            if (isNotFoundError(error as Error)) {
                 return <NotFoundError
                     title={formatMessage(intlMessages.userNotFound)}
                     subtitle={formatMessage(intlMessages.userNotFoundDescription)}

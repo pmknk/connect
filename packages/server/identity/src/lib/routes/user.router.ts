@@ -5,6 +5,8 @@ import { getUsersRequestSchema } from '../dtos/get-users.dto';
 import { TOKEN_SCOPES } from '../constants';
 import { getUserRequestSchema } from '../dtos/get-user.dto';
 import { updateUserRequestSchema } from '../dtos/update-user.dto';
+import { deleteUserRequestSchema } from '../dtos/delete-user.dto';
+import { restoreUserRequestSchema } from '../dtos/restore-user.dto';
 
 /**
  * Router responsible for handling user-related routes
@@ -71,6 +73,30 @@ export class UserRouter {
                 schema: updateUserRequestSchema
             },
             this.userController.updateUser.bind(this.userController)
+        );
+
+        fastify.delete(
+            `${ROUTE_PATHS.USERS}/:id`,
+            {
+                schema: deleteUserRequestSchema,
+                config: {
+                    auth: true,
+                    scope: TOKEN_SCOPES.ADMIN_ACCESS
+                }
+            },
+            this.userController.deleteUser.bind(this.userController)
+        );
+
+        fastify.post(
+            `${ROUTE_PATHS.USERS}/:id/restore`,
+            {
+                schema: restoreUserRequestSchema,
+                config: {
+                    auth: true,
+                    scope: TOKEN_SCOPES.ADMIN_ACCESS
+                }
+            },
+            this.userController.restoreUser.bind(this.userController)
         );
     }
 }

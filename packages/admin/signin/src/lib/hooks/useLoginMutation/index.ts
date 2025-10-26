@@ -1,8 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
-import { useAuth, useErrorBoundary, useHttpClient } from '@connect/admin-utils';
+import { isUnauthorizedError, useAuth, useErrorBoundary, useHttpClient } from '@connect/admin-utils';
 import { LoginFormData } from '../useLoginForm';
 import { useNavigate } from 'react-router-dom';
-import { AxiosError } from 'axios';
 import { useState } from 'react';
 
 export type LoginMutationResponse = {
@@ -69,10 +68,7 @@ export const useLoginMutation = () => {
                 navigate('/');
             },
             onError(error) {
-                if (
-                    error instanceof AxiosError &&
-                    error.response?.status === 401
-                ) {
+                if (isUnauthorizedError(error)) {
                     setIsUnauthorized(true);
                 } else {
                     showError(error);

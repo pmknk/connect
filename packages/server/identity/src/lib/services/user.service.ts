@@ -101,6 +101,24 @@ export class UserService {
     }
 
     /**
+     * Deletes a user
+     * @param id - The unique identifier of the user.
+     * @returns A promise that resolves when the user is deleted
+     */
+    async delete(id: string): Promise<void> {
+        await this.userModel.destroy({ where: { id } });
+    }
+
+    /**
+     * Restores a deleted user
+     * @param id - The unique identifier of the user.
+     * @returns A promise that resolves when the user is restored
+     */
+    async restore(id: string): Promise<void> {
+        await this.userModel.restore({ where: { id } });
+    }
+
+    /**
      * Updates a user
      * @param dto - The update user request dto
      * @returns The updated user

@@ -12,6 +12,8 @@ import {
     toGetUserResponseDto
 } from '../dtos/get-user.dto';
 import { toUpdateUserRequestDto, toUpdateUserResponseDto } from '../dtos/update-user.dto';
+import { toDeleteUserRequestDto } from '../dtos/delete-user.dto';
+import { toRestoreUserRequestDto } from '../dtos/restore-user.dto';
 
 /**
  * Controller class for handling user-related HTTP requests
@@ -85,5 +87,35 @@ export class UserController {
                     )
                 )
             );
+    }
+
+    /**
+     * Deletes a user
+     * @param request - The Fastify request object containing the user ID
+     * @param reply - The Fastify reply object used to send the response
+     * @returns {Promise<void>} A promise that resolves when the user is deleted
+     */
+    async deleteUser(
+        request: FastifyRequest,
+        reply: FastifyReply
+    ): Promise<void> {
+        const dto = toDeleteUserRequestDto(request);
+        await this.userService.delete(dto.id);
+        return reply.status(204).send();
+    }
+
+    /**
+     * Restores a deleted user
+     * @param request - The Fastify request object containing the user ID
+     * @param reply - The Fastify reply object used to send the response
+     * @returns {Promise<void>} A promise that resolves when the user is restored
+     */
+    async restoreUser(
+        request: FastifyRequest,
+        reply: FastifyReply
+    ): Promise<void> {
+        const dto = toRestoreUserRequestDto(request);
+        await this.userService.restore(dto.id);
+        return reply.status(204).send();
     }
 }
