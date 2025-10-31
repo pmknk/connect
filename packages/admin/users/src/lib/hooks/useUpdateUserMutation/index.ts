@@ -1,4 +1,4 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { useHttpClient } from "@content/admin-utils";
 import { UserFormData } from "../useUserForm";
 
@@ -12,16 +12,12 @@ type UpdateUserMutationResponse = {
 
 export const useUpdateUserMutation = (onSuccess?: () => void) => {
     const httpClient = useHttpClient();
-    const queryClient = useQueryClient();
 
     return useMutation({
         mutationKey: ['update-user'],
         mutationFn: (data: UserFormData) =>
             httpClient.put<UpdateUserMutationResponse>(UPDATE_USER_ROUTE, data)
         ,
-        onSuccess: ({ data }) => {
-            queryClient.invalidateQueries({ queryKey: ['user', data.data.id] });
-            onSuccess?.();
-        }
+        onSuccess
     });
 };
