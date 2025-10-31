@@ -2,8 +2,8 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import { useTheme } from '@mui/material';
-import { ExtendedTheme, FormField } from '@connect/admin-ui';
-import { usePermissionAccess, useSnackbar } from '@connect/admin-utils';
+import { ExtendedTheme, FormField } from '@content/admin-ui';
+import { usePermissionAccess, useSnackbar } from '@content/admin-utils';
 
 import { defineMessages, useIntl } from 'react-intl';
 

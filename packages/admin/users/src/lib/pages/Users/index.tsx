@@ -6,7 +6,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import Container from "@mui/material/Container"
 import { useTheme } from "@mui/material";
 
-import { ExtendedTheme } from "@connect/admin-ui";
+import { ExtendedTheme } from "@content/admin-ui";
 
 import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";

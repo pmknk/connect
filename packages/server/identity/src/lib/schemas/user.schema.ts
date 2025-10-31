@@ -1,4 +1,4 @@
-import { SchemaDefinition } from '@connect/server-database';
+import { SchemaDefinition } from '@content/server-database';
 import type { Project } from './project.schema';
 import type { Role } from './role.schema';
 import type { Invite } from './invite.schema';

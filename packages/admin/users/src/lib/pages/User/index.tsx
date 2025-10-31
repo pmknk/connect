@@ -7,8 +7,8 @@ import Button from '@mui/material/Button';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 
-import { ErrorBoundary, isNotFoundError } from '@connect/admin-utils';
-import { ExtendedTheme, InternalServerError, NotFoundError, Tabs } from '@connect/admin-ui';
+import { ErrorBoundary, isNotFoundError } from '@content/admin-utils';
+import { ExtendedTheme, InternalServerError, NotFoundError, Tabs } from '@content/admin-ui';
 
 import { defineMessages, useIntl } from 'react-intl';
 import { Link, useParams, useLocation } from 'react-router-dom';

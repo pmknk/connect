@@ -1,5 +1,5 @@
 import { Stack } from '@mui/material';
-import { FormField } from '@connect/admin-ui';
+import { FormField } from '@content/admin-ui';
 import { Control } from 'react-hook-form';
 import { CreateUserFormData } from '../../../hooks/useCreateUserForm';
 import { defineMessages, useIntl } from 'react-intl';

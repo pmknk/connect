@@ -1,5 +1,5 @@
 import { injectable } from 'inversify';
-import { FastifyApplicationInstance } from '@connect/server-core';
+import { FastifyApplicationInstance } from '@content/server-core';
 import { ProjectController } from '../controllers/project.controller';
 import { TOKEN_SCOPES } from '../constants';
 import { createProjectRequestSchema } from '../dtos/create-project.dto';

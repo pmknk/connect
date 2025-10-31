@@ -1,7 +1,7 @@
-import createApp from '@connect/server-core';
+import createApp from '@content/server-core';
 
-import identity from '@connect/server-identity';
-import database from '@connect/server-database';
+import identity from '@content/server-identity';
+import database from '@content/server-database';
 import cors from '@fastify/cors';
 
 import { config } from './config';

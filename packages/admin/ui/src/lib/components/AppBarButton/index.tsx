@@ -1,4 +1,4 @@
-import { ExtendedTheme } from "@connect/admin-ui"
+import { ExtendedTheme } from "@content/admin-ui"
 
 import Button from "@mui/material/Button"
 import Typography from "@mui/material/Typography"

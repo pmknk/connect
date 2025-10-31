@@ -1,4 +1,4 @@
-import { SchemaDefinition } from '@connect/server-database';
+import { SchemaDefinition } from '@content/server-database';
 import { Role } from './role.schema';
 import {
     Model,

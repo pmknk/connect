@@ -1,7 +1,7 @@
-import { Core } from '@connect/admin-core';
-import { signin } from '@connect/admin-signin';
-import { projects } from '@connect/admin-projects';
-import { users } from '@connect/admin-users';
+import { Core } from '@content/admin-core';
+import { signin } from '@content/admin-signin';
+import { projects } from '@content/admin-projects';
+import { users } from '@content/admin-users';
 
 export function App() {
     return (

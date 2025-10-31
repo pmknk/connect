@@ -1,5 +1,5 @@
 import { FormattedMessage } from 'react-intl';
-import { AppBarButton, ExtendedTheme } from '@connect/admin-ui'
+import { AppBarButton, ExtendedTheme } from '@content/admin-ui'
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useTheme } from '@mui/material/styles';
 import { MenuItem, Typography, useMediaQuery } from '@mui/material';

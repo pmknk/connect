@@ -4,8 +4,8 @@ import { FormattedMessage } from 'react-intl';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 
-import { useErrorBoundary } from '@connect/admin-utils';
-import { FullPageLoader } from '@connect/admin-ui';
+import { useErrorBoundary } from '@content/admin-utils';
+import { FullPageLoader } from '@content/admin-ui';
 
 import { AppBar } from '../../component/AppBar';
 import { useMeQuery } from '../../hooks/useMeQuery';

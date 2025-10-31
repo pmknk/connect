@@ -1,5 +1,5 @@
 {
-    "name": "@connect/admin-users",
+    "name": "@content/admin-users",
     "version": "0.0.1",
     "type": "module",
     "main": "./dist/index.esm.js",

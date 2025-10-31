@@ -5,7 +5,7 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { useTheme } from '@mui/material/styles';
 
-import { ExtendedTheme } from '@connect/admin-ui';
+import { ExtendedTheme } from '@content/admin-ui';
 import { UsersQueryResponse } from '../../../hooks/useUsersQuery';
 
 type ProjectsMenuProps = {

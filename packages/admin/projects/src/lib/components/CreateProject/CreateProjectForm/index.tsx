@@ -1,6 +1,6 @@
 import { Control } from 'react-hook-form';
 import Stack from '@mui/material/Stack';
-import { FormField } from '@connect/admin-ui';
+import { FormField } from '@content/admin-ui';
 import { defineMessages, FormattedMessage, useIntl } from 'react-intl';
 
 import { type CreateProjectFormData } from '../../../hooks/useCreateProjectForm';

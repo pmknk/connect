@@ -1,11 +1,11 @@
 import {
     type FastifyApplicationInstance,
     createPlugin
-} from '@connect/server-core';
+} from '@content/server-core';
 import {
     ConnectionService,
     SchemaRegistryService
-} from '@connect/server-database';
+} from '@content/server-database';
 
 import initializeDataSeed from './seeds/initialization-data';
 

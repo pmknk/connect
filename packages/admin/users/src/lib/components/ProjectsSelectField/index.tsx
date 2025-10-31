@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import { SelectProps } from '@mui/material';
 
-import { FormSelect, SearchMenuItem, SelectedValue } from '@connect/admin-ui';
+import { FormSelect, SearchMenuItem, SelectedValue } from '@content/admin-ui';
 import { Control } from 'react-hook-form';
 import { defineMessages, useIntl } from 'react-intl';
 

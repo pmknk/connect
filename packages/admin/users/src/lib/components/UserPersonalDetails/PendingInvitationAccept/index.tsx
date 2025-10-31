@@ -10,7 +10,7 @@ import { Check, Copy } from 'lucide-react';
 import { useCallback, useState } from 'react';
 import { defineMessages, useIntl } from 'react-intl';
 import Tooltip from '@mui/material/Tooltip';
-import { useSnackbar } from '@connect/admin-utils';
+import { useSnackbar } from '@content/admin-utils';
 
 const intlMessages = defineMessages({
     pendingInvitation: {

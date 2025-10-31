@@ -1,5 +1,5 @@
 {
-    "name": "@connect/admin-core",
+    "name": "@content/admin-core",
     "version": "0.0.1",
     "type": "module",
     "main": "./dist/index.esm.js",

@@ -1,7 +1,7 @@
 import { Button, Stack, useMediaQuery, useTheme } from '@mui/material';
 
-import { PermissionAccess, useSnackbar } from '@connect/admin-utils';
-import { ExtendedTheme } from '@connect/admin-ui';
+import { PermissionAccess, useSnackbar } from '@content/admin-utils';
+import { ExtendedTheme } from '@content/admin-ui';
 
 import { defineMessages, useIntl } from 'react-intl';
 import { useEffect, useState } from 'react';

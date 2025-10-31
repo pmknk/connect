@@ -13,8 +13,8 @@ import { defineMessages, useIntl } from 'react-intl';
 import { Link, useLocation } from 'react-router-dom';
 import { ChevronDown, Pencil } from 'lucide-react';
 
-import { ExtendedTheme } from '@connect/admin-ui';
-import { PermissionAccess, useUser } from '@connect/admin-utils';
+import { ExtendedTheme } from '@content/admin-ui';
+import { PermissionAccess, useUser } from '@content/admin-utils';
 
 import { UsersQueryResponse } from '../../../hooks/useUsersQuery';
 import { USERS_ROUTE } from '../../../constants';

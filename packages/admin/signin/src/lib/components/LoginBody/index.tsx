@@ -1,4 +1,4 @@
-import { FormField } from '@connect/admin-ui';
+import { FormField } from '@content/admin-ui';
 import { Alert, AlertTitle } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 import { Control } from 'react-hook-form';

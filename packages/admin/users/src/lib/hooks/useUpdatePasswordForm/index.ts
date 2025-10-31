@@ -3,7 +3,7 @@ import { useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { defineMessages, useIntl } from 'react-intl';
 import { type JSONSchemaType } from 'ajv';
-import { PASSWORD_PATTERN } from '@connect/admin-utils';
+import { PASSWORD_PATTERN } from '@content/admin-utils';
 
 export type UpdatePasswordFormData = {
     password: string;

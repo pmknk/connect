@@ -1,4 +1,4 @@
-import type { FastifyApplicationInstance } from '@connect/server-core';
+import type { FastifyApplicationInstance } from '@content/server-core';
 import { injectable } from 'inversify';
 import { InitController } from '../controllers/init.controller';
 

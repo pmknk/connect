@@ -1,8 +1,8 @@
 import { injectable } from 'inversify';
 import { ModelStatic, Op } from 'sequelize';
 import type { Transaction } from 'sequelize';
-import { NotFoundError } from '@connect/server-utils';
-import { ConnectionService, ModelService } from '@connect/server-database';
+import { NotFoundError } from '@content/server-utils';
+import { ConnectionService, ModelService } from '@content/server-database';
 
 import type { User } from '../schemas/user.schema';
 

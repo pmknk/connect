@@ -8,7 +8,7 @@ import CardActions from '@mui/material/CardActions';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 
-import { ExtendedTheme } from '@connect/admin-ui';
+import { ExtendedTheme } from '@content/admin-ui';
 import { useTheme } from '@mui/material';
 import { defineMessages, useIntl } from 'react-intl';
 import { ArrowUpRight } from 'lucide-react';

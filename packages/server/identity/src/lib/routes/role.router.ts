@@ -1,5 +1,5 @@
 import { injectable } from 'inversify';
-import { FastifyApplicationInstance } from '@connect/server-core';
+import { FastifyApplicationInstance } from '@content/server-core';
 import { TOKEN_SCOPES } from '../constants';
 import { RoleController } from '../controllers/role.controller';
 

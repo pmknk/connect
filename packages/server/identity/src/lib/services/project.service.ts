@@ -1,4 +1,4 @@
-import { ConnectionService, ModelService } from '@connect/server-database';
+import { ConnectionService, ModelService } from '@content/server-database';
 import { injectable } from 'inversify';
 
 import { type ModelStatic } from 'sequelize';

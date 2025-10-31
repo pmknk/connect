@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { useHttpClient, useUser } from '@connect/admin-utils';
+import { useHttpClient, useUser } from '@content/admin-utils';
 import { useEffect } from 'react';
 
 export type MeQueryResponse = {

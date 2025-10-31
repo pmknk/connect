@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { useHttpClient } from '@connect/admin-utils';
+import { useHttpClient } from '@content/admin-utils';
 import { AxiosError } from 'axios';
 
 /**

@@ -1,4 +1,4 @@
-import { useHttpClient } from '@connect/admin-utils';
+import { useHttpClient } from '@content/admin-utils';
 import { useMutation } from '@tanstack/react-query';
 import { CreateUserFormData } from '../useCreateUserForm';
 

@@ -1,5 +1,5 @@
 {
-    "name": "@connect/server-core",
+    "name": "@content/server-core",
     "version": "0.0.1",
     "main": "./dist/index.js",
     "module": "./dist/index.js",

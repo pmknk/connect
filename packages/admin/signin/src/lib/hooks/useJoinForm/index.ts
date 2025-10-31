@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 
 import { ajvResolver } from '@hookform/resolvers/ajv';
 import { type JSONSchemaType } from 'ajv';
-import { PASSWORD_PATTERN } from '@connect/admin-utils';
+import { PASSWORD_PATTERN } from '@content/admin-utils';
 
 export type JoinFormData = {
     code?: string;

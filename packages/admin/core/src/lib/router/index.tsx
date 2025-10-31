@@ -1,6 +1,6 @@
 import { lazy } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { renderElement, usePlugins } from '@connect/admin-utils';
+import { renderElement, usePlugins } from '@content/admin-utils';
 
 const LazyMain = lazy(() => import('../pages/Main'));
 

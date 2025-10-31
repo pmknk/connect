@@ -4,7 +4,7 @@ import Divider from '@mui/material/Divider';
 
 
 import { defineMessages, useIntl } from 'react-intl';
-import { FormField } from '@connect/admin-ui';
+import { FormField } from '@content/admin-ui';
 
 import { useUpdatePasswordForm } from '../../hooks/useUpdatePasswordForm';
 import { UserPersonalDetailsDangerZone } from './UserPersonalDetailsDangerZone';

@@ -6,7 +6,7 @@ import TextField from '@mui/material/TextField';
 import { useTheme } from '@mui/material/styles';
 import { useMediaQuery } from '@mui/material';
 
-import { ExtendedTheme } from '@connect/admin-ui';
+import { ExtendedTheme } from '@content/admin-ui';
 
 import { useMemo } from 'react';
 import { useProjectsFilter } from '../../hooks/useProjectsFilter';

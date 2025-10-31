@@ -1,7 +1,7 @@
 import { injectable } from 'inversify';
 
-import { ConnectionService, ModelService } from '@connect/server-database';
-import { NotFoundError } from '@connect/server-utils';
+import { ConnectionService, ModelService } from '@content/server-database';
+import { NotFoundError } from '@content/server-utils';
 import { type CreateInviteDto } from '../dtos/create-invite.dto';
 
 import { type Invite } from '../schemas/invite.schema';

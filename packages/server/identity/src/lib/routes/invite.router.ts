@@ -1,6 +1,6 @@
 import { injectable } from 'inversify';
 import { InviteController } from '../controllers/invite.controller';
-import { FastifyApplicationInstance } from '@connect/server-core';
+import { FastifyApplicationInstance } from '@content/server-core';
 import { createInviteRequestSchema } from '../dtos/create-invite.dto';
 import { TOKEN_SCOPES } from '../constants';
 import { deleteInviteRequestSchema } from '../dtos/delete-invite.dto';

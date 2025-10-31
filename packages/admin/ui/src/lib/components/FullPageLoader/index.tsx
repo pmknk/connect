@@ -29,7 +29,7 @@ export const FullPageLoader = ({
             {showSpinner && <CircularProgress />}
             {showLogo && (
                 <Typography variant="h5" fontWeight={300}>
-                    Connect Studio
+                    Content Studio
                 </Typography>
             )}
             {loadingText && (

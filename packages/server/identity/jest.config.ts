@@ -10,7 +10,7 @@ const swcJestConfig = JSON.parse(
 swcJestConfig.swcrc = false;
 
 export default {
-    displayName: '@connect/server-identity',
+    displayName: '@content/server-identity',
     preset: '../../../jest.preset.js',
     testEnvironment: 'node',
     transform: {

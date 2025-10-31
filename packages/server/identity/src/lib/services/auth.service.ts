@@ -1,4 +1,4 @@
-import { UnauthorizedError } from '@connect/server-utils';
+import { UnauthorizedError } from '@content/server-utils';
 import { FastifyRequest } from 'fastify';
 import { injectable } from 'inversify';
 import { TokenExpiredError } from 'jsonwebtoken';
@@ -6,7 +6,7 @@ import { TokenExpiredError } from 'jsonwebtoken';
 import { TOKEN_SCOPE } from '../constants';
 import { JwtService } from './jwt.service';
 
-import { ModelService } from '@connect/server-database';
+import { ModelService } from '@content/server-database';
 import { ModelStatic } from 'sequelize';
 
 import type { User } from '../schemas/user.schema';

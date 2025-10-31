@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { defineMessages, useIntl } from 'react-intl';
 
 import { Stack, Typography } from '@mui/material';
-import { useSnackbar } from '@connect/admin-utils';
-import { ConfirmDialog } from '@connect/admin-ui';
+import { useSnackbar } from '@content/admin-utils';
+import { ConfirmDialog } from '@content/admin-ui';
 import { useQueryClient } from '@tanstack/react-query';
 
 import { UserPersonalDetailsDangerZoneActionAlert } from './UserPersonalDetailsDangerZoneActionAlert';

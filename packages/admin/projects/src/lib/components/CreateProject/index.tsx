@@ -7,9 +7,9 @@ import Stack from '@mui/material/Stack';
 import { useTheme } from '@mui/material/styles';
 import { useMediaQuery } from '@mui/material';
 
-import { ExtendedTheme } from '@connect/admin-ui';
+import { ExtendedTheme } from '@content/admin-ui';
 
-import { PermissionAccess, useSnackbar } from '@connect/admin-utils';
+import { PermissionAccess, useSnackbar } from '@content/admin-utils';
 import { CreateProjectForm } from './CreateProjectForm';
 import { useCreateProjectForm } from '../../hooks/useCreateProjectForm';
 import { CreateProjectDialog } from './CreateProjectDialog';

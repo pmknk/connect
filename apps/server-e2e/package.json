@@ -1,5 +1,5 @@
 {
-    "name": "@connect/server-e2e",
+    "name": "@content/server-e2e",
     "version": "0.0.1",
     "private": true,
     "nx": {

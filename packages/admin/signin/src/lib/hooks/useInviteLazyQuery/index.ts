@@ -1,4 +1,4 @@
-import { ERROR_STATUS_CODES, isNotFoundError, useHttpClient } from "@connect/admin-utils";
+import { ERROR_STATUS_CODES, isNotFoundError, useHttpClient } from "@content/admin-utils";
 import { useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 

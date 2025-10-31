@@ -1,4 +1,4 @@
-import { useHttpClient } from '@connect/admin-utils';
+import { useHttpClient } from '@content/admin-utils';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 const RESTORE_USER_ROUTE = '/api/v1/identity/users/:id/restore';

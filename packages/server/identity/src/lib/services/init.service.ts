@@ -2,8 +2,8 @@ import {
     ConnectionService,
     ModelService,
     type Transaction
-} from '@connect/server-database';
-import { ConflictError, NotFoundError } from '@connect/server-utils';
+} from '@content/server-database';
+import { ConflictError, NotFoundError } from '@content/server-utils';
 import { injectable } from 'inversify';
 import { type ModelStatic } from 'sequelize';
 

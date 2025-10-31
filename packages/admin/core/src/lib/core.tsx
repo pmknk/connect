@@ -9,8 +9,8 @@ import {
     ErrorBoundary,
     PluginDefinition,
     SnackbarProvider,
-} from '@connect/admin-utils';
-import { InternalServerError, theme } from '@connect/admin-ui';
+} from '@content/admin-utils';
+import { InternalServerError, theme } from '@content/admin-ui';
 
 import { Router } from './router';
 

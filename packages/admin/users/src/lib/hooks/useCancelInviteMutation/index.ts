@@ -1,4 +1,4 @@
-import { useHttpClient } from "@connect/admin-utils";
+import { useHttpClient } from "@content/admin-utils";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 const CANCEL_INVITE_ROUTE = '/api/v1/identity/invites/:id';
