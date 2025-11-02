@@ -15,7 +15,7 @@ import { Link } from 'react-router-dom';
 import { ArrowUpRight } from 'lucide-react';
 
 import type { ProjectsQueryResponse } from '../../../hooks/useProjectsQuery';
-import { PROJECTS_ROUTE } from '../../../constants';
+import { PROJECTS_ROUTES } from '../../../constants';
 
 const intlMessages = defineMessages({
     contentItems: {
@@ -68,7 +68,7 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
                     justifyContent: 'space-between'
                 }}
                 component={Link}
-                to={`${PROJECTS_ROUTE}/${project.id}`}
+                to={`${PROJECTS_ROUTES.PROJECT.replace(':projectId', project.id)}`}
             >
                 <CardContent
                     sx={{

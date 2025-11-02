@@ -1,4 +1,9 @@
-export const PROJECTS_ROUTE = '/projects';
+export const PROJECTS_ROUTES = {
+    PROJECT: '/projects/:projectId',
+    PROJECTS: '/projects'
+}
+
 export const PROJECTS_SLOTS = {
-    PROJECTS_SIDEBAR_MENU_ITEMS: 'projectsSidebarMenuItems'
+    PROJECT_SIDEBAR_MENU_ITEMS: 'projectSidebarMenuItems',
+    PROJECT_ROUTES: 'projectRoutes'
 }

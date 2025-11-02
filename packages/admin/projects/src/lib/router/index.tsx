@@ -7,7 +7,7 @@ const LazyProject = lazy(() => import('../pages/Project'))
 export const Router = () => {
     return (
         <Routes>
-            <Route path="/:projectId" element={<LazyProject />} />
+            <Route path="/:projectId/*" element={<LazyProject />} />
             <Route path="/" element={<LazyProjects />} />
         </Routes>
     )

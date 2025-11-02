@@ -2,8 +2,8 @@ import { AppBarButton, ExtendedTheme } from '@content/admin-ui';
 import { MenuItem, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { PROJECTS_ROUTES } from '../../constants';
 
-const PROJECTS_ROUTE = '/projects'
 
 type ProjectsAppBarButtonProps = {
     onClick?: () => void;
@@ -18,8 +18,8 @@ export const ProjectsAppBarButton = ({ onClick }: ProjectsAppBarButtonProps) => 
 
     if (isMobile) {
         return (
-            <MenuItem selected={pathname.includes(PROJECTS_ROUTE)} onClick={() => {
-                navigate(PROJECTS_ROUTE)
+            <MenuItem selected={pathname.includes(PROJECTS_ROUTES.PROJECTS)} onClick={() => {
+                navigate(PROJECTS_ROUTES.PROJECTS)
                 onClick?.()
             }}>
                 <Typography variant="body2">
@@ -33,8 +33,8 @@ export const ProjectsAppBarButton = ({ onClick }: ProjectsAppBarButtonProps) => 
     }
     return (
         <AppBarButton
-            href={PROJECTS_ROUTE}
-            selected={pathname.includes(PROJECTS_ROUTE)}
+            href={PROJECTS_ROUTES.PROJECTS}
+            selected={pathname.includes(PROJECTS_ROUTES.PROJECTS)}
             label={<FormattedMessage 
                 id="main.navbar.projects"
                 defaultMessage="Projects"
