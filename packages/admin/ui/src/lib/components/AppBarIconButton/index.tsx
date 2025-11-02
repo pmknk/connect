@@ -7,8 +7,6 @@ import { ExtendedTheme } from "../../types"
  * Props for the MainMenuIconItem component
  */
 type AppBarIconButtonProps = {
-    /** Unique identifier for the menu item */
-    key: string
     /** Icon element to display */
     icon: ReactNode
     /** Label text or element for the menu item */
@@ -21,17 +19,15 @@ type AppBarIconButtonProps = {
  * A menu item component that displays an icon with optional selection state
  * 
  * @param props - The component props
- * @param props.key - Unique identifier for the menu item
  * @param props.icon - Icon element to display
  * @param props.label - Label text or element for the menu item (currently unused in render)
  * @param props.selected - Whether the menu item is currently selected
  * @returns A ListItem component with icon and styling based on selection state
  */
-export const AppBarIconButton = ({ key, icon, selected }: AppBarIconButtonProps) => {
+export const AppBarIconButton = ({ icon, selected }: AppBarIconButtonProps) => {
     const {palette} = useTheme<ExtendedTheme>()
     return (
         <IconButton
-            key={key}
             sx={{
                 color: palette.slate[100],
                 backgroundColor: selected ? palette.slate[700] : 'transparent',

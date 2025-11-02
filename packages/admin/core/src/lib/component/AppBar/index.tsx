@@ -1,7 +1,8 @@
 import { renderElement, usePlugins } from '@content/admin-utils';
 import { ExtendedTheme, AppBarIconButton } from '@content/admin-ui';
 
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
+import { Bell, CircleUser, Menu as MenuIcon } from 'lucide-react';
 
 import { useTheme } from '@mui/material/styles';
 import MuiAppBar from '@mui/material/AppBar';
@@ -10,10 +11,11 @@ import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import Stack from '@mui/material/Stack';
 import Menu from '@mui/material/Menu';
+import IconButton from '@mui/material/IconButton';
+import { useMediaQuery } from '@mui/material';
 
-import { SLOTS } from '../../constants';
-import { Bell, CircleUser, Menu as MenuIcon } from 'lucide-react';
-import { IconButton, useMediaQuery } from '@mui/material';
+
+import { CORE_SLOTS } from '../../constants';
 export const AppBar = () => {
     const {palette, breakpoints} = useTheme<ExtendedTheme>()
     const isMobile = useMediaQuery(breakpoints.down('sm'));
@@ -24,8 +26,7 @@ export const AppBar = () => {
 
     const { getComponentsBySlot } = usePlugins();
     const navbarLeftMenuItems =
-        getComponentsBySlot(SLOTS.NAVBAR_LEFT_MENU_ITEM) ?? [];
-
+        getComponentsBySlot(CORE_SLOTS.CORE_NAVBAR_LEFT_MENU_ITEM) ?? [];
 
     const handleMenuClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget);
@@ -64,7 +65,9 @@ export const AppBar = () => {
                                 }}
                             >
                                 {navbarLeftMenuItems.map(({ key, component }) => (
-                                    renderElement(component, { onClick: () => setAnchorEl(null), key })
+                                    <Fragment key={key}>
+                                        {renderElement(component, { onClick: () => setAnchorEl(null) })}
+                                    </Fragment>
                                 ))}
                             </Menu>
                         </>
@@ -80,7 +83,9 @@ export const AppBar = () => {
                         }} />
                         <Stack direction="row" spacing={2}>
                             {navbarLeftMenuItems.map(({ key, component }) => (
-                                renderElement(component, { key })
+                                <Fragment key={key}>
+                                    {renderElement(component)}
+                                </Fragment>
                             ))}
                         </Stack>
                     </>}

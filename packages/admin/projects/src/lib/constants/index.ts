@@ -1,4 +1,4 @@
 export const PROJECTS_ROUTE = '/projects';
-export const SLOTS = {
-    PROJECT_SIDEBAR_MENU_ITEM: 'projectSidebarMenuItem'
+export const PROJECTS_SLOTS = {
+    PROJECTS_SIDEBAR_MENU_ITEMS: 'projectsSidebarMenuItems'
 }

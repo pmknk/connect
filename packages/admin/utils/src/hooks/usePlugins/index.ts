@@ -6,9 +6,6 @@ import {
 
 interface UsePluginsReturn {
     plugins: PluginDefinition[];
-    getRoutes: () => PluginDefinition['route'][];
-    getPublicRoutes: () => PluginDefinition['route'][];
-    getPrivateRoutes: () => PluginDefinition['route'][];
     getSlots: () => PluginDefinition['slots'];
     getComponentsBySlot: (slot: string) => PluginDefinition['slots'];
 }
@@ -23,33 +20,6 @@ interface UsePluginsReturn {
  */
 export const usePlugins = (): UsePluginsReturn => {
     const { plugins } = useContext(PluginsRegistryContext);
-    /**
-     * Gets all routes from all registered plugins
-     * @returns {PluginDefinition['routes']} Array of all plugin routes
-     */
-    const getRoutes = (): PluginDefinition['route'][] => {
-        return plugins.flatMap((plugin) => plugin.route ?? []);
-    };
-
-    /**
-     * Gets all public routes from all registered plugins
-     * @returns {PluginDefinition['routes']} Array of all public plugin routes
-     */
-    const getPublicRoutes = (): PluginDefinition['route'][] => {
-        return plugins
-            .flatMap((plugin) => plugin.route ?? [])
-            .filter(({ public: isPublic }) => isPublic);
-    };
-
-    /**
-     * Gets all private routes from all registered plugins
-     * @returns {PluginDefinition['routes']} Array of all private plugin routes
-     */
-    const getPrivateRoutes = (): PluginDefinition['route'][] => {
-        return plugins
-            .flatMap((plugin) => plugin.route ?? [])
-            .filter(({ public: isPublic }) => !isPublic);
-    };
 
     /**
      * Gets all slots from all registered plugins
@@ -70,9 +40,6 @@ export const usePlugins = (): UsePluginsReturn => {
 
     return {
         plugins,
-        getRoutes,
-        getPublicRoutes,
-        getPrivateRoutes,
         getSlots,
         getComponentsBySlot
     };

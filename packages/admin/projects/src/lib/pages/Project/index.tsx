@@ -12,7 +12,7 @@ import { Book, ChartArea, ImageIcon, Settings } from "lucide-react";
 
 import { useProjectQuery } from "../../hooks/useProjectQuery";
 import { ProjectSidebar } from "../../components/ProjectSidebar";
-import { SLOTS } from "../../constants";
+import { PROJECTS_SLOTS } from "../../constants";
 
 const MENU_ITEMS = [
     {
@@ -46,7 +46,7 @@ const Project = () => {
 
     const { getComponentsBySlot } = usePlugins();
 
-    const projectSidebarMenuItems = getComponentsBySlot(SLOTS.PROJECT_SIDEBAR_MENU_ITEM);
+    const projectSidebarMenuItems = getComponentsBySlot(PROJECTS_SLOTS.PROJECTS_SIDEBAR_MENU_ITEMS);
 
     console.log(projectSidebarMenuItems);
 

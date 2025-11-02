@@ -33,6 +33,18 @@
     "include": ["src/**/*.js", "src/**/*.jsx", "src/**/*.ts", "src/**/*.tsx"],
     "references": [
         {
+            "path": "../../packages/admin/media-library/tsconfig.lib.json"
+        },
+        {
+            "path": "../../packages/admin/content-library/tsconfig.lib.json"
+        },
+        {
+            "path": "../../packages/admin/project-settings/tsconfig.lib.json"
+        },
+        {
+            "path": "../../packages/admin/project-insights/tsconfig.lib.json"
+        },
+        {
             "path": "../../packages/admin/users/tsconfig.lib.json"
         },
         {

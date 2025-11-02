@@ -33,7 +33,6 @@ export const ProjectsAppBarButton = ({ onClick }: ProjectsAppBarButtonProps) => 
     }
     return (
         <AppBarButton
-            key={'projects'}
             href={PROJECTS_ROUTE}
             selected={pathname.includes(PROJECTS_ROUTE)}
             label={<FormattedMessage 

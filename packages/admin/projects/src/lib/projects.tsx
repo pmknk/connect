@@ -1,7 +1,4 @@
+import { Route } from "react-router-dom";
 import { Router } from "./router";
 
-export function Projects() {
-    return <Router />
-}
-
-export default Projects;
+export default <Route path="/projects/*" element={<Router />} />;

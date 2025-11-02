@@ -1,7 +1,4 @@
+import { Route } from "react-router-dom";
 import { Router } from "./router";
 
-export function Signin() {
-    return <Router />
-}
-
-export default Signin;
+export default <Route path="/signin/*" element={<Router />} />;

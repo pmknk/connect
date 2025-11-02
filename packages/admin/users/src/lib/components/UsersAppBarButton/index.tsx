@@ -33,7 +33,6 @@ export const UsersAppBarButton = ({ onClick }: UsersAppBarButtonProps) => {
     }
     return (
         <AppBarButton
-            key={'users'}
             href={USERS_ROUTE}
             selected={pathname.includes(USERS_ROUTE)}
             label={<FormattedMessage 

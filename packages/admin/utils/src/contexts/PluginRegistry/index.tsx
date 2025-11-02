@@ -3,19 +3,19 @@ import { ComponentType, Context, createContext, ReactNode } from 'react';
 export type SlotComponent = {
     key: string;
     slot: string;
-    component: ReactNode | ComponentType;
+    component: ReactNode | ComponentType
+    props?: Record<string, any>;
 };
 
 export type RouteDefinition = {
     public?: boolean;
     path: string;
     component: React.ComponentType;
-    props?: any;
+    props?: Record<string, any>;
 };
 
 export type PluginDefinition = {
     name: string;
-    route?: RouteDefinition;
     slots?: SlotComponent[];
 };
 export interface PluginsRegistryContextValue {
