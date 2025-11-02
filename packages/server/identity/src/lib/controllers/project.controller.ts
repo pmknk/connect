@@ -8,6 +8,11 @@ import {
     toCreateProjectResponseDto
 } from '../dtos/create-project.dto';
 import { type GetProjectsResponseDto, toGetProjectsResponseDto } from '../dtos/get-projects.dto';
+import {
+    type GetProjectResponseDto,
+    toGetProjectRequestDto,
+    toGetProjectResponseDto
+} from '../dtos/get-project.dto';
 
 @injectable()
 export class ProjectController {
@@ -47,5 +52,25 @@ export class ProjectController {
                 )
             )
         );
+    }
+
+    /**
+     * Retrieves a project by its ID
+     * @param request - The Fastify request object containing the project ID
+     * @param reply - The Fastify reply object used to send the response
+     * @returns A promise that resolves to the project response DTO
+     */
+    async findById(
+        request: FastifyRequest,
+        reply: FastifyReply
+    ): Promise<GetProjectResponseDto> {
+        const requestDto = toGetProjectRequestDto(request);
+        const project = await this.projectService.findById(
+            requestDto.id,
+            requestDto.include
+        );
+        return reply
+            .status(200)
+            .send(toGetProjectResponseDto(project));
     }
 }

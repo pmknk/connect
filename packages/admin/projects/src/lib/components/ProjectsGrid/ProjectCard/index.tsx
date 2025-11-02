@@ -11,9 +11,11 @@ import Stack from '@mui/material/Stack';
 import { ExtendedTheme } from '@content/admin-ui';
 import { useTheme } from '@mui/material';
 import { defineMessages, useIntl } from 'react-intl';
+import { Link } from 'react-router-dom';
 import { ArrowUpRight } from 'lucide-react';
 
 import type { ProjectsQueryResponse } from '../../../hooks/useProjectsQuery';
+import { PROJECTS_ROUTE } from '../../../constants';
 
 const intlMessages = defineMessages({
     contentItems: {
@@ -65,6 +67,8 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
                     alignItems: 'flex-start',
                     justifyContent: 'space-between'
                 }}
+                component={Link}
+                to={`${PROJECTS_ROUTE}/${project.id}`}
             >
                 <CardContent
                     sx={{

@@ -1,10 +1,9 @@
-import { LoginPage } from '../../support/login.po';
+import { visitLogin, typeLoginEmail, typeLoginPassword, submitLoginForm, clickJoinNow } from '../../utils/login.po';
 
 describe('Signin Login', () => {
-    const login = new LoginPage();
 
     beforeEach(() => {
-        login.visit();
+        visitLogin();
     });
 
     it('should show Authentication Error when invalid credentials are provided', () => {
@@ -15,10 +14,10 @@ describe('Signin Login', () => {
             'signinRequest'
         );
 
-        login.typeEmail('test@test.com');
-        login.typePassword('password');
+        typeLoginEmail('test@test.com');
+        typeLoginPassword('password');
 
-        login.submitForm();
+        submitLoginForm();
         cy.wait('@signinRequest');
 
         cy.contains('Authorization failed').should('be.visible');
@@ -32,24 +31,24 @@ describe('Signin Login', () => {
             'signinRequest'
         );
 
-        login.typeEmail('test@test.com');
-        login.typePassword('password');
+        typeLoginEmail('test@test.com');
+        typeLoginPassword('password');
 
-        login.submitForm();
+        submitLoginForm();
         cy.wait('@signinRequest');
 
         cy.contains('Internal Server Error').should('be.visible');
     });
 
     it('should show required validation messages when submitting empty form', () => {
-        login.submitForm();
+        submitLoginForm();
 
         cy.contains('Email is required').should('be.visible');
         cy.contains('Password is required').should('be.visible');
     });
 
     it('should navigate to /signin/join when clicking Join now', () => {
-        login.clickJoinNow();
+        clickJoinNow();
         cy.location('pathname').should('eq', '/signin/join');
     });
 });

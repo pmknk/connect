@@ -1,26 +1,25 @@
-import { JoinPage } from '../../support/join.po';
+import { visitJoin, submitJoinForm, typeJoinCode, typeJoinPassword, typeJoinConfirmPassword } from '../../utils/join.po';
 
 const INVITE_URL = '**/api/v1/identity/invites/*';
 const SIGNUP_URL = '**/api/v1/identity/auth/signup';
 
 describe('Signin Join', () => {
-    const join = new JoinPage();
 
     beforeEach(() => {
-        join.visit();
+        visitJoin();
     });
 
     describe('Invite code ', () => {
         it('should show validation message when submitting empty code', () => {
-            join.submitForm();
+            submitJoinForm();
             cy.contains('Code is required').should('be.visible');
         });
 
         it('should show not found error when invite code is invalid (404)', () => {
             cy.interceptNotFound('GET', INVITE_URL, { message: 'Not Found' }, 'inviteRequest');
     
-            join.typeCode('WRONGCODE');
-            join.submitForm();
+            typeJoinCode('WRONGCODE');
+            submitJoinForm();
             cy.wait('@inviteRequest');
     
             cy.contains('Invitation code not found').should('be.visible');
@@ -38,8 +37,8 @@ describe('Signin Join', () => {
                 }
             }, 'inviteRequest');
     
-            join.typeCode('VALIDCODE');
-            join.submitForm();
+            typeJoinCode('VALIDCODE');
+            submitJoinForm();
             cy.wait('@inviteRequest');
     
             cy.get('input[name="password"]').should('be.visible');
@@ -60,22 +59,22 @@ describe('Signin Join', () => {
                 }
             }, 'inviteRequest');
     
-            join.typeCode('VALIDCODE');
-            join.submitForm();
+            typeJoinCode('VALIDCODE');
+            submitJoinForm();
             cy.wait('@inviteRequest');
     
             // too short + pattern fail
-            join.typePassword('short');
-            join.typeConfirmPassword('short2');
-            join.submitForm();
+            typeJoinPassword('short');
+            typeJoinConfirmPassword('short2');
+            submitJoinForm();
     
             cy.contains('Password must be at least 8 characters').should('be.visible');
             cy.contains('Passwords do not match').should('be.visible');
 
-            join.typePassword('nopassedregex');
-            join.typeConfirmPassword('short2');
+            typeJoinPassword('nopassedregex');
+            typeJoinConfirmPassword('short2');
 
-            join.submitForm();
+            submitJoinForm();
 
             cy.contains('Password must contain at least one uppercase letter, one lowercase letter, and one number').should('be.visible');
         });
@@ -93,13 +92,13 @@ describe('Signin Join', () => {
     
             cy.interceptCreated('POST', SIGNUP_URL, { data: { success: true } }, 'signupRequest');
     
-            join.typeCode('VALIDCODE');
-            join.submitForm();
+            typeJoinCode('VALIDCODE');
+            submitJoinForm();
             cy.wait('@inviteRequest');
     
-            join.typePassword('ValidPass1');
-            join.typeConfirmPassword('ValidPass1');
-            join.submitForm();
+            typeJoinPassword('ValidPass1');
+            typeJoinConfirmPassword('ValidPass1');
+            submitJoinForm();
             cy.wait('@signupRequest');
     
             cy.location('pathname').should('eq', '/signin');

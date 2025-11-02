@@ -1,10 +1,11 @@
 import { ProjectsAppBarButton } from "./lib/components/ProjectsAppBarButton";
+import { PROJECTS_ROUTE } from "./lib/constants";
 import Projects from "./lib/projects";
 
 export const projects = () => ({
     name: 'projects',
     route: {
-        path: '/projects',
+        path: `${PROJECTS_ROUTE}/*`,
         component: Projects
     },  
     slots: [

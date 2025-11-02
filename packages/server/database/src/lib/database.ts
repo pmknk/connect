@@ -27,7 +27,6 @@ class DatabasePluginInitializer {
             logging: false,
             ...options
         });
-
         fastify.di
             .bind(DATABASE_CONNECTION_CLIENT_PROVIDER)
             .toConstantValue(sequelize);
