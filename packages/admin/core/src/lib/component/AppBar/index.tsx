@@ -2,7 +2,6 @@ import { renderElement, usePlugins } from '@content/admin-utils';
 import { ExtendedTheme, AppBarIconButton } from '@content/admin-ui';
 
 import { useState } from 'react';
-import { Fragment } from 'react/jsx-runtime';
 
 import { useTheme } from '@mui/material/styles';
 import MuiAppBar from '@mui/material/AppBar';
@@ -14,7 +13,7 @@ import Menu from '@mui/material/Menu';
 
 import { SLOTS } from '../../constants';
 import { Bell, CircleUser, Menu as MenuIcon } from 'lucide-react';
-import { IconButton, MenuItem, useMediaQuery } from '@mui/material';
+import { IconButton, useMediaQuery } from '@mui/material';
 export const AppBar = () => {
     const {palette, breakpoints} = useTheme<ExtendedTheme>()
     const isMobile = useMediaQuery(breakpoints.down('sm'));
@@ -38,6 +37,7 @@ export const AppBar = () => {
                 height: 56,
                 minHeight: 56,
                 justifyContent: 'space-between',
+                px: isMobile ? 3 : 2,
             }}>
                 <Stack direction="row" alignItems="center">
                     {isMobile && (
@@ -64,9 +64,7 @@ export const AppBar = () => {
                                 }}
                             >
                                 {navbarLeftMenuItems.map(({ key, component }) => (
-                                    <Fragment key={key}>
-                                        {renderElement(component, { onClick: () => setAnchorEl(null) })}
-                                    </Fragment>
+                                    renderElement(component, { onClick: () => setAnchorEl(null), key })
                                 ))}
                             </Menu>
                         </>
@@ -82,9 +80,7 @@ export const AppBar = () => {
                         }} />
                         <Stack direction="row" spacing={2}>
                             {navbarLeftMenuItems.map(({ key, component }) => (
-                                <Fragment key={key}>
-                                    {renderElement(component)}
-                                </Fragment>
+                                renderElement(component, { key })
                             ))}
                         </Stack>
                     </>}

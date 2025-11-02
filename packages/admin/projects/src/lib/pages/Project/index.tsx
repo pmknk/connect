@@ -5,12 +5,14 @@ import Container from "@mui/material/Container";
 import { useMediaQuery, useTheme } from "@mui/material";
 
 import { ExtendedTheme } from "@content/admin-ui";
+import { usePlugins } from "@content/admin-utils";
 
 import { useParams } from "react-router-dom";
 import { Book, ChartArea, ImageIcon, Settings } from "lucide-react";
 
 import { useProjectQuery } from "../../hooks/useProjectQuery";
 import { ProjectSidebar } from "../../components/ProjectSidebar";
+import { SLOTS } from "../../constants";
 
 const MENU_ITEMS = [
     {
@@ -41,43 +43,21 @@ const Project = () => {
     const { breakpoints } = useTheme<ExtendedTheme>();
     const isMobile = useMediaQuery(breakpoints.down('sm'));
 
+
+    const { getComponentsBySlot } = usePlugins();
+
+    const projectSidebarMenuItems = getComponentsBySlot(SLOTS.PROJECT_SIDEBAR_MENU_ITEM);
+
+    console.log(projectSidebarMenuItems);
+
     if (!project) return <div>Loading...</div>;
 
     return (
         <Box sx={{ display: "flex", gap: 2, height: "100%" }}>
             <ProjectSidebar 
                 project={project} 
-                menuItems={MENU_ITEMS}
+                menuItems={projectSidebarMenuItems ?? []}
             />
-            {/* <Paper
-                elevation={0}
-                sx={{
-                    width: SIDEBAR_WIDTH,
-                    flexShrink: 0,
-                    p: 2,
-                    border: (theme) => `1px solid ${theme.palette.divider}`,
-                    borderRadius: 2,
-                }}
-            >
-                <Typography variant="h6" sx={{ mb: 1 }}>
-                    Project
-                </Typography>
-                <Divider sx={{ mb: 1 }} />
-                <List dense>
-                    <ListItemButton selected>
-                        <ListItemText primary="Overview" secondary="Summary & stats" />
-                    </ListItemButton>
-                    <ListItemButton>
-                        <ListItemText primary="Tasks" secondary="Active work items" />
-                    </ListItemButton>
-                    <ListItemButton>
-                        <ListItemText primary="Members" secondary="Team & roles" />
-                    </ListItemButton>
-                    <ListItemButton>
-                        <ListItemText primary="Settings" secondary="Project preferences" />
-                    </ListItemButton>
-                </List>
-            </Paper> */}
 
             <Container 
                 maxWidth={false}

@@ -6,14 +6,16 @@ export type SlotComponent = {
     component: ReactNode | ComponentType;
 };
 
+export type RouteDefinition = {
+    public?: boolean;
+    path: string;
+    component: React.ComponentType;
+    props?: any;
+};
+
 export type PluginDefinition = {
     name: string;
-    route: {
-        public?: boolean;
-        path: string;
-        component: React.ComponentType;
-        props?: any;
-    };
+    route?: RouteDefinition;
     slots?: SlotComponent[];
 };
 export interface PluginsRegistryContextValue {

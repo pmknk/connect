@@ -1,21 +1,18 @@
+import { ReactNode } from "react";
+
 import Avatar from "@mui/material/Avatar";
 import Divider from "@mui/material/Divider";
-import IconButton from "@mui/material/IconButton";
 import Stack from "@mui/material/Stack";
-import Tooltip from "@mui/material/Tooltip";
-import Typography from "@mui/material/Typography";
 import { useTheme } from "@mui/material";
 
-import type { ProjectQueryResponse } from "../../hooks/useProjectQuery";
 import { ExtendedTheme } from "@content/admin-ui";
+import { renderElement, SlotComponent } from "@content/admin-utils";
+
+import type { ProjectQueryResponse } from "../../hooks/useProjectQuery";
 
 type ProjectSidebarProps = {
     project: ProjectQueryResponse['data'];
-    menuItems: {
-        label: string;
-        icon: React.ReactNode;
-        href: string;
-    }[];
+    menuItems: SlotComponent[];
 }   
 
 export const ProjectSidebar = ({ project: { name }, menuItems }: ProjectSidebarProps) => {
@@ -38,25 +35,8 @@ export const ProjectSidebar = ({ project: { name }, menuItems }: ProjectSidebarP
             </Avatar>
             <Divider sx={{ mt: 2 }} />
             <Stack sx={{ gap: 2.6 }}>
-                {menuItems.map(({ label, href, icon }) => (
-                    <Tooltip title={(<Typography variant="body2">{label}</Typography>)} placement="right" key={href}>
-                        <IconButton 
-                            href={href}
-                            sx={{
-                                width: '100%',
-                                justifyContent: 'flex-start',
-                                '&:hover': {
-                                    backgroundColor: palette.gray[200],
-                                },
-                                '& svg': {
-                                    width: 22,
-                                    height: 22,
-                                },
-                            }}
-                        >
-                            {icon}
-                        </IconButton>
-                    </Tooltip>
+                {menuItems.map(({ key, component }) => (
+                    renderElement(component, { key })
                 ))}
             </Stack>
         </Stack>
