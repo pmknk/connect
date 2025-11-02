@@ -15,6 +15,7 @@ export * from './lib/components/fallback/GenericPageErrorFallback';
 export * from './lib/components/fallback/NotFoundError';
 export * from './lib/components/Tabs';
 export * from './lib/components/ConfirmDialog';
+export * from './lib/components/ProjectSideBarMenuItem';
 
 export * from './lib/theme';
 export * from './lib/types';

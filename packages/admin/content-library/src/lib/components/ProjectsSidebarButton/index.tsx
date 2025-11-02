@@ -1,8 +1,6 @@
-import IconButton from "@mui/material/IconButton";
-import Tooltip from "@mui/material/Tooltip";
-import Typography from "@mui/material/Typography";
 import { BookOpen } from "lucide-react";
-import { defineMessages, useIntl } from "react-intl";
+import { defineMessages } from "react-intl";
+import { ProjectSideBarMenuItem } from "@content/admin-ui";
 
 const intlMessage = defineMessages({
     contentLibrary: {
@@ -11,17 +9,11 @@ const intlMessage = defineMessages({
     }
 });
 
-export const ContentLibrarySidebarButton = () => {
-    const { formatMessage } = useIntl();
-    return (
-        <Tooltip title={
-            <Typography variant="body2">{formatMessage(intlMessage.contentLibrary)}</Typography>
-        } placement="right">
-            <IconButton>
-                <BookOpen size={22} width={22} height={22} />
-            </IconButton>
-        </Tooltip>
-    );
-};
+export const ContentLibrarySidebarButton = () => (
+    <ProjectSideBarMenuItem
+        message={intlMessage.contentLibrary}
+        icon={<BookOpen size={22} width={22} height={22} />}
+    />
+);
 
 
