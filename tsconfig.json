@@ -47,6 +47,18 @@
         },
         {
             "path": "./apps/admin-e2e"
+        },
+        {
+            "path": "./packages/admin/project-settings"
+        },
+        {
+            "path": "./packages/admin/project-insights"
+        },
+        {
+            "path": "./packages/admin/content-library"
+        },
+        {
+            "path": "./packages/admin/media-library"
         }
     ]
 }
