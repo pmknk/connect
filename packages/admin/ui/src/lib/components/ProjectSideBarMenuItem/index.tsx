@@ -5,6 +5,7 @@ import { ReactNode } from "react";
 import { MessageDescriptor, useIntl } from "react-intl";
 import { ExtendedTheme } from "../../types";
 import { useTheme } from "@mui/material";
+import { useMatch, useResolvedPath } from "react-router-dom";
 
 export type ProjectSideBarMenuItemProps = {
     message: MessageDescriptor;
@@ -18,14 +19,22 @@ export type ProjectSideBarMenuItemProps = {
 export const ProjectSideBarMenuItem = ({ message, icon, iconButtonProps, placement = "right" }: ProjectSideBarMenuItemProps) => {
     const { formatMessage } = useIntl();
     const { palette } = useTheme<ExtendedTheme>();
+    const to = iconButtonProps?.to;
+    const resolved = useResolvedPath(to ?? "");
+    const match = to ? useMatch({ path: resolved.pathname, end: false }) : null;
+    const isActive = Boolean(match);
     return (
         <Tooltip title={<Typography variant="body2">{formatMessage(message)}</Typography>} placement={placement}>
             <IconButton 
-            sx={{
-                '&:hover': {
-                    backgroundColor: palette.slate[100],
+            sx={[
+                {
+                    ...(isActive ? { backgroundColor: palette.slate[100] } : {}),
+                    '&:hover': {
+                        backgroundColor: palette.slate[100],
+                    },
                 },
-            }}
+                iconButtonProps?.sx as any
+            ]}
             {...iconButtonProps}>
                 {icon}
             </IconButton>
