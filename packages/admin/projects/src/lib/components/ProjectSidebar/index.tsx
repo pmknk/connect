@@ -21,7 +21,8 @@ export const ProjectSidebar = ({ project: { name }, menuItems }: ProjectSidebarP
         <Stack
             sx={{
                 gap: 1,
-                p: 2,
+                py: 2,
+                px: 2,
                 borderRight: `1px solid ${palette.divider}`,
             }}
         >

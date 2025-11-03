@@ -1,9 +1,5 @@
-export function ContentContentLibrary() {
-    return (
-        <div className={styles['container']}>
-            <h1>Welcome to ContentContentLibrary!</h1>
-        </div>
-    );
-}
+import { Route } from "react-router-dom";
+import { Router } from './router'
+import { CONTENT_LIBRARY_ROUTES } from "./constants";
 
-export default ContentContentLibrary;
+export default <Route path={`${CONTENT_LIBRARY_ROUTES.CONTENT}/*`} element={<Router />} />;

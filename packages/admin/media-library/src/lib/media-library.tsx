@@ -1,9 +1,5 @@
-export function ContentMediaLibrary() {
-    return (
-        <div className={styles['container']}>
-            <h1>Welcome to ContentMediaLibrary!</h1>
-        </div>
-    );
-}
+import { Route } from "react-router-dom";
+import { Router } from './router'
+import { MEDIA_LIBRARY_ROUTES } from "./constants";
 
-export default ContentMediaLibrary;
+export default <Route path={`${MEDIA_LIBRARY_ROUTES.MEDIA}/*`} element={<Router />} />;

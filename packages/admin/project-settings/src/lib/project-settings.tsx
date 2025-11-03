@@ -1,9 +1,5 @@
-export function ContentProjectSettings() {
-    return (
-        <div className={styles['container']}>
-            <h1>Welcome to ContentProjectSettings!</h1>
-        </div>
-    );
-}
+import { Route } from "react-router-dom";
+import { Router } from './router'
+import { PROJECT_SETTINGS_ROUTES } from "./constants";
 
-export default ContentProjectSettings;
+export default <Route path={`${PROJECT_SETTINGS_ROUTES.SETTINGS}/*`} element={<Router />} />;
