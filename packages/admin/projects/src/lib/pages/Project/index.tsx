@@ -11,6 +11,7 @@ import { Routes, useParams } from "react-router-dom";
 import { useProjectQuery } from "../../hooks/useProjectQuery";
 import { ProjectSidebar } from "../../components/ProjectSidebar";
 import { PROJECTS_SLOTS } from "../../constants";
+import { useRedirectToFirstProjectRoute } from "../../hooks/useRedirectToFirstProjectRoute";
 
 
 const Project = () => {
@@ -25,7 +26,7 @@ const Project = () => {
     const projectSidebarMenuItems = getComponentsBySlot(PROJECTS_SLOTS.PROJECT_SIDEBAR_MENU_ITEMS) ?? [];
     const projectRoutes = getComponentsBySlot(PROJECTS_SLOTS.PROJECT_ROUTES) ?? [];
 
-    console.log(projectRoutes);
+    useRedirectToFirstProjectRoute({ projectId, projectRoutes });
 
     if (!project) return <div>Loading...</div>;
 
