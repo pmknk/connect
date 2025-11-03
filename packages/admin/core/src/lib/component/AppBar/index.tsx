@@ -34,7 +34,7 @@ export const AppBar = () => {
     return (
         <MuiAppBar position="static">
             <Toolbar variant="dense" sx={{
-                backgroundColor: palette.slate[900],
+                background: `linear-gradient(135deg, ${palette.slate[900]} 0%, ${palette.slate[900]} 85%, #7c2d12 100%)`,
                 height: 56,
                 minHeight: 56,
                 justifyContent: 'space-between',
