@@ -1,12 +1,10 @@
-import Typography from "@mui/material/Typography";
+import { Page } from "@content/admin-ui";
 
 const MediaLibrary = () => {
     return (
-        <div>
-            <Typography variant="h5">
-                Media Library
-            </Typography>
-        </div>
+        <Page title="Media Library">
+            <div>Media Library</div>
+        </Page>
     )
 }
 

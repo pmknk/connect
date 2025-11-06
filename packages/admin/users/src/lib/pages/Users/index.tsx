@@ -1,16 +1,12 @@
 import Stack from "@mui/material/Stack";
 import TablePagination from "@mui/material/TablePagination";
 import TextField from "@mui/material/TextField";
-import Typography from "@mui/material/Typography";
-import useMediaQuery from "@mui/material/useMediaQuery";
-import Container from "@mui/material/Container"
-import { useTheme } from "@mui/material";
-
-import { ExtendedTheme } from "@content/admin-ui";
+ 
+import { Page } from "@content/admin-ui";
 
 import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { FormattedMessage } from "react-intl";
+import { defineMessages, useIntl } from "react-intl";
 
 import { UsersTable } from "../../components/UsersTable";
 import { UsersTableSkeleton } from "../../components/UsersTable/UsersTableSkeleton";
@@ -19,11 +15,20 @@ import { CreateUser } from "../../components/CreateUser";
 import { useUsersQuery } from "../../hooks/useUsersQuery";
 import { ROWS_PER_USERS_PAGE_OPTIONS } from "../../constants";
 
+const intlMessages = defineMessages({
+    title: {
+        id: 'users.title',
+        defaultMessage: 'Users'
+    },
+    description: {
+        id: 'users.description',
+        defaultMessage: 'List of all users'
+    }
+});
+
 const Users = () => {
     const [initialLoading, setInitialLoading] = useState(true);
-    const { breakpoints } = useTheme<ExtendedTheme>();
-    const isMobile = useMediaQuery(breakpoints.down('sm'));
-
+    const { formatMessage } = useIntl();
     const [searchParams, setSearchParams] = useSearchParams();
 
     const search = useMemo(() => {
@@ -50,27 +55,10 @@ const Users = () => {
     }, [usersQueryResponse]);
 
     return (
-        <Container
-            maxWidth={'xl'}
-            sx={{
-                my: isMobile ? 3 : 4,
-                pb: isMobile ? 8 : 0
-            }}
+        <Page
+            title={formatMessage(intlMessages.title)}
+            subtitle={formatMessage(intlMessages.description)}
         >
-            <Stack direction="column" spacing={1}>
-                <Typography variant="h5">
-                    <FormattedMessage
-                        id="users.title"
-                        defaultMessage="Users"
-                    />
-                </Typography>
-                <Typography variant="body1" color="text.secondary">
-                    <FormattedMessage
-                        id="users.description"
-                        defaultMessage="List of all users"
-                    />
-                </Typography>
-            </Stack>
             {initialLoading ? (
                 <Stack sx={{ mt: 4 }}>
                     <UsersTableSkeleton rows={rowsPerPage} />
@@ -129,7 +117,7 @@ const Users = () => {
                     </Stack>
                 </Stack>
             )}
-        </Container>
+        </Page>
     )
 }
 

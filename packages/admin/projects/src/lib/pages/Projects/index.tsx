@@ -1,12 +1,11 @@
-import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
+ 
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 
 import { useTheme } from '@mui/material/styles';
 import { useMediaQuery } from '@mui/material';
 
-import { ExtendedTheme } from '@content/admin-ui';
+import { ExtendedTheme, Page } from '@content/admin-ui';
 
 import { useMemo } from 'react';
 import { useProjectsFilter } from '../../hooks/useProjectsFilter';
@@ -85,21 +84,10 @@ const Projects = () => {
 
     return (
         <>
-            <Container
-                maxWidth="xl"
-                sx={{
-                    my: isMobile ? 3 : 4,
-                    pb: isMobile ? 8 : 0,
-                }}
+            <Page
+                title={formatMessage(intlMessages.title)}
+                subtitle={formatMessage(intlMessages.description)}
             >
-                <Stack direction="column" spacing={1}>
-                    <Typography variant="h5">
-                        {formatMessage(intlMessages.title)}
-                    </Typography>
-                    <Typography variant="body1" color="text.secondary">
-                        {formatMessage(intlMessages.description)}
-                    </Typography>
-                </Stack>
                 {isLoading || isFetching ? (
                     <ProjectGridSkeleton />
                 ) : hasProjects ? (
@@ -155,7 +143,7 @@ const Projects = () => {
                     description={formatMessage(intlMessages.emptyDescription)}
                 />
                 )}
-            </Container>
+            </Page>
             {isMobile && hasProjects && (
                 <Stack
                     sx={{

@@ -1,14 +1,12 @@
-import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
+ 
+ 
 import IconButton from '@mui/material/IconButton';
-import Stack from '@mui/material/Stack';
 import Tooltip from '@mui/material/Tooltip';
 import Button from '@mui/material/Button';
-import useMediaQuery from '@mui/material/useMediaQuery';
-import { useTheme } from '@mui/material/styles';
+ 
 
 import { ErrorBoundary, isNotFoundError } from '@content/admin-utils';
-import { ExtendedTheme, InternalServerError, NotFoundError, Tabs } from '@content/admin-ui';
+import { InternalServerError, NotFoundError, Tabs, Page } from '@content/admin-ui';
 
 import { defineMessages, useIntl } from 'react-intl';
 import { Link, useParams, useLocation } from 'react-router-dom';
@@ -65,73 +63,63 @@ const User = () => {
     const { state: locationState } = useLocation();
     const { id } = useParams();
 
-    const { breakpoints } = useTheme<ExtendedTheme>();
     const { formatMessage } = useIntl();
-    const isMobile = useMediaQuery(breakpoints.down('sm'));
 
     const { data: userQueryResponse, isLoading, isFetching} = useUserQuery(id);
 
     const backUrl = locationState?.backUrl || USERS_ROUTE;
     
     return (
-        <Container
+        <Page
             maxWidth={'md'}
-            sx={{
-                my: isMobile ? 3 : 4,
-                pb: isMobile ? 8 : 0
-            }}
+            title={formatMessage(intlMessages.userProfile)}
+            titleStartAdornment={
+                <Tooltip title={formatMessage(intlMessages.back)}>
+                    <IconButton
+                        size="small"
+                        component={Link}
+                        to={backUrl}
+                    >
+                        <ChevronLeft />
+                    </IconButton>
+                </Tooltip>
+            }
         >
             {isLoading || isFetching ? (
                 <UserPageSkeleton />
             ) : (
-                <>
-                    <Stack direction="row" alignItems="center" gap={0.5}>
-                        <Tooltip title={formatMessage(intlMessages.back)}>
-                            <IconButton
-                                size="small"
-                                component={Link}
-                                to={backUrl}
-                            >
-                                <ChevronLeft />
-                            </IconButton>
-                        </Tooltip>
-                        <Typography variant="h5">
-                            {formatMessage(intlMessages.userProfile)}
-                        </Typography>
-                    </Stack>
-                    <Tabs
-                        paramName="tab"
-                        defaultValue={USER_TAB_PROFILE}
-                        items={[
-                            {
-                                label: formatMessage(intlMessages.profile),
-                                value: USER_TAB_PROFILE,
-                                panelTitle: formatMessage(
-                                    intlMessages.personalDetails 
-                                ),
-                                content: userQueryResponse ? (
-                                    <UserPersonalDetails
-                                        user={userQueryResponse}
-                                    />
-                                ) : null
-                            },
-                            {
-                                label: formatMessage(intlMessages.security),
-                                value: USER_TAB_SECURITY,
-                                panelTitle: formatMessage(
-                                    intlMessages.security
-                                ),
-                                content: userQueryResponse ? (
-                                    <UserSecurityDetails
-                                        user={userQueryResponse}
-                                    />
-                                ) : null
-                            }
-                        ]}
-                    />
-                </>
+                <Tabs
+                    paramName="tab"
+                    defaultValue={USER_TAB_PROFILE}
+                    items={[
+                        {
+                            label: formatMessage(intlMessages.profile),
+                            value: USER_TAB_PROFILE,
+                            panelTitle: formatMessage(
+                                intlMessages.personalDetails 
+                            ),
+                            content: userQueryResponse ? (
+                                <UserPersonalDetails
+                                    user={userQueryResponse}
+                                />
+                            ) : null
+                        },
+                        {
+                            label: formatMessage(intlMessages.security),
+                            value: USER_TAB_SECURITY,
+                            panelTitle: formatMessage(
+                                intlMessages.security
+                            ),
+                            content: userQueryResponse ? (
+                                <UserSecurityDetails
+                                    user={userQueryResponse}
+                                />
+                            ) : null
+                        }
+                    ]}
+                />
             )}
-        </Container>
+        </Page>
     );
 };
 

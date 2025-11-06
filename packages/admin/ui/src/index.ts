@@ -19,3 +19,4 @@ export * from './lib/components/ProjectSideBarMenuItem';
 
 export * from './lib/theme';
 export * from './lib/types';
+export * from './lib/components/Page';

@@ -1,12 +1,10 @@
-import Typography from "@mui/material/Typography";
+import { Page } from "@content/admin-ui";
 
 const ProjectSettings = () => {
     return (
-        <div>
-            <Typography variant="h5">
-                Project Settings
-            </Typography>
-        </div>
+        <Page title="Project Settings">
+            <div>Project Settings</div>
+        </Page>
     )
 }
 
