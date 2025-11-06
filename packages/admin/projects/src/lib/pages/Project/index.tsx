@@ -1,8 +1,5 @@
 import Box from "@mui/material/Box";
-import Container from "@mui/material/Container";
-import { useMediaQuery, useTheme } from "@mui/material";
 
-import { ExtendedTheme } from "@content/admin-ui";
 import { renderElement, usePlugins } from "@content/admin-utils";
 
 import { Fragment } from "react";
@@ -17,9 +14,6 @@ import { useRedirectToFirstProjectRoute } from "../../hooks/useRedirectToFirstPr
 const Project = () => {
     const { projectId } = useParams();
     const { data: project } = useProjectQuery(projectId);
-    const { breakpoints } = useTheme<ExtendedTheme>();
-    const isMobile = useMediaQuery(breakpoints.down('sm'));
-
 
     const { getComponentsBySlot } = usePlugins();
 
@@ -31,20 +25,11 @@ const Project = () => {
     if (!project) return <div>Loading...</div>;
 
     return (
-        <Box sx={{ display: "flex", gap: 2, height: "100%" }}>
+        <Box sx={{ display: "flex", height: "100%" }}>
             <ProjectSidebar 
                 project={project} 
                 menuItems={projectSidebarMenuItems}
             />
-
-            <Container 
-                maxWidth={false}
-                sx={{
-                    flex: 1,
-                    my: isMobile ? 3 : 4,
-                    pb: isMobile ? 8 : 0,
-                }}
-            >
                 <Routes>
                     {projectRoutes.map(({ key, component }) => (
                         <Fragment key={key}>
@@ -52,7 +37,6 @@ const Project = () => {
                         </Fragment>
                     ))}
                 </Routes>
-            </Container>
         </Box>
     );
 };

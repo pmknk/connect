@@ -41,8 +41,8 @@ export const Page = ({
         <Container
             maxWidth={maxWidth}
             sx={{
-                my: isMobile ? 3 : 4,
-                pb: isMobile ? 8 : 0,
+                my: isMobile ? 1 : 2,
+                p: 0,
                 ...containerSx
             }}
         >
