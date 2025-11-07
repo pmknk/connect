@@ -32,7 +32,9 @@ export const AppBar = () => {
         setAnchorEl(event.currentTarget);
     };
     return (
-        <MuiAppBar position="static">
+        <MuiAppBar position="static" sx={{
+            zIndex: 1
+        }}>
             <Toolbar variant="dense" sx={{
                 background: `linear-gradient(135deg, ${palette.slate[900]} 0%, ${palette.slate[900]} 85%, #7c2d12 100%)`,
                 height: 56,

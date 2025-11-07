@@ -26,16 +26,17 @@ export const ProjectSideBarMenuItem = ({ message, icon, iconButtonProps, placeme
     return (
         <Tooltip title={<Typography variant="body2">{formatMessage(message)}</Typography>} placement={placement}>
             <IconButton 
-            sx={[
-                {
-                    ...(isActive ? { backgroundColor: palette.slate[100] } : {}),
-                    '&:hover': {
-                        backgroundColor: palette.slate[100],
+                sx={[
+                    {
+                        ...(isActive ? { backgroundColor: palette.gray[100] } : {}),
+                        '&:hover': {
+                            backgroundColor: palette.gray[100],
+                        },
                     },
-                },
-                iconButtonProps?.sx as any
-            ]}
-            {...iconButtonProps}>
+                    iconButtonProps?.sx as any
+                ]}
+                {...iconButtonProps}
+            >
                 {icon}
             </IconButton>
         </Tooltip>

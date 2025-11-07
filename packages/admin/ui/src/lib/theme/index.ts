@@ -23,7 +23,7 @@ export const theme = createTheme({
         action: {
             disabledBackground: colors.gray[200],
             disabled: colors.gray[400],
-            hover: colors.gray[200],
+            hover: colors.gray[100],
             active: colors.gray[300],
             focus: colors.gray[200],
             selected: colors.gray[200],

@@ -1,4 +1,4 @@
-import { ProjectInsightsSidebarButton } from "./lib/components/ProjectsSidebarButton";
+import { ProjectInsightsSidebarButton } from "./lib/components/ProjectInsightsSidebarButton";
 import ProjectInsights from "./lib/project-insights";
 
 const PROJECTS_SIDEBAR_MENU_ITEMS_SLOT_NAME = 'projectSidebarMenuItems';

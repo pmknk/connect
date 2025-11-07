@@ -1,6 +1,6 @@
 export * from './lib/content-library';
 import ContentLibrary from "./lib/content-library";
-import { ContentLibrarySidebarButton } from "./lib/components/ProjectsSidebarButton";
+import { ContentLibrarySidebarButton } from "./lib/components/ContentLibrarySidebarButton";
 
 const PROJECTS_SIDEBAR_MENU_ITEMS_SLOT_NAME = 'projectSidebarMenuItems';
 const PROJECTS_SIDEBAR_MENU_ITEMS_SLOT_KEY = 'contentLibrarySidebarMenuItems';
