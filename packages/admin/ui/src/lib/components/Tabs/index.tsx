@@ -31,8 +31,13 @@ export const Tabs = ({ items, paramName = 'tab', defaultValue }: TabsProps) => {
     const [searchParams, setSearchParams] = useSearchParams();
     const effectiveDefault = defaultValue ?? (items[0] ? items[0].value : '');
 
-    const param = (searchParams.get(paramName) || effectiveDefault).toLowerCase();
-    const activeIndex = Math.max(0, items.findIndex(({ value }) => value.toLowerCase() === param));
+    const param = (
+        searchParams.get(paramName) || effectiveDefault
+    ).toLowerCase();
+    const activeIndex = Math.max(
+        0,
+        items.findIndex(({ value }) => value.toLowerCase() === param)
+    );
 
     const handleChange = (event: React.SyntheticEvent, newIndex: number) => {
         const next = new URLSearchParams(searchParams);
@@ -47,7 +52,9 @@ export const Tabs = ({ items, paramName = 'tab', defaultValue }: TabsProps) => {
                 <MuiTabs
                     value={activeIndex}
                     onChange={handleChange}
-                    sx={{ '& .MuiTabs-flexContainer': { gap: isMobile ? 1 : 3 } }}
+                    sx={{
+                        '& .MuiTabs-flexContainer': { gap: isMobile ? 1 : 3 }
+                    }}
                 >
                     {items.map(({ label }, idx) => (
                         <Tab key={idx} label={label} />
@@ -77,5 +84,3 @@ export const Tabs = ({ items, paramName = 'tab', defaultValue }: TabsProps) => {
         </>
     );
 };
-
-

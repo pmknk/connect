@@ -105,7 +105,6 @@ export const FormSelect = ({
                                             isAtBottom &&
                                             !isAtBottomRef.current
                                         ) {
-
                                             isAtBottomRef.current = true;
                                             selectProps?.onScrollEnd?.();
                                         } else if (!isAtBottom) {

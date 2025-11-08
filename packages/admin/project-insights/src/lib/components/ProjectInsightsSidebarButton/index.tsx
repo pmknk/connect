@@ -1,15 +1,15 @@
-import { ChartArea } from "lucide-react";
-import { defineMessages } from "react-intl";
-import { ProjectSideBarMenuItem } from "@content/admin-ui";
-import { Link } from "react-router-dom";
-import { PROJECT_INSIGHTS_ROUTES } from "../../constants";
+import { ChartArea } from 'lucide-react';
+import { defineMessages } from 'react-intl';
+import { ProjectSideBarMenuItem } from '@content/admin-ui';
+import { Link } from 'react-router-dom';
+import { PROJECT_INSIGHTS_ROUTES } from '../../constants';
 
 const intlMessage = defineMessages({
     insights: {
         id: 'project-insights.sidebar.button',
         defaultMessage: 'Insights'
     }
-})
+});
 
 export const ProjectInsightsSidebarButton = () => (
     <ProjectSideBarMenuItem
@@ -20,5 +20,4 @@ export const ProjectInsightsSidebarButton = () => (
             to: PROJECT_INSIGHTS_ROUTES.INSIGHTS
         }}
     />
-)
-
+);

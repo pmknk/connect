@@ -16,7 +16,7 @@ import { MuiChip } from './components/MuiChip';
 export const theme = createTheme({
     breakpoints: breakpoints,
     shape: {
-        borderRadius: '0.6rem',
+        borderRadius: '0.6rem'
     },
     palette: {
         ...colors,
@@ -26,11 +26,11 @@ export const theme = createTheme({
             hover: colors.gray[100],
             active: colors.gray[300],
             focus: colors.gray[200],
-            selected: colors.gray[200],
-        },
+            selected: colors.gray[200]
+        }
     },
     typography: {
-        fontFamily: 'Inter, sans-serif',
+        fontFamily: 'Inter, sans-serif'
     },
     components: {
         MuiButton,
@@ -42,6 +42,6 @@ export const theme = createTheme({
         MuiInputBase,
         MuiIconButton,
         MuiCheckbox,
-        MuiChip,
+        MuiChip
     }
 });

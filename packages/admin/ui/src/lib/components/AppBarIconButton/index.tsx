@@ -1,23 +1,23 @@
-import IconButton from "@mui/material/IconButton"
-import { useTheme } from "@mui/material/styles"
-import { ReactNode } from "react"
-import { ExtendedTheme } from "../../types"
+import IconButton from '@mui/material/IconButton';
+import { useTheme } from '@mui/material/styles';
+import { ReactNode } from 'react';
+import { ExtendedTheme } from '../../types';
 
 /**
  * Props for the MainMenuIconItem component
  */
 type AppBarIconButtonProps = {
     /** Icon element to display */
-    icon: ReactNode
+    icon: ReactNode;
     /** Label text or element for the menu item */
-    label: string | ReactNode
+    label: string | ReactNode;
     /** Whether the menu item is currently selected */
-    selected?: boolean
-}
+    selected?: boolean;
+};
 
 /**
  * A menu item component that displays an icon with optional selection state
- * 
+ *
  * @param props - The component props
  * @param props.icon - Icon element to display
  * @param props.label - Label text or element for the menu item (currently unused in render)
@@ -25,18 +25,20 @@ type AppBarIconButtonProps = {
  * @returns A ListItem component with icon and styling based on selection state
  */
 export const AppBarIconButton = ({ icon, selected }: AppBarIconButtonProps) => {
-    const {palette} = useTheme<ExtendedTheme>()
+    const { palette } = useTheme<ExtendedTheme>();
     return (
         <IconButton
             sx={{
                 color: palette.slate[100],
                 backgroundColor: selected ? palette.slate[700] : 'transparent',
                 '&:hover': {
-                    backgroundColor: selected ? palette.slate[700] : palette.slate[800],
-                },
+                    backgroundColor: selected
+                        ? palette.slate[700]
+                        : palette.slate[800]
+                }
             }}
         >
             {icon}
         </IconButton>
-    )
-}
+    );
+};

@@ -1,6 +1,6 @@
 export * from './lib/project-settings';
-import ProjectSettings from "./lib/project-settings";
-import { ProjectSettingsSidebarButton } from "./lib/components/ProjectSettingsSidebarButton";
+import ProjectSettings from './lib/project-settings';
+import { ProjectSettingsSidebarButton } from './lib/components/ProjectSettingsSidebarButton';
 
 const PROJECTS_SIDEBAR_MENU_ITEMS_SLOT_NAME = 'projectSidebarMenuItems';
 const PROJECTS_SIDEBAR_MENU_ITEMS_SLOT_KEY = 'projectSettingsSidebarMenuItems';

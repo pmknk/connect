@@ -4,11 +4,11 @@ export const MuiOutlinedInput = {
     styleOverrides: {
         root: {
             '& fieldset': {
-                borderColor: colors.gray[300],
+                borderColor: colors.gray[300]
             }
         },
         input: {
-            padding: '0.75rem',
+            padding: '0.75rem'
         }
-    },
-}; 
+    }
+};

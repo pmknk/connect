@@ -12,7 +12,11 @@ interface NotFoundErrorProps {
     actions?: ReactNode;
 }
 
-export const NotFoundError = ({ title, subtitle, actions }: NotFoundErrorProps) => {
+export const NotFoundError = ({
+    title,
+    subtitle,
+    actions
+}: NotFoundErrorProps) => {
     const location = useLocation();
     const from = (location.state as { from?: unknown } | undefined)?.from;
     const backTo: To =
@@ -22,8 +26,15 @@ export const NotFoundError = ({ title, subtitle, actions }: NotFoundErrorProps) 
             ? (from as To)
             : '/';
 
-    const titleContent = title ?? <FormattedMessage id="not-found" defaultMessage="Page Not Found" />;
-    const subtitleContent = subtitle ?? <FormattedMessage id="not-found-description" defaultMessage="The content you are looking for doesn’t exist or has been moved." />;
+    const titleContent = title ?? (
+        <FormattedMessage id="not-found" defaultMessage="Page Not Found" />
+    );
+    const subtitleContent = subtitle ?? (
+        <FormattedMessage
+            id="not-found-description"
+            defaultMessage="The content you are looking for doesn’t exist or has been moved."
+        />
+    );
     return (
         <GenericPageErrorFallback
             icon={<FileQuestion size={80} />}
@@ -32,11 +43,27 @@ export const NotFoundError = ({ title, subtitle, actions }: NotFoundErrorProps) 
             actions={
                 actions ?? (
                     <Stack direction="row" spacing={2} justifyContent="center">
-                        <Button variant="contained" color="primary" component={Link} to="/">
-                            <FormattedMessage id="go-home" defaultMessage="Go Home" />
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            component={Link}
+                            to="/"
+                        >
+                            <FormattedMessage
+                                id="go-home"
+                                defaultMessage="Go Home"
+                            />
                         </Button>
-                        <Button variant="outlined" color="primary" component={Link} to={backTo}>
-                            <FormattedMessage id="go-back" defaultMessage="Go Back" />
+                        <Button
+                            variant="outlined"
+                            color="primary"
+                            component={Link}
+                            to={backTo}
+                        >
+                            <FormattedMessage
+                                id="go-back"
+                                defaultMessage="Go Back"
+                            />
                         </Button>
                     </Stack>
                 )
@@ -44,5 +71,3 @@ export const NotFoundError = ({ title, subtitle, actions }: NotFoundErrorProps) 
         />
     );
 };
-
-

@@ -1,4 +1,3 @@
- 
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 
@@ -131,17 +130,21 @@ const Projects = () => {
                             <NoProjectsFoundCta
                                 onSuccess={refetch}
                                 title={formatMessage(intlMessages.emptyTitle)}
-                                description={formatMessage(intlMessages.emptyFilteredDescription)}
+                                description={formatMessage(
+                                    intlMessages.emptyFilteredDescription
+                                )}
                                 showCreateProject={false}
                             />
                         )}
                     </Stack>
                 ) : (
-                <NoProjectsFoundCta
-                    onSuccess={refetch}
-                    title={formatMessage(intlMessages.emptyTitle)}
-                    description={formatMessage(intlMessages.emptyDescription)}
-                />
+                    <NoProjectsFoundCta
+                        onSuccess={refetch}
+                        title={formatMessage(intlMessages.emptyTitle)}
+                        description={formatMessage(
+                            intlMessages.emptyDescription
+                        )}
+                    />
                 )}
             </Page>
             {isMobile && hasProjects && (

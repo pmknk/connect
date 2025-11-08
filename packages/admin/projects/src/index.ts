@@ -1,5 +1,5 @@
-import { ProjectsAppBarButton } from "./lib/components/ProjectsAppBarButton";
-import Projects from "./lib/projects";
+import { ProjectsAppBarButton } from './lib/components/ProjectsAppBarButton';
+import Projects from './lib/projects';
 
 const CORE_PRIVATE_ROUTES_SLOT_NAME = 'corePrivateRoutes';
 const CORE_PRIVATE_ROUTES_SLOT_KEY = 'projectsPrivateRoutes';
@@ -21,4 +21,4 @@ export const projects = () => ({
             component: ProjectsAppBarButton
         }
     ]
-})
+});

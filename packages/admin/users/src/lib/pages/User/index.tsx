@@ -1,12 +1,14 @@
- 
- 
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import Button from '@mui/material/Button';
- 
 
 import { ErrorBoundary, isNotFoundError } from '@content/admin-utils';
-import { InternalServerError, NotFoundError, Tabs, Page } from '@content/admin-ui';
+import {
+    InternalServerError,
+    NotFoundError,
+    Tabs,
+    Page
+} from '@content/admin-ui';
 
 import { defineMessages, useIntl } from 'react-intl';
 import { Link, useParams, useLocation } from 'react-router-dom';
@@ -51,7 +53,8 @@ const intlMessages = defineMessages({
     },
     userNotFoundDescription: {
         id: 'user.userNotFoundDescription',
-        defaultMessage: 'The user you are looking for does not exist or has been deleted. You can go back to the users list to view all users.'
+        defaultMessage:
+            'The user you are looking for does not exist or has been deleted. You can go back to the users list to view all users.'
     },
     goToUsers: {
         id: 'user.goToUsers',
@@ -65,21 +68,17 @@ const User = () => {
 
     const { formatMessage } = useIntl();
 
-    const { data: userQueryResponse, isLoading, isFetching} = useUserQuery(id);
+    const { data: userQueryResponse, isLoading, isFetching } = useUserQuery(id);
 
     const backUrl = locationState?.backUrl || USERS_ROUTE;
-    
+
     return (
         <Page
             maxWidth={'md'}
             title={formatMessage(intlMessages.userProfile)}
             titleStartAdornment={
                 <Tooltip title={formatMessage(intlMessages.back)}>
-                    <IconButton
-                        size="small"
-                        component={Link}
-                        to={backUrl}
-                    >
+                    <IconButton size="small" component={Link} to={backUrl}>
                         <ChevronLeft />
                     </IconButton>
                 </Tooltip>
@@ -96,24 +95,18 @@ const User = () => {
                             label: formatMessage(intlMessages.profile),
                             value: USER_TAB_PROFILE,
                             panelTitle: formatMessage(
-                                intlMessages.personalDetails 
+                                intlMessages.personalDetails
                             ),
                             content: userQueryResponse ? (
-                                <UserPersonalDetails
-                                    user={userQueryResponse}
-                                />
+                                <UserPersonalDetails user={userQueryResponse} />
                             ) : null
                         },
                         {
                             label: formatMessage(intlMessages.security),
                             value: USER_TAB_SECURITY,
-                            panelTitle: formatMessage(
-                                intlMessages.security
-                            ),
+                            panelTitle: formatMessage(intlMessages.security),
                             content: userQueryResponse ? (
-                                <UserSecurityDetails
-                                    user={userQueryResponse}
-                                />
+                                <UserSecurityDetails user={userQueryResponse} />
                             ) : null
                         }
                     ]}
@@ -127,20 +120,31 @@ export default () => {
     const { formatMessage } = useIntl();
 
     return (
-        <ErrorBoundary fallback={({ error }) => {
-            if (isNotFoundError(error as Error)) {
-                return <NotFoundError
-                    title={formatMessage(intlMessages.userNotFound)}
-                    subtitle={formatMessage(intlMessages.userNotFoundDescription)}
-                    actions={
-                        <Button variant="contained" color="primary" component={Link} to={USERS_ROUTE}>
-                            {formatMessage(intlMessages.goToUsers)}
-                        </Button>
-                    }
-                />;
-            }
-            return <InternalServerError />;
-        }}>
+        <ErrorBoundary
+            fallback={({ error }) => {
+                if (isNotFoundError(error as Error)) {
+                    return (
+                        <NotFoundError
+                            title={formatMessage(intlMessages.userNotFound)}
+                            subtitle={formatMessage(
+                                intlMessages.userNotFoundDescription
+                            )}
+                            actions={
+                                <Button
+                                    variant="contained"
+                                    color="primary"
+                                    component={Link}
+                                    to={USERS_ROUTE}
+                                >
+                                    {formatMessage(intlMessages.goToUsers)}
+                                </Button>
+                            }
+                        />
+                    );
+                }
+                return <InternalServerError />;
+            }}
+        >
             <User />
         </ErrorBoundary>
     );

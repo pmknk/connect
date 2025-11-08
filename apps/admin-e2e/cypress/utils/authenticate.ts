@@ -47,12 +47,10 @@ export const authenticate = (options?: AuthenticateOptions) => {
         'getMe'
     );
 
-    const permissions: Permission[] =
-        options?.permissions ??
-        [
-            { id: 'perm-1', action: 'read', resource: 'projects' },
-            { id: 'perm-2', action: 'read', resource: 'users' }
-        ];
+    const permissions: Permission[] = options?.permissions ?? [
+        { id: 'perm-1', action: 'read', resource: 'projects' },
+        { id: 'perm-2', action: 'read', resource: 'users' }
+    ];
 
     // Stub permissions
     cy.interceptOk(

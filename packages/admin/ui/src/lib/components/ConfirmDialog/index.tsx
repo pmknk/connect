@@ -10,7 +10,14 @@ import type { DialogProps } from '@mui/material/Dialog';
 export type ConfirmDialogAction = {
     label: ReactNode;
     onClick: () => void | Promise<void>;
-    color?: 'inherit' | 'primary' | 'secondary' | 'success' | 'error' | 'info' | 'warning';
+    color?:
+        | 'inherit'
+        | 'primary'
+        | 'secondary'
+        | 'success'
+        | 'error'
+        | 'info'
+        | 'warning';
     variant?: 'text' | 'outlined' | 'contained';
     autoFocus?: boolean;
     disabled?: boolean;
@@ -20,7 +27,10 @@ export type ConfirmDialogAction = {
 
 export type ConfirmDialogProps = {
     open: boolean;
-    onClose?: (event: object, reason?: 'backdropClick' | 'escapeKeyDown') => void;
+    onClose?: (
+        event: object,
+        reason?: 'backdropClick' | 'escapeKeyDown'
+    ) => void;
     title?: ReactNode;
     body?: ReactNode;
     actions?: ConfirmDialogAction[];
@@ -77,5 +87,3 @@ export const ConfirmDialog = ({
         </Dialog>
     );
 };
-
-

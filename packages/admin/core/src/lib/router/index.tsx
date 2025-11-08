@@ -8,8 +8,10 @@ const LazyMain = lazy(() => import('../pages/Main'));
 export const Router = () => {
     const { getComponentsBySlot } = usePlugins();
 
-    const publicRoutes = getComponentsBySlot(CORE_SLOTS.CORE_PUBLIC_ROUTES) ?? [];
-    const privateRoutes = getComponentsBySlot(CORE_SLOTS.CORE_PRIVATE_ROUTES) ?? [];
+    const publicRoutes =
+        getComponentsBySlot(CORE_SLOTS.CORE_PUBLIC_ROUTES) ?? [];
+    const privateRoutes =
+        getComponentsBySlot(CORE_SLOTS.CORE_PRIVATE_ROUTES) ?? [];
 
     return (
         <BrowserRouter>
@@ -20,10 +22,7 @@ export const Router = () => {
                     </Fragment>
                 ))}
 
-                <Route
-                    path="/"
-                    element={<LazyMain />}
-                >
+                <Route path="/" element={<LazyMain />}>
                     {privateRoutes.map(({ key, component, props }) => (
                         <Fragment key={key}>
                             {renderElement(component, props)}

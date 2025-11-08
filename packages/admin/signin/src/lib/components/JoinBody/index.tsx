@@ -1,11 +1,10 @@
-import { FormField } from "@content/admin-ui";
-import { defineMessages, useIntl } from "react-intl";
-import { Control } from "react-hook-form";
-import { JoinFormData } from "../../hooks/useJoinForm";
-import { InviteQueryResponse } from "../../hooks/useInviteLazyQuery";
-import { Alert, AlertTitle } from "@mui/material";
-import { AlertCircle } from "lucide-react";
-
+import { FormField } from '@content/admin-ui';
+import { defineMessages, useIntl } from 'react-intl';
+import { Control } from 'react-hook-form';
+import { JoinFormData } from '../../hooks/useJoinForm';
+import { InviteQueryResponse } from '../../hooks/useInviteLazyQuery';
+import { Alert, AlertTitle } from '@mui/material';
+import { AlertCircle } from 'lucide-react';
 
 interface JoinBodyProps {
     control: Control<JoinFormData>;
@@ -41,22 +40,30 @@ const intlMessages = defineMessages({
     },
     inviteCodeNotFoundMessage: {
         id: 'auth.admin.pages.join.inviteCodeNotFoundMessage',
-        defaultMessage: 'The invitation code you entered is incorrect. Please try again or contact the administrator.'
+        defaultMessage:
+            'The invitation code you entered is incorrect. Please try again or contact the administrator.'
     },
     inviteCodeDescription: {
         id: 'auth.admin.pages.join.inviteCodeDescription',
-        defaultMessage: 'Enter the invitation code you received to complete your account setup. If you do not have an invitation code, please contact the administrator.'
+        defaultMessage:
+            'Enter the invitation code you received to complete your account setup. If you do not have an invitation code, please contact the administrator.'
     },
     passwordDescription: {
         id: 'auth.admin.pages.join.passwordDescription',
-        defaultMessage: 'Enter a password to complete your account setup. The password must be at least 8 characters long, and must contain at least one uppercase letter, one lowercase letter, and one number.'
-    },
+        defaultMessage:
+            'Enter a password to complete your account setup. The password must be at least 8 characters long, and must contain at least one uppercase letter, one lowercase letter, and one number.'
+    }
 });
 
-export const JoinBody = ({ control, invite, isNotFoundError, isLoading }: JoinBodyProps) => {
+export const JoinBody = ({
+    control,
+    invite,
+    isNotFoundError,
+    isLoading
+}: JoinBodyProps) => {
     const { formatMessage } = useIntl();
-    
-    return  (
+
+    return (
         <>
             {isNotFoundError && (
                 <Alert color="error" icon={<AlertCircle size={20} />}>
@@ -74,7 +81,9 @@ export const JoinBody = ({ control, invite, isNotFoundError, isLoading }: JoinBo
                         label: formatMessage(intlMessages.code),
                         labelPlacement: 'outside',
                         placeholder: '123456',
-                        helperText: formatMessage(intlMessages.inviteCodeDescription),
+                        helperText: formatMessage(
+                            intlMessages.inviteCodeDescription
+                        ),
                         disabled: isLoading
                     }}
                 />
@@ -89,7 +98,9 @@ export const JoinBody = ({ control, invite, isNotFoundError, isLoading }: JoinBo
                             label: formatMessage(intlMessages.password),
                             labelPlacement: 'outside',
                             placeholder: '••••••••',
-                            helperText: formatMessage(intlMessages.passwordDescription),
+                            helperText: formatMessage(
+                                intlMessages.passwordDescription
+                            ),
                             disabled: isLoading
                         }}
                     />
@@ -107,5 +118,5 @@ export const JoinBody = ({ control, invite, isNotFoundError, isLoading }: JoinBo
                 </>
             )}
         </>
-    )
+    );
 };

@@ -20,7 +20,7 @@ export class InviteRouter {
             {
                 schema: getInviteByCodeRequestSchema,
                 config: {
-                    auth: false,
+                    auth: false
                 }
             },
             this.inviteController.getInviteByCode.bind(this.inviteController)

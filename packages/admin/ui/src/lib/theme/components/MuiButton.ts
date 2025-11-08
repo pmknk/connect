@@ -1,5 +1,5 @@
-import { Components } from "@mui/material/styles";
-import { colors } from "../colors";
+import { Components } from '@mui/material/styles';
+import { colors } from '../colors';
 
 export const MuiButton: Components['MuiButton'] = {
     styleOverrides: {
@@ -8,12 +8,12 @@ export const MuiButton: Components['MuiButton'] = {
             boxShadow: 'none',
             fontWeight: 500,
             '&:hover': {
-                boxShadow: 'none',
+                boxShadow: 'none'
             }
         },
         text: {
             '&:hover': {
-                backgroundColor: colors.gray[100],
+                backgroundColor: colors.gray[100]
             }
         },
         sizeLarge: {
@@ -33,6 +33,6 @@ export const MuiButton: Components['MuiButton'] = {
             fontSize: '0.875rem',
             padding: '0.375rem 0.75rem',
             height: '34px'
-        },
+        }
     }
 } as const;

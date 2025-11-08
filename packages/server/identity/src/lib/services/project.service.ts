@@ -13,13 +13,14 @@ export class ProjectService {
     private readonly userModel: ModelStatic<User>;
     private readonly projectModel: ModelStatic<Project>;
     private readonly projectUsersModel: ModelStatic<ProjectUsers>;
-    
+
     constructor(
         private readonly modelService: ModelService,
         private readonly connectionService: ConnectionService
     ) {
         this.projectModel = this.modelService.getModel<Project>('Projects');
-        this.projectUsersModel = this.modelService.getModel<ProjectUsers>('ProjectUsers');
+        this.projectUsersModel =
+            this.modelService.getModel<ProjectUsers>('ProjectUsers');
         this.userModel = this.modelService.getModel<User>('Users');
     }
 

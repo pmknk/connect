@@ -1,6 +1,6 @@
 export * from './lib/media-library';
-import MediaLibrary from "./lib/media-library";
-import { MediaLibrarySidebarButton } from "./lib/components/MediaLibrarySidebarButton";
+import MediaLibrary from './lib/media-library';
+import { MediaLibrarySidebarButton } from './lib/components/MediaLibrarySidebarButton';
 
 const PROJECTS_SIDEBAR_MENU_ITEMS_SLOT_NAME = 'projectSidebarMenuItems';
 const PROJECTS_SIDEBAR_MENU_ITEMS_SLOT_KEY = 'mediaLibrarySidebarMenuItems';

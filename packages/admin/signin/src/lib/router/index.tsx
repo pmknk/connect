@@ -2,7 +2,6 @@ import { useAuth } from '@content/admin-utils';
 import { lazy } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 
-
 const Login = lazy(() => import('../pages/Login'));
 const Join = lazy(() => import('../pages/Join'));
 

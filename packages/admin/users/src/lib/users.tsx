@@ -1,4 +1,4 @@
-import { Route } from "react-router-dom";
-import { Router } from "./router";
+import { Route } from 'react-router-dom';
+import { Router } from './router';
 
 export default <Route path="/users/*" element={<Router />} />;

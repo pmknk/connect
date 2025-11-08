@@ -1,5 +1,5 @@
-import { useQuery } from "@tanstack/react-query";
-import { useHttpClient } from "@content/admin-utils";
+import { useQuery } from '@tanstack/react-query';
+import { useHttpClient } from '@content/admin-utils';
 
 /**
  * Response type for the roles query.
@@ -20,7 +20,7 @@ const GET_ALL_ROLES_ROUTE = '/api/v1/identity/roles';
  *
  * Uses React Query's `useQuery` to fetch and cache role data.
  *
- * @returns {import('@tanstack/react-query').UseQueryResult<RolesQueryResponse['data'], unknown>} 
+ * @returns {import('@tanstack/react-query').UseQueryResult<RolesQueryResponse['data'], unknown>}
  * The query result object containing roles data and query state.
  *
  * @example

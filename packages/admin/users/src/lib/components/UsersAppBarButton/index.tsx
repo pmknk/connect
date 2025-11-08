@@ -1,5 +1,5 @@
 import { FormattedMessage } from 'react-intl';
-import { AppBarButton, ExtendedTheme } from '@content/admin-ui'
+import { AppBarButton, ExtendedTheme } from '@content/admin-ui';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useTheme } from '@mui/material/styles';
 import { MenuItem, Typography, useMediaQuery } from '@mui/material';
@@ -8,7 +8,7 @@ import { USERS_ROUTE } from '../../constants';
 
 type UsersAppBarButtonProps = {
     onClick?: () => void;
-}
+};
 
 export const UsersAppBarButton = ({ onClick }: UsersAppBarButtonProps) => {
     const { pathname } = useLocation();
@@ -18,10 +18,13 @@ export const UsersAppBarButton = ({ onClick }: UsersAppBarButtonProps) => {
 
     if (isMobile) {
         return (
-            <MenuItem selected={pathname.includes(USERS_ROUTE)} onClick={() => {
-                navigate(USERS_ROUTE)
-                onClick?.()
-            }}>
+            <MenuItem
+                selected={pathname.includes(USERS_ROUTE)}
+                onClick={() => {
+                    navigate(USERS_ROUTE);
+                    onClick?.();
+                }}
+            >
                 <Typography variant="body2">
                     <FormattedMessage
                         id="main.navbar.users"
@@ -29,16 +32,18 @@ export const UsersAppBarButton = ({ onClick }: UsersAppBarButtonProps) => {
                     />
                 </Typography>
             </MenuItem>
-        )
+        );
     }
     return (
         <AppBarButton
             href={USERS_ROUTE}
             selected={pathname.includes(USERS_ROUTE)}
-            label={<FormattedMessage 
-                id="main.navbar.users"
-                defaultMessage="Users"
-            />}
+            label={
+                <FormattedMessage
+                    id="main.navbar.users"
+                    defaultMessage="Users"
+                />
+            }
         />
-    )
-}
+    );
+};

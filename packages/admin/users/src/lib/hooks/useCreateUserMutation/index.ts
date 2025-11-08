@@ -25,14 +25,19 @@ type CreateUserMutationResponse = {
  * const { mutate, isLoading, isSuccess, data } = useCreateUserMutation();
  * mutate({ email: 'user@example.com', fullName: 'User', roleId: 'role', projectIds: [] });
  */
-export const useCreateUserMutation = (onSuccess?: () => void, onError?: (error: Error) => void) => {
+export const useCreateUserMutation = (
+    onSuccess?: () => void,
+    onError?: (error: Error) => void
+) => {
     const httpClient = useHttpClient();
 
     return useMutation({
         mutationKey: ['create-user'],
         mutationFn: (data: CreateUserFormData) =>
-            httpClient.post<CreateUserMutationResponse>(CREATE_USER_ROUTE, data)
-        ,
+            httpClient.post<CreateUserMutationResponse>(
+                CREATE_USER_ROUTE,
+                data
+            ),
         onSuccess,
         onError
     });

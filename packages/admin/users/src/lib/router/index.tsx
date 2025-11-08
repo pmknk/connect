@@ -1,8 +1,8 @@
-import { lazy } from "react"
-import { Route, Routes } from "react-router-dom"
+import { lazy } from 'react';
+import { Route, Routes } from 'react-router-dom';
 
-const LazyUsers = lazy(() => import('../pages/Users'))
-const LazyUser = lazy(() => import('../pages/User'))
+const LazyUsers = lazy(() => import('../pages/Users'));
+const LazyUser = lazy(() => import('../pages/User'));
 
 export const Router = () => {
     return (
@@ -10,5 +10,5 @@ export const Router = () => {
             <Route path="/:id" element={<LazyUser />} />
             <Route path="/" element={<LazyUsers />} />
         </Routes>
-    )
-}
+    );
+};

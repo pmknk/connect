@@ -5,7 +5,6 @@ import { Control } from 'react-hook-form';
 import { AlertCircle } from 'lucide-react';
 import { LoginFormData } from '../../hooks/useLoginForm';
 
-
 interface LoginBodyProps {
     control: Control<LoginFormData>;
     isLoading: boolean;
@@ -78,7 +77,7 @@ export const LoginBody = ({
                             id="auth.admin.pages.login.password"
                             defaultMessage="Password"
                         />
-                    ),
+                    )
                 }}
             />
         </>

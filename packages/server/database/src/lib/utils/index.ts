@@ -1,5 +1,5 @@
-import { DataTypes } from "sequelize";
-import type { SchemaDataType } from "../types";
+import { DataTypes } from 'sequelize';
+import type { SchemaDataType } from '../types';
 
 /**
  * Converts a schema data type to its corresponding Sequelize DataType
@@ -41,4 +41,4 @@ export const resolveSequelizeType = (type: SchemaDataType, extra?: any) => {
         default:
             throw new Error(`Unsupported type: ${type}`);
     }
-}
+};

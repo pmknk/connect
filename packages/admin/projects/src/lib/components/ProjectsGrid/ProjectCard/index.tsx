@@ -56,7 +56,7 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
             variant="outlined"
             sx={{
                 borderRadius: 2,
-                height: '100%',
+                height: '100%'
             }}
         >
             <CardActionArea
@@ -68,7 +68,10 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
                     justifyContent: 'space-between'
                 }}
                 component={Link}
-                to={`${PROJECTS_ROUTES.PROJECT.replace(':projectId', project.id)}`}
+                to={`${PROJECTS_ROUTES.PROJECT.replace(
+                    ':projectId',
+                    project.id
+                )}`}
             >
                 <CardContent
                     sx={{

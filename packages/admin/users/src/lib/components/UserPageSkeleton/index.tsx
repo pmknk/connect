@@ -1,6 +1,6 @@
-import Box from "@mui/material/Box";
-import Skeleton from "@mui/material/Skeleton";
-import { UserPersonalDetailsSkeleton } from "./UserPersonalDetailsSkeleton";
+import Box from '@mui/material/Box';
+import Skeleton from '@mui/material/Skeleton';
+import { UserPersonalDetailsSkeleton } from './UserPersonalDetailsSkeleton';
 
 export const UserPageSkeleton = () => {
     return (
@@ -12,12 +12,15 @@ export const UserPageSkeleton = () => {
                     <Skeleton variant="rounded" width={100} height={36} />
                 </Box>
                 <Box sx={{ py: 6 }}>
-                    <Skeleton variant="text" width={160} height={24} sx={{ mb: 4 }} />
+                    <Skeleton
+                        variant="text"
+                        width={160}
+                        height={24}
+                        sx={{ mb: 4 }}
+                    />
                     <UserPersonalDetailsSkeleton />
                 </Box>
             </Box>
         </>
     );
 };
-
-

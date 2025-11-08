@@ -11,7 +11,10 @@ import {
     toGetUserRequestDto,
     toGetUserResponseDto
 } from '../dtos/get-user.dto';
-import { toUpdateUserRequestDto, toUpdateUserResponseDto } from '../dtos/update-user.dto';
+import {
+    toUpdateUserRequestDto,
+    toUpdateUserResponseDto
+} from '../dtos/update-user.dto';
 import { toDeleteUserRequestDto } from '../dtos/delete-user.dto';
 import { toRestoreUserRequestDto } from '../dtos/restore-user.dto';
 

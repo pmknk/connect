@@ -14,5 +14,6 @@ curl -X POST 'http://localhost:4001/api/v1/identity/init' \
 ```
 
 Notes:
-- The request body must use the field name `password` (not `pass`).
-- If your server runs on a different port, adjust the URL accordingly.
+
+-   The request body must use the field name `password` (not `pass`).
+-   If your server runs on a different port, adjust the URL accordingly.

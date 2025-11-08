@@ -60,7 +60,7 @@ export const createInviteRequestSchema = {
             email: { type: 'string', format: 'email' },
             fullName: { type: 'string' },
             roleId: { type: 'string' },
-            projectIds: { type: 'array', items: { type: 'string' } },
+            projectIds: { type: 'array', items: { type: 'string' } }
         }
     },
     required: ['email', 'fullName', 'roleId']

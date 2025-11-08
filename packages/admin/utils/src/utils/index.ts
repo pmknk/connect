@@ -1,5 +1,5 @@
-import { AxiosError } from "axios";
-import { ERROR_STATUS_CODES } from "../constants";
+import { AxiosError } from 'axios';
+import { ERROR_STATUS_CODES } from '../constants';
 
 /**
  * Checks if the given error is an AxiosError representing a 404 Not Found error.
@@ -8,7 +8,10 @@ import { ERROR_STATUS_CODES } from "../constants";
  * @returns True if the error is an AxiosError with a 404 status code, otherwise false.
  */
 export const isNotFoundError = (error: Error): boolean => {
-    return error instanceof AxiosError && error.response?.status === ERROR_STATUS_CODES.NOT_FOUND;
+    return (
+        error instanceof AxiosError &&
+        error.response?.status === ERROR_STATUS_CODES.NOT_FOUND
+    );
 };
 
 /**
@@ -18,7 +21,10 @@ export const isNotFoundError = (error: Error): boolean => {
  * @returns True if the error is an AxiosError with a 500 status code, otherwise false.
  */
 export const isInternalServerError = (error: Error): boolean => {
-    return error instanceof AxiosError && error.response?.status === ERROR_STATUS_CODES.INTERNAL_SERVER_ERROR;
+    return (
+        error instanceof AxiosError &&
+        error.response?.status === ERROR_STATUS_CODES.INTERNAL_SERVER_ERROR
+    );
 };
 
 /**
@@ -28,5 +34,8 @@ export const isInternalServerError = (error: Error): boolean => {
  * @returns True if the error is an AxiosError with a 401 status code, otherwise false.
  */
 export const isUnauthorizedError = (error: Error): boolean => {
-    return error instanceof AxiosError && error.response?.status === ERROR_STATUS_CODES.UNAUTHORIZED;
+    return (
+        error instanceof AxiosError &&
+        error.response?.status === ERROR_STATUS_CODES.UNAUTHORIZED
+    );
 };

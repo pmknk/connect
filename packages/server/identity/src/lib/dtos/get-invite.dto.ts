@@ -1,11 +1,13 @@
-import { FastifyRequest } from "fastify";
-import { Invite } from "../schemas/invite.schema";
+import { FastifyRequest } from 'fastify';
+import { Invite } from '../schemas/invite.schema';
 
 export type GetInviteByCodeDto = {
     code: string;
 };
 
-export const toGetInviteByCodeDto = (request: FastifyRequest): GetInviteByCodeDto => {
+export const toGetInviteByCodeDto = (
+    request: FastifyRequest
+): GetInviteByCodeDto => {
     const { code } = (request.params as { code: string }) ?? {};
 
     return {
@@ -37,7 +39,9 @@ export type GetInviteByCodeResponseDto = {
     };
 };
 
-export const toGetInviteByCodeResponseDto = (invite: Invite): GetInviteByCodeResponseDto => {
+export const toGetInviteByCodeResponseDto = (
+    invite: Invite
+): GetInviteByCodeResponseDto => {
     return {
         data: {
             id: invite.id,

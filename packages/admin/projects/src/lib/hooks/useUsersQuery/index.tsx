@@ -38,7 +38,10 @@ const DEFAULT_LIMIT = 20;
  * };
  * ```
  */
-export const useUsersQuery = (limit: number = DEFAULT_LIMIT, search?: string) => {
+export const useUsersQuery = (
+    limit: number = DEFAULT_LIMIT,
+    search?: string
+) => {
     const httpClient = useHttpClient();
 
     const query = useInfiniteQuery({

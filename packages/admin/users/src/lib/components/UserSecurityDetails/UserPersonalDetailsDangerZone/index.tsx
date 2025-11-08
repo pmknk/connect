@@ -23,7 +23,6 @@ import { useRestoreUserMutation } from '../../../hooks/useRestoreUserMutation';
  * Props for the UserPersonalDetailsDangerZone component.
  */
 type UserPersonalDetailsDangerZoneProps = {
-
     /**
      * The ID of the user to delete.
      */
@@ -127,28 +126,40 @@ export const UserPersonalDetailsDangerZone = ({
     inviteId,
     isPendingInvitationAccepted,
     isDeactivated,
-    isActive,
+    isActive
 }: UserPersonalDetailsDangerZoneProps) => {
     const { formatMessage } = useIntl();
     const [openDialog, setOpenDialog] = useState<UserDangerAction | null>(null);
     const { showSnackbar } = useSnackbar();
     const navigate = useNavigate();
 
-    const { mutate: cancelInvite, isPending: isCancelingInvite } = useCancelInviteMutation(() => {
-        setOpenDialog(null);
-        showSnackbar({ message: formatMessage(intlMessages.cancelInvitationSuccess), severity: 'success' });
-        navigate(USERS_ROUTE);
-    });
+    const { mutate: cancelInvite, isPending: isCancelingInvite } =
+        useCancelInviteMutation(() => {
+            setOpenDialog(null);
+            showSnackbar({
+                message: formatMessage(intlMessages.cancelInvitationSuccess),
+                severity: 'success'
+            });
+            navigate(USERS_ROUTE);
+        });
 
-    const { mutate: deleteUser, isPending: isDeletingUser } = useDeleteUserMutation(() => {
-        setOpenDialog(null);
-        showSnackbar({ message: formatMessage(intlMessages.deactivateAccountSuccess), severity: 'success' });
-    });
+    const { mutate: deleteUser, isPending: isDeletingUser } =
+        useDeleteUserMutation(() => {
+            setOpenDialog(null);
+            showSnackbar({
+                message: formatMessage(intlMessages.deactivateAccountSuccess),
+                severity: 'success'
+            });
+        });
 
-    const { mutate: restoreUser, isPending: isRestoringUser } = useRestoreUserMutation(() => {
-        setOpenDialog(null);
-        showSnackbar({ message: formatMessage(intlMessages.activateAccountSuccess), severity: 'success' });
-    });
+    const { mutate: restoreUser, isPending: isRestoringUser } =
+        useRestoreUserMutation(() => {
+            setOpenDialog(null);
+            showSnackbar({
+                message: formatMessage(intlMessages.activateAccountSuccess),
+                severity: 'success'
+            });
+        });
 
     return (
         <Stack spacing={3} sx={{ mt: 3 }}>
@@ -214,7 +225,7 @@ export const UserPersonalDetailsDangerZone = ({
                     {
                         label: formatMessage(intlMessages.cancel),
                         onClick: () => setOpenDialog(null),
-                        disabled: isRestoringUser,
+                        disabled: isRestoringUser
                     },
                     {
                         label: formatMessage(intlMessages.confirm),
@@ -222,7 +233,7 @@ export const UserPersonalDetailsDangerZone = ({
                         color: 'success',
                         variant: 'contained',
                         autoFocus: true,
-                        loading: isRestoringUser,
+                        loading: isRestoringUser
                     }
                 ]}
             />
@@ -236,7 +247,7 @@ export const UserPersonalDetailsDangerZone = ({
                     {
                         label: formatMessage(intlMessages.cancel),
                         onClick: () => setOpenDialog(null),
-                        disabled: isCancelingInvite,
+                        disabled: isCancelingInvite
                     },
                     {
                         label: formatMessage(intlMessages.confirm),
@@ -244,7 +255,7 @@ export const UserPersonalDetailsDangerZone = ({
                         color: 'warning',
                         variant: 'contained',
                         autoFocus: true,
-                        loading: isCancelingInvite,
+                        loading: isCancelingInvite
                     }
                 ]}
             />
@@ -253,14 +264,12 @@ export const UserPersonalDetailsDangerZone = ({
                 open={openDialog === USER_ACTION_DEACTIVATE}
                 onClose={() => setOpenDialog(null)}
                 title={formatMessage(intlMessages.deactivateAccount)}
-                body={formatMessage(
-                    intlMessages.deactivateAccountConfirmBody
-                )}
+                body={formatMessage(intlMessages.deactivateAccountConfirmBody)}
                 actions={[
                     {
                         label: formatMessage(intlMessages.cancel),
                         onClick: () => setOpenDialog(null),
-                        disabled: isDeletingUser,
+                        disabled: isDeletingUser
                     },
                     {
                         label: formatMessage(intlMessages.confirm),
@@ -268,7 +277,7 @@ export const UserPersonalDetailsDangerZone = ({
                         color: 'error',
                         variant: 'contained',
                         autoFocus: true,
-                        loading: isDeletingUser,
+                        loading: isDeletingUser
                     }
                 ]}
             />

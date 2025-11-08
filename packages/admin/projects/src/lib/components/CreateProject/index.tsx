@@ -44,11 +44,16 @@ export const CreateProject = ({ onSuccess }: CreateProjectProps) => {
     const [open, setOpen] = useState(false);
     const { control, handleSubmit, reset } = useCreateProjectForm();
     const { showSnackbar } = useSnackbar();
-    const { mutate: createProject, isPending } = useCreateProjectsMutation(() => {
-        showSnackbar({ message: formatMessage(intlMessages.projectCreated), severity: 'success' });
-        handleClose();
-        onSuccess?.();
-    });
+    const { mutate: createProject, isPending } = useCreateProjectsMutation(
+        () => {
+            showSnackbar({
+                message: formatMessage(intlMessages.projectCreated),
+                severity: 'success'
+            });
+            handleClose();
+            onSuccess?.();
+        }
+    );
     const { formatMessage } = useIntl();
 
     const handleClose = () => {
@@ -57,7 +62,7 @@ export const CreateProject = ({ onSuccess }: CreateProjectProps) => {
             name: '',
             slug: '',
             description: '',
-            userIds: [],
+            userIds: []
         });
     };
 

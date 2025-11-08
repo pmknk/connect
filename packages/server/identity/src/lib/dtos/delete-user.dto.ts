@@ -31,5 +31,3 @@ export const deleteUserRequestSchema = {
         }
     }
 } as const;
-
-

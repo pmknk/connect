@@ -1,49 +1,49 @@
 export const colors = {
     primary: {
-        main: "#1e293b",
-        dark: "#030712",
-        light: "#1F2937",
-        contrastText: "#F9FAFB"
+        main: '#1e293b',
+        dark: '#030712',
+        light: '#1F2937',
+        contrastText: '#F9FAFB'
     },
     secondary: {
-        main: "#E5E7EB",
-        dark: "#D1D5DB",
-        light: "#F9FAFB",
-        contrastText: "#030712"
+        main: '#E5E7EB',
+        dark: '#D1D5DB',
+        light: '#F9FAFB',
+        contrastText: '#030712'
     },
     info: {
-        main: "#2563EB",
-        dark: "#1D4ED8",
-        light: "#3B82F6",
-        contrastText: "#F9FAFB"
+        main: '#2563EB',
+        dark: '#1D4ED8',
+        light: '#3B82F6',
+        contrastText: '#F9FAFB'
     },
     success: {
-        main: "#16A34A",
-        dark: "#15803D",
-        light: "#22C55E",
-        contrastText: "#F9FAFB"
+        main: '#16A34A',
+        dark: '#15803D',
+        light: '#22C55E',
+        contrastText: '#F9FAFB'
     },
     warning: {
-        main: "#EAB308",
-        dark: "#CA8A04",
-        light: "#FACC15",
-        contrastText: "#F9FAFB"
+        main: '#EAB308',
+        dark: '#CA8A04',
+        light: '#FACC15',
+        contrastText: '#F9FAFB'
     },
     error: {
-        main: "#DC2626",
-        dark: "#B91C1C",
-        light: "#EF4444",
-        contrastText: "#F9FAFB"
+        main: '#DC2626',
+        dark: '#B91C1C',
+        light: '#EF4444',
+        contrastText: '#F9FAFB'
     },
     text: {
-        primary: "#1F2937",
-        secondary: "#64748B",
-        disabled: "#64748B"
+        primary: '#1F2937',
+        secondary: '#64748B',
+        disabled: '#64748B'
     },
-    divider: "#e5e7eb",
+    divider: '#e5e7eb',
     background: {
-        default: "#FFFFFF",
-        paper: "#FFFFFF"
+        default: '#FFFFFF',
+        paper: '#FFFFFF'
     },
     gray: {
         '50': '#f9fafb',
@@ -331,5 +331,5 @@ export const colors = {
         '800': '#9f1239',
         '900': '#881337',
         '950': '#4c0519'
-    },
+    }
 };

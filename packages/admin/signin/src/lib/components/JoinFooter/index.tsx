@@ -1,6 +1,6 @@
-import { Button, Link, Typography } from "@mui/material";
-import { defineMessages, useIntl } from "react-intl";
-import { InviteQueryResponse } from "../../hooks/useInviteLazyQuery";
+import { Button, Link, Typography } from '@mui/material';
+import { defineMessages, useIntl } from 'react-intl';
+import { InviteQueryResponse } from '../../hooks/useInviteLazyQuery';
 
 interface JoinFooterProps {
     isLoading: boolean;
@@ -39,8 +39,16 @@ export const JoinFooter = ({ isLoading, invite }: JoinFooterProps) => {
 
     return (
         <>
-            <Button variant="contained" color="primary" type="submit" size="large" disabled={isLoading}>
-                {invite ? formatMessage(intlMessages.finish) : formatMessage(intlMessages.button)}
+            <Button
+                variant="contained"
+                color="primary"
+                type="submit"
+                size="large"
+                disabled={isLoading}
+            >
+                {invite
+                    ? formatMessage(intlMessages.finish)
+                    : formatMessage(intlMessages.button)}
             </Button>
 
             <Typography
@@ -51,14 +59,11 @@ export const JoinFooter = ({ isLoading, invite }: JoinFooterProps) => {
                 px={6}
             >
                 {formatMessage(intlMessages.terms)}{' '}
-                <Link href="#">
-                    {formatMessage(intlMessages.termsLink)}
-                </Link>{' '}
-                &{' '}
+                <Link href="#">{formatMessage(intlMessages.termsLink)}</Link> &{' '}
                 <Link href="#">
                     {formatMessage(intlMessages.privacyPolicy)}
                 </Link>
             </Typography>
         </>
-    )
-}
+    );
+};

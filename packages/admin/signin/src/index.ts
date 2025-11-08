@@ -12,4 +12,4 @@ export const signin = () => ({
             component: Signin
         }
     ]
-})
+});

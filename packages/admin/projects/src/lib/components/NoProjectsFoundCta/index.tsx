@@ -25,11 +25,14 @@ export const NoProjectsFoundCta = ({
 }: NoProjectsFoundCtaProps) => {
     const { palette } = useTheme<ExtendedTheme>();
     return (
-        <Card variant="outlined" sx={{
-            borderRadius: 2,
-            py: 10,
-            mt: 4
-        }}>
+        <Card
+            variant="outlined"
+            sx={{
+                borderRadius: 2,
+                py: 10,
+                mt: 4
+            }}
+        >
             <Stack
                 direction="column"
                 gap={1}
@@ -37,9 +40,17 @@ export const NoProjectsFoundCta = ({
                 justifyContent="center"
                 textAlign="center"
             >
-                <BoxIcon size={60} color={palette.primary.main} strokeWidth={1} />
+                <BoxIcon
+                    size={60}
+                    color={palette.primary.main}
+                    strokeWidth={1}
+                />
                 <Typography variant="h5">{title}</Typography>
-                <Typography variant="body1" color="text.secondary" maxWidth="600px">
+                <Typography
+                    variant="body1"
+                    color="text.secondary"
+                    maxWidth="600px"
+                >
                     {description}
                 </Typography>
                 {showCreateProject && (

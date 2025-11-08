@@ -34,7 +34,11 @@ type ProjectsMenuProps = {
  * @param {ProjectsMenuProps} props - The props for ProjectsMenu.
  * @returns {JSX.Element | null} The rendered menu, or null if no projects.
  */
-export const ProjectsMenu = ({ anchorEl, projects, onClose }: ProjectsMenuProps) => {
+export const ProjectsMenu = ({
+    anchorEl,
+    projects,
+    onClose
+}: ProjectsMenuProps) => {
     const { palette } = useTheme<ExtendedTheme>();
 
     if (!projects) return null;
@@ -46,11 +50,11 @@ export const ProjectsMenu = ({ anchorEl, projects, onClose }: ProjectsMenuProps)
             onClose={onClose}
             sx={{
                 '& .MuiPaper-root': {
-                    minWidth: '200px',
-                },
+                    minWidth: '200px'
+                }
             }}
         >
-            {projects.map(p => (
+            {projects.map((p) => (
                 <MenuItem key={p.id}>
                     <Stack direction="row" spacing={1} alignItems="center">
                         <Avatar
@@ -59,7 +63,7 @@ export const ProjectsMenu = ({ anchorEl, projects, onClose }: ProjectsMenuProps)
                                 backgroundColor: palette.primary.main,
                                 width: 28,
                                 height: 28,
-                                fontSize: 14,
+                                fontSize: 14
                             }}
                         >
                             {p.name.charAt(0)}
@@ -73,4 +77,3 @@ export const ProjectsMenu = ({ anchorEl, projects, onClose }: ProjectsMenuProps)
 };
 
 export default ProjectsMenu;
-

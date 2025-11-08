@@ -1,8 +1,8 @@
-import { lazy } from "react"
-import { Route, Routes } from "react-router-dom"
+import { lazy } from 'react';
+import { Route, Routes } from 'react-router-dom';
 
-const LazyProjects = lazy(() => import('../pages/Projects'))
-const LazyProject = lazy(() => import('../pages/Project'))
+const LazyProjects = lazy(() => import('../pages/Projects'));
+const LazyProject = lazy(() => import('../pages/Project'));
 
 export const Router = () => {
     return (
@@ -10,5 +10,5 @@ export const Router = () => {
             <Route path="/:projectId/*" element={<LazyProject />} />
             <Route path="/" element={<LazyProjects />} />
         </Routes>
-    )
-}
+    );
+};

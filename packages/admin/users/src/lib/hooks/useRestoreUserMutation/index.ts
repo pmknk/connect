@@ -10,7 +10,10 @@ type RestoreUserMutationResponse = void;
  *
  * @param onSuccess Optional callback invoked after successful restore
  */
-export const useRestoreUserMutation = (onSuccess?: (id: string) => void, onError?: (error: Error) => void) => {
+export const useRestoreUserMutation = (
+    onSuccess?: (id: string) => void,
+    onError?: (error: Error) => void
+) => {
     const httpClient = useHttpClient();
     const queryClient = useQueryClient();
 
@@ -31,5 +34,3 @@ export const useRestoreUserMutation = (onSuccess?: (id: string) => void, onError
         onError
     });
 };
-
-

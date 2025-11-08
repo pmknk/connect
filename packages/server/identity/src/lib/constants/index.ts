@@ -16,4 +16,3 @@ export const TOKEN_SCOPES = {
     ADMIN_ACCESS: 'admin_access' as const,
     ADMIN_REFRESH: 'admin_refresh' as const
 } as const;
-

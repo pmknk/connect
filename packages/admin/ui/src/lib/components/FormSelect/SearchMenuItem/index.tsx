@@ -1,22 +1,34 @@
-import { ListSubheader, ListSubheaderProps, TextField, TextFieldProps } from "@mui/material";
+import {
+    ListSubheader,
+    ListSubheaderProps,
+    TextField,
+    TextFieldProps
+} from '@mui/material';
 
 type SearchMenuItemProps = {
     listSubheaderProps?: ListSubheaderProps;
     textFieldProps?: TextFieldProps;
-}
+};
 
-export const SearchMenuItem = ({ listSubheaderProps, textFieldProps }: SearchMenuItemProps) => {
+export const SearchMenuItem = ({
+    listSubheaderProps,
+    textFieldProps
+}: SearchMenuItemProps) => {
     return (
-        <ListSubheader component="div" sx={{
-            px: 1,
-            borderBottom: '1px solid',
-            borderColor: 'divider',
-            mb:1,
-            position: 'sticky',
-            top: 8,
-            zIndex: 1,
-            bgcolor: 'background.paper'
-        }} {...listSubheaderProps}>
+        <ListSubheader
+            component="div"
+            sx={{
+                px: 1,
+                borderBottom: '1px solid',
+                borderColor: 'divider',
+                mb: 1,
+                position: 'sticky',
+                top: 8,
+                zIndex: 1,
+                bgcolor: 'background.paper'
+            }}
+            {...listSubheaderProps}
+        >
             <TextField
                 type="text"
                 size="small"
@@ -40,5 +52,5 @@ export const SearchMenuItem = ({ listSubheaderProps, textFieldProps }: SearchMen
                 {...textFieldProps}
             />
         </ListSubheader>
-    )
+    );
 };

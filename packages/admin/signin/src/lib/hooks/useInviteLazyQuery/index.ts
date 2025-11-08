@@ -1,6 +1,10 @@
-import { ERROR_STATUS_CODES, isNotFoundError, useHttpClient } from "@content/admin-utils";
-import { useQueryClient } from "@tanstack/react-query";
-import { useState } from "react";
+import {
+    ERROR_STATUS_CODES,
+    isNotFoundError,
+    useHttpClient
+} from '@content/admin-utils';
+import { useQueryClient } from '@tanstack/react-query';
+import { useState } from 'react';
 
 export type InviteQueryResponse = {
     data: {
@@ -21,21 +25,28 @@ const getInviteRoute = (code: string) => `/api/v1/identity/invites/${code}`;
 export const useInviteLazyQuery = () => {
     const httpClient = useHttpClient();
     const queryClient = useQueryClient();
-    
-    const [data, setData] = useState<InviteQueryResponse | undefined>(undefined);
+
+    const [data, setData] = useState<InviteQueryResponse | undefined>(
+        undefined
+    );
     const [error, setError] = useState<unknown>(undefined);
     const [isLoading, setIsLoading] = useState(false);
 
-    const fetchInvite = async (code: string): Promise<InviteQueryResponse | undefined> => {
+    const fetchInvite = async (
+        code: string
+    ): Promise<InviteQueryResponse | undefined> => {
         setIsLoading(true);
         setError(undefined);
         try {
             const response = await queryClient.fetchQuery({
                 queryKey: ['invite', code],
                 queryFn: async ({ signal }) => {
-                    const res = await httpClient.get<InviteQueryResponse>(getInviteRoute(code), { signal });
+                    const res = await httpClient.get<InviteQueryResponse>(
+                        getInviteRoute(code),
+                        { signal }
+                    );
                     return res.data;
-                },
+                }
             });
             setData(response);
             return response;
@@ -47,8 +58,8 @@ export const useInviteLazyQuery = () => {
         return undefined;
     };
 
-    return { 
-        fetchInvite, 
+    return {
+        fetchInvite,
         data,
         error,
         isLoading,

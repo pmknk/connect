@@ -48,44 +48,43 @@ export const Page = ({
         >
             {hasHeader && (
                 <Stack direction="column" spacing={1} sx={headerSx}>
-                    {(titleStartAdornment || titleEndAdornment) ? (
+                    {titleStartAdornment || titleEndAdornment ? (
                         <Stack direction="row" alignItems="center" gap={0.5}>
                             {titleStartAdornment}
-                            {title && (
-                                typeof title === 'string' ? (
-                                    <Typography variant="h6">{title}</Typography>
+                            {title &&
+                                (typeof title === 'string' ? (
+                                    <Typography variant="h6">
+                                        {title}
+                                    </Typography>
                                 ) : (
                                     title
-                                )
-                            )}
+                                ))}
                             <Box sx={{ flexGrow: 1 }} />
                             {titleEndAdornment}
                         </Stack>
                     ) : (
                         <>
-                            {title && (
-                                typeof title === 'string' ? (
-                                    <Typography variant="h6">{title}</Typography>
+                            {title &&
+                                (typeof title === 'string' ? (
+                                    <Typography variant="h6">
+                                        {title}
+                                    </Typography>
                                 ) : (
                                     title
-                                )
-                            )}
+                                ))}
                         </>
                     )}
-                    {subtitle && (
-                        typeof subtitle === 'string' ? (
+                    {subtitle &&
+                        (typeof subtitle === 'string' ? (
                             <Typography variant="body1" color="text.secondary">
                                 {subtitle}
                             </Typography>
                         ) : (
                             subtitle
-                        )
-                    )}
+                        ))}
                 </Stack>
             )}
             <Stack sx={{ ...contentSx }}>{children}</Stack>
         </Container>
     );
 };
-
-

@@ -3,7 +3,7 @@ import { ComponentType, Context, createContext, ReactNode } from 'react';
 export type SlotComponent = {
     key: string;
     slot: string;
-    component: ReactNode | ComponentType
+    component: ReactNode | ComponentType;
     props?: Record<string, any>;
 };
 

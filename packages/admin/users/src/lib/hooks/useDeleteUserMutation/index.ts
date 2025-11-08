@@ -10,7 +10,10 @@ type DeleteUserMutationResponse = void;
  *
  * @param onSuccess Optional callback invoked after successful deletion
  */
-export const useDeleteUserMutation = (onSuccess?: (id: string) => void, onError?: (error: Error) => void) => {
+export const useDeleteUserMutation = (
+    onSuccess?: (id: string) => void,
+    onError?: (error: Error) => void
+) => {
     const httpClient = useHttpClient();
     const queryClient = useQueryClient();
 
@@ -25,10 +28,8 @@ export const useDeleteUserMutation = (onSuccess?: (id: string) => void, onError?
         onSuccess: (id) => {
             queryClient.invalidateQueries({ queryKey: ['users'] });
             queryClient.invalidateQueries({ queryKey: ['user', id] });
-            onSuccess?.(id); 
+            onSuccess?.(id);
         },
         onError
     });
 };
-
-

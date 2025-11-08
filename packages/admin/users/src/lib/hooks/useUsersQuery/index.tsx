@@ -53,7 +53,11 @@ const DEFAULT_LIMIT = ROWS_PER_USERS_PAGE_OPTIONS[0];
  * const { data, isLoading, error } = useUsersQuery(2, 10);
  * // data.data contains the array of users for page 2, 10 per page
  */
-export const useUsersQuery = (page: number = 1, limit: number = DEFAULT_LIMIT, search?: string) => {
+export const useUsersQuery = (
+    page: number = 1,
+    limit: number = DEFAULT_LIMIT,
+    search?: string
+) => {
     const httpClient = useHttpClient();
 
     return useQuery({
@@ -65,7 +69,11 @@ export const useUsersQuery = (page: number = 1, limit: number = DEFAULT_LIMIT, s
                     offset: (page - 1) * limit,
                     limit,
                     search,
-                    include: [{ association: 'roles' }, { association: 'projects' }, { association: 'invite' }],
+                    include: [
+                        { association: 'roles' },
+                        { association: 'projects' },
+                        { association: 'invite' }
+                    ],
                     paranoid: false
                 }
             }),

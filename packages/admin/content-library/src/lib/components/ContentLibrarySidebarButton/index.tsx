@@ -1,8 +1,8 @@
-import { BookOpen } from "lucide-react";
-import { defineMessages } from "react-intl";
-import { ProjectSideBarMenuItem } from "@content/admin-ui";
-import { Link } from "react-router-dom";
-import { CONTENT_LIBRARY_ROUTES } from "../../constants";
+import { BookOpen } from 'lucide-react';
+import { defineMessages } from 'react-intl';
+import { ProjectSideBarMenuItem } from '@content/admin-ui';
+import { Link } from 'react-router-dom';
+import { CONTENT_LIBRARY_ROUTES } from '../../constants';
 
 const intlMessage = defineMessages({
     contentLibrary: {
@@ -21,5 +21,3 @@ export const ContentLibrarySidebarButton = () => (
         }}
     />
 );
-
-

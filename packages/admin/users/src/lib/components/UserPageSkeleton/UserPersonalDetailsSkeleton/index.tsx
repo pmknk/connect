@@ -1,10 +1,15 @@
-import { Box, Skeleton, Stack } from "@mui/material";
+import { Box, Skeleton, Stack } from '@mui/material';
 
 export const UserPersonalDetailsSkeleton = () => {
     return (
         <Stack spacing={3} sx={{ maxWidth: '500px' }}>
             <Stack spacing={6} direction="row">
-                <Skeleton variant="rounded" width={135} height={100} sx={{ borderRadius: 2 }} />
+                <Skeleton
+                    variant="rounded"
+                    width={135}
+                    height={100}
+                    sx={{ borderRadius: 2 }}
+                />
                 <Stack spacing={3} width="100%">
                     <Box>
                         <Skeleton width={120} height={16} sx={{ mb: 1 }} />
@@ -29,5 +34,3 @@ export const UserPersonalDetailsSkeleton = () => {
         </Stack>
     );
 };
-
-

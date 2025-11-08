@@ -1,5 +1,5 @@
-import { createConfig } from "@content/server-utils";
-import { Dialect } from "sequelize";
+import { createConfig } from '@content/server-utils';
+import { Dialect } from 'sequelize';
 
 export const config = createConfig((env) => ({
     database: {
@@ -11,7 +11,9 @@ export const config = createConfig((env) => ({
         database: env.string('SERVER_DATABASE_NAME', 'postgres')
     },
     identity: {
-        jwtSecret: env.string('SERVER_IDENTITY_JWT_SECRET') ?? 'default-jwt-secret-please-change-in-production',
+        jwtSecret:
+            env.string('SERVER_IDENTITY_JWT_SECRET') ??
+            'default-jwt-secret-please-change-in-production'
     },
     server: {
         port: env.number('SERVER_PORT', 4000)
@@ -22,4 +24,4 @@ export const config = createConfig((env) => ({
         allowedHeaders: '*',
         credentials: true
     }
-}))
+}));

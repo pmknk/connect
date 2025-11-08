@@ -21,16 +21,16 @@ export function useRedirectToFirstProjectRoute(options: {
 
         if (currentPath === basePath && projectRoutes.length > 0) {
             const firstRoute = projectRoutes[0];
-            const firstRoutePath: string | undefined = (firstRoute?.component as any)?.props?.path;
+            const firstRoutePath: string | undefined = (
+                firstRoute?.component as any
+            )?.props?.path;
             if (!firstRoutePath) return;
 
             const sanitized = firstRoutePath
                 .replace(/\/\*$/, '') // remove /* suffix
-                .replace(/^\//, '');   // remove leading /
+                .replace(/^\//, ''); // remove leading /
 
             navigate(`${basePath}/${sanitized}`, { replace: true });
         }
     }, [location.pathname, projectId, projectRoutes, navigate]);
 }
-
-

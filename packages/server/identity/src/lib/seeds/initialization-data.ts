@@ -7,7 +7,7 @@ const initializeDataSeed = {
             const [existingGeneralGroup] = await sequelize.query(`
                 SELECT "id" FROM "PermissionGroups" WHERE "slug" = 'general'
             `);
-    
+
             let generalPermissionGroupId;
             if (existingGeneralGroup.length === 0) {
                 generalPermissionGroupId = v4();
@@ -25,7 +25,7 @@ const initializeDataSeed = {
             } else {
                 generalPermissionGroupId = (existingGeneralGroup[0] as any).id;
             }
-    
+
             const permissions = [
                 { action: 'create', resource: 'admin:user' },
                 { action: 'read', resource: 'admin:user' },
@@ -40,7 +40,7 @@ const initializeDataSeed = {
                 { action: 'update', resource: 'admin:project' },
                 { action: 'delete', resource: 'admin:project' }
             ];
-    
+
             // Create permissions if they don't exist
             for (const { action, resource } of permissions) {
                 const [existingPermission] = await sequelize.query(`
@@ -49,7 +49,7 @@ const initializeDataSeed = {
                     AND "resource" = '${resource}'
                     AND "permissionGroupId" = '${generalPermissionGroupId}'
                 `);
-    
+
                 if (existingPermission.length === 0) {
                     await sequelize.query(`
                         INSERT INTO "Permissions" ("id", "action", "resource", "permissionGroupId", "createdAt", "updatedAt")
@@ -64,12 +64,12 @@ const initializeDataSeed = {
                     `);
                 }
             }
-    
+
             // Check if admin role exists
             const [existingAdminRole] = await sequelize.query(`
                 SELECT "id" FROM "Roles" WHERE "slug" = 'admin'
             `);
-    
+
             let adminRoleId;
             if (existingAdminRole.length === 0) {
                 adminRoleId = v4();
@@ -87,12 +87,12 @@ const initializeDataSeed = {
             } else {
                 adminRoleId = (existingAdminRole[0] as any).id;
             }
-    
+
             // Check if contributor role exists
             const [existingContributorRole] = await sequelize.query(`
                 SELECT "id" FROM "Roles" WHERE "slug" = 'contributor'
             `);
-    
+
             let contributorRoleId;
             if (existingContributorRole.length === 0) {
                 contributorRoleId = v4();
@@ -110,12 +110,12 @@ const initializeDataSeed = {
             } else {
                 contributorRoleId = (existingContributorRole[0] as any).id;
             }
-    
+
             // Check if viewer role exists
             const [existingViewerRole] = await sequelize.query(`
                 SELECT "id" FROM "Roles" WHERE "slug" = 'viewer'
             `);
-    
+
             let viewerRoleId;
             if (existingViewerRole.length === 0) {
                 viewerRoleId = v4();
@@ -133,7 +133,7 @@ const initializeDataSeed = {
             } else {
                 viewerRoleId = (existingViewerRole[0] as any).id;
             }
-    
+
             for (const { action, resource } of permissions) {
                 const [permission] = await sequelize.query(`
                     SELECT "id" FROM "Permissions" 
@@ -141,14 +141,14 @@ const initializeDataSeed = {
                     AND "resource" = '${resource}'
                     AND "permissionGroupId" = '${generalPermissionGroupId}'
                 `);
-    
+
                 if (permission.length > 0) {
                     const [existingRolePermission] = await sequelize.query(`
                         SELECT "roleId" FROM "RolePermissions" 
                         WHERE "roleId" = '${adminRoleId}' 
                         AND "permissionId" = '${(permission[0] as any).id}'
                     `);
-    
+
                     if (existingRolePermission.length === 0) {
                         await sequelize.query(`
                             INSERT INTO "RolePermissions" ("createdAt", "updatedAt", "roleId", "permissionId")
@@ -161,7 +161,7 @@ const initializeDataSeed = {
                         `);
                     }
                 }
-            }   
+            }
         } catch (error) {
             console.error('Error initializing data seed:', error);
             throw error;

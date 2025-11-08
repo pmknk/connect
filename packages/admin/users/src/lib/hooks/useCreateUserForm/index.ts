@@ -8,10 +8,10 @@ import { defineMessages, useIntl } from 'react-intl';
  * Interface for create user form data
  */
 export interface CreateUserFormData {
-    fullname: string
-    email: string
-    roleId: string
-    projectIds: string[]
+    fullname: string;
+    email: string;
+    roleId: string;
+    projectIds: string[];
 }
 
 const intlMessages = defineMessages({
@@ -39,8 +39,8 @@ const intlMessages = defineMessages({
     emailFormatMessage: {
         id: 'users.create.emailFormatMessage',
         defaultMessage: 'Email is not valid'
-    },
-})
+    }
+});
 
 /**
  * Custom hook for managing create user form state and validation
@@ -75,9 +75,7 @@ export const useCreateUserForm = () => {
                         minLength: formatMessage(
                             intlMessages.emailRequiredMessage
                         ),
-                        pattern: formatMessage(
-                            intlMessages.emailFormatMessage
-                        ),
+                        pattern: formatMessage(intlMessages.emailFormatMessage),
                         maxLength: formatMessage(
                             intlMessages.emailMaxLengthMessage
                         )
@@ -92,7 +90,7 @@ export const useCreateUserForm = () => {
                         )
                     }
                 },
-                projectIds: { type: 'array', items: { type: 'string' } },
+                projectIds: { type: 'array', items: { type: 'string' } }
             },
             required: ['fullname', 'email', 'roleId']
         }),
@@ -100,7 +98,7 @@ export const useCreateUserForm = () => {
     );
     return useForm<CreateUserFormData>({
         defaultValues: {
-            projectIds: [],
+            projectIds: []
         },
         resolver: ajvResolver(schema, {
             allErrors: true,
@@ -108,4 +106,4 @@ export const useCreateUserForm = () => {
             $data: true
         })
     });
-}
+};

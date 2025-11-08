@@ -1,4 +1,4 @@
-import { FastifyRequest } from "fastify";
+import { FastifyRequest } from 'fastify';
 
 /**
  * DTO for the request after signing up.
@@ -25,7 +25,9 @@ export const signupRequestSchema = {
  * @param request - The request to convert.
  * @returns The SignupRequestDto.
  */
-export const toSignupRequestDto = (request: FastifyRequest): SignupRequestDto => {
+export const toSignupRequestDto = (
+    request: FastifyRequest
+): SignupRequestDto => {
     const { password, inviteCode } = request.body as SignupRequestDto;
     return { password, inviteCode };
 };
@@ -36,7 +38,7 @@ export const toSignupRequestDto = (request: FastifyRequest): SignupRequestDto =>
 export type SignupResponseDto = {
     data: {
         success: boolean;
-    }
+    };
 };
 
 /**
@@ -44,6 +46,8 @@ export type SignupResponseDto = {
  * @param response - The response to convert.
  * @returns The SignupResponseDto.
  */
-export const toSignupResponseDto = (response: SignupResponseDto): SignupResponseDto => {
+export const toSignupResponseDto = (
+    response: SignupResponseDto
+): SignupResponseDto => {
     return response;
 };

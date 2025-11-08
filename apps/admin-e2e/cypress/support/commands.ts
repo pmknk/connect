@@ -177,19 +177,19 @@ Cypress.Commands.add(
     }
 );
 
-Cypress.Commands.add(
-    'login',
-    () => {
-        localStorage.setItem('ADMIN_STORAGE', JSON.stringify({
+Cypress.Commands.add('login', () => {
+    localStorage.setItem(
+        'ADMIN_STORAGE',
+        JSON.stringify({
             auth: {
                 accessToken: 'T'.repeat(100),
                 accessTokenExpiresIn: Date.now() + 1000 * 60 * 60 * 24,
                 refreshToken: 'R'.repeat(100),
-                refreshTokenExpiresIn: Date.now() + 1000 * 60 * 60 * 24 * 7,
-            },
-        }))
-    }
-)
+                refreshTokenExpiresIn: Date.now() + 1000 * 60 * 60 * 24 * 7
+            }
+        })
+    );
+});
 
 export {};
 

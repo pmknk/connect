@@ -1,16 +1,16 @@
-import Dialog from "@mui/material/Dialog";
-import DialogTitle from "@mui/material/DialogTitle";
-import Stack from "@mui/material/Stack";
-import Typography from "@mui/material/Typography";
-import useMediaQuery from "@mui/material/useMediaQuery";
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
-import { useTheme } from "@mui/material/styles";
-import { UsersRound } from "lucide-react";
-import { FormattedMessage } from "react-intl";
+import { useTheme } from '@mui/material/styles';
+import { UsersRound } from 'lucide-react';
+import { FormattedMessage } from 'react-intl';
 
-import { type ExtendedTheme } from "@content/admin-ui";
-import DialogContent from "@mui/material/DialogContent";
-import DialogActions from "@mui/material/DialogActions";
+import { type ExtendedTheme } from '@content/admin-ui';
+import DialogContent from '@mui/material/DialogContent';
+import DialogActions from '@mui/material/DialogActions';
 
 type CreateUserDialogProps = {
     open: boolean;
@@ -18,9 +18,15 @@ type CreateUserDialogProps = {
     content: React.ReactNode;
     actions: React.ReactNode;
     onSubmit: () => void;
-}
+};
 
-export const CreateUserDialog = ({ open, onClose, content, actions, onSubmit }: CreateUserDialogProps) => {
+export const CreateUserDialog = ({
+    open,
+    onClose,
+    content,
+    actions,
+    onSubmit
+}: CreateUserDialogProps) => {
     const { breakpoints, palette } = useTheme<ExtendedTheme>();
     const isMobile = useMediaQuery(breakpoints.down('sm'));
 
@@ -67,11 +73,15 @@ export const CreateUserDialog = ({ open, onClose, content, actions, onSubmit }: 
                     </Stack>
                 </DialogTitle>
                 <DialogContent>{content}</DialogContent>
-                <DialogActions sx={{
+                <DialogActions
+                    sx={{
                         px: 3,
                         py: 2
-                    }}>{actions}</DialogActions>
+                    }}
+                >
+                    {actions}
+                </DialogActions>
             </form>
         </Dialog>
-    )
-}
+    );
+};

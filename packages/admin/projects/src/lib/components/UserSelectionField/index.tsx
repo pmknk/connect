@@ -3,7 +3,12 @@ import { defineMessages, useIntl } from 'react-intl';
 import { Control } from 'react-hook-form';
 import { useUser } from '@content/admin-utils';
 
-import { FormSelect, SelectedValue, LoadingMoreOptions, SearchMenuItem } from '@content/admin-ui';
+import {
+    FormSelect,
+    SelectedValue,
+    LoadingMoreOptions,
+    SearchMenuItem
+} from '@content/admin-ui';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
@@ -65,8 +70,13 @@ export const UserSelectionField = ({
     const { formatMessage } = useIntl();
 
     const [search, setSearch] = useState('');
-    const { users, fetchNextPage, hasNextPage, isFetchingNextPage, isFetching } =
-        useUsersQuery(USER_LIMIT, search);
+    const {
+        users,
+        fetchNextPage,
+        hasNextPage,
+        isFetchingNextPage,
+        isFetching
+    } = useUsersQuery(USER_LIMIT, search);
 
     const handleScrollEnd = () => {
         if (hasNextPage && !isFetchingNextPage) {
@@ -98,14 +108,26 @@ export const UserSelectionField = ({
                     multiple: true,
                     disabled: isLoading,
                     renderValue: (value: any) => {
-                        return <SelectedValue
-                            value={value}
-                            messages={{
-                                placeholder: formatMessage(intlMessages.usersPlaceholder),
-                                single: (count: number) => formatMessage(intlMessages.usersSelected, { count }),
-                                plural: (count: number) => formatMessage(intlMessages.usersSelectedPlural, { count })
-                            }}
-                        />
+                        return (
+                            <SelectedValue
+                                value={value}
+                                messages={{
+                                    placeholder: formatMessage(
+                                        intlMessages.usersPlaceholder
+                                    ),
+                                    single: (count: number) =>
+                                        formatMessage(
+                                            intlMessages.usersSelected,
+                                            { count }
+                                        ),
+                                    plural: (count: number) =>
+                                        formatMessage(
+                                            intlMessages.usersSelectedPlural,
+                                            { count }
+                                        )
+                                }}
+                            />
+                        );
                     }
                 }}
             >
@@ -143,14 +165,19 @@ export const UserSelectionField = ({
                     ))}
                 {users.filter((user) => user.id !== currentUserId).length ===
                     0 &&
-                    !isFetchingNextPage && !isFetching && (
+                    !isFetchingNextPage &&
+                    !isFetching && (
                         <MenuItem disabled>
                             <Typography variant="body2" color="text.secondary">
                                 {formatMessage(intlMessages.noUsersFound)}
                             </Typography>
                         </MenuItem>
                     )}
-                {(isFetchingNextPage || isFetching) && <LoadingMoreOptions label={formatMessage(intlMessages.loadingMoreUsers)} />}
+                {(isFetchingNextPage || isFetching) && (
+                    <LoadingMoreOptions
+                        label={formatMessage(intlMessages.loadingMoreUsers)}
+                    />
+                )}
             </FormSelect>
         </Stack>
     );

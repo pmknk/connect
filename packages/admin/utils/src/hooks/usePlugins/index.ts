@@ -35,8 +35,10 @@ export const usePlugins = (): UsePluginsReturn => {
      * @returns {PluginDefinition['slots']} Object containing all components by slot
      */
     const getComponentsBySlot = (slot: string) => {
-        return plugins.flatMap((plugin) => plugin.slots ?? []).filter(({ slot: s }) => s === slot);
-    }
+        return plugins
+            .flatMap((plugin) => plugin.slots ?? [])
+            .filter(({ slot: s }) => s === slot);
+    };
 
     return {
         plugins,

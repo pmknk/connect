@@ -7,7 +7,11 @@ import type { FastifyRequest } from 'fastify';
 import type { User } from '../schemas/user.schema';
 import { type TokenResponseDto, toTokenResponseDto } from '../dtos/token.dto';
 import { type UserResponseDto, toUserResponseDto } from '../dtos/user.dto';
-import { type SignupResponseDto, toSignupRequestDto, toSignupResponseDto } from '../dtos/signup.dto';
+import {
+    type SignupResponseDto,
+    toSignupRequestDto,
+    toSignupResponseDto
+} from '../dtos/signup.dto';
 
 /**
  * Controller responsible for handling authentication-related requests

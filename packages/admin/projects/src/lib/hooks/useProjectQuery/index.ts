@@ -22,11 +22,12 @@ export const useProjectQuery = (projectId?: string) => {
         enabled: Boolean(projectId),
         queryKey: ['project', projectId],
         queryFn: ({ signal }) =>
-            httpClient.get<ProjectQueryResponse>(GET_PROJECT_ROUTE(projectId as string), {
-                signal
-            }),
+            httpClient.get<ProjectQueryResponse>(
+                GET_PROJECT_ROUTE(projectId as string),
+                {
+                    signal
+                }
+            ),
         select: ({ data }) => data.data
     });
 };
-
-

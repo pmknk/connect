@@ -51,11 +51,17 @@ export const PendingInvitationAccept = ({
     const [_copied, setCopied] = useState(false);
     const { showSnackbar } = useSnackbar();
 
-    const handleCopy = useCallback(async (text: string) => {
-        await navigator.clipboard.writeText(text);
-        setCopied(true);
-        showSnackbar({ message: formatMessage(intlMessages.invitationCopied), severity: 'success' });
-    }, [formatMessage, showSnackbar]);
+    const handleCopy = useCallback(
+        async (text: string) => {
+            await navigator.clipboard.writeText(text);
+            setCopied(true);
+            showSnackbar({
+                message: formatMessage(intlMessages.invitationCopied),
+                severity: 'success'
+            });
+        },
+        [formatMessage, showSnackbar]
+    );
 
     return (
         <>

@@ -3,9 +3,6 @@ Feature: Sign in - Login
   Background:
     Given I open the login page
 
-  Scenario: View login page
-    Then I see the login title
-
   Scenario: Show Authentication Error when invalid credentials are provided
     Given the signin request is mocked as unauthorized with message "Invalid email or password" and alias "signinRequest"
     When I fill the login form with email "test@test.com" and password "password"

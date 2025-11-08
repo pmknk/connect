@@ -33,7 +33,7 @@ const intlMessages = defineMessages({
     button: {
         id: 'users.create.button',
         defaultMessage: 'Invite'
-    },
+    }
 });
 
 export const CreateUser = ({ onSuccess }: CreateUserProps) => {
@@ -44,7 +44,10 @@ export const CreateUser = ({ onSuccess }: CreateUserProps) => {
     const { formatMessage } = useIntl();
     const { control, handleSubmit, reset } = useCreateUserForm();
     const { mutate: createUser, isPending } = useCreateUserMutation(() => {
-        showSnackbar({ message: formatMessage(intlMessages.invitationSent), severity: 'success' });
+        showSnackbar({
+            message: formatMessage(intlMessages.invitationSent),
+            severity: 'success'
+        });
     });
 
     useEffect(() => {
@@ -53,7 +56,7 @@ export const CreateUser = ({ onSuccess }: CreateUserProps) => {
                 fullname: '',
                 email: '',
                 roleId: '',
-                projectIds: [],
+                projectIds: []
             });
         }
     }, [reset, open]);

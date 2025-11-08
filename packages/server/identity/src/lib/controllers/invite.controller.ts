@@ -5,8 +5,14 @@ import {
     toCreateInviteResponse
 } from '../dtos/create-invite.dto';
 import { InviteService } from '../services/invite.service';
-import { toDeleteInviteDto, toDeleteInviteResponseDto } from '../dtos/delete-invite.dto';
-import { toGetInviteByCodeDto, toGetInviteByCodeResponseDto } from '../dtos/get-invite.dto';
+import {
+    toDeleteInviteDto,
+    toDeleteInviteResponseDto
+} from '../dtos/delete-invite.dto';
+import {
+    toGetInviteByCodeDto,
+    toGetInviteByCodeResponseDto
+} from '../dtos/get-invite.dto';
 
 /**
  * Controller class for handling invite-related HTTP requests.
@@ -55,7 +61,9 @@ export class InviteController {
         return reply
             .status(200)
             .send(
-                toDeleteInviteResponseDto(await this.inviteService.deleteInvite(inviteDto))
+                toDeleteInviteResponseDto(
+                    await this.inviteService.deleteInvite(inviteDto)
+                )
             );
     }
 
@@ -69,8 +77,14 @@ export class InviteController {
         request: FastifyRequest,
         reply: FastifyReply
     ): Promise<void> {
-        return reply.status(200).send(toGetInviteByCodeResponseDto(
-            await this.inviteService.findByCode(toGetInviteByCodeDto(request).code)
-        ));
+        return reply
+            .status(200)
+            .send(
+                toGetInviteByCodeResponseDto(
+                    await this.inviteService.findByCode(
+                        toGetInviteByCodeDto(request).code
+                    )
+                )
+            );
     }
 }

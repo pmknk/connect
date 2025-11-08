@@ -11,7 +11,9 @@ export type GetUsersRequestDto = {
     paranoid?: boolean;
 };
 
-export const toGetUsersRequestDto = (request: FastifyRequest): GetUsersRequestDto => {
+export const toGetUsersRequestDto = (
+    request: FastifyRequest
+): GetUsersRequestDto => {
     const { offset, limit, include, paranoid, search } =
         request.query as GetUsersRequestDto;
     return { offset, limit, include, paranoid, search };

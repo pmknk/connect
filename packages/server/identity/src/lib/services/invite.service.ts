@@ -27,14 +27,16 @@ export class InviteService {
 
     constructor(
         private readonly modelService: ModelService,
-        private readonly connectionService: ConnectionService,
+        private readonly connectionService: ConnectionService
     ) {
         this.inviteModel = this.modelService.getModel<Invite>('Invites');
         this.roleModel = this.modelService.getModel<Role>('Roles');
         this.projectModel = this.modelService.getModel<Project>('Projects');
         this.userModel = this.modelService.getModel<User>('Users');
-        this.userRolesModel = this.modelService.getModel<UserRoles>('UserRoles');
-        this.projectUsersModel = this.modelService.getModel<ProjectUsers>('ProjectUsers');
+        this.userRolesModel =
+            this.modelService.getModel<UserRoles>('UserRoles');
+        this.projectUsersModel =
+            this.modelService.getModel<ProjectUsers>('ProjectUsers');
     }
 
     /**
@@ -50,9 +52,17 @@ export class InviteService {
             const role = await this.findRoleOrThrow(inviteDto.roleId);
             const projects = await this.findProjects(inviteDto.projectIds);
             const code = this.generateInviteCode();
-            const user = await this.createUser(inviteDto.email, inviteDto.fullname, transaction);
+            const user = await this.createUser(
+                inviteDto.email,
+                inviteDto.fullname,
+                transaction
+            );
             await this.attachUserRole(user.id, role.id, transaction);
-            await this.attachUserProjects(user.id, projects.map(p => p.id), transaction);
+            await this.attachUserProjects(
+                user.id,
+                projects.map((p) => p.id),
+                transaction
+            );
             const invite = await this.createInvite(code, user.id, transaction);
             await transaction.commit();
             return invite;
@@ -99,27 +109,33 @@ export class InviteService {
     /**
      * Creates a user within a transaction.
      */
-    private createUser(email: string, fullName: string, transaction: Transaction) {
-        return this.userModel.create(
-            { email, fullName },
-            { transaction }
-        );
+    private createUser(
+        email: string,
+        fullName: string,
+        transaction: Transaction
+    ) {
+        return this.userModel.create({ email, fullName }, { transaction });
     }
 
     /**
      * Attaches a role to a user within a transaction.
      */
-    private attachUserRole(userId: string, roleId: string, transaction: Transaction) {
-        return this.userRolesModel.create(
-            { userId, roleId },
-            { transaction }
-        );
+    private attachUserRole(
+        userId: string,
+        roleId: string,
+        transaction: Transaction
+    ) {
+        return this.userRolesModel.create({ userId, roleId }, { transaction });
     }
 
     /**
      * Attaches projects to a user within a transaction.
      */
-    private async attachUserProjects(userId: string, projectIds: string[], transaction: Transaction) {
+    private async attachUserProjects(
+        userId: string,
+        projectIds: string[],
+        transaction: Transaction
+    ) {
         for (const projectId of projectIds) {
             await this.projectUsersModel.create(
                 { userId, projectId },
@@ -131,11 +147,12 @@ export class InviteService {
     /**
      * Creates an invite within a transaction.
      */
-    private createInvite(code: string, userId: string, transaction: Transaction) {
-        return this.inviteModel.create(
-            { code, userId },
-            { transaction }
-        );
+    private createInvite(
+        code: string,
+        userId: string,
+        transaction: Transaction
+    ) {
+        return this.inviteModel.create({ code, userId }, { transaction });
     }
 
     /**
@@ -147,13 +164,17 @@ export class InviteService {
             const invite = await this.findInviteOrThrow(id);
             const user = invite.user;
             if (user) {
-                await this.userModel.destroy({ where: { id: user.id }, transaction, force: true });
+                await this.userModel.destroy({
+                    where: { id: user.id },
+                    transaction,
+                    force: true
+                });
             }
             await this.inviteModel.destroy({ where: { id }, transaction });
             await transaction.commit();
             return {
                 id
-            }
+            };
         } catch (error) {
             await transaction.rollback();
             throw error;
@@ -187,9 +208,7 @@ export class InviteService {
     async findByCode(code: string): Promise<Invite> {
         const invite = await this.inviteModel.findOne({
             where: { code },
-            include: [
-                { model: this.userModel, as: 'user' }
-            ]
+            include: [{ model: this.userModel, as: 'user' }]
         });
         if (!invite) {
             throw new NotFoundError('Invite not found');

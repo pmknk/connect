@@ -14,15 +14,13 @@ import Menu from '@mui/material/Menu';
 import IconButton from '@mui/material/IconButton';
 import { useMediaQuery } from '@mui/material';
 
-
 import { CORE_SLOTS } from '../../constants';
 export const AppBar = () => {
-    const {palette, breakpoints} = useTheme<ExtendedTheme>()
+    const { palette, breakpoints } = useTheme<ExtendedTheme>();
     const isMobile = useMediaQuery(breakpoints.down('sm'));
 
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
-
 
     const { getComponentsBySlot } = usePlugins();
     const navbarLeftMenuItems =
@@ -32,23 +30,29 @@ export const AppBar = () => {
         setAnchorEl(event.currentTarget);
     };
     return (
-        <MuiAppBar position="static" sx={{
-            zIndex: 1
-        }}>
-            <Toolbar variant="dense" sx={{
-                background: `linear-gradient(135deg, ${palette.slate[900]} 0%, ${palette.slate[900]} 85%, #7c2d12 100%)`,
-                height: 56,
-                minHeight: 56,
-                justifyContent: 'space-between',
-                px: isMobile ? 3 : 2,
-            }}>
+        <MuiAppBar
+            position="static"
+            sx={{
+                zIndex: 1
+            }}
+        >
+            <Toolbar
+                variant="dense"
+                sx={{
+                    background: `linear-gradient(135deg, ${palette.slate[900]} 0%, ${palette.slate[900]} 85%, #7c2d12 100%)`,
+                    height: 56,
+                    minHeight: 56,
+                    justifyContent: 'space-between',
+                    px: isMobile ? 3 : 2
+                }}
+            >
                 <Stack direction="row" alignItems="center">
                     {isMobile && (
                         <>
-                            <IconButton 
+                            <IconButton
                                 sx={{
                                     p: 0,
-                                    mr: 2,
+                                    mr: 2
                                 }}
                                 onClick={handleMenuClick}
                             >
@@ -56,42 +60,51 @@ export const AppBar = () => {
                             </IconButton>
 
                             <Menu
-
                                 anchorEl={anchorEl}
                                 open={open}
                                 onClose={() => setAnchorEl(null)}
                                 slotProps={{
-                                list: {
-                                    'aria-labelledby': 'basic-button',
-                                },
+                                    list: {
+                                        'aria-labelledby': 'basic-button'
+                                    }
                                 }}
                             >
-                                {navbarLeftMenuItems.map(({ key, component }) => (
-                                    <Fragment key={key}>
-                                        {renderElement(component, { onClick: () => setAnchorEl(null) })}
-                                    </Fragment>
-                                ))}
+                                {navbarLeftMenuItems.map(
+                                    ({ key, component }) => (
+                                        <Fragment key={key}>
+                                            {renderElement(component, {
+                                                onClick: () => setAnchorEl(null)
+                                            })}
+                                        </Fragment>
+                                    )
+                                )}
                             </Menu>
                         </>
                     )}
                     <Typography variant="body1" color="white" fontWeight={300}>
                         Content Studio
                     </Typography>
-                    {!isMobile && <>
-                        <Divider orientation='vertical' sx={{
-                            mx: 2.4,
-                            height: 24,
-                            borderColor: palette.slate[500],
-                        }} />
-                        <Stack direction="row" spacing={2}>
-                            {navbarLeftMenuItems.map(({ key, component }) => (
-                                <Fragment key={key}>
-                                    {renderElement(component)}
-                                </Fragment>
-                            ))}
-                        </Stack>
-                    </>}
-
+                    {!isMobile && (
+                        <>
+                            <Divider
+                                orientation="vertical"
+                                sx={{
+                                    mx: 2.4,
+                                    height: 24,
+                                    borderColor: palette.slate[500]
+                                }}
+                            />
+                            <Stack direction="row" spacing={2}>
+                                {navbarLeftMenuItems.map(
+                                    ({ key, component }) => (
+                                        <Fragment key={key}>
+                                            {renderElement(component)}
+                                        </Fragment>
+                                    )
+                                )}
+                            </Stack>
+                        </>
+                    )}
                 </Stack>
                 <Stack direction="row" alignItems="center" spacing={2}>
                     <AppBarIconButton
@@ -106,8 +119,8 @@ export const AppBar = () => {
                         label="Profile"
                         selected={false}
                     />
-                    </Stack>
+                </Stack>
             </Toolbar>
         </MuiAppBar>
-    )
+    );
 };

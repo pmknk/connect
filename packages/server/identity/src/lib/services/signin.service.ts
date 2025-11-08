@@ -43,7 +43,9 @@ export class SigninService {
      * @returns The tokens pair.
      */
     async signin(dto: SigninRequestDto) {
-        const user = await this.userModel.findOne({ where: { email: dto.email } });
+        const user = await this.userModel.findOne({
+            where: { email: dto.email }
+        });
 
         if (!user) throw new UnauthorizedError('Invalid email or password');
 
@@ -70,7 +72,7 @@ export class SigninService {
                     }
                 }
             ]
-        })
+        });
 
         if (!user) throw new UnauthorizedError('Invalid invite code');
 

@@ -23,7 +23,7 @@ export const createProjectRequestSchema = {
         name: { type: 'string' },
         slug: { type: 'string' },
         description: { type: 'string' },
-        userIds: { type: 'array', items: { type: 'string' } },
+        userIds: { type: 'array', items: { type: 'string' } }
     },
     additionalProperties: false
 } as const;

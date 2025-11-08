@@ -1,27 +1,27 @@
-import { ExtendedTheme } from "@content/admin-ui"
+import { ExtendedTheme } from '@content/admin-ui';
 
-import Button from "@mui/material/Button"
-import Typography from "@mui/material/Typography"
-import { useTheme } from "@mui/material/styles"
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import { useTheme } from '@mui/material/styles';
 
-import { Link } from "react-router-dom"
-import { ReactNode } from "react"
+import { Link } from 'react-router-dom';
+import { ReactNode } from 'react';
 
 /**
  * Props for the MainMenuItem component
  */
 type AppBarButtonProps = {
     /** URL path for navigation */
-    href: string
+    href: string;
     /** Display text or React node for the menu item */
-    label: string | ReactNode
+    label: string | ReactNode;
     /** Whether the menu item is currently selected */
-    selected?: boolean
-}
+    selected?: boolean;
+};
 
 /**
  * MainMenuItem component for navigation menu items
- * 
+ *
  * @param props - The component props
  * @param props.key - Unique identifier for the menu item
  * @param props.href - URL path for navigation
@@ -30,7 +30,7 @@ type AppBarButtonProps = {
  * @returns A clickable menu item with hover and selection states
  */
 export const AppBarButton = ({ href, label, selected }: AppBarButtonProps) => {
-    const {palette, spacing} = useTheme<ExtendedTheme>()
+    const { palette, spacing } = useTheme<ExtendedTheme>();
     return (
         <Button
             component={Link}
@@ -45,13 +45,15 @@ export const AppBarButton = ({ href, label, selected }: AppBarButtonProps) => {
                 backgroundColor: selected ? palette.slate[700] : 'transparent',
                 px: spacing(1.5),
                 '&:hover': {
-                    backgroundColor: selected ? palette.slate[700] : palette.slate[800],
-                },
+                    backgroundColor: selected
+                        ? palette.slate[700]
+                        : palette.slate[800]
+                }
             }}
         >
             <Typography variant="body2" color="white" fontWeight={300}>
                 {label}
             </Typography>
         </Button>
-    )
-}
+    );
+};

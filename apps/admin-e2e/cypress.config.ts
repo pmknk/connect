@@ -15,16 +15,24 @@ export default defineConfig({
             'cypress/e2e/**/*.cy.{ts,tsx,js,jsx}'
         ],
         async setupNodeEvents(on, config) {
-            const cucumberModule: any = await import('@badeball/cypress-cucumber-preprocessor');
-            const esbuildPluginModule: any = await import('@badeball/cypress-cucumber-preprocessor/esbuild');
-            const esbuildPreprocessorModule: any = await import('@bahmutov/cypress-esbuild-preprocessor');
+            const cucumberModule: any = await import(
+                '@badeball/cypress-cucumber-preprocessor'
+            );
+            const esbuildPluginModule: any = await import(
+                '@badeball/cypress-cucumber-preprocessor/esbuild'
+            );
+            const esbuildPreprocessorModule: any = await import(
+                '@bahmutov/cypress-esbuild-preprocessor'
+            );
 
             const addCucumber =
                 cucumberModule?.addCucumberPreprocessorPlugin ??
                 cucumberModule?.default;
 
             if (typeof addCucumber !== 'function') {
-                throw new Error('Unable to resolve addCucumberPreprocessorPlugin');
+                throw new Error(
+                    'Unable to resolve addCucumberPreprocessorPlugin'
+                );
             }
             await addCucumber(on, config);
 
@@ -36,9 +44,12 @@ export default defineConfig({
                 esbuildPreprocessorModule?.default ??
                 esbuildPreprocessorModule;
 
-            on('file:preprocessor', createBundler({
-                plugins: [createEsbuildPlugin(config)]
-            }));
+            on(
+                'file:preprocessor',
+                createBundler({
+                    plugins: [createEsbuildPlugin(config)]
+                })
+            );
 
             // Ensure Cypress exits when running headless so Nx unpins the dev server
             if (!config.isInteractive) {

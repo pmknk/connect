@@ -66,7 +66,7 @@ export const RoleSelectField = ({
                         sx: {
                             maxHeight: '200px'
                         }
-                    },
+                    }
                 },
                 displayEmpty: true,
                 renderValue: renderSelectedValue,

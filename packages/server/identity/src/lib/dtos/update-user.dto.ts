@@ -39,7 +39,7 @@ export const updateUserRequestSchema = {
             email: { type: 'string' },
             fullName: { type: 'string' },
             projectIds: { type: 'array', items: { type: 'string' } },
-            roleId: { type: 'string' },
+            roleId: { type: 'string' }
         }
     }
 } as const;

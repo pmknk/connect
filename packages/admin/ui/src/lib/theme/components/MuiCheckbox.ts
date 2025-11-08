@@ -3,11 +3,11 @@ export const MuiCheckbox = {
         root: {
             padding: '0',
             input: {
-                padding: '0',
+                padding: '0'
             },
             svg: {
-                fontSize: '20px',
+                fontSize: '20px'
             }
         }
     }
-}
+};

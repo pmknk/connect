@@ -1,4 +1,4 @@
-import { JOIN_ROUTE } from "../constants";
+import { JOIN_ROUTE } from '../constants';
 
 /**
  * Generates the invitation URL for a user to sign up with a specific invitation code.
@@ -8,4 +8,4 @@ import { JOIN_ROUTE } from "../constants";
  */
 export const getInvitationUrl = (invitationCode: string): string => {
     return `${window.location.origin}${JOIN_ROUTE}?code=${invitationCode}`;
-}
+};

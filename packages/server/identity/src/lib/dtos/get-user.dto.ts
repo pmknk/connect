@@ -38,7 +38,7 @@ export const getUserRequestSchema = {
                     }
                 },
                 default: []
-            },
+            }
         }
     }
 } as const;

@@ -1,10 +1,10 @@
-import { colors } from "../colors";
+import { colors } from '../colors';
 
 export const MuiIconButton = {
     styleOverrides: {
         root: {
             borderRadius: '0.5rem',
-            color: colors.slate[600],
-        },
-    },
-} as const
+            color: colors.slate[600]
+        }
+    }
+} as const;

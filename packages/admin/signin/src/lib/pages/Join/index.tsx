@@ -1,14 +1,17 @@
-import { useState } from "react";
-import {defineMessages, useIntl } from "react-intl";
-import { useNavigate } from "react-router-dom";
+import { useState } from 'react';
+import { defineMessages, useIntl } from 'react-intl';
+import { useNavigate } from 'react-router-dom';
 
-import { FormWrapper } from "../../components/FormWrapper";
-import { JoinBody } from "../../components/JoinBody";
-import { JoinFooter } from "../../components/JoinFooter";
+import { FormWrapper } from '../../components/FormWrapper';
+import { JoinBody } from '../../components/JoinBody';
+import { JoinFooter } from '../../components/JoinFooter';
 
-import { JoinFormData, useJoinForm } from "../../hooks/useJoinForm";
-import { type InviteQueryResponse, useInviteLazyQuery } from "../../hooks/useInviteLazyQuery";
-import { useJoinMutation } from "../../hooks/useJoinMutation";
+import { JoinFormData, useJoinForm } from '../../hooks/useJoinForm';
+import {
+    type InviteQueryResponse,
+    useInviteLazyQuery
+} from '../../hooks/useInviteLazyQuery';
+import { useJoinMutation } from '../../hooks/useJoinMutation';
 
 const intlMessages = defineMessages({
     title: {
@@ -52,8 +55,20 @@ export const Join = () => {
             onSubmit={handleSubmit(onSubmit)}
             title={formatMessage(intlMessages.title)}
             subtitle={formatMessage(intlMessages.subtitle)}
-            body={<JoinBody control={control} invite={invite} isNotFoundError={isNotFoundError} isLoading={isLoading || isPending} />}
-            footer={<JoinFooter isLoading={isLoading || isPending} invite={invite} />}
+            body={
+                <JoinBody
+                    control={control}
+                    invite={invite}
+                    isNotFoundError={isNotFoundError}
+                    isLoading={isLoading || isPending}
+                />
+            }
+            footer={
+                <JoinFooter
+                    isLoading={isLoading || isPending}
+                    invite={invite}
+                />
+            }
         />
     );
 };

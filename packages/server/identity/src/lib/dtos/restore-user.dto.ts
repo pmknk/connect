@@ -31,5 +31,3 @@ export const restoreUserRequestSchema = {
         }
     }
 } as const;
-
-

@@ -34,7 +34,8 @@ const intlMessages = defineMessages({
     },
     updatedSuccessfully: {
         id: 'users.personalDetails.updatedSuccessfully',
-        defaultMessage: 'The user details have been updated successfully. All changes are now saved.'
+        defaultMessage:
+            'The user details have been updated successfully. All changes are now saved.'
     }
 });
 
@@ -53,7 +54,10 @@ export const UserPersonalDetails = ({ user }: UserPersonalDetailsProps) => {
         projectIds: user.projects.map((project) => project.id)
     });
     const { mutate: updateUser, isPending } = useUpdateUserMutation(() => {
-        showSnackbar({ message: formatMessage(intlMessages.updatedSuccessfully), severity: 'success' });
+        showSnackbar({
+            message: formatMessage(intlMessages.updatedSuccessfully),
+            severity: 'success'
+        });
     });
 
     const { formatMessage } = useIntl();

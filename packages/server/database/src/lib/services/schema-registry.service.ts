@@ -3,9 +3,12 @@ import { ModelService } from './model.service';
 import { resolveSequelizeType } from '../utils';
 import { ConnectionService } from './connection.service';
 
-import { DataTypes, type IndexesOptions, type ModelAttributes } from 'sequelize'; 
+import {
+    DataTypes,
+    type IndexesOptions,
+    type ModelAttributes
+} from 'sequelize';
 import type { SchemaDefinition, SchemaRelationDefinition } from '../types';
-
 
 /**
  * Service for managing database schemas and model definitions
@@ -50,16 +53,13 @@ export class SchemaRegistryService {
 
                 const relationField = field as SchemaRelationDefinition;
 
-                const targetModel = this.connectionService.client.models[relationField.target];
-                this.modelService.defineRelations(
-                    sourceModel,
-                    targetModel,
-                    {
-                        type: relationField.relationType,
-                        target: relationField.target,
-                        options: relationField.options
-                    }
-                );
+                const targetModel =
+                    this.connectionService.client.models[relationField.target];
+                this.modelService.defineRelations(sourceModel, targetModel, {
+                    type: relationField.relationType,
+                    target: relationField.target,
+                    options: relationField.options
+                });
             }
         }
 
@@ -78,19 +78,20 @@ export class SchemaRegistryService {
 
         for (const [name, field] of Object.entries(schema.fields)) {
             if (field.type === 'relation') continue;
-            
+
             const type = resolveSequelizeType(field.type, field);
 
             attributes[name] = {
                 type,
                 allowNull: field.nullable ?? true,
                 primaryKey: field.primaryKey ?? false,
-                defaultValue: (field.type === 'uuid' && field.primaryKey)
-                    ? DataTypes.UUIDV4
-                    : field.defaultValue
-                        ? (typeof field.defaultValue === 'function'
+                defaultValue:
+                    field.type === 'uuid' && field.primaryKey
+                        ? DataTypes.UUIDV4
+                        : field.defaultValue
+                        ? typeof field.defaultValue === 'function'
                             ? field.defaultValue()
-                            : field.defaultValue)
+                            : field.defaultValue
                         : undefined,
                 validate: field.validate ?? undefined
             };

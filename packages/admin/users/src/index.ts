@@ -1,5 +1,5 @@
-import { UsersAppBarButton } from "./lib/components/UsersAppBarButton";
-import Users from "./lib/users";
+import { UsersAppBarButton } from './lib/components/UsersAppBarButton';
+import Users from './lib/users';
 
 const CORE_PRIVATE_ROUTES_SLOT_NAME = 'corePrivateRoutes';
 const CORE_PRIVATE_ROUTES_SLOT_KEY = 'usersPrivateRoutes';
@@ -21,4 +21,4 @@ export const users = () => ({
             component: UsersAppBarButton
         }
     ]
-})
+});

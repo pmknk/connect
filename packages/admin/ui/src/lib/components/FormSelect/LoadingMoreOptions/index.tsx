@@ -18,9 +18,7 @@ export const LoadingMoreOptions = ({ label }: LoadingMenuItemProps) => {
                 }}
             >
                 <CircularProgress size={16} />
-                <Typography variant="body2">
-                    {label}
-                </Typography>
+                <Typography variant="body2">{label}</Typography>
             </Box>
         </MenuItem>
     );

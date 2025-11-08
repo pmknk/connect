@@ -2,13 +2,13 @@ import { IntlProvider } from 'react-intl';
 import { Provider as ReduxStoreProvider } from 'react-redux';
 import { ThemeProvider } from '@mui/material';
 
-import { 
+import {
     store,
     HttpClientProvider,
     PluginsRegistryProvider,
     ErrorBoundary,
     PluginDefinition,
-    SnackbarProvider,
+    SnackbarProvider
 } from '@content/admin-utils';
 import { InternalServerError, theme } from '@content/admin-ui';
 
@@ -26,9 +26,7 @@ export function Core({ environment, plugins = [] }: CoreProps) {
     return (
         <ThemeProvider theme={theme}>
             <IntlProvider locale={'en'}>
-                <ErrorBoundary
-                    fallback={InternalServerError}
-                >
+                <ErrorBoundary fallback={InternalServerError}>
                     <HttpClientProvider api={environment.api}>
                         <ReduxStoreProvider store={store}>
                             <PluginsRegistryProvider plugins={plugins}>

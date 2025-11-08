@@ -25,7 +25,10 @@ export class InitController {
      * @param request - Fastify request object containing the admin user data.
      * @returns {Promise<void>} The result of the admin user creation.
      */
-    async init(request: FastifyRequest, reply: FastifyReply): Promise<InitAdminResponseDto> {
+    async init(
+        request: FastifyRequest,
+        reply: FastifyReply
+    ): Promise<InitAdminResponseDto> {
         await this.initService.createAdminUser(toInitAdminUserDto(request));
         return reply
             .status(201)

@@ -5,7 +5,7 @@ import { useMemo } from 'react';
 import { defineMessages, useIntl } from 'react-intl';
 
 export interface UserFormData {
-    id: string
+    id: string;
     fullName: string;
     email: string;
     roleId: string;
@@ -42,9 +42,7 @@ const intlMessages = defineMessages({
 /**
  * Custom hook for managing user form (edit/view) state and validation
  */
-export const useUserForm = (
-    defaultValues: UserFormData
-) => {
+export const useUserForm = (defaultValues: UserFormData) => {
     const { formatMessage } = useIntl();
 
     const schema = useMemo(
@@ -79,9 +77,7 @@ export const useUserForm = (
                         minLength: formatMessage(
                             intlMessages.emailRequiredMessage
                         ),
-                        pattern: formatMessage(
-                            intlMessages.emailFormatMessage
-                        ),
+                        pattern: formatMessage(intlMessages.emailFormatMessage),
                         maxLength: formatMessage(
                             intlMessages.emailMaxLengthMessage
                         )
@@ -113,4 +109,4 @@ export const useUserForm = (
             $data: true
         })
     });
-}
+};

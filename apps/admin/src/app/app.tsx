@@ -21,7 +21,7 @@ export function App() {
                 projectInsights(),
                 contentLibrary(),
                 mediaLibrary(),
-                projectSettings(),
+                projectSettings()
             ]}
         />
     );

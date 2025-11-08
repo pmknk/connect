@@ -1,5 +1,5 @@
-import { useHttpClient } from "@content/admin-utils";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useHttpClient } from '@content/admin-utils';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 const CANCEL_INVITE_ROUTE = '/api/v1/identity/invites/:id';
 
@@ -17,18 +17,22 @@ type CancelInviteMutationResponse = {
  * @returns {UseMutationResult<CancelInviteMutationResponse, unknown, string>}
  *   The mutation object returned by `useMutation`, which includes methods and state for the mutation.
  */
-export const useCancelInviteMutation = (onSuccess?: () => void, onError?: (error: Error) => void) => {
+export const useCancelInviteMutation = (
+    onSuccess?: () => void,
+    onError?: (error: Error) => void
+) => {
     const queryClient = useQueryClient();
     const httpClient = useHttpClient();
     return useMutation({
         mutationKey: ['cancel-invite'],
         mutationFn: (id: string) =>
-            httpClient.delete<CancelInviteMutationResponse>(CANCEL_INVITE_ROUTE.replace(':id', id))
-        ,
+            httpClient.delete<CancelInviteMutationResponse>(
+                CANCEL_INVITE_ROUTE.replace(':id', id)
+            ),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['users'] });
             onSuccess?.();
         },
         onError
     });
-}
+};

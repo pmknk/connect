@@ -1,7 +1,18 @@
 import type { Theme } from '@mui/material/styles';
 import { breakpoints } from '../theme/breakpoints';
 
-type ColorShade = '50' | '100' | '200' | '300' | '400' | '500' | '600' | '700' | '800' | '900' | '950';
+type ColorShade =
+    | '50'
+    | '100'
+    | '200'
+    | '300'
+    | '400'
+    | '500'
+    | '600'
+    | '700'
+    | '800'
+    | '900'
+    | '950';
 type ColorPalette = Record<ColorShade, string>;
 
 export type ExtendedTheme = {
@@ -28,8 +39,8 @@ export type ExtendedTheme = {
         fuchsia: ColorPalette;
         pink: ColorPalette;
         rose: ColorPalette;
-    }
+    };
     breakpoints: {
-        values: typeof breakpoints['values']
-    }
+        values: (typeof breakpoints)['values'];
+    };
 } & Theme;

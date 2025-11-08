@@ -13,7 +13,7 @@ export class PermissionService {
     private readonly roleModel: ModelStatic<Role>;
     private readonly permissionModel: ModelStatic<Permission>;
     private readonly userModel: ModelStatic<User>;
-        /**
+    /**
      * Creates an instance of PermissionService
      * @param modelService - Service for managing database models
      */

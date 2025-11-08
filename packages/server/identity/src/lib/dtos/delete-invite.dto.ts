@@ -1,5 +1,5 @@
-import { FastifyRequest } from "fastify";
-import { Invite } from "../schemas/invite.schema";
+import { FastifyRequest } from 'fastify';
+import { Invite } from '../schemas/invite.schema';
 
 export type DeleteInviteDto = {
     id: string;
@@ -26,6 +26,8 @@ export type DeleteInviteResponseDto = {
     };
 };
 
-export const toDeleteInviteResponseDto = (invite: Pick<Invite, 'id'>): DeleteInviteResponseDto => {
+export const toDeleteInviteResponseDto = (
+    invite: Pick<Invite, 'id'>
+): DeleteInviteResponseDto => {
     return { data: { id: invite.id } };
 };

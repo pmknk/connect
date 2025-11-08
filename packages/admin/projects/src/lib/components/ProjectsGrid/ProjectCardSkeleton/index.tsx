@@ -1,23 +1,27 @@
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import Skeleton from "@mui/material/Skeleton";
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Skeleton from '@mui/material/Skeleton';
 
-import { CardActions, Stack } from "@mui/material";
+import { CardActions, Stack } from '@mui/material';
 
 export const ProjectCardSkeleton = () => {
-
     return (
-        <Card variant="outlined" sx={{ 
-            borderRadius: 2
-        }}>
-            <CardContent sx={{
-                '&.MuiCardContent-root': {
-                    p: 2,
-                    '&:last-child': {
-                        paddingBottom: 2
+        <Card
+            variant="outlined"
+            sx={{
+                borderRadius: 2
+            }}
+        >
+            <CardContent
+                sx={{
+                    '&.MuiCardContent-root': {
+                        p: 2,
+                        '&:last-child': {
+                            paddingBottom: 2
+                        }
                     }
-                }
-            }}>
+                }}
+            >
                 <Stack spacing={1}>
                     <Skeleton variant="rounded" width={40} height={40} />
                     <Stack>
@@ -25,16 +29,18 @@ export const ProjectCardSkeleton = () => {
                         <Skeleton variant="text" width={100} height={20} />
                     </Stack>
                 </Stack>
-                <Skeleton 
-                    variant="rectangular" 
-                    width="100%" 
-                    height={60} 
+                <Skeleton
+                    variant="rectangular"
+                    width="100%"
+                    height={60}
                     sx={{ mt: 2, borderRadius: 1 }}
                 />
             </CardContent>
-            <CardActions sx={{
-                p: 2,
-            }}>
+            <CardActions
+                sx={{
+                    p: 2
+                }}
+            >
                 <Stack spacing={0.2}>
                     <Skeleton variant="text" width={80} height={20} />
                     <Skeleton variant="text" width={140} height={16} />
@@ -42,4 +48,4 @@ export const ProjectCardSkeleton = () => {
             </CardActions>
         </Card>
     );
-}; 
+};

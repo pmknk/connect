@@ -5,7 +5,8 @@
     "scripts": {
         "dev": "nx run-many --target=serve --projects=admin,server --configuration=development",
         "e2e:admin": "nx e2e admin-e2e",
-        "format": "nx format:write"
+        "format": "nx format:write",
+        "format:all": "nx format:write --all"
     },
     "private": true,
     "devDependencies": {

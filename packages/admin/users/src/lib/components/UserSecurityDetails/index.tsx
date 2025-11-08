@@ -2,7 +2,6 @@ import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 
-
 import { defineMessages, useIntl } from 'react-intl';
 import { FormField } from '@content/admin-ui';
 

@@ -1,6 +1,6 @@
-import { useHttpClient } from "@content/admin-utils";
-import { useMutation } from "@tanstack/react-query";
-import { JoinFormData } from "../useJoinForm";
+import { useHttpClient } from '@content/admin-utils';
+import { useMutation } from '@tanstack/react-query';
+import { JoinFormData } from '../useJoinForm';
 
 const JOIN_ROUTE = '/api/v1/identity/auth/signup';
 
@@ -15,7 +15,9 @@ export type JoinMutationResponse = {
  *
  * @returns A mutation object for join operations
  */
-export const useJoinMutation = (onSuccess: (data: JoinMutationResponse) => void) => {
+export const useJoinMutation = (
+    onSuccess: (data: JoinMutationResponse) => void
+) => {
     const httpClient = useHttpClient();
 
     return useMutation({
@@ -26,6 +28,6 @@ export const useJoinMutation = (onSuccess: (data: JoinMutationResponse) => void)
                 inviteCode: dto.code
             });
         },
-        onSuccess,
-    })
+        onSuccess
+    });
 };

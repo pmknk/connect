@@ -7,7 +7,10 @@ import {
     toCreateProjectRequestDto,
     toCreateProjectResponseDto
 } from '../dtos/create-project.dto';
-import { type GetProjectsResponseDto, toGetProjectsResponseDto } from '../dtos/get-projects.dto';
+import {
+    type GetProjectsResponseDto,
+    toGetProjectsResponseDto
+} from '../dtos/get-projects.dto';
 import {
     type GetProjectResponseDto,
     toGetProjectRequestDto,
@@ -31,10 +34,11 @@ export class ProjectController {
         const { user } = request as FastifyRequest & { user: User };
         return reply
             .status(200)
-            .send(toGetProjectsResponseDto(
-                await this.projectService.findAllByUserId(user.id)
-            )
-        );
+            .send(
+                toGetProjectsResponseDto(
+                    await this.projectService.findAllByUserId(user.id)
+                )
+            );
     }
 
     /**
@@ -43,15 +47,19 @@ export class ProjectController {
      * @param reply - The Fastify reply object used to send the response
      * @returns A promise that resolves to the created project
      */
-    async create(request: FastifyRequest, reply: FastifyReply): Promise<CreateProjectResponseDto> {
+    async create(
+        request: FastifyRequest,
+        reply: FastifyReply
+    ): Promise<CreateProjectResponseDto> {
         return reply
             .status(201)
-            .send(toCreateProjectResponseDto(
-                await this.projectService.createProject(
-                    toCreateProjectRequestDto(request)
+            .send(
+                toCreateProjectResponseDto(
+                    await this.projectService.createProject(
+                        toCreateProjectRequestDto(request)
+                    )
                 )
-            )
-        );
+            );
     }
 
     /**
@@ -69,8 +77,6 @@ export class ProjectController {
             requestDto.id,
             requestDto.include
         );
-        return reply
-            .status(200)
-            .send(toGetProjectResponseDto(project));
+        return reply.status(200).send(toGetProjectResponseDto(project));
     }
 }

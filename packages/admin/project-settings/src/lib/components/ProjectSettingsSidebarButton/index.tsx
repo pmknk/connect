@@ -1,8 +1,8 @@
-import { Settings } from "lucide-react";
-import { defineMessages } from "react-intl";
-import { ProjectSideBarMenuItem } from "@content/admin-ui";
-import { Link } from "react-router-dom";
-import { PROJECT_SETTINGS_ROUTES } from "../../constants";
+import { Settings } from 'lucide-react';
+import { defineMessages } from 'react-intl';
+import { ProjectSideBarMenuItem } from '@content/admin-ui';
+import { Link } from 'react-router-dom';
+import { PROJECT_SETTINGS_ROUTES } from '../../constants';
 
 const intlMessage = defineMessages({
     settings: {
@@ -21,5 +21,3 @@ export const ProjectSettingsSidebarButton = () => (
         }}
     />
 );
-
-

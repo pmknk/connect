@@ -1,8 +1,8 @@
-import { Stack, useTheme, TableRow, TableCell } from "@mui/material";
-import { UserX } from "lucide-react";
-import { ExtendedTheme } from "packages/admin/ui/src/lib/types";
-import { Typography } from "@mui/material";
-import { defineMessages, useIntl } from "react-intl";
+import { Stack, useTheme, TableRow, TableCell } from '@mui/material';
+import { UserX } from 'lucide-react';
+import { ExtendedTheme } from 'packages/admin/ui/src/lib/types';
+import { Typography } from '@mui/material';
+import { defineMessages, useIntl } from 'react-intl';
 
 const intlMessages = defineMessages({
     title: {
@@ -28,8 +28,14 @@ export const UserTableEmptyState = () => {
                     justifyContent="center"
                     textAlign="center"
                 >
-                    <UserX size={60} color={palette.primary.main} strokeWidth={1} />
-                    <Typography variant="h5">{formatMessage(intlMessages.title)}</Typography>
+                    <UserX
+                        size={60}
+                        color={palette.primary.main}
+                        strokeWidth={1}
+                    />
+                    <Typography variant="h5">
+                        {formatMessage(intlMessages.title)}
+                    </Typography>
                     <Typography variant="body1" color="text.secondary">
                         {formatMessage(intlMessages.description)}
                     </Typography>
