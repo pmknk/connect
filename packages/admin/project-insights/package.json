@@ -1,5 +1,5 @@
 {
-    "name": "@content/project-insights",
+    "name": "@content/admin-project-insights",
     "version": "0.0.1",
     "type": "module",
     "main": "./dist/index.esm.js",

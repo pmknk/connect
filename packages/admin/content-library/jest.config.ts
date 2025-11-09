@@ -1,5 +1,5 @@
 export default {
-    displayName: '@content/content-library',
+    displayName: '@content/admin-content-library',
     preset: '../../../jest.preset.js',
     transform: {
         '^(?!.*\\.(js|jsx|ts|tsx|css|json)$)': '@nx/react/plugins/jest',

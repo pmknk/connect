@@ -46,19 +46,19 @@
             "path": "./apps/server-e2e"
         },
         {
-            "path": "./apps/admin-e2e"
+            "path": "./packages/admin/project-insights"
         },
         {
             "path": "./packages/admin/project-settings"
-        },
-        {
-            "path": "./packages/admin/project-insights"
         },
         {
             "path": "./packages/admin/content-library"
         },
         {
             "path": "./packages/admin/media-library"
+        },
+        {
+            "path": "./packages/server/content-library"
         }
     ]
 }

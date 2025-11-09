@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 
-import ContentProjectSettings from './project-settings';
+import ContentProjectSettings from './admin-project-settings';
 
 describe('ContentProjectSettings', () => {
     it('should render successfully', () => {

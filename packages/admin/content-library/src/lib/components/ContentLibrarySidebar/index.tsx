@@ -12,7 +12,7 @@ import {
 
 const intlMessages = defineMessages({
     catalog: {
-        id: 'content-library.sidebar.catalog',
+        id: 'admin-content-library.sidebar.catalog',
         defaultMessage: 'Content Catalog'
     }
 });

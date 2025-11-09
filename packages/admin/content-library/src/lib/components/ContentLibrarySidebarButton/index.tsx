@@ -6,7 +6,7 @@ import { CONTENT_LIBRARY_ROUTES } from '../../constants';
 
 const intlMessage = defineMessages({
     contentLibrary: {
-        id: 'content-library.sidebar.button',
+        id: 'admin-content-library.sidebar.button',
         defaultMessage: 'Content Library'
     }
 });

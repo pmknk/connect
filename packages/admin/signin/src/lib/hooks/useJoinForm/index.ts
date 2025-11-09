@@ -15,7 +15,7 @@ export type JoinFormData = {
 const intlMessages = defineMessages({
     codeRequiredMessage: {
         id: 'auth.admin.pages.join.codeRequiredMessage',
-        defaultMessage: 'Code is required'
+        defaultMessage: 'Invitation code is required'
     },
     passwordRequiredMessage: {
         id: 'auth.admin.pages.join.passwordRequiredMessage',

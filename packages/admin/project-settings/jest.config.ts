@@ -1,5 +1,5 @@
 export default {
-    displayName: '@content/project-settings',
+    displayName: '@content/admin-project-settings',
     preset: '../../../jest.preset.js',
     transform: {
         '^(?!.*\\.(js|jsx|ts|tsx|css|json)$)': '@nx/react/plugins/jest',

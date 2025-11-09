@@ -1,7 +1,7 @@
-# @content/media-library
+# @content/admin-media-library
 
 This library was generated with [Nx](https://nx.dev).
 
 ## Running unit tests
 
-Run `nx test @content/media-library` to execute the unit tests via [Jest](https://jestjs.io).
+Run `nx test @content/admin-media-library` to execute the unit tests via [Jest](https://jestjs.io).

@@ -6,7 +6,7 @@ import { PROJECT_INSIGHTS_ROUTES } from '../../constants';
 
 const intlMessage = defineMessages({
     insights: {
-        id: 'project-insights.sidebar.button',
+        id: 'admin-project-insights.sidebar.button',
         defaultMessage: 'Insights'
     }
 });

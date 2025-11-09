@@ -6,7 +6,7 @@ import { MEDIA_LIBRARY_ROUTES } from '../../constants';
 
 const intlMessage = defineMessages({
     mediaLibrary: {
-        id: 'media-library.sidebar.button',
+        id: 'admin-media-library.sidebar.button',
         defaultMessage: 'Media Library'
     }
 });

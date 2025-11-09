@@ -82,7 +82,8 @@
         "packages/server/utils",
         "packages/server/identity",
         "packages/server/database",
-        "packages/cli"
+        "packages/cli",
+        "packages/server/content-library"
     ],
     "types": "./@types/fastify/index.d.ts",
     "dependencies": {

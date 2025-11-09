@@ -6,7 +6,7 @@ import { PROJECT_SETTINGS_ROUTES } from '../../constants';
 
 const intlMessage = defineMessages({
     settings: {
-        id: 'project-settings.sidebar.button',
+        id: 'admin-project-settings.sidebar.button',
         defaultMessage: 'Settings'
     }
 });

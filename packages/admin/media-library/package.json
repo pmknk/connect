@@ -1,5 +1,5 @@
 {
-    "name": "@content/media-library",
+    "name": "@content/admin-media-library",
     "version": "0.0.1",
     "type": "module",
     "main": "./dist/index.esm.js",

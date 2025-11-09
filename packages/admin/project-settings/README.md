@@ -1,7 +1,7 @@
-# @content/project-settings
+# @content/admin-project-settings
 
 This library was generated with [Nx](https://nx.dev).
 
 ## Running unit tests
 
-Run `nx test @content/project-settings` to execute the unit tests via [Jest](https://jestjs.io).
+Run `nx test @content/admin-project-settings` to execute the unit tests via [Jest](https://jestjs.io).
