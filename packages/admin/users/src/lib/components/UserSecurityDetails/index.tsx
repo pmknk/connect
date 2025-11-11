@@ -4,10 +4,12 @@ import Divider from '@mui/material/Divider';
 
 import { defineMessages, useIntl } from 'react-intl';
 import { FormField } from '@content/admin-ui';
+import { useSnackbar } from '@content/admin-utils';
 
 import { useUpdatePasswordForm } from '../../hooks/useUpdatePasswordForm';
 import { UserPersonalDetailsDangerZone } from './UserPersonalDetailsDangerZone';
 import { UserQueryResponse } from '../../hooks/useUserQuery';
+import { useUpdatePasswordMutation } from '../../hooks/useUpdatePasswordMutation';
 
 type UserSecurityDetailsProps = {
     user: UserQueryResponse['data'];
@@ -26,6 +28,14 @@ const intlMessages = defineMessages({
         id: 'users.securityDetails.save',
         defaultMessage: 'Update password'
     },
+    updatePasswordSuccess: {
+        id: 'users.securityDetails.updatePasswordSuccess',
+        defaultMessage: 'Password updated successfully.'
+    },
+    updatePasswordError: {
+        id: 'users.securityDetails.updatePasswordError',
+        defaultMessage: 'Failed to update password.'
+    },
     passwordDescription: {
         id: 'users.securityDetails.passwordDescription',
         defaultMessage:
@@ -35,11 +45,27 @@ const intlMessages = defineMessages({
 
 export const UserSecurityDetails = ({ user }: UserSecurityDetailsProps) => {
     const { formatMessage } = useIntl();
+    const { showSnackbar } = useSnackbar();
     const {
         control,
         handleSubmit,
-        formState: { errors }
+        reset
     } = useUpdatePasswordForm();
+    const { mutateAsync: updatePassword, isPending } = useUpdatePasswordMutation(
+        () => {
+            reset();
+            showSnackbar({
+                message: formatMessage(intlMessages.updatePasswordSuccess),
+                severity: 'success'
+            });
+        },
+        () => {
+            showSnackbar({
+                message: formatMessage(intlMessages.updatePasswordError),
+                severity: 'error'
+            });
+        }
+    );
 
     const isPendingInvitationAccepted = !!user.invite;
     const isDeactivated = !!user.deletedAt;
@@ -49,7 +75,7 @@ export const UserSecurityDetails = ({ user }: UserSecurityDetailsProps) => {
         <Stack spacing={6}>
             <form
                 onSubmit={handleSubmit(async (formData) => {
-                    console.log(formData);
+                    await updatePassword({ password: formData.password });
                 })}
             >
                 <Stack spacing={3} sx={{ maxWidth: '500px' }}>
@@ -57,7 +83,7 @@ export const UserSecurityDetails = ({ user }: UserSecurityDetailsProps) => {
                         control={control}
                         name="password"
                         inputProps={{
-                            disabled: !isActive,
+                            disabled: !isActive || isPending,
                             type: 'password',
                             label: formatMessage(intlMessages.password),
                             labelPlacement: 'outside',
@@ -71,7 +97,7 @@ export const UserSecurityDetails = ({ user }: UserSecurityDetailsProps) => {
                         control={control}
                         name="confirmPassword"
                         inputProps={{
-                            disabled: !isActive,
+                            disabled: !isActive || isPending,
                             type: 'password',
                             label: formatMessage(intlMessages.confirmPassword),
                             placeholder: '••••••••',
@@ -87,7 +113,7 @@ export const UserSecurityDetails = ({ user }: UserSecurityDetailsProps) => {
                             type="submit"
                             variant="contained"
                             color="primary"
-                            disabled={!isActive}
+                            disabled={!isActive || isPending}
                         >
                             {formatMessage(intlMessages.updatePassword)}
                         </Button>

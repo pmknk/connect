@@ -1,4 +1,4 @@
-import { serverContentLibrary } from './server-content-library';
+import { serverContentLibrary } from './content-library';
 
 describe('serverContentLibrary', () => {
     it('should work', () => {

@@ -7,6 +7,9 @@
             "path": "../../packages/server/utils"
         },
         {
+            "path": "../../packages/server/content-library"
+        },
+        {
             "path": "../../packages/server/database"
         },
         {

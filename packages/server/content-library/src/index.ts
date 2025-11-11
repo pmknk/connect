@@ -1,1 +1,1 @@
-export * from './lib/server-content-library.js';
+export { default } from './lib/content-library.js';

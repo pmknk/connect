@@ -12,6 +12,11 @@ import {
     toSignupRequestDto,
     toSignupResponseDto
 } from '../dtos/signup.dto';
+import {
+    type UpdatePasswordResponseDto,
+    toUpdatePasswordRequestDto,
+    toUpdatePasswordResponseDto
+} from '../dtos/update-password.dto';
 
 /**
  * Controller responsible for handling authentication-related requests
@@ -68,5 +73,21 @@ export class AuthController {
                 (request as FastifyRequest & { user: User }).user.id
             )
         );
+    }
+
+    /**
+     * Updates current user's password
+     * @param request - The incoming request containing the new password
+     * @returns {Promise<UpdatePasswordResponseDto>} The update result
+     */
+    async updatePassword(
+        request: FastifyRequest
+    ): Promise<UpdatePasswordResponseDto> {
+        const userId = (request as FastifyRequest & { user: User }).user.id;
+        await this.signinService.updatePassword(
+            userId,
+            toUpdatePasswordRequestDto(request)
+        );
+        return toUpdatePasswordResponseDto({ data: { success: true } });
     }
 }

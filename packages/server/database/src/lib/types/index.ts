@@ -10,6 +10,8 @@ import {
     Transaction as SequelizeTransaction
 } from 'sequelize';
 
+import { TextFieldProps, TextareaAutosizeProps } from '@mui/material';
+
 /**
  * Supported data types for schema fields
  */
@@ -30,6 +32,11 @@ export type SchemaDataType =
     | 'json'
     | 'relation';
 
+export type SchemaAdminDefinition = {
+    component: 'text' | 'textarea' | 'number',
+    componentProps?: TextFieldProps | TextareaAutosizeProps
+}
+
 /**
  * Definition of a schema field with its properties
  */
@@ -47,6 +54,7 @@ export type SchemaFieldDefinition = {
         | (() => string | number | boolean | Date | null);
     values?: string[] | number[];
     validate?: ModelValidateOptions;
+    admin?: SchemaAdminDefinition
 } & (
     | ({
           type: 'relation';
@@ -90,6 +98,7 @@ export type SchemaOptions = {
     paranoid?: boolean;
     timestamps?: boolean;
     indexes?: SchemaIndexDefinition[];
+    publishable?: boolean;
 };
 
 /**

@@ -4,6 +4,7 @@ import { FastifyApplicationInstance } from '@content/server-core';
 import { TOKEN_SCOPES } from '../constants';
 import { signinRequestSchema } from '../dtos/signin.dto';
 import { signupRequestSchema } from '../dtos/signup.dto';
+import { updatePasswordRequestSchema } from '../dtos/update-password.dto';
 
 /**
  * Router responsible for handling authentication-related routes
@@ -39,7 +40,8 @@ export class AuthRouter {
             SIGNIN: '/api/v1/identity/auth/signin',
             SIGNUP: '/api/v1/identity/auth/signup',
             GET_ME: '/api/v1/identity/auth/me',
-            REFRESH_TOKEN: '/api/v1/identity/auth/refresh-token'
+            REFRESH_TOKEN: '/api/v1/identity/auth/refresh-token',
+            UPDATE_PASSWORD: '/api/v1/identity/auth/password'
         };
 
         fastify.post(
@@ -85,6 +87,20 @@ export class AuthRouter {
                 }
             },
             this.authController.signup.bind(this.authController)
+        );
+
+        fastify.put(
+            ROUTE_PATHS.UPDATE_PASSWORD,
+            {
+                schema: {
+                    body: updatePasswordRequestSchema
+                },
+                config: {
+                    auth: true,
+                    scope: TOKEN_SCOPES.ADMIN_ACCESS
+                }
+            },
+            this.authController.updatePassword.bind(this.authController)
         );
     }
 }

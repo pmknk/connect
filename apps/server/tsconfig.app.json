@@ -22,6 +22,9 @@
             "path": "../../packages/server/utils/tsconfig.lib.json"
         },
         {
+            "path": "../../packages/server/content-library/tsconfig.lib.json"
+        },
+        {
             "path": "../../packages/server/database/tsconfig.lib.json"
         },
         {

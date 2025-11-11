@@ -7,6 +7,7 @@ import { injectable } from 'inversify';
 import { JwtService } from './jwt.service';
 import { SigninRequestDto } from '../dtos/signin.dto';
 import { generateHash } from '../utils';
+import type { UpdatePasswordRequestDto } from '../dtos/update-password.dto';
 import {
     ACCESS_TOKEN_EXPIRES_IN,
     REFRESH_TOKEN_EXPIRES_IN,
@@ -126,5 +127,23 @@ export class SigninService {
             (acc, token) => ({ ...acc, ...token }),
             {} as TokensPair
         );
+    }
+
+    /**
+     * Updates the password for the specified user.
+     * @param userId - The ID of the user whose password will be updated.
+     * @param dto - The DTO containing the new password.
+     */
+    async updatePassword(
+        userId: string,
+        dto: UpdatePasswordRequestDto
+    ): Promise<void> {
+        const user = await this.userModel.findByPk(userId);
+        if (!user) {
+            throw new UnauthorizedError('User not found');
+        }
+
+        const { hash, salt } = generateHash(dto.password);
+        await user.update({ password: hash, salt });
     }
 }

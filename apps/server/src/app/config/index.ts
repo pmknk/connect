@@ -1,6 +1,8 @@
 import { createConfig } from '@content/server-utils';
 import { Dialect } from 'sequelize';
 
+import { ArticleSchema } from '../schemas/article.schema';
+
 export const config = createConfig((env) => ({
     database: {
         dialect: env.string('SERVER_DATABASE_DIALECT', 'postgres') as Dialect,
@@ -23,5 +25,8 @@ export const config = createConfig((env) => ({
         methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
         allowedHeaders: '*',
         credentials: true
+    },
+    contentLibrary: {
+        schemas: [ArticleSchema]
     }
 }));

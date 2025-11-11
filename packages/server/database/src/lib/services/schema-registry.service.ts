@@ -23,6 +23,13 @@ export class SchemaRegistryService {
     ) {}
 
     /**
+     * Returns all defined schema definitions
+     */
+    getSchemas(): SchemaDefinition[] {
+        return this.schemas;
+    }
+
+    /**
      * Defines a new schema and adds it to the collection
      * @param schema - The schema definition to add
      */
@@ -94,6 +101,14 @@ export class SchemaRegistryService {
                             : field.defaultValue
                         : undefined,
                 validate: field.validate ?? undefined
+            };
+        }
+
+        if (schema.options?.publishable) {
+            attributes.publishedAt = {
+                type: DataTypes.DATE,
+                allowNull: true,
+                defaultValue: null
             };
         }
 

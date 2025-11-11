@@ -46,13 +46,13 @@ const intlMessages = defineMessages({
 export const useUpdatePasswordForm = () => {
     const { formatMessage } = useIntl();
 
-    const schema = useMemo(
-        (): JSONSchemaType<UpdatePasswordFormData> => ({
+    const schema = useMemo((): JSONSchemaType<UpdatePasswordFormData> => {
+        const base = {
             type: 'object',
             properties: {
                 password: {
                     type: 'string',
-                    minLength: 1,
+                    minLength: 8,
                     pattern: PASSWORD_PATTERN,
                     errorMessage: {
                         minLength: formatMessage(
@@ -85,9 +85,30 @@ export const useUpdatePasswordForm = () => {
                     )
                 }
             }
-        }),
-        [formatMessage]
-    );
+        } as const;
+
+        const withAllOf = {
+            ...base,
+            allOf: [
+                {
+                    properties: {
+                        confirmPassword: {
+                            const: { $data: '1/password' }
+                        }
+                    },
+                    errorMessage: {
+                        properties: {
+                            confirmPassword: formatMessage(
+                                intlMessages.passwordConfirmPasswordMismatchMessage
+                            )
+                        }
+                    }
+                }
+            ]
+        };
+
+        return withAllOf as unknown as JSONSchemaType<UpdatePasswordFormData>;
+    }, [formatMessage]);
 
     return useForm<UpdatePasswordFormData>({
         resolver: ajvResolver(schema, {
