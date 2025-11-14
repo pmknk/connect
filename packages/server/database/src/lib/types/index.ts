@@ -106,6 +106,7 @@ export type SchemaOptions = {
  */
 export type SchemaDefinition = {
     name: string;
+    type: 'page' | 'collection' | 'internal';
     fields: Record<string, SchemaFieldDefinition>;
     options?: SchemaOptions;
 };

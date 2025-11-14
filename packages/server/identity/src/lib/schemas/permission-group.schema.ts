@@ -23,6 +23,7 @@ export class PermissionGroup extends Model<
 
 export const PermissionGroupSchema: SchemaDefinition = {
     name: 'PermissionGroups',
+    type: 'internal',
     fields: {
         id: {
             type: 'uuid',

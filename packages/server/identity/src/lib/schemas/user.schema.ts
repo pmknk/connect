@@ -30,6 +30,7 @@ export class User extends Model<
 
 export const UserSchema: SchemaDefinition = {
     name: 'Users',
+    type: 'internal',
     fields: {
         id: {
             type: 'uuid',

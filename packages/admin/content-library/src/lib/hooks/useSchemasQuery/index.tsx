@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 export type SchemasQueryResponse = {
     data: {
         name: string;
+        type: 'page' | 'collection' | 'internal';
         fields: Record<string, unknown>;
         options?: Record<string, unknown>;
     }[];

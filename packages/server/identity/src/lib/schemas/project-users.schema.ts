@@ -20,6 +20,7 @@ export class ProjectUsers extends Model<
 
 export const ProjectUsersSchema: SchemaDefinition = {
     name: 'ProjectUsers',
+    type: 'internal',
     fields: {
         id: {
             type: 'uuid',

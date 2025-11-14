@@ -104,14 +104,6 @@ export class SchemaRegistryService {
             };
         }
 
-        if (schema.options?.publishable) {
-            attributes.publishedAt = {
-                type: DataTypes.DATE,
-                allowNull: true,
-                defaultValue: null
-            };
-        }
-
         return attributes;
     }
 

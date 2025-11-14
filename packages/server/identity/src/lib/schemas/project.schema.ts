@@ -26,6 +26,7 @@ export class Project extends Model<
 
 export const ProjectSchema: SchemaDefinition = {
     name: 'Projects',
+    type: 'internal',
     fields: {
         id: {
             type: 'uuid',

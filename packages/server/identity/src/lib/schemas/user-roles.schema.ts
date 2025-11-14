@@ -17,6 +17,7 @@ export class UserRoles extends Model<
 
 export const UserRolesSchema: SchemaDefinition = {
     name: 'UserRoles',
+    type: 'internal',
     fields: {
         id: {
             type: 'uuid',

@@ -2,6 +2,7 @@ import { SchemaDefinition } from "@content/server-database";
 
 export const ArticleSchema: SchemaDefinition = {
     name: 'Articles',
+    type: 'collection',
     fields: {
         id: {
             type: 'uuid',

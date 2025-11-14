@@ -24,6 +24,7 @@ export class Invite extends Model<
 
 export const InviteSchema: SchemaDefinition = {
     name: 'Invites',
+    type: 'internal',
     fields: {
         id: {
             type: 'uuid',

@@ -22,6 +22,7 @@ export class Permission extends Model<
 
 export const PermissionSchema: SchemaDefinition = {
     name: 'Permissions',
+    type: 'internal',
     fields: {
         id: {
             type: 'uuid',

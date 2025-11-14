@@ -24,6 +24,7 @@ export class Role extends Model<
 
 export const RoleSchema: SchemaDefinition = {
     name: 'Roles',
+    type: 'internal',
     fields: {
         id: {
             type: 'uuid',
