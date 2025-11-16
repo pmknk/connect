@@ -1,6 +1,6 @@
 import { Button, Stack, useMediaQuery, useTheme } from '@mui/material';
 
-import { PermissionAccess, useSnackbar } from '@content/admin-utils';
+import { isConflictError, PermissionAccess, useSnackbar } from '@content/admin-utils';
 import { ExtendedTheme } from '@content/admin-ui';
 
 import { defineMessages, useIntl } from 'react-intl';
@@ -12,6 +12,7 @@ import {
     useCreateUserForm
 } from '../../hooks/useCreateUserForm';
 import { useCreateUserMutation } from '../../hooks/useCreateUserMutation';
+import { AxiosError } from 'axios';
 
 type CreateUserProps = {
     onSuccess?: () => void;
@@ -33,6 +34,10 @@ const intlMessages = defineMessages({
     button: {
         id: 'users.create.button',
         defaultMessage: 'Invite'
+    },
+    emailTaken: {
+        id: 'users.create.emailTaken',
+        defaultMessage: 'This email is already invited or exists'
     }
 });
 
@@ -42,13 +47,26 @@ export const CreateUser = ({ onSuccess }: CreateUserProps) => {
     const [open, setOpen] = useState(false);
     const { showSnackbar } = useSnackbar();
     const { formatMessage } = useIntl();
-    const { control, handleSubmit, reset } = useCreateUserForm();
-    const { mutate: createUser, isPending } = useCreateUserMutation(() => {
-        showSnackbar({
-            message: formatMessage(intlMessages.invitationSent),
-            severity: 'success'
-        });
-    });
+    const { control, handleSubmit, reset, setError } = useCreateUserForm();
+    const { mutate: createUser, isPending } = useCreateUserMutation(
+        () => {
+            showSnackbar({
+                message: formatMessage(intlMessages.invitationSent),
+                severity: 'success'
+            });
+        },
+        (error: Error) => {
+            if (isConflictError(error)) {
+                const responseMessage = (error as AxiosError).response?.data as { message: string };
+                const field = responseMessage.message.split(':')[2] as 'email';
+
+                setError(field, {
+                    message: formatMessage(intlMessages.emailTaken)
+                });
+                return;
+            }
+        }
+    );
 
     useEffect(() => {
         if (open) {

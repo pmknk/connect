@@ -16,6 +16,10 @@ import {
     toGetProjectRequestDto,
     toGetProjectResponseDto
 } from '../dtos/get-project.dto';
+import {
+    type GetProjectBySlugResponseDto,
+    toGetProjectBySlugRequestDto
+} from '../dtos/get-project-by-slug.dto';
 
 @injectable()
 export class ProjectController {
@@ -75,6 +79,24 @@ export class ProjectController {
         const requestDto = toGetProjectRequestDto(request);
         const project = await this.projectService.findById(
             requestDto.id,
+            requestDto.include
+        );
+        return reply.status(200).send(toGetProjectResponseDto(project));
+    }
+
+    /**
+     * Retrieves a project by its slug
+     * @param request - The Fastify request object containing the project slug
+     * @param reply - The Fastify reply object used to send the response
+     * @returns A promise that resolves to the project response DTO
+     */
+    async findBySlug(
+        request: FastifyRequest,
+        reply: FastifyReply
+    ): Promise<GetProjectBySlugResponseDto> {
+        const requestDto = toGetProjectBySlugRequestDto(request);
+        const project = await this.projectService.findBySlug(
+            requestDto.slug,
             requestDto.include
         );
         return reply.status(200).send(toGetProjectResponseDto(project));

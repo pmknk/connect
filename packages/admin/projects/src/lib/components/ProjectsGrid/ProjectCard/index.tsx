@@ -69,8 +69,8 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
                 }}
                 component={Link}
                 to={`${PROJECTS_ROUTES.PROJECT.replace(
-                    ':projectId',
-                    project.id
+                    ':projectSlug',
+                    project.slug
                 )}`}
             >
                 <CardContent

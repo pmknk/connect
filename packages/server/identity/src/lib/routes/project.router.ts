@@ -4,6 +4,7 @@ import { ProjectController } from '../controllers/project.controller';
 import { TOKEN_SCOPES } from '../constants';
 import { createProjectRequestSchema } from '../dtos/create-project.dto';
 import { getProjectRequestSchema } from '../dtos/get-project.dto';
+import { getProjectBySlugRequestSchema } from '../dtos/get-project-by-slug.dto';
 
 @injectable()
 export class ProjectRouter {
@@ -49,6 +50,18 @@ export class ProjectRouter {
                 }
             },
             this.projectController.findById.bind(this.projectController)
+        );
+
+        fastify.get(
+            `${ROUTE_PATHS.PROJECTS}/slug/:slug`,
+            {
+                schema: getProjectBySlugRequestSchema,
+                config: {
+                    auth: true,
+                    scope: TOKEN_SCOPES.ADMIN_ACCESS
+                }
+            },
+            this.projectController.findBySlug.bind(this.projectController)
         );
     }
 }

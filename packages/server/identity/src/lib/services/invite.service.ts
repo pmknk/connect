@@ -1,7 +1,7 @@
 import { injectable } from 'inversify';
 
 import { ConnectionService, ModelService } from '@content/server-database';
-import { NotFoundError } from '@content/server-utils';
+import { ConflictError, NotFoundError } from '@content/server-utils';
 import { type CreateInviteDto } from '../dtos/create-invite.dto';
 
 import { type Invite } from '../schemas/invite.schema';
@@ -47,6 +47,17 @@ export class InviteService {
      * @throws If the role does not exist or any DB operation fails
      */
     async create(inviteDto: CreateInviteDto): Promise<Invite> {
+        // Prevent inviting a user with an email that already exists
+        const exists = await this.userModel.findOne({
+            where: { email: inviteDto.email },
+            paranoid: false
+        });
+        if (exists) {
+            // Keep message format consistent with other conflict cases
+            // so FE can map field errors: "field:email"
+            throw new ConflictError('field:email');
+        }
+
         const transaction = await this.connectionService.client.transaction();
         try {
             const role = await this.findRoleOrThrow(inviteDto.roleId);

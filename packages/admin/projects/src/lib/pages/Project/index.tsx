@@ -3,16 +3,18 @@ import Box from '@mui/material/Box';
 import { renderElement, usePlugins } from '@content/admin-utils';
 
 import { Fragment } from 'react';
-import { Routes, useParams } from 'react-router-dom';
+import { Routes, useLocation, useNavigate, useParams } from 'react-router-dom';
 
-import { useProjectQuery } from '../../hooks/useProjectQuery';
+import { useProjectBySlugOrIdQuery } from '../../hooks/useProjectBySlugOrIdQuery';
 import { ProjectSidebar } from '../../components/ProjectSidebar';
 import { PROJECTS_SLOTS } from '../../constants';
 import { useRedirectToFirstProjectRoute } from '../../hooks/useRedirectToFirstProjectRoute';
 
 const Project = () => {
-    const { projectId } = useParams();
-    const { data: project } = useProjectQuery(projectId);
+    const { projectSlug: projectParam } = useParams();
+    const { data: project } = useProjectBySlugOrIdQuery(projectParam);
+    const location = useLocation();
+    const navigate = useNavigate();
 
     const { getComponentsBySlot } = usePlugins();
 
@@ -21,7 +23,17 @@ const Project = () => {
     const projectRoutes =
         getComponentsBySlot(PROJECTS_SLOTS.PROJECT_ROUTES) ?? [];
 
-    useRedirectToFirstProjectRoute({ projectId, projectRoutes });
+    useRedirectToFirstProjectRoute({
+        projectSlug: project?.slug ?? projectParam,
+        projectRoutes
+    });
+
+    // Redirect from id-based URL to canonical slug-based URL if needed
+    if (project && projectParam && project.slug && projectParam !== project.slug) {
+        const remainder = location.pathname.replace(`/projects/${projectParam}`, '');
+        navigate(`/projects/${project.slug}${remainder}`, { replace: true });
+        return null;
+    }
 
     if (!project) return <div>Loading...</div>;
 

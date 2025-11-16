@@ -4,19 +4,19 @@ import { PROJECTS_ROUTES } from '../../constants';
 import type { SlotComponent } from '@content/admin-utils';
 
 /**
- * Redirects from /projects/:projectId to the first provided project route slot.
+ * Redirects from /projects/:projectSlug to the first provided project route slot.
  */
 export function useRedirectToFirstProjectRoute(options: {
-    projectId?: string;
+    projectSlug?: string;
     projectRoutes: SlotComponent[];
 }) {
-    const { projectId, projectRoutes } = options;
+    const { projectSlug, projectRoutes } = options;
     const location = useLocation();
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (!projectId) return;
-        const basePath = `${PROJECTS_ROUTES.PROJECTS}/${projectId}`;
+        if (!projectSlug) return;
+        const basePath = `${PROJECTS_ROUTES.PROJECTS}/${projectSlug}`;
         const currentPath = location.pathname.replace(/\/+$/, '');
 
         if (currentPath === basePath && projectRoutes.length > 0) {
@@ -32,5 +32,5 @@ export function useRedirectToFirstProjectRoute(options: {
 
             navigate(`${basePath}/${sanitized}`, { replace: true });
         }
-    }, [location.pathname, projectId, projectRoutes, navigate]);
+    }, [location.pathname, projectSlug, projectRoutes, navigate]);
 }

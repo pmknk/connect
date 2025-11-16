@@ -2,7 +2,7 @@ import { ConnectionService, ModelService } from '@content/server-database';
 import { injectable } from 'inversify';
 
 import { type ModelStatic } from 'sequelize';
-import { NotFoundError } from '@content/server-utils';
+import { ConflictError, NotFoundError } from '@content/server-utils';
 import { type Project } from '../schemas/project.schema';
 import { type CreateProjectRequestDto } from '../dtos/create-project.dto';
 import { type ProjectUsers } from '../schemas/project-users.schema';
@@ -52,6 +52,9 @@ export class ProjectService {
         userIds,
         ...dto
     }: CreateProjectRequestDto): Promise<Project> {
+        await this.validateProjectSlugCreation(dto.slug);
+        await this.validateProjectNameCreation(dto.name);
+
         const transaction = await this.connectionService.client.transaction();
         try {
             const project = await this.projectModel.create(
@@ -77,6 +80,26 @@ export class ProjectService {
         }
     }
 
+    private async validateProjectSlugCreation(slug: string) {
+        const existingWithSlug = await this.projectModel.findOne({
+            where: { slug },
+            paranoid: false
+        });
+        if (existingWithSlug) {
+            throw new ConflictError('field:slug');
+        }
+    }
+
+    private async validateProjectNameCreation(name: string) {
+        const existingWithName = await this.projectModel.findOne({
+            where: { name },
+            paranoid: false
+        });
+        if (existingWithName) {
+            throw new ConflictError('field:name');
+        }
+    }
+
     /**
      * Finds a project by its ID
      * @param id - The unique identifier of the project.
@@ -89,6 +112,29 @@ export class ProjectService {
     ): Promise<Project> {
         const project = await this.projectModel.findOne({
             where: { id },
+            include,
+            paranoid: false
+        });
+
+        if (!project) {
+            throw new NotFoundError('Project not found');
+        }
+
+        return project;
+    }
+
+    /**
+     * Finds a project by its slug
+     * @param slug - The URL-friendly identifier of the project.
+     * @param include - The associations to include.
+     * @returns A promise that resolves to the Project object.
+     */
+    async findBySlug(
+        slug: string,
+        include?: { association: string }[]
+    ): Promise<Project> {
+        const project = await this.projectModel.findOne({
+            where: { slug },
             include,
             paranoid: false
         });

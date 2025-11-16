@@ -39,3 +39,16 @@ export const isUnauthorizedError = (error: Error): boolean => {
         error.response?.status === ERROR_STATUS_CODES.UNAUTHORIZED
     );
 };
+
+/**
+ * Checks if the given error is an AxiosError representing a 409 Conflict error.
+ *
+ * @param error - The error to check.
+ * @returns True if the error is an AxiosError with a 409 status code, otherwise false.
+ */
+export const isConflictError = (error: Error): boolean => {
+    return (
+        error instanceof AxiosError &&
+        error.response?.status === ERROR_STATUS_CODES.CONFLICT
+    );
+};

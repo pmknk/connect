@@ -9,11 +9,12 @@ import { useMediaQuery } from '@mui/material';
 
 import { ExtendedTheme } from '@content/admin-ui';
 
-import { PermissionAccess, useSnackbar } from '@content/admin-utils';
+import { isConflictError, PermissionAccess, useSnackbar } from '@content/admin-utils';
 import { CreateProjectForm } from './CreateProjectForm';
 import { useCreateProjectForm } from '../../hooks/useCreateProjectForm';
 import { CreateProjectDialog } from './CreateProjectDialog';
 import { useCreateProjectsMutation } from '../../hooks/useCreateProjectsMutation';
+import { AxiosError } from 'axios';
 
 type CreateProjectProps = {
     onSuccess?: () => void;
@@ -32,6 +33,14 @@ const intlMessages = defineMessages({
         id: 'projects.create.button',
         defaultMessage: 'Create'
     },
+    slugTaken: {
+        id: 'projects.create.slugTaken',
+        defaultMessage: 'This slug is already taken'
+    },
+    nameTaken: {
+        id: 'projects.create.nameTaken',
+        defaultMessage: 'This name is already taken'
+    },
     projectCreated: {
         id: 'projects.create.projectCreated',
         defaultMessage: 'Project has been created successfully'
@@ -42,7 +51,7 @@ export const CreateProject = ({ onSuccess }: CreateProjectProps) => {
     const { breakpoints } = useTheme<ExtendedTheme>();
     const isMobile = useMediaQuery(breakpoints.down('sm'));
     const [open, setOpen] = useState(false);
-    const { control, handleSubmit, reset } = useCreateProjectForm();
+    const { control, handleSubmit, reset, setError } = useCreateProjectForm();
     const { showSnackbar } = useSnackbar();
     const { mutate: createProject, isPending } = useCreateProjectsMutation(
         () => {
@@ -52,6 +61,18 @@ export const CreateProject = ({ onSuccess }: CreateProjectProps) => {
             });
             handleClose();
             onSuccess?.();
+        },
+        (error: Error) => {
+            if (isConflictError(error)) {
+                const responseMessage = (error as AxiosError).response?.data as { message: string };
+                const field = responseMessage.message.split(':')[2] as 'slug' | 'name';
+
+                console.log(field);
+                setError(field, {
+                    message: formatMessage(intlMessages[`${field}Taken`])
+                });
+                return;
+            }
         }
     );
     const { formatMessage } = useIntl();

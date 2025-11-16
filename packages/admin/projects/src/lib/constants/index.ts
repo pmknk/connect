@@ -1,5 +1,5 @@
 export const PROJECTS_ROUTES = {
-    PROJECT: '/projects/:projectId',
+    PROJECT: '/projects/:projectSlug',
     PROJECTS: '/projects'
 };
 
