@@ -34,6 +34,10 @@ export class SchemaRegistryService {
      * @param schema - The schema definition to add
      */
     async defineSchema(schema: SchemaDefinition) {
+        const exists = this.schemas.some((s) => s.name === schema.name);
+        if (exists) {
+            throw new Error(`Schema "${schema.name}" already exists`);
+        }
         this.schemas.push(schema);
     }
 

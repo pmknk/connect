@@ -5,6 +5,6 @@ const LazyContentLibrary = lazy(() => import('../pages/ContentLibrary'));
 
 export const Router = () => (
     <Routes>
-        <Route path="/" element={<LazyContentLibrary />} />
+        <Route path="*" element={<LazyContentLibrary />} />
     </Routes>
 );

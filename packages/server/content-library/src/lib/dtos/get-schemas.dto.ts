@@ -1,4 +1,5 @@
 import type { SchemaDefinition } from '@content/server-database';
+import { nameToApiSlug } from '../utils/slug-utils';
 
 type SerializableFieldMeta = {
     name: string;
@@ -14,6 +15,7 @@ type SerializableFieldsMap = Record<string, SerializableFieldMeta>;
 export type GetSchemasResponseDto = {
     data: {
         name: string;
+        apiSlug: string;
         type: 'page' | 'collection' | 'internal';
         options: Record<string, unknown>;
         fields: SerializableFieldsMap;
@@ -27,6 +29,7 @@ export const toGetSchemasResponseDto = (
         data: schemas.map((schema) => ({
             name: schema.name,
             type: schema.type,
+            apiSlug: nameToApiSlug(schema.name),
             options: schema.options ?? {},
             fields: Object.entries(schema.fields).reduce<SerializableFieldsMap>(
                 (acc, [fieldName, field]) => {
