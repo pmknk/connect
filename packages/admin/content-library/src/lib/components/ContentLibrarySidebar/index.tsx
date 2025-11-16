@@ -1,16 +1,17 @@
-import { Stack, Typography, useTheme, Button } from '@mui/material';
+import { Stack, Typography, useTheme } from '@mui/material';
 import { ExtendedTheme } from '@content/admin-ui';
 import { defineMessages, useIntl } from 'react-intl';
 import { useSchemasQuery } from '../../hooks/useSchemasQuery';
 import { useState, useMemo, MouseEvent } from 'react';
 import {
     BookOpen,
-    ChevronDown,
     FileText,
     History,
     Settings,
     Trash
 } from 'lucide-react';
+import { SidebarExpandableList } from './ExpandableList';
+import { SidebarItem } from './Item';
 
 const intlMessages = defineMessages({
     catalog: {
@@ -22,26 +23,26 @@ const intlMessages = defineMessages({
 const catalogItems = [
     {
         label: 'Collections',
-        icon: <BookOpen size={18} width={18} height={18} />,
+        icon: <BookOpen size={16} width={16} height={16} />,
         expandable: true
     },
     {
         label: 'Pages',
-        icon: <FileText size={18} width={18} height={18} />,
+        icon: <FileText size={16} width={16} height={16} />,
         expandable: true
     },
     {
         label: 'History',
-        icon: <History size={18} width={18} height={18} />
+        icon: <History size={16} width={16} height={16} />
     },
     {
         label: 'Settings',
-        icon: <Settings size={18} width={18} height={18} />,
+        icon: <Settings size={16} width={16} height={16} />,
         expandable: false
     },
     {
         label: 'Trash',
-        icon: <Trash size={18} width={18} height={18} />
+        icon: <Trash size={16} width={16} height={16} />
     }
 ];
 
@@ -85,128 +86,26 @@ export const ContentLibrarySidebar = () => {
             <Stack direction="column" spacing={1} mt={3} sx={{ px: 1 }}>
                 {catalogItems.map((item) => (
                     <Stack key={item.label}>
-                        <Button
-                            variant="text"
-                            fullWidth
+                        <SidebarItem
+                            label={item.label}
+                            icon={item.icon}
+                            expandable={!!item.expandable}
+                            expanded={!!expanded[item.label]}
                             onClick={handleToggle(item.label)}
-                            aria-expanded={
-                                item.expandable
-                                    ? !!expanded[item.label]
-                                    : undefined
-                            }
-                            sx={{
-                                color: palette.gray[700],
-                                textTransform: 'none',
-                                justifyContent: 'flex-start',
-                                px: 2
-                            }}
-                        >
-                            <Stack
-                                direction="row"
-                                justifyContent="space-between"
-                                alignItems="center"
-                                spacing={2}
-                                sx={{ width: '100%' }}
-                            >
-                                <Stack direction="row" spacing={2}>
-                                    {item.icon}
-                                    <Typography variant="body2">
-                                        {item.label}
-                                    </Typography>
-                                </Stack>
-                                {item.expandable && (
-                                    <ChevronDown
-                                        size={18}
-                                        width={18}
-                                        height={18}
-                                        style={{
-                                            transition: 'transform 120ms ease',
-                                            transform: expanded[item.label]
-                                                ? 'rotate(0deg)'
-                                                : 'rotate(-90deg)'
-                                        }}
-                                    />
-                                )}
-                            </Stack>
-                        </Button>
-                        {item.label === 'Collections' &&
-                            collections.length > 0 && (
-                                <Stack
-                                    sx={{
-                                        display: 'grid',
-                                        gridTemplateRows: expanded[
-                                            'Collections'
-                                        ]
-                                            ? '1fr'
-                                            : '0fr',
-                                        transition:
-                                            'grid-template-rows 180ms cubic-bezier(0.2, 0, 0, 1), opacity 180ms cubic-bezier(0.2, 0, 0, 1)',
-                                        overflow: 'hidden',
-                                        opacity: expanded['Collections']
-                                            ? 1
-                                            : 0,
-                                        pointerEvents: expanded['Collections']
-                                            ? 'auto'
-                                            : 'none'
-                                    }}
-                                >
-                                    <Stack
-                                        sx={{
-                                            pl: 6,
-                                            pr: 2,
-                                            py: 1,
-                                            overflow: 'hidden'
-                                        }}
-                                        spacing={0.5}
-                                    >
-                                        {collections.map((s) => (
-                                            <Typography
-                                                key={s.name}
-                                                variant="caption"
-                                                color="text.secondary"
-                                            >
-                                                {s.name}
-                                            </Typography>
-                                        ))}
-                                    </Stack>
-                                </Stack>
-                            )}
-                        {item.label === 'Pages' && pages.length > 0 && (
-                            <Stack
-                                sx={{
-                                    display: 'grid',
-                                    gridTemplateRows: expanded['Pages']
-                                        ? '1fr'
-                                        : '0fr',
-                                    transition:
-                                        'grid-template-rows 180ms cubic-bezier(0.2, 0, 0, 1), opacity 180ms cubic-bezier(0.2, 0, 0, 1)',
-                                    overflow: 'hidden',
-                                    opacity: expanded['Pages'] ? 1 : 0,
-                                    pointerEvents: expanded['Pages']
-                                        ? 'auto'
-                                        : 'none'
-                                }}
-                            >
-                                <Stack
-                                    sx={{
-                                        pl: 6,
-                                        pr: 2,
-                                        py: 1,
-                                        overflow: 'hidden'
-                                    }}
-                                    spacing={0.5}
-                                >
-                                    {pages.map((s) => (
-                                        <Typography
-                                            key={s.name}
-                                            variant="caption"
-                                            color="text.secondary"
-                                        >
-                                            {s.name}
-                                        </Typography>
-                                    ))}
-                                </Stack>
-                            </Stack>
+                        />
+                        {item.label === 'Collections' && (
+                            <SidebarExpandableList
+                                items={collections}
+                                isExpanded={!!expanded['Collections']}
+                                variant="body2"
+                            />
+                        )}
+                        {item.label === 'Pages' && (
+                            <SidebarExpandableList
+                                items={pages}
+                                isExpanded={!!expanded['Pages']}
+                                variant="caption"
+                            />
                         )}
                     </Stack>
                 ))}
