@@ -10,8 +10,8 @@ import {
     Settings,
     Trash
 } from 'lucide-react';
-import { SidebarExpandableList } from './ExpandableList';
-import { SidebarItem } from './Item';
+import { ContentLibrarySidebarExpandableList } from './ContentLibrarySidebarExpandableList';
+import { ContentLibrarySidebarItem } from './ContentLibrarySidebarItem';
 
 const intlMessages = defineMessages({
     catalog: {
@@ -86,7 +86,7 @@ export const ContentLibrarySidebar = () => {
             <Stack direction="column" spacing={1} mt={3} sx={{ px: 1 }}>
                 {catalogItems.map((item) => (
                     <Stack key={item.label}>
-                        <SidebarItem
+                        <ContentLibrarySidebarItem
                             label={item.label}
                             icon={item.icon}
                             expandable={!!item.expandable}
@@ -94,14 +94,14 @@ export const ContentLibrarySidebar = () => {
                             onClick={handleToggle(item.label)}
                         />
                         {item.label === 'Collections' && (
-                            <SidebarExpandableList
+                            <ContentLibrarySidebarExpandableList
                                 items={collections}
                                 isExpanded={!!expanded['Collections']}
                                 variant="body2"
                             />
                         )}
                         {item.label === 'Pages' && (
-                            <SidebarExpandableList
+                            <ContentLibrarySidebarExpandableList
                                 items={pages}
                                 isExpanded={!!expanded['Pages']}
                                 variant="caption"

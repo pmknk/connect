@@ -3,7 +3,7 @@ import { ExtendedTheme } from '@content/admin-ui';
 import { ChevronDown } from 'lucide-react';
 import { FC, MouseEvent, ReactNode } from 'react';
 
-interface SidebarItemProps {
+interface ContentLibrarySidebarItemProps {
     label: string;
     icon: ReactNode;
     expandable?: boolean;
@@ -11,7 +11,7 @@ interface SidebarItemProps {
     onClick: (e: MouseEvent) => void;
 }
 
-export const SidebarItem: FC<SidebarItemProps> = ({
+export const ContentLibrarySidebarItem: FC<ContentLibrarySidebarItemProps> = ({
     label,
     icon,
     expandable = false,

@@ -4,13 +4,13 @@ import { FC } from 'react';
 
 type NamedItem = { name: string };
 
-interface SidebarExpandableListProps {
+interface ContentLibrarySidebarExpandableList {
     items: NamedItem[];
     isExpanded: boolean;
     variant?: 'body2' | 'caption';
 }
 
-export const SidebarExpandableList: FC<SidebarExpandableListProps> = ({
+export const ContentLibrarySidebarExpandableList: FC<ContentLibrarySidebarExpandableList> = ({
     items,
     isExpanded,
     variant = 'body2',
