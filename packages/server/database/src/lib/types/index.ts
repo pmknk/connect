@@ -33,9 +33,9 @@ export type SchemaDataType =
     | 'relation';
 
 export type SchemaAdminDefinition = {
-    component: 'text' | 'textarea' | 'number',
-    componentProps?: TextFieldProps | TextareaAutosizeProps
-}
+    component: 'text' | 'textarea' | 'number';
+    componentProps?: TextFieldProps | TextareaAutosizeProps;
+};
 
 /**
  * Definition of a schema field with its properties
@@ -54,7 +54,7 @@ export type SchemaFieldDefinition = {
         | (() => string | number | boolean | Date | null);
     values?: string[] | number[];
     validate?: ModelValidateOptions;
-    admin?: SchemaAdminDefinition
+    admin?: SchemaAdminDefinition;
 } & (
     | ({
           type: 'relation';

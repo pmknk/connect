@@ -44,5 +44,5 @@ export const InviteSchema: SchemaDefinition = {
                 foreignKey: 'userId'
             }
         }
-    },
+    }
 };

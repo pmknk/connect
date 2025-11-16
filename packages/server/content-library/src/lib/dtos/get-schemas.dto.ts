@@ -20,7 +20,6 @@ export type GetSchemasResponseDto = {
     }[];
 };
 
-
 export const toGetSchemasResponseDto = (
     schemas: SchemaDefinition[]
 ): GetSchemasResponseDto => {
@@ -29,19 +28,22 @@ export const toGetSchemasResponseDto = (
             name: schema.name,
             type: schema.type,
             options: schema.options ?? {},
-            fields: Object.entries(schema.fields).reduce<SerializableFieldsMap>((acc, [fieldName, field]) => {
-                acc[fieldName] = {
-                    name: fieldName,
-                    admin: field.admin as unknown as Record<string, unknown> | undefined,
-                    nullable: field.nullable,
-                    unique: field.unique,
-                    defaultValue: field.defaultValue as unknown,
-                    values: field.values as unknown[] | undefined
-                };
-                return acc;
-            }, {})
+            fields: Object.entries(schema.fields).reduce<SerializableFieldsMap>(
+                (acc, [fieldName, field]) => {
+                    acc[fieldName] = {
+                        name: fieldName,
+                        admin: field.admin as unknown as
+                            | Record<string, unknown>
+                            | undefined,
+                        nullable: field.nullable,
+                        unique: field.unique,
+                        defaultValue: field.defaultValue as unknown,
+                        values: field.values as unknown[] | undefined
+                    };
+                    return acc;
+                },
+                {}
+            )
         }))
     };
 };
-
-

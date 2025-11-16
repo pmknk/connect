@@ -47,21 +47,24 @@ Given(
     }
 );
 
-Given('the signin request is mocked as success with alias {string}', (alias: string) => {
-    cy.interceptOk(
-        'POST',
-        SIGNIN_URL,
-        {
-            data: {
-                accessToken: 'A'.repeat(64),
-                accessTokenExpiresIn: Date.now() + 1000 * 60 * 60,
-                refreshToken: 'R'.repeat(64),
-                refreshTokenExpiresIn: Date.now() + 1000 * 60 * 60 * 24 * 7
-            }
-        },
-        alias
-    );
-});
+Given(
+    'the signin request is mocked as success with alias {string}',
+    (alias: string) => {
+        cy.interceptOk(
+            'POST',
+            SIGNIN_URL,
+            {
+                data: {
+                    accessToken: 'A'.repeat(64),
+                    accessTokenExpiresIn: Date.now() + 1000 * 60 * 60,
+                    refreshToken: 'R'.repeat(64),
+                    refreshTokenExpiresIn: Date.now() + 1000 * 60 * 60 * 24 * 7
+                }
+            },
+            alias
+        );
+    }
+);
 
 Then('I should be navigated to the {string}', (path: string) => {
     cy.location('pathname').should('eq', path);
@@ -70,4 +73,3 @@ Then('I should be navigated to the {string}', (path: string) => {
 When('I click the Join now link', () => {
     clickJoinNow();
 });
-

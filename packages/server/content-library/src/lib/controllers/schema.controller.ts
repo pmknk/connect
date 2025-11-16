@@ -20,5 +20,3 @@ export class SchemaController {
         return reply.status(200).send(toGetSchemasResponseDto(schemas));
     }
 }
-
-

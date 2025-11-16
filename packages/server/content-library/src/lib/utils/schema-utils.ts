@@ -42,7 +42,8 @@ export const addProjectRelations = (
         }
     };
 
-    const schemaName = schema.name.charAt(0).toLowerCase() + schema.name.slice(1);
+    const schemaName =
+        schema.name.charAt(0).toLowerCase() + schema.name.slice(1);
     projectSchema.fields[schemaName] = {
         type: 'relation',
         relationType: 'hasMany',
@@ -73,5 +74,3 @@ export const prepareSchemas = (
         addProjectRelations(schema, projectSchema);
     }
 };
-
-

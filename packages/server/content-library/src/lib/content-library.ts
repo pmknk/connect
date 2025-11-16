@@ -2,7 +2,10 @@ import {
     type FastifyApplicationInstance,
     createPlugin
 } from '@content/server-core';
-import { SchemaDefinition, SchemaRegistryService } from '@content/server-database';
+import {
+    SchemaDefinition,
+    SchemaRegistryService
+} from '@content/server-database';
 import { SchemaController } from './controllers/schema.controller';
 import { SchemaRouter } from './routes/schema.router';
 import { prepareSchemas } from './utils/schema-utils';
@@ -11,10 +14,15 @@ type ContentLibraryPluginOptions = {
 };
 
 class ContentLibraryPluginInitializer {
-    static async initialize(fastify: FastifyApplicationInstance, { schemas }: ContentLibraryPluginOptions) {
+    static async initialize(
+        fastify: FastifyApplicationInstance,
+        { schemas }: ContentLibraryPluginOptions
+    ) {
         const schemaService = fastify.di.get(SchemaRegistryService);
 
-        const projectSchema = schemaService.getSchemas().find(schema => schema.name === 'Projects');
+        const projectSchema = schemaService
+            .getSchemas()
+            .find((schema) => schema.name === 'Projects');
         prepareSchemas(schemas, projectSchema);
         for (const schema of schemas) schemaService.defineSchema(schema);
         await schemaService.sync();
@@ -25,4 +33,6 @@ class ContentLibraryPluginInitializer {
     }
 }
 
-export default createPlugin<ContentLibraryPluginOptions>(ContentLibraryPluginInitializer.initialize);
+export default createPlugin<ContentLibraryPluginOptions>(
+    ContentLibraryPluginInitializer.initialize
+);

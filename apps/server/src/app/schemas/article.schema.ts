@@ -1,4 +1,4 @@
-import { SchemaDefinition } from "@content/server-database";
+import { SchemaDefinition } from '@content/server-database';
 
 export const ArticleSchema: SchemaDefinition = {
     name: 'Articles',
@@ -25,7 +25,7 @@ export const ArticleSchema: SchemaDefinition = {
                 component: 'number',
                 componentProps: {
                     label: 'Duration',
-                    placeholder: 'Enter the duration of the article',
+                    placeholder: 'Enter the duration of the article'
                 }
             }
         },
@@ -41,10 +41,10 @@ export const ArticleSchema: SchemaDefinition = {
                     rows: 10
                 }
             }
-        },
+        }
     },
     options: {
         paranoid: true,
         publishable: true
     }
-}
+};

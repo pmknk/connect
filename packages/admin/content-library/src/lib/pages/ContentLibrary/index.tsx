@@ -15,9 +15,18 @@ const ContentLibrary = () => {
             <ContentLibrarySidebar />
             <Page title="Content Library" maxWidth={false}>
                 {isLoading ? (
-                    <Box sx={{ p: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
+                    <Box
+                        sx={{
+                            p: 2,
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: 1
+                        }}
+                    >
                         <CircularProgress size={20} />
-                        <Typography variant="body2">Loading schemas…</Typography>
+                        <Typography variant="body2">
+                            Loading schemas…
+                        </Typography>
                     </Box>
                 ) : error ? (
                     <Typography color="error" sx={{ p: 2 }}>
@@ -30,7 +39,9 @@ const ContentLibrary = () => {
                         </Typography>
                         <List dense>
                             {data?.data.map((schema) => (
-                                <ListItem key={schema.name}>{schema.name}</ListItem>
+                                <ListItem key={schema.name}>
+                                    {schema.name}
+                                </ListItem>
                             ))}
                         </List>
                     </Box>

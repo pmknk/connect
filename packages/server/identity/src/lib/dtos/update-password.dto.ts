@@ -30,5 +30,3 @@ export const toUpdatePasswordResponseDto = (
 ): UpdatePasswordResponseDto => {
     return response;
 };
-
-

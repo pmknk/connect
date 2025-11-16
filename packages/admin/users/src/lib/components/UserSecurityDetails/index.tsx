@@ -46,26 +46,23 @@ const intlMessages = defineMessages({
 export const UserSecurityDetails = ({ user }: UserSecurityDetailsProps) => {
     const { formatMessage } = useIntl();
     const { showSnackbar } = useSnackbar();
-    const {
-        control,
-        handleSubmit,
-        reset
-    } = useUpdatePasswordForm();
-    const { mutateAsync: updatePassword, isPending } = useUpdatePasswordMutation(
-        () => {
-            reset();
-            showSnackbar({
-                message: formatMessage(intlMessages.updatePasswordSuccess),
-                severity: 'success'
-            });
-        },
-        () => {
-            showSnackbar({
-                message: formatMessage(intlMessages.updatePasswordError),
-                severity: 'error'
-            });
-        }
-    );
+    const { control, handleSubmit, reset } = useUpdatePasswordForm();
+    const { mutateAsync: updatePassword, isPending } =
+        useUpdatePasswordMutation(
+            () => {
+                reset();
+                showSnackbar({
+                    message: formatMessage(intlMessages.updatePasswordSuccess),
+                    severity: 'success'
+                });
+            },
+            () => {
+                showSnackbar({
+                    message: formatMessage(intlMessages.updatePasswordError),
+                    severity: 'error'
+                });
+            }
+        );
 
     const isPendingInvitationAccepted = !!user.invite;
     const isDeactivated = !!user.deletedAt;
